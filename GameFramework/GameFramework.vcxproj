@@ -110,7 +110,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(ProjectDir)directxtex\lib\x64\debug;$(ProjectDir)assimp\assimp\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)directxtex\lib\_x64\_debug;$(ProjectDir)assimp\assimp\lib;$(LibraryPath)</LibraryPath>
     <IncludePath>$(ProjectDir)ExternalCode;$(ProjectDir)InternalCode;$(ProjectDir)DirectXTex\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,7 +118,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(ProjectDir)directxtex\lib\x64\release;$(ProjectDir)assimp\assimp\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)directxtex\lib\_x64\_release;$(ProjectDir)assimp\assimp\lib;$(LibraryPath)</LibraryPath>
     <IncludePath>$(ProjectDir)ExternalCode;$(ProjectDir)InternalCode;$(ProjectDir)DirectXTex\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
