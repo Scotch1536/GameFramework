@@ -28,6 +28,8 @@
     <ClCompile Include="ExternalCode\dx11mathutil.cpp" />
     <ClCompile Include="ExternalCode\dx11util.cpp" />
     <ClCompile Include="ExternalCode\Shader.cpp" />
+    <ClCompile Include="InternalCode\CActor.cpp" />
+    <ClCompile Include="InternalCode\CComponent.cpp" />
     <ClCompile Include="InternalCode\CGame.cpp" />
     <ClCompile Include="InternalCode\WinMain.cpp" />
   </ItemGroup>
@@ -44,6 +46,8 @@
     <ClInclude Include="ExternalCode\DX11util.h" />
     <ClInclude Include="ExternalCode\Memory.h" />
     <ClInclude Include="ExternalCode\Shader.h" />
+    <ClInclude Include="InternalCode\CActor.h" />
+    <ClInclude Include="InternalCode\CComponent.h" />
     <ClInclude Include="InternalCode\CGame.h" />
   </ItemGroup>
   <ItemGroup>
