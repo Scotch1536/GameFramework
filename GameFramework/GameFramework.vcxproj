@@ -106,16 +106,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\directxtex\lib\x64\debug;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\assimp\assimp\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\ExternalCode;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\InternalCode;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\DirectXTex\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)directxtex\lib\x64\debug;$(ProjectDir)assimp\assimp\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)ExternalCode;$(ProjectDir)InternalCode;$(ProjectDir)DirectXTex\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\directxtex\lib\x64\debug;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\assimp\assimp\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\ExternalCode;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\InternalCode;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\DirectXTex\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)directxtex\lib\x64\release;$(ProjectDir)assimp\assimp\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)ExternalCode;$(ProjectDir)InternalCode;$(ProjectDir)DirectXTex\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -171,7 +171,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
