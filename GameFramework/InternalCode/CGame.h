@@ -2,6 +2,8 @@
 #include <Windows.h>
 #include <memory>
 
+#include "CLevel.h"
+
 //ƒŒƒxƒ‹–¼
 enum class Level
 {
@@ -13,7 +15,7 @@ class CGame
 {
 private:
 	Level mLevel;
-	//std::unique_ptr<CLevel> mLevelInfo;
+	std::unique_ptr<CLevel> mLevelInfo;
 
 	CGame();
 

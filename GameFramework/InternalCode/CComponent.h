@@ -9,4 +9,6 @@ public:
 	{
 		return mPriority;
 	}
+
+	virtual void Update() = 0;
 };
