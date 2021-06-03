@@ -18,6 +18,37 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DirectXTex\include\DDSTextureLoader.cpp" />
+    <ClCompile Include="DirectXTex\include\WICTextureLoader.cpp" />
+    <ClCompile Include="ExternalCode\Application.cpp" />
+    <ClCompile Include="ExternalCode\CDirectXGraphics.cpp" />
+    <ClCompile Include="ExternalCode\CWindow.cpp" />
+    <ClCompile Include="ExternalCode\CWindowCallback.cpp" />
+    <ClCompile Include="ExternalCode\dx11mathutil.cpp" />
+    <ClCompile Include="ExternalCode\dx11util.cpp" />
+    <ClCompile Include="ExternalCode\Shader.cpp" />
+    <ClCompile Include="InternalCode\CGame.cpp" />
+    <ClCompile Include="InternalCode\WinMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ExternalCode\Application.h" />
+    <ClInclude Include="ExternalCode\CCamera.h" />
+    <ClInclude Include="ExternalCode\CDirectInput.h" />
+    <ClInclude Include="ExternalCode\CDirectxGraphics.h" />
+    <ClInclude Include="ExternalCode\CLight.h" />
+    <ClInclude Include="ExternalCode\CWindow.h" />
+    <ClInclude Include="ExternalCode\CWindowCallback.h" />
+    <ClInclude Include="ExternalCode\dx11mathutil.h" />
+    <ClInclude Include="ExternalCode\DX11Settransform.h" />
+    <ClInclude Include="ExternalCode\DX11util.h" />
+    <ClInclude Include="ExternalCode\Memory.h" />
+    <ClInclude Include="ExternalCode\Shader.h" />
+    <ClInclude Include="InternalCode\CGame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DirectXTex\include\DirectXTex.inl" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{7EBE32F6-5A15-4575-B5A7-A9D8AD68BF4C}</ProjectGuid>
@@ -43,14 +74,14 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -75,12 +106,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\directxtex\lib\x64\debug;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\assimp\assimp\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\ExternalCode;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\InternalCode;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\DirectXTex\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\directxtex\lib\x64\debug;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\assimp\assimp\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\ExternalCode;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\InternalCode;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\DirectXTex\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -102,10 +137,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -134,16 +171,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
