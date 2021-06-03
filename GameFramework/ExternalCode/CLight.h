@@ -2,7 +2,7 @@
 #include	<DirectXMath.h>
 #include	"memory.h"
 #include	"Shader.h"
-#include	"DX11util.h"
+#include	"CDirectXGraphics.h"
 
 class CLight {
 	ALIGN16 struct ConstantBufferLight {
@@ -29,7 +29,7 @@ public:
 
 		// コンスタントバッファ作成
 		bool sts = CreateConstantBuffer(
-			GetDX11Device(),				// デバイス
+			CDirectXGraphics::GetInstance()->GetDXDevice(),					// デバイス
 			sizeof(ConstantBufferLight),		// サイズ
 			&m_pConstantBufferLight);			// コンスタントバッファ４
 		if (!sts) {
@@ -57,16 +57,16 @@ public:
 
 		cb.Ambient = m_ambient;
 
-		GetDX11DeviceContext()->UpdateSubresource(m_pConstantBufferLight, 
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->UpdateSubresource(m_pConstantBufferLight,
 			0, 
 			nullptr, 
 			&cb, 
 			0, 0);
 
 		// コンスタントバッファ4をｂ3レジスタへセット（頂点シェーダー用）
-		GetDX11DeviceContext()->VSSetConstantBuffers(4, 1, &m_pConstantBufferLight);
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->VSSetConstantBuffers(4, 1, &m_pConstantBufferLight);
 		// コンスタントバッファ4をｂ3レジスタへセット(ピクセルシェーダー用)
-		GetDX11DeviceContext()->PSSetConstantBuffers(4, 1, &m_pConstantBufferLight);
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->PSSetConstantBuffers(4, 1, &m_pConstantBufferLight);
 
 	}
 

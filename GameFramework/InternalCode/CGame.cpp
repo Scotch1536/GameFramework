@@ -2,12 +2,13 @@
 
 #include "CGame.h"
 #include "Application.h"
-#include "DX11util.h"
 #include "CDirectInput.h"
+#include "CDirectXGraphics.h"
+#include "DX11Settransform.h"
+
 
 CGame::CGame()
-{
-}
+{}
 
 CGame& CGame::GetInstance()
 {
@@ -16,7 +17,7 @@ CGame& CGame::GetInstance()
 	return instance;
 }
 
-long CGame::Execute(HINSTANCE hInst,int winMode)const
+long CGame::Execute(HINSTANCE hInst , int winMode)const
 {
 	// アプリケーション初期処理
 	Application* App = Application::Instance();		// インスタンス取得
@@ -38,15 +39,28 @@ long CGame::Execute(HINSTANCE hInst,int winMode)const
 void CGame::Init()
 {
 	// DX11　初期化
-	DX11Init(
+	bool sts;
+
+	sts = CDirectXGraphics::GetInstance()->Init(
 		Application::Instance()->GetHWnd() ,
 		Application::CLIENT_WIDTH ,
 		Application::CLIENT_HEIGHT ,
-		false
-	);
+		false);
+	if(!sts)
+	{
+		MessageBox(Application::Instance()->GetHWnd() , "DX11 init error" , "error" , MB_OK);
+		exit(1);
+	}
+
+	sts = DX11SetTransform::GetInstance()->Init();
+	if(!sts)
+	{
+		MessageBox(NULL , "SetTransform error" , "Error" , MB_OK);
+		exit(1);
+	}
 
 	//半透明設定
-	TurnOnAlphablend();
+	CDirectXGraphics::GetInstance()->TurnOnAlphaBlending();
 
 	//DIRECTINPUT初期化
 	CDirectInput::GetInstance().Init

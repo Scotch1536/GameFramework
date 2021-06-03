@@ -26,7 +26,6 @@
     <ClCompile Include="ExternalCode\CWindow.cpp" />
     <ClCompile Include="ExternalCode\CWindowCallback.cpp" />
     <ClCompile Include="ExternalCode\dx11mathutil.cpp" />
-    <ClCompile Include="ExternalCode\dx11util.cpp" />
     <ClCompile Include="ExternalCode\Shader.cpp" />
     <ClCompile Include="InternalCode\CActor.cpp" />
     <ClCompile Include="InternalCode\CComponent.cpp" />
@@ -43,7 +42,6 @@
     <ClInclude Include="ExternalCode\CWindowCallback.h" />
     <ClInclude Include="ExternalCode\dx11mathutil.h" />
     <ClInclude Include="ExternalCode\DX11Settransform.h" />
-    <ClInclude Include="ExternalCode\DX11util.h" />
     <ClInclude Include="ExternalCode\Memory.h" />
     <ClInclude Include="ExternalCode\Shader.h" />
     <ClInclude Include="InternalCode\CActor.h" />
