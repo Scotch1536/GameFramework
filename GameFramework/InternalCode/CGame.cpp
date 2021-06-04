@@ -86,3 +86,8 @@ void CGame::Render(uint64_t deltataime)
 {
 
 }
+
+void CGame::LoadLevel(CLevel& level)
+{
+	mLevel.reset(&level);
+}
