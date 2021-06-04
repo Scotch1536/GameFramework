@@ -1,7 +1,6 @@
 #include "CComponent.h"
 
-
-CComponent::CComponent(CActor& owner):mOwnerMethod(owner)
+CComponent::CComponent(CActor& owner):mOwnerInterface(owner)
 {
-	mOwnerMethod.AddComponent(*this);
+	mOwnerInterface.AddComponent(*this);
 }

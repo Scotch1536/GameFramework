@@ -6,19 +6,19 @@
 #include "CLevel.h"
 #include "CTransform.h"
 
-class IActorMethod
+class IActor
 {
 public:
-	virtual ~IActorMethod() {};
+	virtual ~IActor() {};
 	virtual void AddComponent(CComponent& component) = 0;
 };
 
-class CActor :public IActorMethod
+class CActor :public IActor
 {
 private:
 	std::vector<std::unique_ptr<CComponent>> mComponents;
 	CTransform mTransform;
-	ILevelMethod& mOwnerMethod;
+	ILevel& mOwnerInterface;
 public:
 	CActor(CLevel& owner);
 

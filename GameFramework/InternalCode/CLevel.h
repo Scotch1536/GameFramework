@@ -5,18 +5,18 @@
 #include "CActor.h"
 #include "CGame.h"
 
-class ILevelMethod
+class ILevel
 {
 public:
-	virtual ~ILevelMethod() {};
+	virtual ~ILevel() {};
 	virtual void DestroyActor(CActor& target) = 0;
 };
 
-class CLevel :public ILevelMethod
+class CLevel :public ILevel
 {
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;
-	IGameMethod& mOwnerMethod;
+	IGame& mOwnerInterface;
 
 	//ÉRÉsÅ[ã÷é~
 	CLevel(const CLevel&) = delete;
