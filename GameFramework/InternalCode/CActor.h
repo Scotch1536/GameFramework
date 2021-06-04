@@ -4,12 +4,13 @@
 
 #include "CComponent.h"
 #include "CLevel.h"
+#include "CTransform.h"
 
 class CActor
 {
 private:
 	std::vector<std::unique_ptr<CComponent>> mComponents;
-	//CTransform mTransform;
+	CTransform mTransform;
 	CLevel& mOwner;
 public:
 	CActor(CLevel& owner);
