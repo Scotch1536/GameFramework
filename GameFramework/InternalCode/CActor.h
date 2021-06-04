@@ -6,7 +6,14 @@
 #include "CLevel.h"
 #include "CTransform.h"
 
-class CActor
+class IActorMethod
+{
+public:
+	virtual ~IActorMethod() {};
+	virtual void AddComponent(CComponent& component) = 0;
+};
+
+class CActor :public IActorMethod
 {
 private:
 	std::vector<std::unique_ptr<CComponent>> mComponents;
@@ -15,7 +22,7 @@ private:
 public:
 	CActor(CLevel& owner);
 
-	void AddComponent(CComponent* component);
+	void AddComponent(CComponent& component)override;
 	void Update();
 	void Destroy();
 };

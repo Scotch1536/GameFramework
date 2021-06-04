@@ -4,9 +4,9 @@ CActor::CActor(CLevel& owner):mOwnerMethod(owner)
 {
 }
 
-void CActor::AddComponent(CComponent* component)
+void CActor::AddComponent(CComponent& component)
 {
-	int myPriority = component->GetPriority();
+	int myPriority = component.GetPriority();
 	auto itr = this->mComponents.begin();
 
 	for(; itr != this->mComponents.end(); ++itr)
