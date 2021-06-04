@@ -1,6 +1,6 @@
 #include "CActor.h"
 
-CActor::CActor(CLevel& owner):mOwner(owner)
+CActor::CActor(CLevel& owner):mOwnerMethod(owner)
 {
 }
 
@@ -30,5 +30,5 @@ void CActor::Update()
 
 void CActor::Destroy()
 {
-	mOwner.DestroyActor(this);
+	mOwnerMethod.DestroyActor(*this);
 }

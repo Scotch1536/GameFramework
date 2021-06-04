@@ -4,8 +4,15 @@
 
 #include "CLevel.h"
 
+class IGameMethod
+{
+public:
+	virtual ~IGameMethod() {};
+	virtual void LoadLevel(CLevel& level) = 0;
+};
+
 //ゲームクラス（シングルトン）
-class CGame
+class CGame:public IGameMethod
 {
 private:
 	std::unique_ptr<CLevel> mLevel;
@@ -30,6 +37,6 @@ public:
 	void Render(uint64_t deltatime);
 
 	//レベルのロード（遷移）
-	void LoadLevel(CLevel& level);
+	void LoadLevel(CLevel& level)override;
 };
 
