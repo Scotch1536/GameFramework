@@ -1,5 +1,10 @@
 #include "CLevel.h"
 
+CLevel::CLevel(CGame& owner):mOwner(owner)
+{
+	mOwner.LoadLevel(*this);
+}
+
 void CLevel::DestroyActor(CActor* target)
 {
 	for(auto itr = mActors.begin(); itr != mActors.end(); ++itr)
