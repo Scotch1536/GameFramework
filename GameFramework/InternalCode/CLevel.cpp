@@ -1,8 +1,8 @@
 #include "CLevel.h"
 
-CLevel::CLevel(CGame& owner):mOwnerMethod(owner)
+CLevel::CLevel(CGame& owner):mOwnerInterface(owner)
 {
-	mOwnerMethod.LoadLevel(*this);
+	mOwnerInterface.LoadLevel(*this);
 }
 
 void CLevel::DestroyActor(CActor& target)

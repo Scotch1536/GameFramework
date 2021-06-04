@@ -5,7 +5,7 @@ class CComponent
 {
 private:
 	int mPriority;
-	IActorMethod& mOwnerMethod;
+	IActor& mOwnerInterface;
 public:
 	CComponent(CActor& owner);
 
