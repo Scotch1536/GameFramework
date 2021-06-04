@@ -11,7 +11,7 @@ class CActor
 private:
 	std::vector<std::unique_ptr<CComponent>> mComponents;
 	CTransform mTransform;
-	CLevel& mOwner;
+	ILevelMethod& mOwnerMethod;
 public:
 	CActor(CLevel& owner);
 
