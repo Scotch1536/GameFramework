@@ -45,7 +45,7 @@ const float			Application::FPS = 60;
 //!	@param	
 //!	@retval	
 //==============================================================================
-Application::Application(): m_SystemCounter(0)
+Application::Application(CGame& partner): m_SystemCounter(0)
 {}
 
 //==============================================================================
@@ -59,18 +59,6 @@ Application :: ~Application()
 	Dispose();
 }
 
-//==============================================================================
-//!	@fn		GetInstance
-//!	@brief	インスタンス取得
-//!	@param	
-//!	@retval	インスタンス
-//==============================================================================
-Application* Application::Instance()
-{
-	static Application Instance;
-
-	return &Instance;
-}
 
 //==============================================================================
 //!	@fn		InitSystemWH

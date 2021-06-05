@@ -4,6 +4,7 @@
 
 #include "CGameManager.h"
 #include "CLevel.h"
+#include "Application.h"
 
 //インターフェース
 class IGame
@@ -19,9 +20,8 @@ class CGame :public IGame
 private:
 	friend CGameManager;
 
-	static bool mCanInstance;	//インスタンス化できるか
-
-	std::unique_ptr<CLevel> mLevel;		//レベル
+	std::unique_ptr<Application> mApp;
+	std::unique_ptr<CLevel> mLevel;			//レベル
 
 	CGame();
 
@@ -32,7 +32,7 @@ private:
 	CGame& operator=(CGame&&) = delete;
 
 	//実行　※このメソッドをエントリーポイントの関数で呼べばウィンドウが作られゲームがスタートする
-	long Execute(HINSTANCE hInst , int winMode)const;
+	long Execute(HINSTANCE hInst , int winMode);
 
 public:
 	//レベルのロード（遷移）
