@@ -8,6 +8,7 @@
 class ILevel;
 class CLevel;
 
+//インターフェース
 class IActor
 {
 public:
@@ -18,13 +19,18 @@ public:
 class CActor :public IActor
 {
 private:
-	std::vector<std::unique_ptr<CComponent>> mComponents;
-	CTransform mTransform;
-	ILevel& mOwnerInterface;
+	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
+	CTransform mTransform;										//トランスフォーム
+	ILevel& mOwnerInterface;									//インターフェース
 public:
 	CActor(CLevel& owner);
 
+	//コンポーネント追加
 	void AddComponent(CComponent& component)override;
+
+	//更新
 	void Update();
+
+	//破壊
 	void Destroy();
 };

@@ -6,15 +6,11 @@
 #include "CDirectXGraphics.h"
 #include "DX11Settransform.h"
 
+bool CGame::mCanInstance = true;
 
 CGame::CGame()
-{}
-
-CGame& CGame::GetInstance()
 {
-	static CGame instance;
-
-	return instance;
+	if(mCanInstance)mCanInstance = false;
 }
 
 long CGame::Execute(HINSTANCE hInst , int winMode)const
