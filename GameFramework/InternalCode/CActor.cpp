@@ -11,6 +11,7 @@ void CActor::AddComponent(CComponent& component)
 
 	for(; itr != this->mComponents.end(); ++itr)
 	{
+		if((*itr).get() == &component)return;
 		if(myPriority < (*itr)->GetPriority())
 		{
 			break;

@@ -7,10 +7,10 @@ class CComponent
 {
 private:
 	int mPriority;					//優先度
-	IActor& mOwnerInterface;		//インターフェース
+	//IActor& mOwnerInterface;		//インターフェース
 public:
 	//★超重要★　コンストラクタを呼ぶということはアクターにコンポーネントを追加することを意味する
-	CComponent(CActor& owner);
+	CComponent(IActor& owner);
 
 	//更新
 	virtual void Update() = 0;

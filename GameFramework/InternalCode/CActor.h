@@ -18,15 +18,15 @@ public:
 
 class CActor :public IActor
 {
-private:
+protected:
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
 	CTransform mTransform;										//トランスフォーム
 	ILevel& mOwnerInterface;									//インターフェース
-public:
-	CActor(CLevel& owner);
 
 	//コンポーネント追加
 	void AddComponent(CComponent& component)override;
+public:
+	CActor(CLevel& owner);
 
 	//更新
 	void Update();

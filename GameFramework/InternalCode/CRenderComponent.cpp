@@ -36,3 +36,8 @@ void CRenderComponent::Render()
 	// インデックスバッファを利用して描画
 	devcontext->DrawIndexed(mIndexSize , 0 , 0);
 }
+
+void CRenderComponent::Update()
+{
+
+}

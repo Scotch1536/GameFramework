@@ -19,6 +19,7 @@ public:
 class CRenderComponent :public CComponent,IRender
 {
 protected:
+	using CComponent::CComponent;
 
 	unsigned int mIndexSize;
 	ComPtr<ID3D11VertexShader> mVertexShader;			// 頂点シェーダー入れ物
@@ -34,4 +35,5 @@ protected:
 
 public:
 	void Render()override;
+	void Update()override;
 };

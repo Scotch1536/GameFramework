@@ -13,9 +13,11 @@
 #include	<stdio.h>
 #include	<cinttypes>
 
+class CGame;
+
 //==============================================================================
 //!	@class	CApplication
-//!	@brief	アプリケーション(シングルトン)
+//!	@brief	アプリケーション
 //==============================================================================
 class Application
 {
@@ -46,8 +48,6 @@ private:
 #endif
 
 private:
-	Application();											// コンストラクタ
-	
 	Application( const Application& );					// コピー
 	Application& operator = (const Application&) {}		// =
 	
@@ -56,6 +56,8 @@ private:
 	void Render(uint64_t deltatime);					// 描画
 
 public:
+	Application(CGame& partner);						// コンストラクタ
+
 	virtual ~Application();								// デストラクタ
 	static void InitSystemWH();							// システム幅高さ初期化
 
@@ -64,8 +66,7 @@ public:
 	unsigned long MainLoop();							// メインループ
 
 	// メンバ取得関数
-	static Application* Instance();						// インスタンス取得
-	HWND			 	GetHWnd();							// ウィンドウハンドル
+	HWND			 	GetHWnd();						// ウィンドウハンドル
 	HINSTANCE			GetHInst();						// インスタンスハンドル
 };
 

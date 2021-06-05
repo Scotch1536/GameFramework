@@ -6,28 +6,24 @@
 #include "CDirectXGraphics.h"
 #include "DX11Settransform.h"
 
-bool CGame::mCanInstance = true;
-
 CGame::CGame()
-{
-	if(mCanInstance)mCanInstance = false;
-}
+{}
 
-long CGame::Execute(HINSTANCE hInst , int winMode)const
+long CGame::Execute(HINSTANCE hInst , int winMode)
 {
 	// アプリケーション初期処理
-	Application* App = Application::Instance();		// インスタンス取得
-	App->Init(hInst);
+	mApp.reset(new Application(*this));
+	mApp->Init(hInst);
 
 	// ウインドウを表示する
-	ShowWindow(App->GetHWnd() , winMode);
-	UpdateWindow(App->GetHWnd());
+	ShowWindow(mApp->GetHWnd() , winMode);
+	UpdateWindow(mApp->GetHWnd());
 
 	// メインループ
-	long ret = App->MainLoop();
+	long ret = mApp->MainLoop();
 
 	// アプリケーション終了処理
-	App->Dispose();
+	mApp->Dispose();
 
 	return ret;
 }
@@ -38,13 +34,13 @@ void CGame::Init()
 	bool sts;
 
 	sts = CDirectXGraphics::GetInstance()->Init(
-		Application::Instance()->GetHWnd() ,
+		mApp->GetHWnd() ,
 		Application::CLIENT_WIDTH ,
 		Application::CLIENT_HEIGHT ,
 		false);
 	if(!sts)
 	{
-		MessageBox(Application::Instance()->GetHWnd() , "DX11 init error" , "error" , MB_OK);
+		MessageBox(mApp->GetHWnd() , "DX11 init error" , "error" , MB_OK);
 		exit(1);
 	}
 
@@ -61,8 +57,8 @@ void CGame::Init()
 	//DIRECTINPUT初期化
 	CDirectInput::GetInstance().Init
 	(
-		Application::Instance()->GetHInst() ,
-		Application::Instance()->GetHWnd() ,
+		mApp->GetHInst() ,
+		mApp->GetHWnd() ,
 		Application::CLIENT_WIDTH ,
 		Application::CLIENT_HEIGHT
 	);
