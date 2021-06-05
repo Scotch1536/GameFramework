@@ -17,7 +17,7 @@ void CInputManager::RequestBindAction(std::string actionName , std::function<voi
 {
 	if(mActionList.count(actionName) == 0)
 	{
-		MessageBox(Application::Instance()->GetHWnd() , "RequestBindAction error:Not Found Key" , "error" , MB_OK);
+		MessageBox(NULL , "RequestBindAction error:Not Found Key" , "error" , MB_OK);
 		return;
 	}
 	mActionList[actionName].ActionInfo = func;
