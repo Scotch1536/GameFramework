@@ -22,11 +22,15 @@
     <ClCompile Include="DirectXTex\include\DDSTextureLoader.cpp" />
     <ClCompile Include="DirectXTex\include\WICTextureLoader.cpp" />
     <ClCompile Include="ExternalCode\Application.cpp" />
+    <ClCompile Include="ExternalCode\AssimpScene.cpp" />
     <ClCompile Include="ExternalCode\CDirectXGraphics.cpp" />
     <ClCompile Include="ExternalCode\CWindow.cpp" />
     <ClCompile Include="ExternalCode\CWindowCallback.cpp" />
     <ClCompile Include="ExternalCode\dx11mathutil.cpp" />
+    <ClCompile Include="ExternalCode\Mesh.cpp" />
+    <ClCompile Include="ExternalCode\ModelData.cpp" />
     <ClCompile Include="ExternalCode\Shader.cpp" />
+    <ClCompile Include="ExternalCode\utftosjisconv.cpp" />
     <ClCompile Include="InternalCode\CActor.cpp" />
     <ClCompile Include="InternalCode\CComponent.cpp" />
     <ClCompile Include="InternalCode\CGame.cpp" />
@@ -38,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ExternalCode\Application.h" />
+    <ClInclude Include="ExternalCode\AssimpScene.h" />
     <ClInclude Include="ExternalCode\CCamera.h" />
     <ClInclude Include="ExternalCode\CDirectInput.h" />
     <ClInclude Include="ExternalCode\CDirectxGraphics.h" />
@@ -47,7 +52,11 @@
     <ClInclude Include="ExternalCode\dx11mathutil.h" />
     <ClInclude Include="ExternalCode\DX11Settransform.h" />
     <ClInclude Include="ExternalCode\Memory.h" />
+    <ClInclude Include="ExternalCode\Mesh.h" />
+    <ClInclude Include="ExternalCode\ModelData.h" />
     <ClInclude Include="ExternalCode\Shader.h" />
+    <ClInclude Include="ExternalCode\utftosjisconv.h" />
+    <ClInclude Include="ExternalCode\VertexProto.h" />
     <ClInclude Include="InternalCode\CActor.h" />
     <ClInclude Include="InternalCode\CComponent.h" />
     <ClInclude Include="InternalCode\CGame.h" />
@@ -117,7 +126,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(ProjectDir)directxtex\lib\_x64\_debug;$(ProjectDir)assimp\assimp\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)ExternalCode;$(ProjectDir)InternalCode;$(ProjectDir)DirectXTex\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)ExternalCode;$(ProjectDir)InternalCode;$(ProjectDir)DirectXTex\include;$(ProjectDir)\Assimp\assimp\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -125,7 +134,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(ProjectDir)directxtex\lib\_x64\_release;$(ProjectDir)assimp\assimp\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)ExternalCode;$(ProjectDir)InternalCode;$(ProjectDir)DirectXTex\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)ExternalCode;$(ProjectDir)InternalCode;$(ProjectDir)DirectXTex\include;$(ProjectDir)\Assimp\assimp\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
