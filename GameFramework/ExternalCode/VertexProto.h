@@ -1,5 +1,8 @@
 #pragma once
-#include	<directxmath.h>
+#include <directxmath.h>
+#include <string>
+
+using Microsoft::WRL::ComPtr;
 
 // 頂点
 struct Vertex {
@@ -33,4 +36,14 @@ struct ConstantBufferMaterial {
 	DirectX::XMFLOAT4	AmbientMaterial;		// 環境光の反射率
 	DirectX::XMFLOAT4	DiffuseMaterial;		// ディフューズ光の反射率
 	DirectX::XMFLOAT4	SpecularMaterial;		// スペキュラ光の反射率
+};
+
+// テクスチャ構造体
+struct Texture
+{
+	std::string type;		// テクスチャ種類
+	std::string path;		// テクスチャパス名
+
+	ComPtr<ID3D11Resource> texres;						// テクスチャリソース
+	ComPtr<ID3D11ShaderResourceView> texture;			// SRV
 };

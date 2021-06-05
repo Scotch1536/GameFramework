@@ -9,16 +9,6 @@
 
 using Microsoft::WRL::ComPtr;
 
-// テクスチャ構造体
-struct Texture
-{
-	std::string type;		// テクスチャ種類
-	std::string path;		// テクスチャパス名
-
-	ComPtr<ID3D11Resource> texres;						// テクスチャリソース
-	ComPtr<ID3D11ShaderResourceView> texture;			// SRV
-};
-
 class Mesh
 {
 public:
