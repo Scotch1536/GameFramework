@@ -1,4 +1,5 @@
 #include "CActor.h"
+#include "CLevel.h"
 
 CActor::CActor(CLevel& owner):mOwnerInterface(owner)
 {}
@@ -16,7 +17,7 @@ void CActor::AddComponent(CComponent& component)
 		}
 	}
 
-	this->mComponents.emplace(itr , component);
+	this->mComponents.emplace(itr , &component);
 }
 
 void CActor::Update()

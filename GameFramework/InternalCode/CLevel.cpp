@@ -1,4 +1,5 @@
 #include "CLevel.h"
+#include "CGame.h"
 
 CLevel::CLevel(CGame& owner):mOwnerInterface(owner)
 {

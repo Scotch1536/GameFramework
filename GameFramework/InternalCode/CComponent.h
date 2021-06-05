@@ -1,5 +1,7 @@
 #pragma once
-#include "CActor.h"
+
+class IActor;
+class CActor;
 
 class CComponent
 {

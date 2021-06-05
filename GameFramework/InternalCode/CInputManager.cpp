@@ -4,6 +4,8 @@
 #include "CDirectInput.h"
 #include "Application.h"
 
+CInputManager::CInputManager() {}
+
 CInputManager& CInputManager::GetInstance()
 {
 	static CInputManager instance;
@@ -21,7 +23,7 @@ void CInputManager::RequestBindAction(std::string actionName , std::function<voi
 	mActionList[actionName].ActionInfo = func;
 }
 
-void CInputManager::AddAction(std::string actionName , std::vector<SButtonInfo> buttonInfoList , std::function<void()>& func)
+void CInputManager::AddAction(std::string actionName , std::vector<SButtonInfo>& buttonInfoList , std::function<void()>& func)
 {
 	mActionList[actionName].ButtonInfoList = buttonInfoList;
 	mActionList[actionName].ActionInfo = func;
@@ -37,7 +39,7 @@ void CInputManager::Update()
 			switch(buttonInfo.ButtonType)
 			{
 			case ButtonType::KEYBOARD:
-				if(CDirectInput::GetInstance().CheckKeyBuffer(*buttonInfo.ButtonNum))
+				if(CDirectInput::GetInstance().CheckKeyBuffer(buttonInfo.ButtonNum))
 				{
 					shouldAction = true;
 					break;

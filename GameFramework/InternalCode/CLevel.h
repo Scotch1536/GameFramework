@@ -3,7 +3,9 @@
 #include <memory>
 
 #include "CActor.h"
-#include "CGame.h"
+
+class IGame;
+class CGame;
 
 class ILevel
 {
