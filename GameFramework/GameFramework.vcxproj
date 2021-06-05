@@ -30,6 +30,7 @@
     <ClCompile Include="InternalCode\CActor.cpp" />
     <ClCompile Include="InternalCode\CComponent.cpp" />
     <ClCompile Include="InternalCode\CGame.cpp" />
+    <ClCompile Include="InternalCode\CGameManager.cpp" />
     <ClCompile Include="InternalCode\CInputManager.cpp" />
     <ClCompile Include="InternalCode\CLevel.cpp" />
     <ClCompile Include="InternalCode\CTransform.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="InternalCode\CActor.h" />
     <ClInclude Include="InternalCode\CComponent.h" />
     <ClInclude Include="InternalCode\CGame.h" />
+    <ClInclude Include="InternalCode\CGameManager.h" />
     <ClInclude Include="InternalCode\CInputManager.h" />
     <ClInclude Include="InternalCode\CLevel.h" />
     <ClInclude Include="InternalCode\CTransform.h" />

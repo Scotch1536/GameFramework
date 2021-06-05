@@ -18,7 +18,7 @@
 //	Include header files.
 //-----------------------------------------------------------------------------
 #include <Windows.h>
-#include "CGame.h"
+#include "CGameManager.h"
 
 //==============================================================================
 //!	@fn		WinMain
@@ -35,9 +35,9 @@ INT APIENTRY WinMain(HINSTANCE  h_hInst,
 					 LPSTR		h_lpszArgs,
 					 int		h_nWinMode)
 {
-	CGame& game = CGame::GetInstance();
+	CGameManager& gameManager = CGameManager::GetInstance();
 
-	game.Execute(h_hInst , h_nWinMode);
+	gameManager.RequestExecute(h_hInst , h_nWinMode);
 }
 
 

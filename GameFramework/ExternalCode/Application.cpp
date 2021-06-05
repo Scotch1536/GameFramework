@@ -16,6 +16,7 @@
 #include "Application.h"
 #include "CWindow.h"
 #include "CGame.h"
+#include "CGameManager.h"
 //#include "macro.h"
 //#include "game.h"
 
@@ -160,7 +161,7 @@ unsigned long Application::MainLoop()
 	uint64_t current_time = 0;
 	uint64_t last_time = 0;
 
-	CGame& game = CGame::GetInstance();
+	CGame& game = CGameManager::GetInstance().GetGame(*this);
 
 	// ƒQ[ƒ€‚Ì‰Šúˆ—
 	game.Init();
