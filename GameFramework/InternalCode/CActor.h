@@ -27,6 +27,7 @@ protected:
 	void AddComponent(CComponent& component)override;
 public:
 	CActor(CLevel& owner);
+	virtual ~CActor() = default;
 
 	//XV
 	void Update();

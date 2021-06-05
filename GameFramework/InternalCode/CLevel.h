@@ -26,6 +26,7 @@ private:
 public:
 	//★超重要★　コンストラクタを呼ぶことはレベルの遷移を意味する
 	CLevel(CGame& owner);
+	virtual ~CLevel() = default;
 
 	void Update();
 	void DestroyActor(CActor& target)override;
