@@ -15,15 +15,10 @@ enum class ButtonType
 struct SButtonInfo
 {
 	ButtonType ButtonType;
-	std::unique_ptr<int> ButtonNum;
+	int ButtonNum;
 
-	SButtonInfo(int buttonNum = 0)
-	{
-		if(buttonNum != 0)
-		{
-			ButtonNum.reset(new int(buttonNum));
-		}
-	}
+	SButtonInfo(int buttonNum = 0):ButtonNum(buttonNum)
+	{}
 };
 
 struct SInputDefinition
@@ -50,7 +45,7 @@ public:
 	void RequestBindAction(std::string actionName , std::function<void()>& func);
 
 	//アクションの追加　※actionNameのキーがmActionListに既にあっても上書きする
-	void AddAction(std::string actionName , std::vector<SButtonInfo> buttonInfoList , std::function<void()>& func);
+	void AddAction(std::string actionName , std::vector<SButtonInfo>& buttonInfoList , std::function<void()>& func);
 
 	void Update();
 };

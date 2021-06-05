@@ -3,8 +3,10 @@
 #include <memory>
 
 #include "CComponent.h"
-#include "CLevel.h"
 #include "CTransform.h"
+
+class ILevel;
+class CLevel;
 
 class IActor
 {

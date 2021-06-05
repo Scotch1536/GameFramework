@@ -37,6 +37,6 @@ public:
 	void Render(uint64_t deltatime);
 
 	//レベルのロード（遷移）
-	void LoadLevel(CLevel& level)overrides;
+	void LoadLevel(CLevel& level)override;
 };
 
