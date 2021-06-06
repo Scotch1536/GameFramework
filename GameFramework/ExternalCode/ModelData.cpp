@@ -59,7 +59,7 @@ std::vector<Texture> ModelData::loadMaterialTextures(
 
 			bool sts = CreateSRVfromFile(
 				filename.c_str() ,
-				dev , devcon , tex.texres.GetAddressOf() , tex.texture.GetAddressOf());
+				dev , devcon , &tex.texres , &tex.texture);
 			if(!sts)
 			{
 				// ｆｉｌｅ名がＵＴＦ８で設定されていた場合に対応
@@ -68,7 +68,7 @@ std::vector<Texture> ModelData::loadMaterialTextures(
 
 				bool sts = CreateSRVfromFile(
 					filename.c_str() ,
-					dev , devcon , tex.texres.GetAddressOf() , tex.texture.GetAddressOf());
+					dev , devcon , &tex.texres , &tex.texture);
 				if(!sts)
 				{
 					MessageBox(nullptr , "Texture couldn't be loaded" , "Error!" , MB_ICONERROR | MB_OK);
@@ -92,7 +92,6 @@ ModelData::ModelData()
 
 ModelData::~ModelData()
 {
-
 	Exit();
 }
 
@@ -167,17 +166,17 @@ bool ModelData::Load(std::string resourcefolder ,
 
 	return true;
 }
-
-void ModelData::Draw(ID3D11DeviceContext * devcon , XMFLOAT4X4& mtxworld)
-{
-	for(int i = 0; i < m_meshes.size(); i++)
-	{
-		// ワールド変換行列
-		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD , mtxworld);
-		// 定数バッファセット処理
-		m_meshes[i].Draw(devcon);
-	}
-}
+//
+//void ModelData::Draw(ID3D11DeviceContext * devcon , XMFLOAT4X4& mtxworld)
+//{
+//	for(int i = 0; i < m_meshes.size(); i++)
+//	{
+//		// ワールド変換行列
+//		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD , mtxworld);
+//		// 定数バッファセット処理
+//		m_meshes[i].Draw(devcon);
+//	}
+//}
 
 // メッシュの解析
 Mesh ModelData::processMesh(aiMesh * mesh , const aiScene * scene , int meshidx)
@@ -255,6 +254,19 @@ Mesh ModelData::processMesh(aiMesh * mesh , const aiScene * scene , int meshidx)
 
 void ModelData::Exit()
 {
+	// テクスチャリソースを解放する
+	for(auto tex : m_texturesloaded)
+	{
+		if(tex.texres != nullptr)
+		{
+			tex.texres->Release();
+		}
+
+		if(tex.texture != nullptr)
+		{
+			tex.texture->Release();
+		}
+	}
 	// assimp scene 解放
 	m_assimpscene.Exit();
 }

@@ -44,6 +44,6 @@ struct Texture
 	std::string type;		// テクスチャ種類
 	std::string path;		// テクスチャパス名
 
-	ComPtr<ID3D11Resource> texres;						// テクスチャリソース
-	ComPtr<ID3D11ShaderResourceView> texture;			// SRV
+	ID3D11Resource* texres;					// テクスチャリソース
+	ID3D11ShaderResourceView* texture;		// SRV
 };
