@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CDice.cpp" />
     <ClCompile Include="DirectXTex\include\DDSTextureLoader.cpp" />
     <ClCompile Include="DirectXTex\include\WICTextureLoader.cpp" />
     <ClCompile Include="ExternalCode\Application.cpp" />
@@ -39,10 +40,12 @@
     <ClCompile Include="InternalCode\CLevel.cpp" />
     <ClCompile Include="InternalCode\CModelDataManager.cpp" />
     <ClCompile Include="InternalCode\CRenderComponent.cpp" />
+    <ClCompile Include="InternalCode\CStaticMeshComponent.cpp" />
     <ClCompile Include="InternalCode\CTransform.cpp" />
     <ClCompile Include="InternalCode\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CDice.h" />
     <ClInclude Include="ExternalCode\Application.h" />
     <ClInclude Include="ExternalCode\AssimpScene.h" />
     <ClInclude Include="ExternalCode\CCamera.h" />
@@ -67,6 +70,7 @@
     <ClInclude Include="InternalCode\CLevel.h" />
     <ClInclude Include="InternalCode\CModelDataManager.h" />
     <ClInclude Include="InternalCode\CRenderComponent.h" />
+    <ClInclude Include="InternalCode\CStaticMeshComponent.h" />
     <ClInclude Include="InternalCode\CTransform.h" />
   </ItemGroup>
   <ItemGroup>

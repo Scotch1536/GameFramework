@@ -21,7 +21,7 @@ public:
 		return instance;
 	}
 
-	ModelData& GetModel(std::string resourcefolder , std::string filename);		//モデル（のポインタ）を取得する
+	ModelData& GetModel(std::string filename , std::string resourcefolder);		//モデル（のポインタ）を取得する
 private:
 	std::unordered_map<std::string , ModelData> mModelData;			//モデルデータ格納辞書
 };

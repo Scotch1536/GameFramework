@@ -18,15 +18,16 @@ public:
 
 class CActor :public IActor
 {
+private:
+	//コンポーネント追加　★超重要★子クラスは呼ぶことはできない
+	void AddComponent(CComponent& component)override;
 protected:
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
 	CTransform mTransform;										//トランスフォーム
 	ILevel& mOwnerInterface;									//インターフェース
-
-	//コンポーネント追加
-	void AddComponent(CComponent& component)override;
 public:
 	CActor(CLevel& owner);
+	virtual ~CActor() = default;
 
 	//更新
 	void Update();

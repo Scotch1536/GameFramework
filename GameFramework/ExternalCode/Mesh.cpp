@@ -27,39 +27,14 @@ Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture
 	m_dev = CDirectXGraphics::GetInstance()->GetDXDevice();
 	m_textures = textures;
 	m_mtrl = mtrl;
-	setupMesh();
+
+	SetupMesh();
 }
 
-void Mesh::Draw(ID3D11DeviceContext *devcon)
-{
-	unsigned int stride = sizeof(Vertex);
-	unsigned int offset = 0;
-	// 頂点バッファをセット
-	devcon->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
-	// インデックスバッファをセット
-	devcon->IASetIndexBuffer(m_IndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	// トポロジーをセット
-	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	// SRVをセット
-	if (m_textures.size() >= 1) {
-		devcon->PSSetShaderResources(0, 1, &m_textures[0].texture);
-	}
-	else {
-		// 真っ白SRVをセット
-		devcon->PSSetShaderResources(0, 1, &m_whitesrv);
-	}
-	// マテリアルをVSへセット
-	devcon->VSSetConstantBuffers(3, 1, &m_cbmtrl);
-	devcon->PSSetConstantBuffers(3, 1, &m_cbmtrl);
-
-	// インデックスバッファを利用して描画
-	devcon->DrawIndexed(static_cast<unsigned int>(m_indices.size()), 0, 0);
-}
-
-bool Mesh::setupMesh()
+bool Mesh::SetupMesh()
 {
 	// 頂点バッファ生成
-	bool sts = CreateVertexBufferWrite(m_dev.Get(),
+	bool sts = CreateVertexBufferWrite(m_dev,
 		static_cast<unsigned int>(sizeof(Vertex)),			// ストライド
 		static_cast<unsigned int>(m_vertices.size()),		// 頂点数
 		m_vertices.data(),									// 頂点データ
@@ -69,7 +44,7 @@ bool Mesh::setupMesh()
 	}
 
 	// インデックスバッファ生成
-	sts = CreateIndexBuffer(m_dev.Get(),
+	sts = CreateIndexBuffer(m_dev,
 		static_cast<unsigned int>(m_indices.size()),
 		m_indices.data(),
 		&m_IndexBuffer);
@@ -78,7 +53,7 @@ bool Mesh::setupMesh()
 	}
 
 	// マテリアル用コンスタントバッファ生成
-	sts = CreateConstantBufferWrite(m_dev.Get(),
+	sts = CreateConstantBufferWrite(m_dev,
 		sizeof(ConstantBufferMaterial),
 		&m_cbmtrl);
 	if (!sts) {
