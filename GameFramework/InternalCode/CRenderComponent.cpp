@@ -49,20 +49,24 @@ bool CRenderComponent::GeneratePixelShader(const char* psfile)
 	return true;
 }
 
-void CRenderComponent::SetData(unsigned int indexSize ,
+//void CRenderComponent::SetData(unsigned int indexSize ,
+//	ID3D11ShaderResourceView* shaderResourceView ,
+//	ID3D11Buffer* vertexBuffer ,
+//	ID3D11Buffer* indexBuffer ,
+//	ID3D11Buffer* cBMaterial)
+//{
+//	mIndexBuffer = indexBuffer;
+//	mShaderResourceView = shaderResourceView;
+//	mVertexBuffer = vertexBuffer;
+//	mIndexBuffer = indexBuffer;
+//	mCBMaterial = cBMaterial;
+//}
+
+void CRenderComponent::Render(unsigned int indexSize ,
 	ID3D11ShaderResourceView* shaderResourceView ,
 	ID3D11Buffer* vertexBuffer ,
 	ID3D11Buffer* indexBuffer ,
 	ID3D11Buffer* cBMaterial)
-{
-	mIndexBuffer = indexBuffer;
-	mShaderResourceView = shaderResourceView;
-	mVertexBuffer = vertexBuffer;
-	mIndexBuffer = indexBuffer;
-	mCBMaterial = cBMaterial;
-}
-
-void CRenderComponent::Render()
 {
 	ID3D11DeviceContext*	devcontext;			// デバイスコンテキスト
 
@@ -77,13 +81,13 @@ void CRenderComponent::Render()
 	// ピクセルシェーダーをセット
 	devcontext->PSSetShader(mPixelShader.Get() , nullptr , 0);
 	// 頂点バッファをセット
-	devcontext->IASetVertexBuffers(0 , 1 , &mVertexBuffer , &stride , &offset);
+	devcontext->IASetVertexBuffers(0 , 1 , &vertexBuffer , &stride , &offset);
 	// インデックスバッファをセット
-	devcontext->IASetIndexBuffer(mIndexBuffer , DXGI_FORMAT_R32_UINT , 0);
+	devcontext->IASetIndexBuffer(indexBuffer , DXGI_FORMAT_R32_UINT , 0);
 	// トポロジーをセット
 	devcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	// SRVをセット
-	devcontext->PSSetShaderResources(0 , 1 , &mShaderResourceView);
+	devcontext->PSSetShaderResources(0 , 1 , &shaderResourceView);
 
 	//else {
 	//	// 真っ白SRVをセット
@@ -91,11 +95,11 @@ void CRenderComponent::Render()
 	//}
 
 	// マテリアルをVSへセット
-	devcontext->VSSetConstantBuffers(3 , 1 , &mCBMaterial);
-	devcontext->PSSetConstantBuffers(3 , 1 , &mCBMaterial);
+	devcontext->VSSetConstantBuffers(3 , 1 , &cBMaterial);
+	devcontext->PSSetConstantBuffers(3 , 1 , &cBMaterial);
 
 	// インデックスバッファを利用して描画
-	devcontext->DrawIndexed(mIndexSize , 0 , 0);
+	devcontext->DrawIndexed(indexSize , 0 , 0);
 }
 
 void CRenderComponent::Update()

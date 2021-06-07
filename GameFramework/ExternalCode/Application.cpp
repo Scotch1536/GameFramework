@@ -151,9 +151,6 @@ unsigned long Application::MainLoop()
 
 	CGame& game = CGameManager::GetInstance().GetGame(*this);
 
-	// ゲームの初期処理
-	game.Init();
-
 	// タイマ解像度をミリ秒に
 	::timeBeginPeriod(1);
 

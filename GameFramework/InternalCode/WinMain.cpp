@@ -20,6 +20,8 @@
 #include <Windows.h>
 #include "CGameManager.h"
 
+#include "../CTestLevel.h"
+
 //==============================================================================
 //!	@fn		WinMain
 //!	@brief	エントリポイント
@@ -37,7 +39,8 @@ INT APIENTRY WinMain(HINSTANCE  h_hInst,
 {
 	CGameManager& gameManager = CGameManager::GetInstance();
 
-	gameManager.RequestExecute(h_hInst , h_nWinMode);
+	//RequestExecute<開始時のレベルの型名>で指定のレベルでゲームを開始できる
+	gameManager.RequestExecute<CTestLevel>(h_hInst , h_nWinMode);
 }
 
 

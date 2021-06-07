@@ -6,6 +6,8 @@
 #include "CLevel.h"
 #include "Application.h"
 
+class CLevel;
+
 //インターフェース
 class IGame
 {
@@ -18,9 +20,10 @@ public:
 class CGame :public IGame
 {
 private:
+	//ゲームマネージャーには隠蔽しない
 	friend CGameManager;
 
-	std::unique_ptr<Application> mApp;
+	std::unique_ptr<Application> mApp;		//アプリケーション
 	std::unique_ptr<CLevel> mLevel;			//レベル
 
 	CGame();
@@ -32,6 +35,7 @@ private:
 	CGame& operator=(CGame&&) = delete;
 
 	//実行　※このメソッドをエントリーポイントの関数で呼べばウィンドウが作られゲームがスタートする
+	template<class StartLevel>
 	long Execute(HINSTANCE hInst , int winMode);
 
 public:
@@ -41,8 +45,13 @@ public:
 	//ゲームの初期化（ウィンドウ作成後に呼び出し）
 	void Init();
 
+	//入力
 	void Input(uint64_t deltatime);
+
+	//更新
 	void Update(uint64_t deltatime);
+
+	//描画
 	void Render(uint64_t deltatime);
 };
 

@@ -16,13 +16,28 @@ CGameManager& CGameManager::GetInstance()
 	return instance;
 }
 
+//void CGameManager::SetStartLevel(CLevel* startLevel)
+//{
+//	if(mCanSetStartLevel)
+//	{
+//		mCanSetStartLevel = false;
+//
+//		mStartLevel.reset(startLevel);
+//	}
+//	else
+//	{
+//		MessageBox(NULL , "Already SetStartLevel" , "error" , MB_OK);
+//	}
+//}
+
+template<class StartLevel>
 void CGameManager::RequestExecute(HINSTANCE hInst , int winMode)
 {
 	if(mCanExecute)
 	{
 		mCanExecute = false;
 
-		mGame->Execute(hInst,winMode);
+		mGame->Execute<StartLevel>(hInst,winMode);
 	}
 	else
 	{

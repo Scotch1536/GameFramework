@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CDice.cpp" />
+    <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="DirectXTex\include\DDSTextureLoader.cpp" />
     <ClCompile Include="DirectXTex\include\WICTextureLoader.cpp" />
     <ClCompile Include="ExternalCode\Application.cpp" />
@@ -46,9 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDice.h" />
+    <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="ExternalCode\Application.h" />
     <ClInclude Include="ExternalCode\AssimpScene.h" />
-    <ClInclude Include="ExternalCode\CCamera.h" />
     <ClInclude Include="ExternalCode\CDirectInput.h" />
     <ClInclude Include="ExternalCode\CDirectxGraphics.h" />
     <ClInclude Include="ExternalCode\CLight.h" />
@@ -63,6 +64,7 @@
     <ClInclude Include="ExternalCode\utftosjisconv.h" />
     <ClInclude Include="ExternalCode\VertexProto.h" />
     <ClInclude Include="InternalCode\CActor.h" />
+    <ClInclude Include="InternalCode\CCameraComponent.h" />
     <ClInclude Include="InternalCode\CComponent.h" />
     <ClInclude Include="InternalCode\CGame.h" />
     <ClInclude Include="InternalCode\CGameManager.h" />
@@ -72,9 +74,24 @@
     <ClInclude Include="InternalCode\CRenderComponent.h" />
     <ClInclude Include="InternalCode\CStaticMeshComponent.h" />
     <ClInclude Include="InternalCode\CTransform.h" />
+    <ClInclude Include="InternalCode\IRender.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DirectXTex\include\DirectXTex.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\ps.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\pstexcol.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\psvscommon.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\vs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
