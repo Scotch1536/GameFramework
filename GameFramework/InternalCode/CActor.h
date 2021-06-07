@@ -16,10 +16,13 @@ public:
 	virtual void AddComponent(CComponent& component) = 0;
 };
 
+//アクタークラス
 class CActor :public IActor
 {
 private:
-	//コンポーネント追加　★超重要★子クラスは呼ぶことはできない
+	/*コンポーネント追加
+	★超重要★子クラスは呼ぶことはできない
+	コンポーネントのコンストラクタを呼ぶことでアクターの参照から辿ってこのメソッドが呼ばれる*/
 	void AddComponent(CComponent& component)override;
 protected:
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント

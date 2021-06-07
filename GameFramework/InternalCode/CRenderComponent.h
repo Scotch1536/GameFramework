@@ -16,6 +16,7 @@ public:
 	virtual void Render() = 0;
 };
 
+//レンダーコンポーネントクラス
 class CRenderComponent :public CComponent , IRender
 {
 protected:
