@@ -4,6 +4,7 @@
 
 #include "CActor.h"
 #include "IRender.h"
+#include "StartLevelSetting.h"
 
 class IGame;
 class CGame;
@@ -19,13 +20,18 @@ public:
 class CLevel :public ILevel , public IRender
 {
 private:
+	//フレンド指定
+	friend CLevel& StartLevelSetting();
 	friend CActor::CActor(CLevel&);
 
 	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
 	std::vector<std::unique_ptr<CActor>> mActors;		//アクター
 
 protected:
-	IGame& mOwnerInterface;								//ゲームインターフェース
+	IGame* mOwnerInterface;			//ゲームインターフェース
+
+	//子クラスとフレンド指定したものにのみ許可
+	CLevel() {};
 
 private:
 	//コピー禁止
@@ -45,7 +51,7 @@ public:
 	//★超重要★　コンストラクタを呼ぶことはレベルの遷移を意味する
 	CLevel(CGame& owner);
 
-	virtual ~CLevel() = default;
+	virtual ~CLevel() {};
 
 	//初期化
 	virtual void Init() = 0;

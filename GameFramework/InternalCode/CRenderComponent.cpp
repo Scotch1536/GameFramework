@@ -100,6 +100,7 @@ void CRenderComponent::Render(unsigned int indexSize ,
 
 	// インデックスバッファを利用して描画
 	devcontext->DrawIndexed(indexSize , 0 , 0);
+
 }
 
 void CRenderComponent::Update()

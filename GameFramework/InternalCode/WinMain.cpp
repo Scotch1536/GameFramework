@@ -19,6 +19,7 @@
 //-----------------------------------------------------------------------------
 #include <Windows.h>
 #include "CGameManager.h"
+#include "StartLevelSetting.h"
 
 #include "../CTestLevel.h"
 
@@ -39,10 +40,10 @@ INT APIENTRY WinMain(HINSTANCE  h_hInst,
 {
 	CGameManager& gameManager = CGameManager::GetInstance();
 
-	//RequestExecute<開始時のレベルの型名>で指定のレベルでゲームを開始できる
-	gameManager.RequestExecute<CTestLevel>(h_hInst , h_nWinMode);
-}
+	gameManager.SetStartLevel(StartLevelSetting());
 
+	gameManager.RequestExecute(h_hInst , h_nWinMode);
+}
 
 //******************************************************************************
 //	End of file.

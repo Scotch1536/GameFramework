@@ -10,7 +10,7 @@ CDice::CDice(CLevel& owner):CActor(owner)
 
 	staticMesh->SetModel("assets/dice/PlayerBox.x" , "assets/dice/");
 
-	DirectX::XMFLOAT3 eye(70 , 100 , -150);	//カメラ位置
+	DirectX::XMFLOAT3 eye(10 , 100 , -100);	//カメラ位置
 	DirectX::XMFLOAT3 lookat(0 , 0 , 0);	//注視点
 	DirectX::XMFLOAT3 up(0 , 1 , 0);		//カメラの上向きベクトル
 

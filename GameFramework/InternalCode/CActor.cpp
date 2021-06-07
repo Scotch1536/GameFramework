@@ -33,24 +33,8 @@ void CActor::Update()
 {
 	for(auto& component : mComponents)
 	{
-		/*	if(mShouldCheckAttribute)
-			{
-				int inheritInterface = component->GetInheritInterface();
-
-				if(inheritInterface&static_cast<int>(CComponent::InheritInteface::RENDER))
-				{
-					int componentType = component->GetType();
-
-					if(componentType&static_cast<int>(CComponent::ComponentType::SMESH)
-					{
-						dynamic_cast<CStaticMeshComponent>component
-					}
-					mRenderAttributeComponents.push_back(static_cast<IRender&>(dynamic_cast<CStaticMeshComponent&>(*component)));
-				}
-			}*/
 		component->Update();
 	}
-
 
 	if(mShouldCheckAttribute)mShouldCheckAttribute = false;
 }
@@ -68,7 +52,7 @@ void CActor::Destroy()
 	mOwnerInterface.DestroyActor(*this);
 }
 
-bool CActor::GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent* inOut)const
+bool CActor::GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& inOut)const
 {
 	for(auto& component : mComponents)
 	{

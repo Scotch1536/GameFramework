@@ -26,6 +26,7 @@ public:
 	CCameraComponent(IActor& owner):CComponent(owner)
 	{
 		mPriority = 80;
+		mAttribute = CComponent::EAttribute::CAMERA;
 	}
 
 	void Init(float nearclip , float farclip , float fov ,

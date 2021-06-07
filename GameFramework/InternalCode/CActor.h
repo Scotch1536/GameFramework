@@ -19,9 +19,10 @@ public:
 };
 
 //アクタークラス
-class CActor :public IActor,public IRender
+class CActor :public IActor , public IRender
 {
 private:
+	//フレンド指定
 	friend CComponent::CComponent(IActor&);
 
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
@@ -47,18 +48,19 @@ public:
 	//★超重要★　アクターのコンストラクタを呼ぶことはレベルにアクターを追加することを意味する
 	CActor(CLevel& owner);
 
-	virtual ~CActor() = default;
+	virtual ~CActor() {};
 
 	/*更新
 	★超重要★このメソッドをオーバーライドする場合は必ず最後に親のメソッドを呼ぶこと
 	*/
 	virtual void Update();
 
+	//描画
 	void Render()override;
 
 	//破壊
 	void Destroy();
 
 	//コンポーネントの属性から指定のコンポーネントをゲット
-	bool GetComponentFromAttribute(CComponent::EAttribute attribute,CComponent* inOut)const;
+	bool GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& inOut)const;
 };

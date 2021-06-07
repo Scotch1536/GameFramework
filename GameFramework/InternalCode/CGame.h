@@ -2,11 +2,12 @@
 #include <Windows.h>
 #include <memory>
 
-#include "CGameManager.h"
+//#include "CGameManager.h"
 #include "CLevel.h"
 #include "Application.h"
 
 class CLevel;
+class CGameManager;
 
 //インターフェース
 class IGame
@@ -20,7 +21,7 @@ public:
 class CGame :public IGame
 {
 private:
-	//ゲームマネージャーには隠蔽しない
+	//フレンド指定
 	friend CGameManager;
 
 	std::unique_ptr<Application> mApp;		//アプリケーション
@@ -35,7 +36,6 @@ private:
 	CGame& operator=(CGame&&) = delete;
 
 	//実行　※このメソッドをエントリーポイントの関数で呼べばウィンドウが作られゲームがスタートする
-	template<class StartLevel>
 	long Execute(HINSTANCE hInst , int winMode);
 
 public:

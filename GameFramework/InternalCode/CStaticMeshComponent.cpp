@@ -6,7 +6,7 @@
 
 CStaticMeshComponent::CStaticMeshComponent(IActor& owner)
 	:CComponent(owner) ,
-	mRenderComponent(owner)
+	mRenderComponent(*new CRenderComponent(owner))
 {
 	owner.RegisterRenderComponent(*this);
 
@@ -37,13 +37,18 @@ void CStaticMeshComponent::Update()
 
 void CStaticMeshComponent::Render()
 {
-	for(auto& mesh : mModel.GetMeshes())
+	for(auto& mesh : mModel->GetMeshes())
 	{
 		unsigned int indexSize = static_cast <unsigned int>(sizeof(mesh.m_indices));
 
-		//mRenderComponent.SetData(indexSize , mesh.m_textures[0].texture ,
-		//	mesh.GetVertexBuffer() , mesh.GetIndexBuffer() , mesh.GetConstantBuffer());
-		mRenderComponent.Render(indexSize , mesh.m_textures[0].texture ,
-			mesh.GetVertexBuffer() , mesh.GetIndexBuffer() , mesh.GetConstantBuffer());
+		if(mesh.m_textures.size() >= 1)
+		{
+			mRenderComponent.Render(indexSize , mesh.m_textures[0].texture ,
+				mesh.GetVertexBuffer() , mesh.GetIndexBuffer() , mesh.GetConstantBuffer());
+		}
+		else
+		{
+			//TO DO
+		}
 	}
 }

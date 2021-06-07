@@ -3,9 +3,9 @@
 #include "CCameraComponent.h"
 #include "DX11Settransform.h"
 
-CLevel::CLevel(CGame& owner):mOwnerInterface(owner)
+CLevel::CLevel(CGame& owner):mOwnerInterface(&owner)
 {
-	mOwnerInterface.LoadLevel(*this);
+	mOwnerInterface->LoadLevel(*this);
 }
 
 void CLevel::AddActor(CActor& actor)
@@ -36,6 +36,16 @@ void CLevel::Render()
 		exit(1);
 	}
 
+	float col[4] = { 1.f,1.f,1.f,1.f };
+
+	// ターゲットバッファクリア
+	CDirectXGraphics::GetInstance()->GetImmediateContext()->ClearRenderTargetView(
+		CDirectXGraphics::GetInstance()->GetRenderTargetView() , col);
+	// Zバッファクリア
+	CDirectXGraphics::GetInstance()->GetImmediateContext()->ClearDepthStencilView(
+		CDirectXGraphics::GetInstance()->GetDepthStencilView() ,
+		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f , 0);
+
 	bufMTX = mRenderingCamera->GetProjectionMatrix();
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , bufMTX);
 
@@ -46,6 +56,8 @@ void CLevel::Render()
 	{
 		actor->Render();
 	}
+
+	CDirectXGraphics::GetInstance()->GetSwapChain()->Present(0 , 0);
 }
 
 void CLevel::DestroyActor(CActor& target)

@@ -9,7 +9,6 @@
 CGame::CGame()
 {}
 
-template<class StartLevel>
 long CGame::Execute(HINSTANCE hInst , int winMode)
 {
 	// アプリケーション初期処理
@@ -21,8 +20,6 @@ long CGame::Execute(HINSTANCE hInst , int winMode)
 	UpdateWindow(mApp->GetHWnd());
 
 	Init();
-
-	LoadLevel(new StartLevel(*this));
 
 	// メインループ
 	long ret = mApp->MainLoop();
@@ -67,6 +64,11 @@ void CGame::Init()
 		Application::CLIENT_WIDTH ,
 		Application::CLIENT_HEIGHT
 	);
+
+	if(mLevel != nullptr)
+	{
+		mLevel->Init();
+	}
 }
 
 void CGame::Input(uint64_t deltataime)
@@ -87,4 +89,6 @@ void CGame::Render(uint64_t deltataime)
 void CGame::LoadLevel(CLevel& level)
 {
 	mLevel.reset(&level);
+
+	mLevel->Init();
 }

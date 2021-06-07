@@ -7,9 +7,9 @@
 class CStaticMeshComponent :public CComponent , public IRender
 {
 private:
-	ModelData mModel;							//モデルデータ
+	ModelData* mModel;							//モデルデータ
 	CTransform mTransform;						//トランスフォーム
-	CRenderComponent mRenderComponent;			//レンダーコンポーネント
+	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
 public:
 	CStaticMeshComponent(IActor& owner);
 

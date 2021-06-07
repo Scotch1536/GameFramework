@@ -31,7 +31,7 @@ protected:
 public:
 	//★超重要★　コンストラクタを呼ぶことはアクターにコンポーネントを追加することを意味する
 	CComponent(IActor& owner);
-	virtual ~CComponent() = default;
+	virtual ~CComponent() {};
 
 	//更新
 	virtual void Update() {};
