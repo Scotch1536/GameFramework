@@ -19,6 +19,8 @@ long CGame::Execute(HINSTANCE hInst , int winMode)
 	ShowWindow(mApp->GetHWnd() , winMode);
 	UpdateWindow(mApp->GetHWnd());
 
+	Init();
+
 	// ƒƒCƒ“ƒ‹[ƒv
 	long ret = mApp->MainLoop();
 
@@ -62,6 +64,11 @@ void CGame::Init()
 		Application::CLIENT_WIDTH ,
 		Application::CLIENT_HEIGHT
 	);
+
+	if(mLevel != nullptr)
+	{
+		mLevel->Init();
+	}
 }
 
 void CGame::Input(uint64_t deltataime)
@@ -71,15 +78,17 @@ void CGame::Input(uint64_t deltataime)
 
 void CGame::Update(uint64_t deltataime)
 {
-
+	mLevel->Update();
 }
 
 void CGame::Render(uint64_t deltataime)
 {
-
+	mLevel->Render();
 }
 
 void CGame::LoadLevel(CLevel& level)
 {
 	mLevel.reset(&level);
+
+	mLevel->Init();
 }

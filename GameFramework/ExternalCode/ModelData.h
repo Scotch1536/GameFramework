@@ -20,8 +20,6 @@ public:
 
 	bool Load(std::string resourcefolder, std::string filename);
 	
-	//void Draw(ID3D11DeviceContext* devcon, DirectX::XMFLOAT4X4& mtxworld);
-
 	void Exit();
 
 	std::vector<Mesh>& GetMeshes() {

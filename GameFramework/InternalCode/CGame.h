@@ -2,9 +2,12 @@
 #include <Windows.h>
 #include <memory>
 
-#include "CGameManager.h"
+//#include "CGameManager.h"
 #include "CLevel.h"
 #include "Application.h"
+
+class CLevel;
+class CGameManager;
 
 //インターフェース
 class IGame
@@ -18,9 +21,10 @@ public:
 class CGame :public IGame
 {
 private:
+	//フレンド指定
 	friend CGameManager;
 
-	std::unique_ptr<Application> mApp;
+	std::unique_ptr<Application> mApp;		//アプリケーション
 	std::unique_ptr<CLevel> mLevel;			//レベル
 
 	CGame();
@@ -41,8 +45,13 @@ public:
 	//ゲームの初期化（ウィンドウ作成後に呼び出し）
 	void Init();
 
+	//入力
 	void Input(uint64_t deltatime);
+
+	//更新
 	void Update(uint64_t deltatime);
+
+	//描画
 	void Render(uint64_t deltatime);
 };
 

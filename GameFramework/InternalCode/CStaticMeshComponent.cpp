@@ -2,11 +2,14 @@
 
 #include "CStaticMeshComponent.h"
 #include "CModelDataManager.h"
+#include "CActor.h"
 
 CStaticMeshComponent::CStaticMeshComponent(IActor& owner)
 	:CComponent(owner) ,
-	mRenderComponent(CRenderComponent(owner))
+	mRenderComponent(*new CRenderComponent(owner))
 {
+	owner.RegisterRenderComponent(*this);
+
 	mPriority = 90;
 
 	// 頂点データの定義（アニメーション対応）
@@ -18,8 +21,8 @@ CStaticMeshComponent::CStaticMeshComponent(IActor& owner)
 	};
 	unsigned int numElements = ARRAYSIZE(layout);
 
-	mRenderComponent.GenerateVertexShader(layout , numElements , "");
-	mRenderComponent.GeneratePixelShader("");
+	mRenderComponent.GenerateVertexShader(layout , numElements , "./Shader/vs.hlsl");
+	mRenderComponent.GeneratePixelShader("./Shader/ps.hlsl");
 }
 
 void CStaticMeshComponent::SetModel(std::string filename , std::string resourcefolder)
@@ -34,11 +37,18 @@ void CStaticMeshComponent::Update()
 
 void CStaticMeshComponent::Render()
 {
-	for(auto& mesh : mModel.GetMeshes())
+	for(auto& mesh : mModel->GetMeshes())
 	{
 		unsigned int indexSize = static_cast <unsigned int>(sizeof(mesh.m_indices));
 
-		mRenderComponent.SetData(indexSize , mesh.m_textures[0].texture ,
-			mesh.GetVertexBuffer() , mesh.GetIndexBuffer() , mesh.GetConstantBuffer());
+		if(mesh.m_textures.size() >= 1)
+		{
+			mRenderComponent.Render(indexSize , mesh.m_textures[0].texture ,
+				mesh.GetVertexBuffer() , mesh.GetIndexBuffer() , mesh.GetConstantBuffer());
+		}
+		else
+		{
+			//TO DO
+		}
 	}
 }

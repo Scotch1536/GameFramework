@@ -1,6 +1,6 @@
 #include "CModelDataManager.h"
 
-ModelData& CModelManager::GetModel(std::string filename , std::string resourcefolder)
+ModelData* CModelManager::GetModel(std::string filename , std::string resourcefolder)
 {
 	if (mModelData.count(filename) == 0) {
 		mModelData[filename];		//モデルデータ作成
@@ -11,5 +11,5 @@ ModelData& CModelManager::GetModel(std::string filename , std::string resourcefo
 			MessageBox(nullptr, "LoadModels function error", "error", MB_OK);
 		}
 	}
-	return mModelData[filename];
+	return &mModelData[filename];
 }

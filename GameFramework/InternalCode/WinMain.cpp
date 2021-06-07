@@ -19,6 +19,9 @@
 //-----------------------------------------------------------------------------
 #include <Windows.h>
 #include "CGameManager.h"
+#include "StartLevelSetting.h"
+
+#include "../CTestLevel.h"
 
 //==============================================================================
 //!	@fn		WinMain
@@ -37,9 +40,10 @@ INT APIENTRY WinMain(HINSTANCE  h_hInst,
 {
 	CGameManager& gameManager = CGameManager::GetInstance();
 
+	gameManager.SetStartLevel(StartLevelSetting());
+
 	gameManager.RequestExecute(h_hInst , h_nWinMode);
 }
-
 
 //******************************************************************************
 //	End of file.

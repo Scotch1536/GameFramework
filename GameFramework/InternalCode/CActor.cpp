@@ -1,8 +1,11 @@
 #include "CActor.h"
 #include "CLevel.h"
+#include "IRender.h"
 
 CActor::CActor(CLevel& owner):mOwnerInterface(owner)
-{}
+{
+	owner.AddActor(*this);
+}
 
 void CActor::AddComponent(CComponent& component)
 {
@@ -21,15 +24,43 @@ void CActor::AddComponent(CComponent& component)
 	this->mComponents.emplace(itr , &component);
 }
 
+void CActor::RegisterRenderComponent(IRender& component)
+{
+	mRenderAttributeComponents.emplace_back(&component);
+}
+
 void CActor::Update()
 {
 	for(auto& component : mComponents)
 	{
 		component->Update();
 	}
+
+	if(mShouldCheckAttribute)mShouldCheckAttribute = false;
+}
+
+void CActor::Render()
+{
+	for(auto& renderComp : mRenderAttributeComponents)
+	{
+		renderComp->Render();
+	}
 }
 
 void CActor::Destroy()
 {
 	mOwnerInterface.DestroyActor(*this);
+}
+
+bool CActor::GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& inOut)const
+{
+	for(auto& component : mComponents)
+	{
+		if(component->GetAttribute() == attribute)
+		{
+			inOut = component.get();
+			return true;
+		}
+	}
+	return false;
 }

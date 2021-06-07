@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ModelData.h"
+#include <memory>
 #include <unordered_map>
 #include <string>
 
@@ -21,7 +22,8 @@ public:
 		return instance;
 	}
 
-	ModelData& GetModel(std::string filename , std::string resourcefolder);		//モデル（のポインタ）を取得する
+	//モデル（のポインタ）を取得する
+	ModelData* GetModel(std::string filename , std::string resourcefolder);
 private:
-	std::unordered_map<std::string , ModelData> mModelData;			//モデルデータ格納辞書
+	std::unordered_map<std::string , ModelData> mModelData;		//モデルデータ格納辞書
 };

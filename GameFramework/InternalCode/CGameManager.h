@@ -1,6 +1,9 @@
 #pragma once
+
+#include "CGame.h"
 #include <memory>
 
+class CLevel;
 class CGame;
 class IGame;
 class Application;
@@ -9,8 +12,12 @@ class Application;
 class CGameManager
 {
 private:
-	std::unique_ptr<CGame> mGame;		//ゲームクラス
-	bool mCanExecute = true;			//実行できるか
+	std::unique_ptr<CGame> mGame;			//ゲームクラス
+
+	//CLevel* mStartLevel;					//スタートレベル
+
+	bool mCanExecute = true;				//実行できるか
+	bool mCanSetStartLevel = true;			//スタートレベルをセットできるか
 
 	CGameManager();
 
@@ -21,6 +28,9 @@ private:
 	CGameManager& operator=(CGameManager&&) = delete;
 public:
 	static CGameManager& GetInstance();
+
+	////スタートレベルのセット
+	void SetStartLevel(CLevel& startLevel);
 
 	//実行をリクエスト
 	void RequestExecute(HINSTANCE hInst , int winMode);

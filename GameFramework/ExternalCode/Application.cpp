@@ -17,6 +17,9 @@
 #include "CWindow.h"
 #include "CGame.h"
 #include "CGameManager.h"
+#include "DX11Settransform.h"
+#include "CDirectxGraphics.h"
+
 //#include "macro.h"
 //#include "game.h"
 
@@ -151,9 +154,6 @@ unsigned long Application::MainLoop()
 
 	CGame& game = CGameManager::GetInstance().GetGame(*this);
 
-	// ゲームの初期処理
-	game.Init();
-
 	// タイマ解像度をミリ秒に
 	::timeBeginPeriod(1);
 
@@ -187,8 +187,10 @@ unsigned long Application::MainLoop()
 	// タイマ解像度を元に戻す
 	::timeEndPeriod(1);
 
-	// ゲームの終了処理
-	//GameDispose();
+	DX11SetTransform::GetInstance()->Uninit();
+
+	// 解放処理
+	CDirectXGraphics::GetInstance()->Exit();
 
 	return window->GetMessage();
 }

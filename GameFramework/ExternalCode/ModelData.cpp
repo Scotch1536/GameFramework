@@ -166,17 +166,6 @@ bool ModelData::Load(std::string resourcefolder ,
 
 	return true;
 }
-//
-//void ModelData::Draw(ID3D11DeviceContext * devcon , XMFLOAT4X4& mtxworld)
-//{
-//	for(int i = 0; i < m_meshes.size(); i++)
-//	{
-//		// ワールド変換行列
-//		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD , mtxworld);
-//		// 定数バッファセット処理
-//		m_meshes[i].Draw(devcon);
-//	}
-//}
 
 // メッシュの解析
 Mesh ModelData::processMesh(aiMesh * mesh , const aiScene * scene , int meshidx)
