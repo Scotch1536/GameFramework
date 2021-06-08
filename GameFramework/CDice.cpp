@@ -28,6 +28,7 @@ CDice::CDice(CLevel& owner):CActor(owner)
 	SButtonInfo bufin = { EButtonType::KEYBOARD,DIK_A };
 
 	CInputManager::GetInstance().AddAction("test" , bufin , std::bind(&CDice::Test , std::ref(*this)));
+	
 }
 
 void CDice::Test()

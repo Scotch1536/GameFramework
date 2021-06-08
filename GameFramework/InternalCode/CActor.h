@@ -40,7 +40,7 @@ private:
 	void AddComponent(CComponent& component)override;
 	void RegisterRenderComponent(IRender& component)override;
 protected:
-	CTransform mTransform;										//トランスフォーム
+	CTransform mTransform;			//トランスフォーム
 
 public:
 	//★超重要★　アクターのコンストラクタを呼ぶことはレベルにアクターを追加することを意味する

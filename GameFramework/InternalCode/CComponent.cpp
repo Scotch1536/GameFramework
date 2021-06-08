@@ -5,3 +5,5 @@ CComponent::CComponent(IActor& owner)
 {
 	owner.AddComponent(*this);
 }
+
+CComponent::~CComponent() {}

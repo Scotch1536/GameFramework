@@ -12,17 +12,10 @@ public:
 		CAMERA ,
 	};
 
-	//enum class ComponentType
-	//{
-	//	NONE = 0b00 ,
-	//	SMESH = 0b01 ,
-	//};
-
 protected:
 	int mPriority = 0;		//優先度
 
 	EAttribute mAttribute = EAttribute::NONE;
-	//ComponentType mType = ComponentType::NONE;
 
 	//コピー禁止
 	CComponent(const CComponent&) = delete;
@@ -31,7 +24,7 @@ protected:
 public:
 	//★超重要★　コンストラクタを呼ぶことはアクターにコンポーネントを追加することを意味する
 	CComponent(IActor& owner);
-	virtual ~CComponent() {};
+	virtual ~CComponent() = 0;
 
 	//更新
 	virtual void Update() {};
@@ -46,8 +39,4 @@ public:
 		return mAttribute;
 	}
 
-	//const int& GetType()const
-	//{
-	//	return static_cast<int>(mType);
-	//}
 };

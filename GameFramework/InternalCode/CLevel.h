@@ -23,8 +23,8 @@ private:
 	//フレンド指定
 	friend CActor::CActor(CLevel&);
 
-	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
 	std::vector<std::unique_ptr<CActor>> mActors;		//アクター
+	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
 
 protected:
 	IGame* mOwnerInterface;			//ゲームインターフェース
