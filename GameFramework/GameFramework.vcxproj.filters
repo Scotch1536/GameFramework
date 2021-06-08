@@ -90,15 +90,12 @@
     <ClCompile Include="CTestLevel.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-<<<<<<< HEAD
-=======
     <ClCompile Include="InternalCode\StartLevelSetting.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="InternalCode\CRotator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
->>>>>>> Kotaro
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ExternalCode\Application.h">
@@ -188,15 +185,12 @@
     <ClInclude Include="CTestLevel.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-<<<<<<< HEAD
-=======
     <ClInclude Include="InternalCode\StartLevelSetting.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="InternalCode\CRotator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
->>>>>>> Kotaro
   </ItemGroup>
   <ItemGroup>
     <None Include="DirectXTex\include\DirectXTex.inl">
