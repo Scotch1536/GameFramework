@@ -1,105 +1,71 @@
 #include "CRotator.h"
+#include "CTransform.h"
 
-
-void CRotator::Init()
+CRotator::CRotator()
 {
-	DX11QtIdentity(mQua);
+	DX11QtIdentity(mQuaternion);
 }
 
-void CRotator::Update()
-{	
-	if (mGoalQua != nullptr)
-	{
-		DX11QtSlerp(*mStartQua, *mGoalQua, mAlpha, mQua);
-		
-		if (mAlpha>1.0f)
-		{
-			mGoalQua.reset();
-		}
-		mAlpha++;
-	}	
-}
-
-//void CRotator::Update()
+//void CRotator::Init()
 //{
-//	XMFLOAT3 nowPos{ 0.0f,0.0f,0.0f };
-//
-//	XMFLOAT4 mAxisX;
-//	XMFLOAT4 mAxisY;
-//	XMFLOAT4 mAxisZ;
-//
-//	//X軸を取り出す
-//	mAxisX.x = mMtx._11;
-//	mAxisX.y = mMtx._12;
-//	mAxisX.z = mMtx._13;
-//	mAxisX.w = 0.0f;
-//
-//	//Y軸を取り出す
-//	mAxisY.x = mMtx._21;
-//	mAxisY.y = mMtx._22;
-//	mAxisY.z = mMtx._23;
-//	mAxisY.w = 0.0f;
-//
-//	//Z軸を取り出す
-//	mAxisZ.x = mMtx._31;
-//	mAxisZ.y = mMtx._32;
-//	mAxisZ.z = mMtx._33;
-//	mAxisZ.w = 0.0f;
-//	
-//	{
-//		//行列からクオータニオンを生成
-//		DX11GetQtfromMatrix(mMtx, mQua);
-//
-//		XMFLOAT4 qtX, qtY, qtZ; //クオータニオン
-//
-//		//指定軸回転のクオータニオンを生成
-//		DX11QtRotationAxis(qtX, mAxisX, mAngle.x);
-//		DX11QtRotationAxis(qtY, mAxisY, mAngle.y);
-//		DX11QtRotationAxis(qtZ, mAxisZ, mAngle.z);
-//
-//		//クオータニオンを合成
-//		XMFLOAT4 tempQt1;
-//		DX11QtMul(tempQt1, mQua, qtX);
-//
-//		XMFLOAT4 tempQt2;
-//		DX11QtMul(tempQt2, qtY, qtZ);
-//
-//		XMFLOAT4 tempQt3;
-//		DX11QtMul(tempQt3, tempQt1, tempQt2);
-//
-//		//クオータニオンをノーマライズ
-//		DX11QtNormalize(tempQt3, tempQt3);
-//
-//		//クオータニオンから行列を作成
-//		DX11MtxFromQt(mMtx, tempQt3);
-//	}	
-//	
-//	mMtx._41 = nowPos.x;
-//	mMtx._42 = nowPos.y;
-//	mMtx._43 = nowPos.z;
+//	DX11QtIdentity(mQuatanion);
 //}
 
-void CRotator::SetAngle(XMFLOAT3 angle,float time)
+void CRotator::Update()
+{
+	if(mToQuaternion != nullptr)
+	{
+		DX11QtSlerp(*mFromQuaternion , *mToQuaternion , mAlpha , mQuaternion);
+
+		TransformFromQuaternionToEulerAngles(mQuaternion , mAngle);
+
+		if(mAlpha >= 1.0f)
+		{
+			mFromQuaternion.reset();
+			mToQuaternion.reset();
+		}
+		//mAlpha++;
+		mAlpha += mIncreaceAlpha;
+	}
+}
+
+void CRotator::SetAngle(XMFLOAT3 angle/*,float time*/)
 {
 	mAngle = angle;
-	mInc = 1 / (time * 60);
-	mStartQua.reset();
-	*mStartQua = mQua;
-	mGoalQua.reset();
-	EulerAnglesToQuaternion(mAngle, *mGoalQua);
 
+	//mIncreaceAlpha = 1 / (time * 60);
+
+	//mFromQuatanion.reset();
+	//*mFromQuatanion = mQuatanion;
+	//mToQuatanion.reset();
+	TransformFromEulerAnglesToQuaternion(mAngle , mQuaternion);
 }
 
-XMFLOAT4X4 CRotator::GetMtx()
+void CRotator::RequestSLerp(XMFLOAT3 angle , float time)
 {
-	//クォータニオンから行列を作成
-	DX11MtxFromQt(mMtx, mQua);
+	if(mAlpha != 0.f)mAlpha = 0.f;
+	mIncreaceAlpha = 1 / (time * 60);
 
-	return mMtx;
+	mFromQuaternion.reset(new XMFLOAT4);
+	mToQuaternion.reset(new XMFLOAT4);
+
+	*mFromQuaternion = mQuaternion;
+
+	TransformFromEulerAnglesToQuaternion(mAngle , *mToQuaternion);
 }
 
-void CRotator::EulerAnglesToQuaternion(XMFLOAT3 angle, XMFLOAT4 qua)
-{	
+XMFLOAT4X4 CRotator::GenerateMatrix(CTransform& partner)
+{
+	XMFLOAT4X4 ansMTX;
+
+	//クォータニオンから行列を作成
+	DX11MtxFromQt(ansMTX , mQuaternion);
+
+	return ansMTX;
+}
+
+void CRotator::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& angle , XMFLOAT4& qua)
+{
 	float cosRoll = cos(angle.x / 2.0f);
 	float sinRoll = sin(angle.x / 2.0f);
 	float cosPitch = cos(angle.y / 2.0f);
@@ -111,4 +77,22 @@ void CRotator::EulerAnglesToQuaternion(XMFLOAT3 angle, XMFLOAT4 qua)
 	qua.y = sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw;
 	qua.z = cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw;
 	qua.w = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;
+}
+
+void CRotator::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua , XMFLOAT3& angle)
+{
+	float q0q0 = qua.x * qua.x;
+	float q0q1 = qua.x * qua.y;
+	float q0q2 = qua.x * qua.z;
+	float q0q3 = qua.x * qua.w;
+	float q1q1 = qua.y * qua.y;
+	float q1q2 = qua.y * qua.z;
+	float q1q3 = qua.y * qua.w;
+	float q2q2 = qua.z * qua.z;
+	float q2q3 = qua.z * qua.w;
+	float q3q3 = qua.w * qua.w;
+
+	angle.x = atan2(2.0 * (q2q3 + q0q1) , q0q0 - q1q1 - q2q2 + q3q3);
+	angle.y = asin(2.0 * (q0q2 - q1q3));
+	angle.z = atan2(2.0 * (q1q2 + q0q3) , q0q0 + q1q1 - q2q2 - q3q3);
 }
