@@ -1,15 +1,15 @@
 #include "CModelDataManager.h"
 
-ModelData* CModelManager::GetModel(std::string filename , std::string resourcefolder)
+ModelData& CModelManager::GetModel(std::string filePath , std::string resourceFolderPath)
 {
-	if (mModelData.count(filename) == 0) {
-		mModelData[filename];		//モデルデータ作成
+	if (mModelData.count(filePath) == 0) {
+		mModelData[filePath];		//モデルデータ作成
 
 		//モデルデータ初期化
-		if (!mModelData[filename].Load(resourcefolder,filename))
+		if (!mModelData[filePath].Load(resourceFolderPath,filePath))
 		{
 			MessageBox(nullptr, "LoadModels function error", "error", MB_OK);
 		}
 	}
-	return &mModelData[filename];
+	return mModelData[filePath];
 }

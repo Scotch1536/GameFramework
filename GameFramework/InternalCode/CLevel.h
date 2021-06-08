@@ -17,7 +17,7 @@ public:
 	virtual void DestroyActor(CActor& target) = 0;
 };
 
-class CLevel :public ILevel , public IRender
+class CLevel :public ILevel
 {
 private:
 	//フレンド指定
@@ -63,7 +63,7 @@ public:
 	void Update();
 
 	//描画
-	void Render()override;
+	void Render();
 
 	//アクターの破壊
 	void DestroyActor(CActor& target)override;

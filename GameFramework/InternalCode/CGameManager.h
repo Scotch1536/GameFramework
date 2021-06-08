@@ -39,6 +39,4 @@ public:
 
 	//ゲームクラスの取得（アプリケーションクラスの参照が必要）
 	CGame& GetGame(Application& partner);
-
-	//IGame& GetGameInterface();
 };

@@ -42,7 +42,7 @@ void CLevel::Render()
 		exit(1);
 	}
 
-	float col[4] = { 1.f,0.f,0.f,1.f };
+	float col[4] = { 0.f,0.f,1.f,1.f };
 
 	// ターゲットバッファクリア
 	CDirectXGraphics::GetInstance()->GetImmediateContext()->ClearRenderTargetView(

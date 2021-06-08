@@ -19,7 +19,7 @@ public:
 };
 
 //アクタークラス
-class CActor :public IActor , public IRender
+class CActor :public IActor
 {
 private:
 	//フレンド指定
@@ -54,11 +54,11 @@ public:
 	virtual void Update();
 
 	//描画
-	void Render()override;
+	void Render();
 
 	//破壊
 	void Destroy();
 
 	//コンポーネントの属性から指定のコンポーネントをゲット
-	bool GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& inOut)const;
+	bool GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& result)const;
 };

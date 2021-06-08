@@ -147,17 +147,17 @@ void ModelData::LoadMaterial()
 	}
 }
 
-bool ModelData::Load(std::string resourcefolder ,
-	std::string filename)
+bool ModelData::Load(std::string resourceFolderPath ,
+	std::string filePath)
 {
-	bool sts = m_assimpscene.Init(filename);
+	bool sts = m_assimpscene.Init(filePath);
 	if(!sts)
 	{
 		MessageBox(nullptr , "ModelData load error" , "error" , MB_OK);
 		return false;
 	}
 
-	m_directory = resourcefolder;		// このモデルのテクスチャが存在するディレクトリ
+	m_directory = resourceFolderPath;		// このモデルのテクスチャが存在するディレクトリ
 
 	LoadMaterial();						// このモデルで使用されているマテリアルを取得する
 

@@ -184,11 +184,6 @@
     <None Include="DirectXTex\include\DirectXTex.inl">
       <Filter>ヘッダー ファイル</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Shader\ps.hlsl" />
-    <FxCompile Include="Shader\pstexcol.hlsl" />
-    <FxCompile Include="Shader\psvscommon.hlsl" />
-    <FxCompile Include="Shader\vs.hlsl" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

@@ -17,8 +17,8 @@ private:
 	ComPtr<ID3D11Buffer>  m_cbmtrl;				// マテリアル用コンスタントバッファ
 
 public:
-	ComPtr<ID3D11ShaderResourceView> m_whitesrv;		// 真っ白ＳＲＶ
-	ComPtr<ID3D11Resource> m_whiteres;					// 真っ白RES
+	//ComPtr<ID3D11ShaderResourceView> m_whitesrv;		// 真っ白ＳＲＶ
+	//ComPtr<ID3D11Resource> m_whiteres;					// 真っ白RES
 
 	std::vector<Vertex> m_vertices;				// 頂点データ
 	std::vector<unsigned int> m_indices;		// インデックス

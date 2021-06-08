@@ -6,14 +6,12 @@
 #include "InternalCode/CCameraComponent.h"
 #include "ExternalCode/Application.h"
 #include "InternalCode/CInputManager.h"
+#include "InternalCode/CModelDataManager.h"
 
 CDice::CDice(CLevel& owner):CActor(owner)
 {
-	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this);
+	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this , CModelManager::GetInstance().GetModel("assets/HAL/halchan1.pmx" , "assets/HAL/"));
 	CCameraComponent* camera = new CCameraComponent(*this);
-
-	//staticMesh->SetModel("assets/dice/PlayerBox.x" , "assets/dice/");
-	staticMesh->SetModel("assets/dice/PlayerBox.x" , "assets/dice/");
 
 	DirectX::XMFLOAT3 eye(-50 , 50 , -50);	//ƒJƒƒ‰ˆÊ’u
 	DirectX::XMFLOAT3 lookat(0 , 0 , 0);	//’‹“_

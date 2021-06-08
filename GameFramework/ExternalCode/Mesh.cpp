@@ -16,11 +16,11 @@ using Microsoft::WRL::ComPtr;
 
 Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures,Material mtrl){
 
-	// ^‚Á”’‚ÌSRV‚ðˆê‚Âì‚Á‚Ä‚¨‚­
-	bool sts = CreateSRVfromFile("assets/white.bmp", CDirectXGraphics::GetInstance()->GetDXDevice() , CDirectXGraphics::GetInstance()->GetImmediateContext(), &m_whiteres,&m_whitesrv);
-	if (!sts) {
-		MessageBox(nullptr, "white,bmp load error", "error", MB_OK);
-	}
+	//// ^‚Á”’‚ÌSRV‚ðˆê‚Âì‚Á‚Ä‚¨‚­
+	//bool sts = CreateSRVfromFile("assets/white.bmp", CDirectXGraphics::GetInstance()->GetDXDevice() , CDirectXGraphics::GetInstance()->GetImmediateContext(), &m_whiteres,&m_whitesrv);
+	//if (!sts) {
+	//	MessageBox(nullptr, "white,bmp load error", "error", MB_OK);
+	//}
 
 	m_vertices = vertices;
 	m_indices = indices;

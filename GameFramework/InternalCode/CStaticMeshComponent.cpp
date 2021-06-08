@@ -4,13 +4,15 @@
 #include "CModelDataManager.h"
 #include "CActor.h"
 
-CStaticMeshComponent::CStaticMeshComponent(IActor& owner)
+CStaticMeshComponent::CStaticMeshComponent(IActor& owner , ModelData& model)
 	:CComponent(owner) ,
+	mModel(&model) ,
 	mRenderComponent(*new CRenderComponent(owner))
 {
-	owner.RegisterRenderComponent(*this);
-
 	mPriority = 90;
+
+	//アクター(owner)にレンダー担当のコンポーネントとして登録
+	owner.RegisterRenderComponent(*this);
 
 	// 頂点データの定義（アニメーション対応）
 	D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -21,20 +23,15 @@ CStaticMeshComponent::CStaticMeshComponent(IActor& owner)
 	};
 	unsigned int numElements = ARRAYSIZE(layout);
 
-	mRenderComponent.GenerateVertexShader(layout , numElements , "./Shader/vs.hlsl");
-	mRenderComponent.GeneratePixelShader("./Shader/ps.hlsl");
-}
-
-void CStaticMeshComponent::SetModel(std::string filename , std::string resourcefolder)
-{
-	mModel = CModelManager::GetInstance().GetModel(filename , resourcefolder);
+	mRenderComponent.GenerateVertexShader(layout , numElements , "Shader/vs.hlsl");
+	mRenderComponent.GeneratePixelShader("Shader/ps.hlsl");
 }
 
 void CStaticMeshComponent::Render()
 {
 	for(auto& mesh : mModel->GetMeshes())
 	{
-		unsigned int indexSize = static_cast <unsigned int>(sizeof(mesh.m_indices));
+		unsigned int indexSize = static_cast <unsigned int>(mesh.m_indices.size());
 
 		if(mesh.m_textures.size() >= 1)
 		{
@@ -43,6 +40,8 @@ void CStaticMeshComponent::Render()
 		}
 		else
 		{
+			MessageBox(NULL , "Not Found Texture!!" , "error" , MB_OK);
+			exit(1);
 			//TO DO
 		}
 	}
