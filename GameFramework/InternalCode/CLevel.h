@@ -4,10 +4,10 @@
 
 #include "CActor.h"
 #include "IRender.h"
-#include "StartLevelSetting.h"
 
 class IGame;
 class CGame;
+class CGameManager;
 class CCameraComponent;
 
 class ILevel
@@ -21,7 +21,6 @@ class CLevel :public ILevel , public IRender
 {
 private:
 	//フレンド指定
-	friend CLevel& StartLevelSetting();
 	friend CActor::CActor(CLevel&);
 
 	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
@@ -29,9 +28,6 @@ private:
 
 protected:
 	IGame* mOwnerInterface;			//ゲームインターフェース
-
-	//子クラスとフレンド指定したものにのみ許可
-	CLevel() {};
 
 private:
 	//コピー禁止
@@ -51,6 +47,13 @@ public:
 	//★超重要★　コンストラクタを呼ぶことはレベルの遷移を意味する
 	CLevel(CGame& owner);
 
+	/*
+	★超重要★
+	ゲームマネージャーにレベルを送る場合のみゲームの参照なしでコンストラクタを呼び出し可能
+	開始レベルの設定のためなので一度のみ可能二度目からはエラーで終了する
+	*/
+	CLevel(CGameManager& receiver);
+
 	virtual ~CLevel() {};
 
 	//初期化
@@ -64,4 +67,7 @@ public:
 
 	//アクターの破壊
 	void DestroyActor(CActor& target)override;
+
+	//インターフェースのセット　ゲームマネージャーからしか呼び出す想定をしていない
+	void SetOwnerInterface(CGame& owner);
 };

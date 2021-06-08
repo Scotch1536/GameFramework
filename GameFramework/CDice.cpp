@@ -1,16 +1,21 @@
+#include <functional>
+
 #include "CDice.h"
 #include "CStaticMeshComponent.h"
+#include "ExternalCode/CDirectInput.h"
 #include "InternalCode/CCameraComponent.h"
 #include "ExternalCode/Application.h"
+#include "InternalCode/CInputManager.h"
 
 CDice::CDice(CLevel& owner):CActor(owner)
 {
 	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this);
 	CCameraComponent* camera = new CCameraComponent(*this);
 
+	//staticMesh->SetModel("assets/dice/PlayerBox.x" , "assets/dice/");
 	staticMesh->SetModel("assets/dice/PlayerBox.x" , "assets/dice/");
 
-	DirectX::XMFLOAT3 eye(10 , 100 , -100);	//カメラ位置
+	DirectX::XMFLOAT3 eye(-50 , 50 , -50);	//カメラ位置
 	DirectX::XMFLOAT3 lookat(0 , 0 , 0);	//注視点
 	DirectX::XMFLOAT3 up(0 , 1 , 0);		//カメラの上向きベクトル
 
@@ -21,4 +26,13 @@ CDice::CDice(CLevel& owner):CActor(owner)
 		Application::CLIENT_WIDTH ,		//スクリーン幅
 		Application::CLIENT_HEIGHT ,	//スクリーンの高さ
 		eye , lookat , up);
+
+	SButtonInfo bufin = { EButtonType::KEYBOARD,DIK_A };
+
+	CInputManager::GetInstance().AddAction("test" , bufin , std::bind(&CDice::Test , std::ref(*this)));
+}
+
+void CDice::Test()
+{
+	MessageBox(NULL , "Test" , "error" , MB_OK);
 }

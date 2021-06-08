@@ -30,11 +30,6 @@ void CStaticMeshComponent::SetModel(std::string filename , std::string resourcef
 	mModel = CModelManager::GetInstance().GetModel(filename , resourcefolder);
 }
 
-void CStaticMeshComponent::Update()
-{
-
-}
-
 void CStaticMeshComponent::Render()
 {
 	for(auto& mesh : mModel->GetMeshes())

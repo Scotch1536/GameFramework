@@ -29,8 +29,6 @@ private:
 	ILevel& mOwnerInterface;									//インターフェース
 	std::vector<IRender*> mRenderAttributeComponents;			//描画の属性をもつコンポーネント
 
-	bool mShouldCheckAttribute = true;		//属性チェックすべきか
-
 	//コピー禁止
 	CActor(const CActor&) = delete;
 	CActor& operator=(const CActor&) = delete;

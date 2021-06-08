@@ -49,19 +49,6 @@ bool CRenderComponent::GeneratePixelShader(const char* psfile)
 	return true;
 }
 
-//void CRenderComponent::SetData(unsigned int indexSize ,
-//	ID3D11ShaderResourceView* shaderResourceView ,
-//	ID3D11Buffer* vertexBuffer ,
-//	ID3D11Buffer* indexBuffer ,
-//	ID3D11Buffer* cBMaterial)
-//{
-//	mIndexBuffer = indexBuffer;
-//	mShaderResourceView = shaderResourceView;
-//	mVertexBuffer = vertexBuffer;
-//	mIndexBuffer = indexBuffer;
-//	mCBMaterial = cBMaterial;
-//}
-
 void CRenderComponent::Render(unsigned int indexSize ,
 	ID3D11ShaderResourceView* shaderResourceView ,
 	ID3D11Buffer* vertexBuffer ,
@@ -100,10 +87,4 @@ void CRenderComponent::Render(unsigned int indexSize ,
 
 	// インデックスバッファを利用して描画
 	devcontext->DrawIndexed(indexSize , 0 , 0);
-
-}
-
-void CRenderComponent::Update()
-{
-
 }

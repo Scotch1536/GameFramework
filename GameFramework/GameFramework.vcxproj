@@ -43,7 +43,6 @@
     <ClCompile Include="InternalCode\CRenderComponent.cpp" />
     <ClCompile Include="InternalCode\CStaticMeshComponent.cpp" />
     <ClCompile Include="InternalCode\CTransform.cpp" />
-    <ClCompile Include="InternalCode\StartLevelSetting.cpp" />
     <ClCompile Include="InternalCode\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -76,7 +75,6 @@
     <ClInclude Include="InternalCode\CStaticMeshComponent.h" />
     <ClInclude Include="InternalCode\CTransform.h" />
     <ClInclude Include="InternalCode\IRender.h" />
-    <ClInclude Include="InternalCode\StartLevelSetting.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DirectXTex\include\DirectXTex.inl" />

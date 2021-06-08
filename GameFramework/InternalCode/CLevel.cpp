@@ -1,11 +1,17 @@
 #include "CLevel.h"
 #include "CGame.h"
+#include "CGameManager.h"
 #include "CCameraComponent.h"
 #include "DX11Settransform.h"
 
 CLevel::CLevel(CGame& owner):mOwnerInterface(&owner)
 {
 	mOwnerInterface->LoadLevel(*this);
+}
+
+CLevel::CLevel(CGameManager& receiver)
+{
+	receiver.SetStartLevel(*this);
 }
 
 void CLevel::AddActor(CActor& actor)
@@ -36,7 +42,7 @@ void CLevel::Render()
 		exit(1);
 	}
 
-	float col[4] = { 1.f,1.f,1.f,1.f };
+	float col[4] = { 1.f,0.f,0.f,1.f };
 
 	// ターゲットバッファクリア
 	CDirectXGraphics::GetInstance()->GetImmediateContext()->ClearRenderTargetView(
@@ -71,4 +77,9 @@ void CLevel::DestroyActor(CActor& target)
 		}
 	}
 	mActors.shrink_to_fit();
+}
+
+void CLevel::SetOwnerInterface(CGame& owner)
+{
+	mOwnerInterface = &owner;
 }

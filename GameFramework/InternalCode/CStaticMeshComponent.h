@@ -16,9 +16,6 @@ public:
 	//モデルのセット
 	void SetModel(std::string filename , std::string resourcefolder);
 
-	//更新
-	void Update()override;
-
 	//描画
 	void Render()override;
 };

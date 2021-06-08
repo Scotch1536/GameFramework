@@ -35,8 +35,6 @@ void CActor::Update()
 	{
 		component->Update();
 	}
-
-	if(mShouldCheckAttribute)mShouldCheckAttribute = false;
 }
 
 void CActor::Render()
