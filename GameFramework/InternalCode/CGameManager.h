@@ -1,7 +1,8 @@
 #pragma once
 
-#include "CGame.h"
 #include <memory>
+
+#include "CGame.h"
 
 class CLevel;
 class CGame;
@@ -12,9 +13,10 @@ class Application;
 class CGameManager
 {
 private:
-	std::unique_ptr<CGame> mGame;			//ゲームクラス
+	//フレンド指定
+	friend CLevel::CLevel(CGameManager&);
 
-	//CLevel* mStartLevel;					//スタートレベル
+	std::unique_ptr<CGame> mGame;			//ゲームクラス
 
 	bool mCanExecute = true;				//実行できるか
 	bool mCanSetStartLevel = true;			//スタートレベルをセットできるか
@@ -26,11 +28,11 @@ private:
 	CGameManager& operator=(const CGameManager&) = delete;
 	CGameManager(CGameManager&&) = delete;
 	CGameManager& operator=(CGameManager&&) = delete;
+
+	//スタートレベルのセット
+	void SetStartLevel(CLevel& startLevel);
 public:
 	static CGameManager& GetInstance();
-
-	////スタートレベルのセット
-	void SetStartLevel(CLevel& startLevel);
 
 	//実行をリクエスト
 	void RequestExecute(HINSTANCE hInst , int winMode);
@@ -38,5 +40,8 @@ public:
 	//ゲームクラスの取得（アプリケーションクラスの参照が必要）
 	CGame& GetGame(Application& partner);
 
-	IGame& GetGameInterface();
+	IGame& GetGameInterface()
+	{
+		return *mGame;
+	}
 };

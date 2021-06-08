@@ -19,7 +19,7 @@ public:
 };
 
 //アクタークラス
-class CActor :public IActor , public IRender
+class CActor :public IActor
 {
 private:
 	//フレンド指定
@@ -28,8 +28,6 @@ private:
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
 	ILevel& mOwnerInterface;									//インターフェース
 	std::vector<IRender*> mRenderAttributeComponents;			//描画の属性をもつコンポーネント
-
-	bool mShouldCheckAttribute = true;		//属性チェックすべきか
 
 	//コピー禁止
 	CActor(const CActor&) = delete;
@@ -42,7 +40,7 @@ private:
 	void AddComponent(CComponent& component)override;
 	void RegisterRenderComponent(IRender& component)override;
 protected:
-	CTransform mTransform;										//トランスフォーム
+	CTransform mTransform;			//トランスフォーム
 
 public:
 	//★超重要★　アクターのコンストラクタを呼ぶことはレベルにアクターを追加することを意味する
@@ -56,11 +54,11 @@ public:
 	virtual void Update();
 
 	//描画
-	void Render()override;
+	void Render();
 
 	//破壊
 	void Destroy();
 
 	//コンポーネントの属性から指定のコンポーネントをゲット
-	bool GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& inOut)const;
+	bool GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& result)const;
 };

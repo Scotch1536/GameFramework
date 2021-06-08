@@ -23,10 +23,12 @@ void CGameManager::SetStartLevel(CLevel& startLevel)
 		mCanSetStartLevel = false;
 
 		mGame->mLevel.reset(&startLevel);
+		startLevel.SetOwnerInterface(*mGame);
 	}
 	else
 	{
 		MessageBox(NULL , "Already SetStartLevel" , "error" , MB_OK);
+		exit(1);
 	}
 }
 
@@ -49,7 +51,7 @@ CGame& CGameManager::GetGame(Application& partner)
 	return *mGame;
 }
 
-IGame& CGameManager::GetGameInterface()
-{
-	return dynamic_cast<IGame&>(*mGame);
-}
+//IGame& CGameManager::GetGameInterface()
+//{
+//	return dynamic_cast<IGame&>(*mGame);
+//}

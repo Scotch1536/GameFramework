@@ -19,7 +19,6 @@
 //-----------------------------------------------------------------------------
 #include <Windows.h>
 #include "CGameManager.h"
-#include "StartLevelSetting.h"
 
 #include "../CTestLevel.h"
 
@@ -38,10 +37,18 @@ INT APIENTRY WinMain(HINSTANCE  h_hInst,
 					 LPSTR		h_lpszArgs,
 					 int		h_nWinMode)
 {
+	//ゲームマネージャー取得
 	CGameManager& gameManager = CGameManager::GetInstance();
 
-	gameManager.SetStartLevel(StartLevelSetting());
+	/*★超重要★
+		ここに開始したいレベルのコンストラクタを
+		引数をCGameManager&で呼び出す
+		メモリ解放ははゲームマネージャーが行うので考えなくてよい
+		new StartLevelType(CGameManager&);
+	*/
+	*new CTestLevel(gameManager);
 
+	//ゲームの実行をリクエスト
 	gameManager.RequestExecute(h_hInst , h_nWinMode);
 }
 

@@ -5,6 +5,7 @@
 #include "CDirectInput.h"
 #include "CDirectXGraphics.h"
 #include "DX11Settransform.h"
+#include "CInputManager.h"
 
 CGame::CGame()
 {}
@@ -73,7 +74,7 @@ void CGame::Init()
 
 void CGame::Input(uint64_t deltataime)
 {
-
+	CInputManager::GetInstance().CheckInput();
 }
 
 void CGame::Update(uint64_t deltataime)

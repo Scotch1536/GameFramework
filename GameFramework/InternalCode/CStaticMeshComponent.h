@@ -11,13 +11,13 @@ private:
 	CTransform mTransform;						//トランスフォーム
 	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
 public:
-	CStaticMeshComponent(IActor& owner);
+	CStaticMeshComponent(IActor& owner , ModelData& model);
 
 	//モデルのセット
-	void SetModel(std::string filename , std::string resourcefolder);
-
-	//更新
-	void Update()override;
+	void SetModel(ModelData& model)
+	{
+		mModel = &model;
+	}
 
 	//描画
 	void Render()override;

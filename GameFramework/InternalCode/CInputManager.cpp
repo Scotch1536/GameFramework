@@ -23,14 +23,22 @@ void CInputManager::RequestBindAction(std::string actionName , std::function<voi
 	mActionList[actionName].ActionInfo = func;
 }
 
-void CInputManager::AddAction(std::string actionName , std::vector<SButtonInfo>& buttonInfoList , std::function<void()>& func)
+void CInputManager::AddAction(std::string actionName , std::vector<SButtonInfo> buttonInfoList , std::function<void(void)> func)
 {
 	mActionList[actionName].ButtonInfoList = buttonInfoList;
 	mActionList[actionName].ActionInfo = func;
 }
 
-void CInputManager::Update()
+void CInputManager::AddAction(std::string actionName , SButtonInfo buttonInfo , std::function<void(void)> func)
 {
+	mActionList[actionName].ButtonInfoList.emplace_back(buttonInfo);
+	mActionList[actionName].ActionInfo = func;
+}
+
+void CInputManager::CheckInput()
+{
+	CDirectInput::GetInstance().GetKeyBuffer();
+
 	for(auto& action : mActionList)
 	{
 		bool shouldAction = false;
@@ -38,7 +46,7 @@ void CInputManager::Update()
 		{
 			switch(buttonInfo.ButtonType)
 			{
-			case ButtonType::KEYBOARD:
+			case EButtonType::KEYBOARD:
 				if(CDirectInput::GetInstance().CheckKeyBuffer(buttonInfo.ButtonNum))
 				{
 					shouldAction = true;

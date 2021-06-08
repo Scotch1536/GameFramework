@@ -90,9 +90,6 @@
     <ClCompile Include="CTestLevel.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\StartLevelSetting.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ExternalCode\Application.h">
@@ -182,19 +179,11 @@
     <ClInclude Include="CTestLevel.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\StartLevelSetting.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="DirectXTex\include\DirectXTex.inl">
       <Filter>ヘッダー ファイル</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Shader\ps.hlsl" />
-    <FxCompile Include="Shader\pstexcol.hlsl" />
-    <FxCompile Include="Shader\psvscommon.hlsl" />
-    <FxCompile Include="Shader\vs.hlsl" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

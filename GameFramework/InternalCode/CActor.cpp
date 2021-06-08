@@ -35,8 +35,6 @@ void CActor::Update()
 	{
 		component->Update();
 	}
-
-	if(mShouldCheckAttribute)mShouldCheckAttribute = false;
 }
 
 void CActor::Render()
@@ -52,13 +50,13 @@ void CActor::Destroy()
 	mOwnerInterface.DestroyActor(*this);
 }
 
-bool CActor::GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& inOut)const
+bool CActor::GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& result)const
 {
 	for(auto& component : mComponents)
 	{
 		if(component->GetAttribute() == attribute)
 		{
-			inOut = component.get();
+			result = component.get();
 			return true;
 		}
 	}

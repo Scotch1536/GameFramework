@@ -10,7 +10,6 @@ void CTestLevel::Init()
 	CLight* light = new CLight;
 
 	CActor& buf = *new CDice(*this);
-	//mActors.emplace_back(new CDice(*this));
 
 	CComponent* ref = nullptr;
 	if(buf.GetComponentFromAttribute(CComponent::EAttribute::CAMERA , ref))
