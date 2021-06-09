@@ -8,6 +8,7 @@
 class IGame;
 class CGame;
 class CGameManager;
+class IGameManagerToLevel;
 class CCameraComponent;
 
 class ILevel
@@ -17,15 +18,22 @@ public:
 	virtual void DestroyActor(CActor& target) = 0;
 };
 
-class CLevel :public ILevel
+class ILevelToActor
+{
+public:
+	virtual ~ILevelToActor() {};
+	virtual void AddActor(CActor& actor) = 0;
+};
+
+class CLevel :public ILevel , public ILevelToActor
 {
 private:
-	//フレンド指定
-	friend CActor::CActor(CLevel&);
-
 	std::vector<std::unique_ptr<CActor>> mActors;		//アクター
+
 	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
 
+	//アクターの破壊
+	void DestroyActor(CActor& target)override;
 protected:
 	IGame* mOwnerInterface;			//ゲームインターフェース
 
@@ -38,7 +46,7 @@ private:
 	★超重要★子クラスは呼ぶことはできない
 	アクターのコンストラクタを呼ぶことでアクターの参照から辿ってこのメソッドが呼ばれる
 	*/
-	void AddActor(CActor& actor);
+	void AddActor(CActor& actor)override;
 protected:
 	//カメラのセットをリクエスト
 	void RequestSetCamera(CCameraComponent& camera);
@@ -52,7 +60,7 @@ public:
 	ゲームマネージャーにレベルを送る場合のみゲームの参照なしでコンストラクタを呼び出し可能
 	開始レベルの設定のためなので一度のみ可能二度目からはエラーで終了する
 	*/
-	CLevel(CGameManager& receiver);
+	CLevel(IGameManagerToLevel& receiver);
 
 	virtual ~CLevel() {};
 
@@ -64,9 +72,6 @@ public:
 
 	//描画
 	void Render();
-
-	//アクターの破壊
-	void DestroyActor(CActor& target)override;
 
 	//インターフェースのセット　ゲームマネージャーからしか呼び出す想定をしていない
 	void SetOwnerInterface(CGame& owner);

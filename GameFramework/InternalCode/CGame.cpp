@@ -7,7 +7,7 @@
 #include "DX11Settransform.h"
 #include "CInputManager.h"
 
-CGame::CGame()
+CGame::CGame(CGameManager& partner)
 {}
 
 long CGame::Execute(HINSTANCE hInst , int winMode)
@@ -29,6 +29,11 @@ long CGame::Execute(HINSTANCE hInst , int winMode)
 	mApp->Dispose();
 
 	return ret;
+}
+
+void CGame::SetLevel(CLevel& level)
+{
+	mLevel.reset(&level);
 }
 
 void CGame::Init()

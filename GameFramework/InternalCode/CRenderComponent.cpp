@@ -2,10 +2,8 @@
 #include "CDirectxGraphics.h"
 #include "Shader.h"
 
-CRenderComponent::CRenderComponent(IActor& owner):CComponent(owner)
-{
-	mPriority = 100;
-}
+CRenderComponent::CRenderComponent(IActor& owner , int priority):CComponent(owner , priority)
+{}
 
 bool CRenderComponent::GenerateVertexShader(D3D11_INPUT_ELEMENT_DESC* layout , unsigned int layoutSize , const char* vsfile)
 {

@@ -17,7 +17,7 @@ protected:
 	ComPtr<ID3D11InputLayout> mVertexLayout;			// 頂点フォーマット
 
 public:
-	CRenderComponent(IActor& owner);
+	CRenderComponent(IActor& owner , int priority = 100);
 
 	//頂点シェーダ生成
 	bool GenerateVertexShader(D3D11_INPUT_ELEMENT_DESC* layout , unsigned int layoutSize , const char* vsfile);

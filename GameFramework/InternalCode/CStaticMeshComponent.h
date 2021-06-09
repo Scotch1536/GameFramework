@@ -1,17 +1,20 @@
 #pragma once
+#include "CComponent.h"
 #include "ModelData.h"
-#include "CTransform.h"
 #include "IRender.h"
-#include "CRenderComponent.h"
+#include "CChildTransform.h"
+
+class CRenderComponent;
 
 class CStaticMeshComponent :public CComponent , public IRender
 {
 private:
+	CChildTransform mTransform;				//トランスフォーム
+
 	ModelData* mModel;							//モデルデータ
-	CTransform mTransform;						//トランスフォーム
 	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
 public:
-	CStaticMeshComponent(IActor& owner , ModelData& model);
+	CStaticMeshComponent(IActor& owner , ModelData& model , int priority = 90);
 
 	//モデルのセット
 	void SetModel(ModelData& model)

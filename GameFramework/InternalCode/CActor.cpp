@@ -2,9 +2,9 @@
 #include "CLevel.h"
 #include "IRender.h"
 
-CActor::CActor(CLevel& owner):mOwnerInterface(owner)
+CActor::CActor(CLevel& owner):mOwnerInterface(owner) , mTransform(*this)
 {
-	owner.AddActor(*this);
+	static_cast<ILevelToActor&>(owner).AddActor(*this);
 }
 
 void CActor::AddComponent(CComponent& component)
@@ -20,7 +20,6 @@ void CActor::AddComponent(CComponent& component)
 			break;
 		}
 	}
-
 	this->mComponents.emplace(itr , &component);
 }
 
@@ -29,8 +28,15 @@ void CActor::RegisterRenderComponent(IRender& component)
 	mRenderAttributeComponents.emplace_back(&component);
 }
 
+CTransform& CActor::GetTransform()
+{
+	return mTransform;
+}
+
 void CActor::Update()
 {
+	mTransform.Update();
+
 	for(auto& component : mComponents)
 	{
 		component->Update();

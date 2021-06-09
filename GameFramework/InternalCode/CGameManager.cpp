@@ -6,7 +6,7 @@
 
 CGameManager::CGameManager()
 {
-	mGame.reset(new CGame());
+	mGame.reset(new CGame(*this));
 }
 
 CGameManager& CGameManager::GetInstance()
@@ -22,8 +22,8 @@ void CGameManager::SetStartLevel(CLevel& startLevel)
 	{
 		mCanSetStartLevel = false;
 
-		mGame->mLevel.reset(&startLevel);
-		startLevel.SetOwnerInterface(*mGame);
+		static_cast<IGameToGameManager&>(*mGame).SetLevel(startLevel);
+		startLevel.SetOwnerInterface(dynamic_cast<CGame&>(*mGame));
 	}
 	else
 	{
@@ -38,7 +38,7 @@ void CGameManager::RequestExecute(HINSTANCE hInst , int winMode)
 	{
 		mCanExecute = false;
 
-		mGame->Execute(hInst , winMode);
+		static_cast<IGameToGameManager&>(*mGame).Execute(hInst , winMode);
 	}
 	else
 	{
