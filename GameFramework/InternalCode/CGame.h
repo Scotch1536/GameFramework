@@ -2,7 +2,6 @@
 #include <Windows.h>
 #include <memory>
 
-//#include "CGameManager.h"
 #include "CLevel.h"
 #include "Application.h"
 
@@ -17,17 +16,20 @@ public:
 	virtual void LoadLevel(CLevel& level) = 0;
 };
 
+class IGameToGameManager
+{
+public:
+	virtual ~IGameToGameManager() {};
+	virtual void SetLevel(CLevel& level) = 0;
+	virtual long Execute(HINSTANCE hInst , int winMode) = 0;
+};
+
 //ゲームクラス
-class CGame :public IGame
+class CGame :public IGame , public IGameToGameManager
 {
 private:
-	//フレンド指定
-	friend CGameManager;
-
 	std::unique_ptr<Application> mApp;		//アプリケーション
 	std::unique_ptr<CLevel> mLevel;			//レベル
-
-	CGame();
 
 	//コピー＆ムーブ禁止
 	CGame(const CGame&) = delete;
@@ -36,9 +38,12 @@ private:
 	CGame& operator=(CGame&&) = delete;
 
 	//実行　※このメソッドをエントリーポイントの関数で呼べばウィンドウが作られゲームがスタートする
-	long Execute(HINSTANCE hInst , int winMode);
+	long Execute(HINSTANCE hInst , int winMode)override;
 
+	void SetLevel(CLevel& level)override;
 public:
+	CGame(CGameManager& partner);
+
 	//レベルのロード（遷移）
 	void LoadLevel(CLevel& level)override;
 

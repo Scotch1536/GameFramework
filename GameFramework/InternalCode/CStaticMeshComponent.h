@@ -1,14 +1,17 @@
 #pragma once
+#include "CComponent.h"
 #include "ModelData.h"
-#include "CTransform.h"
 #include "IRender.h"
-#include "CRenderComponent.h"
+
+class CChildTransform;
+class CRenderComponent;
 
 class CStaticMeshComponent :public CComponent , public IRender
 {
 private:
+	CChildTransform& mTransform;				//トランスフォーム
+
 	ModelData* mModel;							//モデルデータ
-	CTransform mTransform;						//トランスフォーム
 	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
 public:
 	CStaticMeshComponent(IActor& owner , ModelData& model);

@@ -6,11 +6,6 @@ CRotator::CRotator()
 	DX11QtIdentity(mQuaternion);
 }
 
-//void CRotator::Init()
-//{
-//	DX11QtIdentity(mQuatanion);
-//}
-
 void CRotator::Update()
 {
 	if(mToQuaternion != nullptr)
@@ -24,20 +19,14 @@ void CRotator::Update()
 			mFromQuaternion.reset();
 			mToQuaternion.reset();
 		}
-		//mAlpha++;
 		mAlpha += mIncreaceAlpha;
 	}
 }
 
-void CRotator::SetAngle(XMFLOAT3 angle/*,float time*/)
+void CRotator::SetAngle(XMFLOAT3 angle)
 {
 	mAngle = angle;
 
-	//mIncreaceAlpha = 1 / (time * 60);
-
-	//mFromQuatanion.reset();
-	//*mFromQuatanion = mQuatanion;
-	//mToQuatanion.reset();
 	TransformFromEulerAnglesToQuaternion(mAngle , mQuaternion);
 }
 

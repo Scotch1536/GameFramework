@@ -34,6 +34,7 @@
     <ClCompile Include="ExternalCode\Shader.cpp" />
     <ClCompile Include="ExternalCode\utftosjisconv.cpp" />
     <ClCompile Include="InternalCode\CActor.cpp" />
+    <ClCompile Include="InternalCode\CChildTransform.cpp" />
     <ClCompile Include="InternalCode\CComponent.cpp" />
     <ClCompile Include="InternalCode\CGame.cpp" />
     <ClCompile Include="InternalCode\CGameManager.cpp" />
@@ -66,6 +67,7 @@
     <ClInclude Include="ExternalCode\VertexProto.h" />
     <ClInclude Include="InternalCode\CActor.h" />
     <ClInclude Include="InternalCode\CCameraComponent.h" />
+    <ClInclude Include="InternalCode\CChildTransform.h" />
     <ClInclude Include="InternalCode\CComponent.h" />
     <ClInclude Include="InternalCode\CGame.h" />
     <ClInclude Include="InternalCode\CGameManager.h" />
@@ -79,7 +81,6 @@
     <ClInclude Include="InternalCode\IRender.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="DirectXTex\include\DirectXTex.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

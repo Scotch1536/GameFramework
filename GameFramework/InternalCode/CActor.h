@@ -8,6 +8,7 @@
 
 class CLevel;
 class ILevel;
+class CTransform;
 
 //インターフェース
 class IActor
@@ -16,15 +17,13 @@ public:
 	virtual ~IActor() {};
 	virtual void AddComponent(CComponent& component) = 0;
 	virtual void RegisterRenderComponent(IRender& component) = 0;
+	virtual CTransform& GetTransform() = 0;
 };
 
 //アクタークラス
 class CActor :public IActor
 {
 private:
-	//フレンド指定
-	friend CComponent::CComponent(IActor&);
-
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
 	ILevel& mOwnerInterface;									//インターフェース
 	std::vector<IRender*> mRenderAttributeComponents;			//描画の属性をもつコンポーネント
@@ -39,6 +38,7 @@ private:
 	*/
 	void AddComponent(CComponent& component)override;
 	void RegisterRenderComponent(IRender& component)override;
+	CTransform& GetTransform()override;
 protected:
 	CTransform mTransform;			//トランスフォーム
 

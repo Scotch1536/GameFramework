@@ -9,13 +9,17 @@ class CGame;
 class IGame;
 class Application;
 
+class IGameManagerToLevel
+{
+public:
+	virtual ~IGameManagerToLevel() {};
+	virtual void SetStartLevel(CLevel& startLevel) = 0;
+};
+
 //ゲームマネージャークラス　（シングルトン）
-class CGameManager
+class CGameManager :public IGameManagerToLevel
 {
 private:
-	//フレンド指定
-	friend CLevel::CLevel(CGameManager&);
-
 	std::unique_ptr<CGame> mGame;			//ゲームクラス
 
 	bool mCanExecute = true;				//実行できるか
@@ -30,7 +34,7 @@ private:
 	CGameManager& operator=(CGameManager&&) = delete;
 
 	//スタートレベルのセット
-	void SetStartLevel(CLevel& startLevel);
+	void SetStartLevel(CLevel& startLevel)override;
 public:
 	static CGameManager& GetInstance();
 

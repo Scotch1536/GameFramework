@@ -1,14 +1,18 @@
 #include <string>
 
 #include "CStaticMeshComponent.h"
+#include "CChildTransform.h"
+#include "CRenderComponent.h"
 #include "CModelDataManager.h"
 #include "CActor.h"
 
 CStaticMeshComponent::CStaticMeshComponent(IActor& owner , ModelData& model)
 	:CComponent(owner) ,
+	mTransform(*new CChildTransform(owner.GetTransform())) ,
 	mModel(&model) ,
 	mRenderComponent(*new CRenderComponent(owner))
 {
+	//mTransform = new CChildTransform(owner.GetTransform());
 	mPriority = 90;
 
 	//アクター(owner)にレンダー担当のコンポーネントとして登録
@@ -29,6 +33,8 @@ CStaticMeshComponent::CStaticMeshComponent(IActor& owner , ModelData& model)
 
 void CStaticMeshComponent::Render()
 {
+	mTransform.RequestSetMatrix();
+
 	for(auto& mesh : mModel->GetMeshes())
 	{
 		unsigned int indexSize = static_cast <unsigned int>(mesh.m_indices.size());

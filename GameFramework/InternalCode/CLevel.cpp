@@ -9,7 +9,7 @@ CLevel::CLevel(CGame& owner):mOwnerInterface(&owner)
 	mOwnerInterface->LoadLevel(*this);
 }
 
-CLevel::CLevel(CGameManager& receiver)
+CLevel::CLevel(IGameManagerToLevel& receiver)
 {
 	receiver.SetStartLevel(*this);
 }

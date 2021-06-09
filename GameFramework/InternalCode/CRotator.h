@@ -13,8 +13,6 @@ private:
 	XMFLOAT3 mAngle;				//角度（度数法）
 	XMFLOAT4 mQuaternion;			//クォータニオン（現在地）
 
-	//XMFLOAT4X4 mMatrix;			//マトリックス
-
 	std::unique_ptr<XMFLOAT4> mFromQuaternion;			//クォータニオン（移動前）
 	std::unique_ptr<XMFLOAT4> mToQuaternion;			//クォータニオン（移動後）
 	
@@ -26,17 +24,20 @@ private:
 public :
 	CRotator();
 
-	////初期化
-	//void Init();
-
 	//更新
 	void Update();
 
-	//角度セット
-	void SetAngle(XMFLOAT3 angle /*,float time*/);
-
+	//球面線形補間をリクエスト
 	void RequestSLerp(XMFLOAT3 angle , float time);
 
 	//マトリックス取得
 	XMFLOAT4X4 GenerateMatrix(CTransform& partner);
+
+	//角度セット
+	void SetAngle(XMFLOAT3 angle);
+
+	const XMFLOAT3& GetAngle()const
+	{
+		return mAngle;
+	}
 };
