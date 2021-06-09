@@ -20,12 +20,4 @@ void CTestLevel::Init()
 		light->SetAmbient(XMFLOAT4(0.0f , 0.0f , 0.0f , 0.0f));
 		light->Update();
 	}
-
-	XMFLOAT4X4 worldMTX;
-	XMFLOAT3 rot = { 0.f,0.f,0.f };
-	XMFLOAT3 trans = { 0.f,0.f,0.f };
-	DX11MakeWorldMatrix(worldMTX , rot , trans);
-	DX11MtxIdentity(worldMTX);
-
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD , worldMTX);
 }

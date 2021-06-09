@@ -6,8 +6,8 @@
 #include "CModelDataManager.h"
 #include "CActor.h"
 
-CStaticMeshComponent::CStaticMeshComponent(IActor& owner , ModelData& model)
-	:CComponent(owner) ,
+CStaticMeshComponent::CStaticMeshComponent(IActor& owner , ModelData& model , int priority)
+	:CComponent(owner , priority) ,
 	mTransform(*new CChildTransform(owner.GetTransform())) ,
 	mModel(&model) ,
 	mRenderComponent(*new CRenderComponent(owner))

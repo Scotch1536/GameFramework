@@ -10,10 +10,15 @@
 
 CDice::CDice(CLevel& owner):CActor(owner)
 {
-	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this , CModelManager::GetInstance().GetModel("assets/HAL/halchan1.pmx" , "assets/HAL/"));
+	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this , CModelManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/"));
 	CCameraComponent* camera = new CCameraComponent(*this);
 
-	DirectX::XMFLOAT3 eye(-50 , 50 , -50);	//カメラ位置
+	mTransform.SetLocation({ 0,0,0 });
+	mTransform.SetScale({ 1,1,1 });
+	mTransform.SetRotation({ 0,0,0 });
+	mTransform.RequestSLerp({ 90,0,0 } , 1);
+
+	DirectX::XMFLOAT3 eye(0 , 0 , -100);	//カメラ位置
 	DirectX::XMFLOAT3 lookat(0 , 0 , 0);	//注視点
 	DirectX::XMFLOAT3 up(0 , 1 , 0);		//カメラの上向きベクトル
 
@@ -28,7 +33,6 @@ CDice::CDice(CLevel& owner):CActor(owner)
 	SButtonInfo bufin = { EButtonType::KEYBOARD,DIK_A };
 
 	CInputManager::GetInstance().AddAction("test" , bufin , std::bind(&CDice::Test , std::ref(*this)));
-	
 }
 
 void CDice::Test()

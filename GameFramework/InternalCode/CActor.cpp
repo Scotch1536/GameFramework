@@ -20,7 +20,6 @@ void CActor::AddComponent(CComponent& component)
 			break;
 		}
 	}
-
 	this->mComponents.emplace(itr , &component);
 }
 

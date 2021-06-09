@@ -13,7 +13,7 @@ public:
 	};
 
 protected:
-	int mPriority = 0;		//優先度
+	int mPriority = 0;		//優先度 0～100を想定
 
 	EAttribute mAttribute = EAttribute::NONE;
 
@@ -23,7 +23,7 @@ protected:
 
 public:
 	//★超重要★　コンストラクタを呼ぶことはアクターにコンポーネントを追加することを意味する
-	CComponent(IActor& owner);
+	CComponent(IActor& owner , int priority);
 	virtual ~CComponent() = 0;
 
 	//更新

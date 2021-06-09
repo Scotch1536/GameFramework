@@ -28,7 +28,7 @@ public :
 	void Update();
 
 	//球面線形補間をリクエスト
-	void RequestSLerp(XMFLOAT3 angle , float time);
+	void RequestSLerp(XMFLOAT3 angle , float lerpTime);
 
 	//マトリックス取得
 	XMFLOAT4X4 GenerateMatrix(CTransform& partner);

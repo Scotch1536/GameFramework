@@ -23,9 +23,8 @@ private:
 	float			m_far;
 
 public:
-	CCameraComponent(IActor& owner):CComponent(owner)
+	CCameraComponent(IActor& owner , int priority = 80):CComponent(owner , priority)
 	{
-		mPriority = 80;
 		mAttribute = CComponent::EAttribute::CAMERA;
 	}
 

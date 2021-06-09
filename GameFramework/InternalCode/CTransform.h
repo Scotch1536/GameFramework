@@ -21,7 +21,7 @@ private:
 	XMFLOAT4X4 mWorldMatrix;		//ワールド行列
 
 	std::vector<CTransform*> mChildTransform;			//従属するの子トランスフォーム
-	
+
 	bool mShouldUpdateMatrix = true;		//行列を更新すべきか
 
 	//子トランスフォームの追加
@@ -31,8 +31,7 @@ protected:
 	XMFLOAT3 mScale;			//スケール
 	CRotator mRotation;			//ローテーション
 
-	CTransform() = default;
-
+	CTransform();
 public:
 	CTransform(CActor& partner);
 	virtual ~CTransform() = default;
@@ -42,6 +41,12 @@ public:
 
 	//行列をDirectxにセットしてもらうリクエスト
 	void RequestSetMatrix();
+
+	//球面線形補間をリクエスト
+	void RequestSLerp(XMFLOAT3 angle , float lerpTime)
+	{
+		mRotation.RequestSLerp(angle , lerpTime);
+	}
 
 	void SetLocation(XMFLOAT3 location)
 	{

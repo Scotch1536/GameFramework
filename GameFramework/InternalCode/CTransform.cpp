@@ -2,7 +2,13 @@
 #include "DX11Settransform.h"
 #include "CChildTransform.h"
 
-CTransform::CTransform(CActor& partner) {}
+CTransform::CTransform()
+{
+	DX11MtxIdentity(mWorldMatrix);
+}
+
+CTransform::CTransform(CActor& partner):CTransform()
+{}
 
 void CTransform::AddChildTransform(CChildTransform& child)
 {

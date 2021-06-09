@@ -30,10 +30,10 @@ void CRotator::SetAngle(XMFLOAT3 angle)
 	TransformFromEulerAnglesToQuaternion(mAngle , mQuaternion);
 }
 
-void CRotator::RequestSLerp(XMFLOAT3 angle , float time)
+void CRotator::RequestSLerp(XMFLOAT3 angle , float lerpTime)
 {
 	if(mAlpha != 0.f)mAlpha = 0.f;
-	mIncreaceAlpha = 1 / (time * 60);
+	mIncreaceAlpha = 1 / (lerpTime * 60);
 
 	mFromQuaternion.reset(new XMFLOAT4);
 	mToQuaternion.reset(new XMFLOAT4);
