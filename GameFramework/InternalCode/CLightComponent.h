@@ -1,10 +1,11 @@
 #pragma once
 #include	<DirectXMath.h>
 #include	"memory.h"
+#include	"CComponent.h"
 #include	"Shader.h"
 #include	"CDirectXGraphics.h"
 
-class CLight {
+class CLightComponent :public CComponent {
 	ALIGN16 struct ConstantBufferLight {
 		DirectX::XMFLOAT4 LightDirection;
 		DirectX::XMFLOAT4 EyePos;
@@ -22,7 +23,13 @@ class CLight {
 	ID3D11Buffer*       m_pConstantBufferLight = nullptr;
 	DirectX::XMFLOAT4	m_ambient;
 public:
-	bool Init(DirectX::XMFLOAT3 eyepos,DirectX::XMFLOAT4 lightpos) {
+	CLightComponent(IActor& owner) :CComponent(owner)
+	{
+		mPriority = 40;
+		mAttribute = CComponent::EAttribute::LIGHT;
+	}
+
+	bool Init(DirectX::XMFLOAT3 eyepos, DirectX::XMFLOAT4 lightpos) {
 		m_lightpos = lightpos;
 		m_eyepos = eyepos;
 		m_type = LightType::DIRECTIONAL;
@@ -58,9 +65,9 @@ public:
 		cb.Ambient = m_ambient;
 
 		CDirectXGraphics::GetInstance()->GetImmediateContext()->UpdateSubresource(m_pConstantBufferLight,
-			0, 
-			nullptr, 
-			&cb, 
+			0,
+			nullptr,
+			&cb,
 			0, 0);
 
 		// コンスタントバッファ4をｂ3レジスタへセット（頂点シェーダー用）

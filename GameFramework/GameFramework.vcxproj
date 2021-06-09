@@ -48,12 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDice.h" />
+    <ClInclude Include="CLightComponent.h" />
     <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="ExternalCode\Application.h" />
     <ClInclude Include="ExternalCode\AssimpScene.h" />
     <ClInclude Include="ExternalCode\CDirectInput.h" />
     <ClInclude Include="ExternalCode\CDirectxGraphics.h" />
-    <ClInclude Include="ExternalCode\CLight.h" />
     <ClInclude Include="ExternalCode\CWindow.h" />
     <ClInclude Include="ExternalCode\CWindowCallback.h" />
     <ClInclude Include="ExternalCode\dx11mathutil.h" />
