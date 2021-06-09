@@ -12,9 +12,22 @@ CTransform::CTransform()
 CTransform::CTransform(CActor& partner):CTransform()
 {}
 
-void CTransform::AddChildTransform(CChildTransform& child)
+void CTransform::AttachChildTransform(CChildTransform& targetChild)
 {
-	mChildTransform.emplace_back(&child);
+	mChildTransform.emplace_back(&targetChild);
+}
+
+void CTransform::DetachChildTransform(CChildTransform& targetChild)
+{
+	for(auto itr = mChildTransform.begin(); itr != mChildTransform.end(); ++itr)
+	{
+		if((*itr) == &targetChild)
+		{
+			mChildTransform.erase(itr);
+			mChildTransform.shrink_to_fit();
+			break;
+		}
+	}
 }
 
 void CTransform::Update()

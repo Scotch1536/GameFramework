@@ -4,7 +4,12 @@
 
 CChildTransform::CChildTransform(CTransform& parent):mParentTransform(parent)
 {
-	static_cast<ITransform&>(parent).AddChildTransform(*this);
+	static_cast<ITransform&>(mParentTransform).AttachChildTransform(*this);
+}
+
+CChildTransform::~CChildTransform()
+{
+	mParentTransform.DetachChildTransform(*this);
 }
 
 void CChildTransform::Update()

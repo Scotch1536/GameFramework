@@ -2,7 +2,7 @@
 #include "CLevel.h"
 #include "IRender.h"
 
-CActor::CActor(CLevel& owner):mOwnerInterface(owner),mTransform(*this)
+CActor::CActor(CLevel& owner):mOwnerInterface(owner) , mTransform(*this)
 {
 	static_cast<ILevelToActor&>(owner).AddActor(*this);
 }

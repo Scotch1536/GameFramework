@@ -12,7 +12,8 @@ class ITransform
 {
 public:
 	virtual ~ITransform() {};
-	virtual void AddChildTransform(CChildTransform& child) = 0;
+	virtual void AttachChildTransform(CChildTransform& targetChild) = 0;
+	//virtual void EraseChildTransform(CChildTransform& child) = 0;
 };
 
 class CTransform :public ITransform
@@ -24,7 +25,7 @@ private:
 	XMFLOAT3 mCompareScale = { 0.f,0.f,0.f };			//比較するためのスケール
 
 	//子トランスフォームの追加
-	void AddChildTransform(CChildTransform& child)override;
+	void AttachChildTransform(CChildTransform& targetChild)override;
 protected:
 	XMFLOAT4X4 mWorldMatrix;		//ワールド行列
 
@@ -46,6 +47,9 @@ public:
 
 	//行列をDirectxにセットしてもらうリクエスト
 	void RequestSetMatrix();
+
+	//引数の子コンポーネントとの親子関係をを切り離す
+	void DetachChildTransform(CChildTransform& targetChild);
 
 	////球面線形補間をリクエスト
 	//void RequestSLerp(XMFLOAT3 angle , float lerpTime)

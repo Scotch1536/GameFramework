@@ -29,8 +29,11 @@ class CLevel :public ILevel , public ILevelToActor
 {
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;		//アクター
+
 	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
 
+	//アクターの破壊
+	void DestroyActor(CActor& target)override;
 protected:
 	IGame* mOwnerInterface;			//ゲームインターフェース
 
@@ -69,9 +72,6 @@ public:
 
 	//描画
 	void Render();
-
-	//アクターの破壊
-	void DestroyActor(CActor& target)override;
 
 	//インターフェースのセット　ゲームマネージャーからしか呼び出す想定をしていない
 	void SetOwnerInterface(CGame& owner);

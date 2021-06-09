@@ -8,12 +8,11 @@
 
 CStaticMeshComponent::CStaticMeshComponent(IActor& owner , ModelData& model , int priority)
 	:CComponent(owner , priority) ,
-	mTransform(*new CChildTransform(owner.GetTransform())) ,
+	mTransform(owner.GetTransform()) ,
 	mModel(&model) ,
 	mRenderComponent(*new CRenderComponent(owner))
 {
-	//mTransform = new CChildTransform(owner.GetTransform());
-	mPriority = 90;
+	mAttribute = CComponent::EAttribute::RENDER;
 
 	//アクター(owner)にレンダー担当のコンポーネントとして登録
 	owner.RegisterRenderComponent(*this);

@@ -10,12 +10,16 @@ public:
 	{
 		NONE ,
 		CAMERA ,
+		RENDER ,
 	};
 
-protected:
+private:
 	int mPriority = 0;		//優先度 0～100を想定
 
-	EAttribute mAttribute = EAttribute::NONE;
+protected:
+	EAttribute mAttribute = EAttribute::NONE;		//属性
+
+	IActor& mOwnerInterface;		//インターフェース
 
 	//コピー禁止
 	CComponent(const CComponent&) = delete;
@@ -38,5 +42,4 @@ public:
 	{
 		return mAttribute;
 	}
-
 };

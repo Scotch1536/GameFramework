@@ -10,6 +10,7 @@ private:
 
 public:
 	CChildTransform(CTransform& parent);
+	~CChildTransform();
 
 	void Update()override;
 };

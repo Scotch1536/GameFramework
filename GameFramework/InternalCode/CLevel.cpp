@@ -68,15 +68,22 @@ void CLevel::Render()
 
 void CLevel::DestroyActor(CActor& target)
 {
+	CComponent* refCamera;
+
+	if(target.GetComponentFromAttribute(CComponent::EAttribute::CAMERA , refCamera))
+	{
+		if(refCamera == mRenderingCamera)mRenderingCamera = nullptr;
+	}
+
 	for(auto itr = mActors.begin(); itr != mActors.end(); ++itr)
 	{
 		if((*itr).get() == &target)
 		{
 			mActors.erase(itr);
+			mActors.shrink_to_fit();
 			break;
 		}
 	}
-	mActors.shrink_to_fit();
 }
 
 void CLevel::SetOwnerInterface(CGame& owner)

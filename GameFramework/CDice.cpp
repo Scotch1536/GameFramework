@@ -2,6 +2,8 @@
 
 #include "CDice.h"
 #include "CStaticMeshComponent.h"
+#include "InternalCode/CLevel.h"
+
 #include "ExternalCode/CDirectInput.h"
 #include "InternalCode/CCameraComponent.h"
 #include "ExternalCode/Application.h"
@@ -32,6 +34,7 @@ CDice::CDice(CLevel& owner):CActor(owner)
 	CInputManager::GetInstance().AddAction("YM" , { EButtonType::KEYBOARD,DIK_G } , std::bind(&CDice::Rot , std::ref(*this) , 3));
 	CInputManager::GetInstance().AddAction("ZP" , { EButtonType::KEYBOARD,DIK_H } , std::bind(&CDice::Rot , std::ref(*this) , 4));
 	CInputManager::GetInstance().AddAction("ZM" , { EButtonType::KEYBOARD,DIK_J } , std::bind(&CDice::Rot , std::ref(*this) , 5));
+	CInputManager::GetInstance().AddAction("Dst" , { EButtonType::KEYBOARD,DIK_L } , std::bind(&CDice::Destroy , std::ref(*this)));
 }
 
 void CDice::Test()
@@ -64,6 +67,11 @@ void CDice::Rot(int dire)
 	default:
 		break;
 	}
+}
+
+void CDice::Destroy()
+{
+	mOwnerInterface.DestroyActor(*this);
 }
 
 void CDice::Update()

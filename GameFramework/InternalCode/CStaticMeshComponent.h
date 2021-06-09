@@ -2,14 +2,14 @@
 #include "CComponent.h"
 #include "ModelData.h"
 #include "IRender.h"
+#include "CChildTransform.h"
 
-class CChildTransform;
 class CRenderComponent;
 
 class CStaticMeshComponent :public CComponent , public IRender
 {
 private:
-	CChildTransform& mTransform;				//トランスフォーム
+	CChildTransform mTransform;				//トランスフォーム
 
 	ModelData* mModel;							//モデルデータ
 	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
