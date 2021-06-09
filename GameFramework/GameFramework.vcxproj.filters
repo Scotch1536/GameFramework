@@ -90,9 +90,6 @@
     <ClCompile Include="CTestLevel.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\StartLevelSetting.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="InternalCode\CRotator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -120,9 +117,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="InternalCode\CGame.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ExternalCode\CLight.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ExternalCode\Memory.h">
@@ -185,10 +179,10 @@
     <ClInclude Include="CTestLevel.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\StartLevelSetting.h">
+    <ClInclude Include="InternalCode\CRotator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CRotator.h">
+    <ClInclude Include="CLightComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
