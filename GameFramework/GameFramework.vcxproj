@@ -45,6 +45,7 @@
     <ClCompile Include="InternalCode\CRotator.cpp" />
     <ClCompile Include="InternalCode\CStaticMeshComponent.cpp" />
     <ClCompile Include="InternalCode\CTransform.cpp" />
+    <ClCompile Include="InternalCode\LCMath.cpp" />
     <ClCompile Include="InternalCode\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +80,7 @@
     <ClInclude Include="InternalCode\CStaticMeshComponent.h" />
     <ClInclude Include="InternalCode\CTransform.h" />
     <ClInclude Include="InternalCode\IRender.h" />
+    <ClInclude Include="InternalCode\LCMath.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DirectXTex\include\DirectXTex.inl" />

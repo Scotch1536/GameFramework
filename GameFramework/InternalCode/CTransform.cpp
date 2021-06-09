@@ -1,6 +1,8 @@
 #include "CTransform.h"
 #include "DX11Settransform.h"
 #include "CChildTransform.h"
+#include "dx11mathutil.h"
+#include "LCMath.h"
 
 CTransform::CTransform()
 {
@@ -17,27 +19,28 @@ void CTransform::AddChildTransform(CChildTransform& child)
 
 void CTransform::Update()
 {
+	//bool isSLerp = rotation.Update();
+	rotation.Update();
+
+	if(!LCMath::CompareFloat3(location , mCompareLocation) || !LCMath::CompareFloat3(scale , mCompareScale) || !rotation.GetIsNowCompareResult())
+	{
+		mShouldUpdateMatrix = true;
+		mCompareLocation = location;
+		mCompareScale = scale;
+	}
+
+
 	if(mShouldUpdateMatrix)
 	{
+		//if(isSLerp != true)mShouldUpdateMatrix = false;
 		mShouldUpdateMatrix = false;
 
-		XMFLOAT4X4 rotMatrix = mRotation.GenerateMatrix(*this);
+		for(auto& child : mChildTransform)
+		{
+			child->mShouldUpdateMatrix = true;
+		}
 
-		mWorldMatrix._11 = mScale.x * rotMatrix._11;
-		mWorldMatrix._12 = mScale.y * rotMatrix._12;
-		mWorldMatrix._13 = mScale.z * rotMatrix._13;
-
-		mWorldMatrix._21 = mScale.x * rotMatrix._21;
-		mWorldMatrix._22 = mScale.y * rotMatrix._22;
-		mWorldMatrix._23 = mScale.z * rotMatrix._23;
-
-		mWorldMatrix._31 = mScale.x * rotMatrix._31;
-		mWorldMatrix._32 = mScale.y * rotMatrix._32;
-		mWorldMatrix._33 = mScale.z * rotMatrix._33;
-
-		mWorldMatrix._41 = mLocation.x;
-		mWorldMatrix._42 = mLocation.y;
-		mWorldMatrix._43 = mLocation.z;
+		LCMath::UpdateMatrix(location , scale , rotation.GenerateMatrix(*this) , mWorldMatrix);
 	}
 
 	for(auto& child : mChildTransform)

@@ -1,4 +1,6 @@
 #include "CChildTransform.h"
+#include "LCMath.h"
+#include "dx11mathutil.h"
 
 CChildTransform::CChildTransform(CTransform& parent):mParentTransform(parent)
 {
@@ -7,24 +9,50 @@ CChildTransform::CChildTransform(CTransform& parent):mParentTransform(parent)
 
 void CChildTransform::Update()
 {
-	XMFLOAT3 parentLocation=mParentTransform.GetLocation();
-	XMFLOAT3 parentScale=mParentTransform.GetScale();
-	XMFLOAT3 parentAngle=mParentTransform.GetRotation();
-	XMFLOAT3 ansAngle = mRotation.GetAngle();
+	if(mShouldUpdateMatrix)
+	{
+		mShouldUpdateMatrix = false;
 
-	mLocation.x += parentLocation.x;
-	mLocation.y += parentLocation.y;
-	mLocation.z += parentLocation.z;
+		XMFLOAT3 parentLocation = mParentTransform.location;
+		XMFLOAT3 parentScale = mParentTransform.scale;
+		XMFLOAT3 parentAngle = mParentTransform.rotation.angle;
 
-	mScale.x += parentScale.x;
-	mScale.y += parentScale.y;
-	mScale.z += parentScale.z;
+		XMFLOAT3 ansLocation;
+		XMFLOAT3 ansScale;
+		XMFLOAT3 ansAngle;
 
-	ansAngle.x += parentAngle.x;
-	ansAngle.y += parentAngle.y;
-	ansAngle.z += parentAngle.z;
+		XMFLOAT3 bufAngle = rotation.angle;
 
-	mRotation.SetAngle(ansAngle);
+		ansLocation.x = location.x + parentLocation.x;
+		ansLocation.y = location.y + parentLocation.y;
+		ansLocation.z = location.z + parentLocation.z;
 
-	CTransform::Update();
+		ansScale.x = scale.x + parentScale.x;
+		ansScale.y = scale.y + parentScale.y;
+		ansScale.z = scale.z + parentScale.z;
+
+		ansAngle.x = bufAngle.x + parentAngle.x;
+		ansAngle.y = bufAngle.y + parentAngle.y;
+		ansAngle.z = bufAngle.z + parentAngle.z;
+
+		/*mRotation.Update();
+
+		XMFLOAT4 parentQua = mParentTransform.GetRotation().GetQuaternion();
+		XMFLOAT4 ansQua;
+
+		DX11QtMul(ansQua , parentQua , mRotation.GetQuaternion());*/
+
+		XMFLOAT4 ansQua;
+
+		LCMath::TransformFromEulerAnglesToQuaternion(ansAngle , ansQua);
+
+		rotation.SetQuaternion(*this , ansQua);
+
+		XMFLOAT4X4 ansMTX;
+
+		//クォータニオンから行列を作成
+		DX11MtxFromQt(ansMTX , ansQua);
+
+		LCMath::UpdateMatrix(ansLocation , ansScale , ansMTX , mWorldMatrix);
+	}
 }

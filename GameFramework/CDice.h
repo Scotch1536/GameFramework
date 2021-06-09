@@ -7,5 +7,9 @@ public:
 	CDice(CLevel& owner);
 
 	void Test();
+
+	void Rot(int dire);
+
+	void Update()override;
 };
 

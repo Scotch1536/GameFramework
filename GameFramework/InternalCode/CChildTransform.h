@@ -7,6 +7,7 @@ class CChildTransform :public CTransform
 {
 private:
 	CTransform& mParentTransform;		//親トランスフォーム
+
 public:
 	CChildTransform(CTransform& parent);
 
