@@ -2,7 +2,7 @@
 
 class IActor;
 
-//ƒRƒ“ƒ|[ƒlƒ“ƒgƒNƒ‰ƒX
+//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¯ãƒ©ã‚¹
 class CComponent
 {
 public:
@@ -11,26 +11,27 @@ public:
 		NONE ,
 		CAMERA ,
 		RENDER ,
+		LIGHT,
 	};
 
 private:
-	int mPriority = 0;		//—Dæ“x 0`100‚ğ‘z’è
+	int mPriority = 0;		//å„ªå…ˆåº¦ 0ï½100ã‚’æƒ³å®š
 
 protected:
-	EAttribute mAttribute = EAttribute::NONE;		//‘®«
+	EAttribute mAttribute = EAttribute::NONE;		//å±æ€§
 
-	IActor& mOwnerInterface;		//ƒCƒ“ƒ^[ƒtƒF[ƒX
+	IActor& mOwnerInterface;		//ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 
-	//ƒRƒs[‹Ö~
+	//ã‚³ãƒ”ãƒ¼ç¦æ­¢
 	CComponent(const CComponent&) = delete;
 	CComponent& operator=(const CComponent&) = delete;
 
 public:
-	//š’´d—vš@ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô‚±‚Æ‚ÍƒAƒNƒ^[‚ÉƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ’Ç‰Á‚·‚é‚±‚Æ‚ğˆÓ–¡‚·‚é
+	//â˜…è¶…é‡è¦â˜…ã€€ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã¶ã“ã¨ã¯ã‚¢ã‚¯ã‚¿ãƒ¼ã«ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è¿½åŠ ã™ã‚‹ã“ã¨ã‚’æ„å‘³ã™ã‚‹
 	CComponent(IActor& owner , int priority);
 	virtual ~CComponent() = 0;
 
-	//XV
+	//æ›´æ–°
 	virtual void Update() {};
 
 	const int& GetPriority()const
