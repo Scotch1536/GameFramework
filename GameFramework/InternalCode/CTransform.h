@@ -13,7 +13,6 @@ class ITransform
 public:
 	virtual ~ITransform() {};
 	virtual void AttachChildTransform(CChildTransform& targetChild) = 0;
-	//virtual void EraseChildTransform(CChildTransform& child) = 0;
 };
 
 class CTransform :public ITransform

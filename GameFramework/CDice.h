@@ -11,7 +11,5 @@ public:
 	void Rot(int dire);
 
 	void Destroy();
-
-	void Update()override;
 };
 

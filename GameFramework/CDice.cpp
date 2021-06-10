@@ -73,15 +73,3 @@ void CDice::Destroy()
 {
 	mOwnerInterface.DestroyActor(*this);
 }
-
-void CDice::Update()
-{
-	//XMFLOAT3 buf = mTransform.Rotation.Angle;
-	//buf.x += 1.f;
-	//buf.y += 5.f;
-	//buf.z += 2.f;
-
-	//mTransform.Rotation.Angle = buf;
-
-	CActor::Update();
-}
