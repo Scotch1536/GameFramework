@@ -33,14 +33,12 @@ private:
 	bool Init()
 	{
 		//コンスタントバッファ作成
-		bool sts = CreateConstantBuffer(CDirectXGraphics::GetInstance()->GetDXDevice() ,
-			sizeof(ConstantBufferLight) , &mConstantBufferLight);
+		bool sts = CreateConstantBuffer(CDirectXGraphics::GetInstance()->GetDXDevice() , sizeof(ConstantBufferLight) , &mConstantBufferLight);
 		if(!sts)
 		{
 			MessageBox(NULL , "CreateBuffer(constant buffer Light) error" , "Error" , MB_OK);
 			return false;
 		}
-
 		return true;
 	}
 public:
@@ -68,11 +66,7 @@ public:
 
 		cb.Ambient = mAmbient;
 
-		CDirectXGraphics::GetInstance()->GetImmediateContext()->UpdateSubresource(mConstantBufferLight.Get() ,
-			0 ,
-			nullptr ,
-			&cb ,
-			0 , 0);
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->UpdateSubresource(mConstantBufferLight.Get() , 0 , nullptr , &cb , 0 , 0);
 
 		// コンスタントバッファ4をｂ3レジスタへセット（頂点シェーダー用）
 		CDirectXGraphics::GetInstance()->GetImmediateContext()->VSSetConstantBuffers(4 , 1 , mConstantBufferLight.GetAddressOf());
