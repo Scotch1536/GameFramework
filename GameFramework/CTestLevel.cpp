@@ -10,11 +10,9 @@ void CTestLevel::Init()
 	CActor& buf = *new CDice(*this);
 
 	CComponent* ref = nullptr;
-	CComponent* glow = nullptr;
 	if (buf.GetComponentFromAttribute(CComponent::EAttribute::CAMERA, ref))
 	{
 		CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*ref);
 		this->RequestSetCamera(camera);
-		
 	}
 }
