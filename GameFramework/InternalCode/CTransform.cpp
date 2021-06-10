@@ -42,7 +42,6 @@ void CTransform::Update()
 		mCompareScale = scale;
 	}
 
-
 	if(mShouldUpdateMatrix)
 	{
 		//if(isSLerp != true)mShouldUpdateMatrix = false;
