@@ -30,6 +30,16 @@ void CLevel::Update()
 	{
 		actor->Update();
 	}
+
+	//更新後に行う関数を実行
+	for(auto& func : mDoAfterUpdateFunction)
+	{
+		func();
+	}
+
+	//中身を空にする
+	mDoAfterUpdateFunction.clear();
+	mDoAfterUpdateFunction.shrink_to_fit();
 }
 
 void CLevel::Render()
@@ -68,22 +78,29 @@ void CLevel::Render()
 
 void CLevel::DestroyActor(CActor& target)
 {
-	CComponent* refCamera;
-
-	if(target.GetComponentFromAttribute(CComponent::EAttribute::CAMERA , refCamera))
+	//ラムダ式を作成
+	auto destroyLambda = [&]
 	{
-		if(refCamera == mRenderingCamera)mRenderingCamera = nullptr;
-	}
+		CComponent* refCamera;
 
-	for(auto itr = mActors.begin(); itr != mActors.end(); ++itr)
-	{
-		if((*itr).get() == &target)
+		if(target.GetComponentFromAttribute(CComponent::EAttribute::CAMERA , refCamera))
 		{
-			mActors.erase(itr);
-			mActors.shrink_to_fit();
-			break;
+			if(refCamera == mRenderingCamera)mRenderingCamera = nullptr;
 		}
-	}
+
+		for(auto itr = mActors.begin(); itr != mActors.end(); ++itr)
+		{
+			if((*itr).get() == &target)
+			{
+				mActors.erase(itr);
+				mActors.shrink_to_fit();
+				break;
+			}
+		}
+	};
+
+	//作成したラムダ式を格納
+	mDoAfterUpdateFunction.emplace_back(destroyLambda);
 }
 
 void CLevel::SetOwnerInterface(CGame& owner)

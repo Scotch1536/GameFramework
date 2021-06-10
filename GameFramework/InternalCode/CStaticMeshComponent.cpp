@@ -47,7 +47,6 @@ void CStaticMeshComponent::Render()
 		{
 			MessageBox(NULL , "Not Found Texture!!" , "error" , MB_OK);
 			exit(1);
-			//TO DO
 		}
 	}
 }

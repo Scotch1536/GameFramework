@@ -3,6 +3,7 @@
 
 class CTransform;
 
+//子トランスフォームクラス
 class CChildTransform :public CTransform
 {
 private:
@@ -12,5 +13,6 @@ public:
 	CChildTransform(CTransform& parent);
 	~CChildTransform();
 
+	//更新
 	void Update()override;
 };

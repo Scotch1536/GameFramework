@@ -7,7 +7,6 @@
 
 void CTestLevel::Init()
 {
-	
 	CActor& buf = *new CDice(*this);
 
 	CComponent* ref = nullptr;
