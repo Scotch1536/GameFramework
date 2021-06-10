@@ -47,7 +47,8 @@ private:
 	CLevel& operator=(const CLevel&) = delete;
 
 	/*アクター追加
-	★超重要★子クラスは呼ぶことはできない
+	★超重要★
+	子クラスは呼ぶことはできない
 	アクターのコンストラクタを呼ぶことでアクターの参照から辿ってこのメソッドが呼ばれる
 	*/
 	void AddActor(CActor& actor)override;

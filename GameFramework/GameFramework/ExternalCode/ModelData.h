@@ -3,8 +3,8 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 
-#include "../Assimp/assimp/include/assimp/scene.h"
-#include "../Assimp/assimp/include/assimp/Importer.hpp"
+#include "../ExternalLibrary/Assimp/assimp/include/assimp/scene.h"
+#include "../ExternalLibrary/Assimp/assimp/include/assimp/Importer.hpp"
 
 #include "Mesh.h"
 #include "CDirectxGraphics.h"

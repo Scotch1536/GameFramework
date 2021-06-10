@@ -1,6 +1,7 @@
+#include "../Math/LCMath.h"
+#include "../ExternalCode/dx11mathutil.h"
+
 #include "CChildTransform.h"
-#include "LCMath.h"
-#include "dx11mathutil.h"
 
 CChildTransform::CChildTransform(CTransform& parent):mParentTransform(parent)
 {

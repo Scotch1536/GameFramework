@@ -1,10 +1,10 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../Assimp/assimp/include/assimp/Importer.hpp"
-#include "../Assimp/assimp/include/assimp/scene.h"
-#include "../Assimp/assimp/include/assimp/postprocess.h"
-#include "../Assimp/assimp/include/assimp/cimport.h"
+#include "../ExternalLibrary/Assimp/assimp/include/assimp/Importer.hpp"
+#include "../ExternalLibrary/Assimp/assimp/include/assimp/scene.h"
+#include "../ExternalLibrary/Assimp/assimp/include/assimp/postprocess.h"
+#include "../ExternalLibrary/Assimp/assimp/include/assimp/cimport.h"
 
 #include "Shader.h"
 #include "Memory.h"

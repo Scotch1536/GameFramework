@@ -18,7 +18,9 @@ CDice::CDice(CLevel& owner):CActor(owner)
 	コンポーネントはコンストラクタの引数ownerにいれたアクターに自動で追加される
 	その際原則ヒープ領域に(newで)作成すること
 	*/
-	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this , CModelManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/"));
+	CStaticMeshComponent* staticMesh = 
+		new CStaticMeshComponent(*this , CModelManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/") , "Shader/vs.hlsl" , "Shader/ps.hlsl");
+
 	CCameraComponent* camera = new CCameraComponent(*this);
 	CLightComponent* light = new CLightComponent(*this);
 

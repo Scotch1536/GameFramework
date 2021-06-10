@@ -1,6 +1,6 @@
-#include "../Assimp/assimp/include/assimp/postprocess.h"
-#include "../Assimp/assimp/include/assimp/cimport.h"
-#include "../Assimp/assimp/include/assimp/scene.h"
+#include "../ExternalLibrary/Assimp/assimp/include/assimp/postprocess.h"
+#include "../ExternalLibrary/Assimp/assimp/include/assimp/cimport.h"
+#include "../ExternalLibrary/Assimp/assimp/include/assimp/scene.h"
 
 #include "AssimpScene.h"
 

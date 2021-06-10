@@ -7,7 +7,7 @@
 #include "CStaticMeshComponent.h"
 #include "CRenderComponent.h"
 
-CStaticMeshComponent::CStaticMeshComponent(IActor& owner , ModelData& model , int priority)
+CStaticMeshComponent::CStaticMeshComponent(IActor& owner , ModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority)
 	:CComponent(owner , priority) ,
 	mTransform(owner.GetTransform()) ,
 	mModel(&model) ,
@@ -27,8 +27,8 @@ CStaticMeshComponent::CStaticMeshComponent(IActor& owner , ModelData& model , in
 	};
 	unsigned int numElements = ARRAYSIZE(layout);
 
-	mRenderComponent.GenerateVertexShader(layout , numElements , "Shader/vs.hlsl");
-	mRenderComponent.GeneratePixelShader("Shader/ps.hlsl");
+	mRenderComponent.GenerateVertexShader(layout , numElements , vertexShaderPath.c_str());
+	mRenderComponent.GeneratePixelShader(pixelShaderPath.c_str());
 }
 
 void CStaticMeshComponent::Render()

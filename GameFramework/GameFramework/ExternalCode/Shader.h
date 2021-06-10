@@ -7,9 +7,9 @@
 #include	<memory>
 #include	<string>
 
-#include	"../DirectXTex/include/WICTextureLoader.h"
-#include	"../DirectXTex/include/DDSTextureLoader.h"
-#include	"../DirectXTex/include/DirectXTex.h"
+#include	"../ExternalLibrary/DirectXTex/include/WICTextureLoader.h"
+#include	"../ExternalLibrary/DirectXTex/include/DDSTextureLoader.h"
+#include	"../ExternalLibrary/DirectXTex/include/DirectXTex.h"
 
 using namespace DirectX;
 

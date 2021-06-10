@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-#include "../Assimp/assimp/include/assimp/cimport.h"
+#include "../ExternalLibrary/Assimp/assimp/include/assimp/cimport.h"
 
 class AssimpScene {
 private:
@@ -9,6 +9,7 @@ private:
 public:
 	// ‰Šúˆ—
 	bool Init(std::string filename);
+
 	// I—¹ˆ—
 	void Exit();
 

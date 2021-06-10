@@ -1,7 +1,8 @@
+#include "../Math/LCMath.h"
+#include "../ExternalCode/dx11mathutil.h"
+
 #include "CRotator.h"
 #include "CTransform.h"
-#include "LCMath.h"
-#include "dx11mathutil.h"
 
 CRotator::CRotator()
 {
@@ -10,7 +11,7 @@ CRotator::CRotator()
 
 bool CRotator::Update()
 {
-	if(!LCMath::CompareFloat3(Angle,mCompareAngle))
+	if(!LCMath::CompareFloat3(Angle , mCompareAngle))
 	{
 		LCMath::TransformFromEulerAnglesToQuaternion(Angle , mQuaternion);
 
