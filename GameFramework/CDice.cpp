@@ -11,33 +11,36 @@
 #include "InternalCode/CInputManager.h"
 #include "InternalCode/CModelDataManager.h"
 
-CDice::CDice(CLevel& owner):CActor(owner)
+CDice::CDice(CLevel& owner) :CActor(owner)
 {
 	/*
-	š’´d—vš
-	ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÍƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Ìˆø”owner‚É‚¢‚ê‚½ƒAƒNƒ^[‚É©“®‚Å’Ç‰Á‚³‚ê‚é
-	‚»‚ÌÛŒ´‘¥ƒq[ƒv—Ìˆæ‚É(new‚Å)ì¬‚·‚é‚±‚Æ
+	â˜…è¶…é‡è¦â˜…
+	ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã¯ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å¼•æ•°ownerã«ã„ã‚ŒãŸã‚¢ã‚¯ã‚¿ãƒ¼ã«è‡ªå‹•ã§è¿½åŠ ã•ã‚Œã‚‹
+	ãã®éš›åŸå‰‡ãƒ’ãƒ¼ãƒ—é ˜åŸŸã«(newã§)ä½œæˆã™ã‚‹ã“ã¨
 	*/
 	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this , CModelManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/"));
 	CCameraComponent* camera = new CCameraComponent(*this);
 	CLightComponent* light = new CLightComponent(*this);
 
-	DirectX::XMFLOAT3 eye(0 , 0 , -100);	//ƒJƒƒ‰ˆÊ’u
-	DirectX::XMFLOAT3 lookat(0 , 0 , 0);	//’‹“_
-	DirectX::XMFLOAT3 up(0 , 1 , 0);		//ƒJƒƒ‰‚ÌãŒü‚«ƒxƒNƒgƒ‹
+	DirectX::XMFLOAT3 eye(0, 0, -100);	//ã‚«ãƒ¡ãƒ©ä½ç½®
+	DirectX::XMFLOAT3 lookat(0, 0, 0);	//æ³¨è¦–ç‚¹
+	DirectX::XMFLOAT3 up(0, 1, 0);		//ã‚«ãƒ¡ãƒ©ã®ä¸Šå‘ããƒ™ã‚¯ãƒˆãƒ«
 
 	camera->Init(
-		10.0f ,							//ƒjƒAƒNƒŠƒbƒv
-		10000.0f ,						//ƒtƒ@[ƒNƒŠƒbƒv
-		XM_PI / 4.0f ,					//‹–ìŠp
-		Application::CLIENT_WIDTH ,		//ƒXƒNƒŠ[ƒ“•
-		Application::CLIENT_HEIGHT ,	//ƒXƒNƒŠ[ƒ“‚Ì‚‚³
-		eye , lookat , up);
+		10.0f,							//ãƒ‹ã‚¢ã‚¯ãƒªãƒƒãƒ—
+		10000.0f,						//ãƒ•ã‚¡ãƒ¼ã‚¯ãƒªãƒƒãƒ—
+		XM_PI / 4.0f,					//è¦–é‡è§’
+		Application::CLIENT_WIDTH,		//ã‚¹ã‚¯ãƒªãƒ¼ãƒ³å¹…
+		Application::CLIENT_HEIGHT,	//ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®é«˜ã•
+		eye, lookat, up);
 
+  light->Init(camera->GetEye(), XMFLOAT4(1, 1, -1, 0));
+	light->SetAmbient(XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f));
+  
 	/*
-	š’´d—vš
-	ƒ{ƒ^ƒ“‚Ì“ü—Í‚ÅŒÄ‚Ñ‚¾‚µ‚½‚¢ƒƒ\ƒbƒh‚Í‚±‚Ì‚æ‚¤‚ÉƒCƒ“ƒvƒbƒgƒ}ƒl[ƒWƒƒ[‚É’Ç‰Á‚Å‚«‚é
-	‘¼‚É‚à’Ç‰Á•û–@‚ª‚ ‚é‚Ì‚ÅƒCƒ“ƒvƒbƒgƒ}ƒl[ƒWƒƒ[‚Ìƒwƒbƒ_[‚ğŠm”F‚·‚é‚±‚Æ‚ğ„§
+	â˜…è¶…é‡è¦â˜…
+	ãƒœã‚¿ãƒ³ã®å…¥åŠ›ã§å‘¼ã³ã ã—ãŸã„ãƒ¡ã‚½ãƒƒãƒ‰ã¯ã“ã®ã‚ˆã†ã«ã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«è¿½åŠ ã§ãã‚‹
+	ä»–ã«ã‚‚è¿½åŠ æ–¹æ³•ãŒã‚ã‚‹ã®ã§ã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒ˜ãƒƒãƒ€ãƒ¼ã‚’ç¢ºèªã™ã‚‹ã“ã¨ã‚’æ¨å¥¨
 	*/
 	CInputManager::GetInstance().AddAction("test" , *this , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CDice::Test , std::ref(*this)));
 	CInputManager::GetInstance().AddAction("XP" , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CDice::Rot , std::ref(*this) , 0));
@@ -51,12 +54,12 @@ CDice::CDice(CLevel& owner):CActor(owner)
 
 void CDice::Test()
 {
-	MessageBox(NULL , "Test" , "error" , MB_OK);
+	MessageBox(NULL, "Test", "error", MB_OK);
 }
 
 void CDice::Rot(int dire)
 {
-	switch(dire)
+	switch (dire)
 	{
 	case 0:
 		mTransform.Rotation.Angle.x++;
