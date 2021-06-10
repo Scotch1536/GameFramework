@@ -48,12 +48,10 @@ public:
 			return false;
 		}
 
-		Update();
-
 		return true;
 	}
 
-	void Update()
+	void Update()override
 	{
 		ConstantBufferLight		cb;
 
@@ -79,7 +77,6 @@ public:
 		CDirectXGraphics::GetInstance()->GetImmediateContext()->VSSetConstantBuffers(4 , 1 , &m_pConstantBufferLight);
 		// コンスタントバッファ4をｂ3レジスタへセット(ピクセルシェーダー用)
 		CDirectXGraphics::GetInstance()->GetImmediateContext()->PSSetConstantBuffers(4 , 1 , &m_pConstantBufferLight);
-
 	}
 
 	void Uninit()
