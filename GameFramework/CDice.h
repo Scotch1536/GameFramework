@@ -1,5 +1,5 @@
 #pragma once
-#include "CActor.h"
+#include "GameFramework/Actor/CActor.h"
 
 class CDice :public CActor
 {

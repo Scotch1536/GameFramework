@@ -1,5 +1,5 @@
 #pragma once
-#include "CLevel.h"
+#include "GameFramework/Level/CLevel.h"
 
 class CTestLevel :public CLevel
 {

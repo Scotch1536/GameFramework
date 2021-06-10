@@ -1,15 +1,15 @@
+#include <dinput.h>
 #include <functional>
 
-#include "CDice.h"
-#include "CStaticMeshComponent.h"
-#include "InternalCode/CLevel.h"
+#include "GameFramework/Components/CStaticMeshComponent.h"
+#include "GameFramework/Level/CLevel.h"
+#include "GameFramework/Components/CCameraComponent.h"
+#include "GameFramework/Components/CLightComponent.h"
+#include "GameFramework/Game/Application.h"
+#include "GameFramework/Managers/CInputManager.h"
+#include "GameFramework/Managers/CModelDataManager.h"
 
-#include "ExternalCode/CDirectInput.h"
-#include "InternalCode/CCameraComponent.h"
-#include "InternalCode/CLightComponent.h"
-#include "ExternalCode/Application.h"
-#include "InternalCode/CInputManager.h"
-#include "InternalCode/CModelDataManager.h"
+#include "CDice.h"
 
 CDice::CDice(CLevel& owner):CActor(owner)
 {

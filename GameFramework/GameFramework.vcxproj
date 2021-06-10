@@ -21,69 +21,64 @@
   <ItemGroup>
     <ClCompile Include="CDice.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
-    <ClCompile Include="DirectXTex\include\DDSTextureLoader.cpp" />
-    <ClCompile Include="DirectXTex\include\WICTextureLoader.cpp" />
-    <ClCompile Include="ExternalCode\Application.cpp" />
-    <ClCompile Include="ExternalCode\AssimpScene.cpp" />
-    <ClCompile Include="ExternalCode\CDirectXGraphics.cpp" />
-    <ClCompile Include="ExternalCode\CWindow.cpp" />
-    <ClCompile Include="ExternalCode\CWindowCallback.cpp" />
-    <ClCompile Include="ExternalCode\dx11mathutil.cpp" />
-    <ClCompile Include="ExternalCode\Mesh.cpp" />
-    <ClCompile Include="ExternalCode\ModelData.cpp" />
-    <ClCompile Include="ExternalCode\Shader.cpp" />
-    <ClCompile Include="ExternalCode\utftosjisconv.cpp" />
-    <ClCompile Include="InternalCode\CActor.cpp" />
-    <ClCompile Include="InternalCode\CChildTransform.cpp" />
-    <ClCompile Include="InternalCode\CComponent.cpp" />
-    <ClCompile Include="InternalCode\CGame.cpp" />
-    <ClCompile Include="InternalCode\CGameManager.cpp" />
-    <ClCompile Include="InternalCode\CInputManager.cpp" />
-    <ClCompile Include="InternalCode\CLevel.cpp" />
-    <ClCompile Include="InternalCode\CModelDataManager.cpp" />
-    <ClCompile Include="InternalCode\CRenderComponent.cpp" />
-    <ClCompile Include="InternalCode\CRotator.cpp" />
-    <ClCompile Include="InternalCode\CStaticMeshComponent.cpp" />
-    <ClCompile Include="InternalCode\CTransform.cpp" />
-    <ClCompile Include="InternalCode\LCMath.cpp" />
-    <ClCompile Include="InternalCode\WinMain.cpp" />
+    <ClCompile Include="GameFramework\Actor\CActor.cpp" />
+    <ClCompile Include="GameFramework\Components\CComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp" />
+    <ClCompile Include="GameFramework\DirectXTex\include\DDSTextureLoader.cpp" />
+    <ClCompile Include="GameFramework\DirectXTex\include\WICTextureLoader.cpp" />
+    <ClCompile Include="GameFramework\EntryPoint.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\AssimpScene.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\CDirectXGraphics.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\CWindow.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\CWindowCallback.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\dx11mathutil.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\Mesh.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\ModelData.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\Shader.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\utftosjisconv.cpp" />
+    <ClCompile Include="GameFramework\Game\Application.cpp" />
+    <ClCompile Include="GameFramework\Game\CGame.cpp" />
+    <ClCompile Include="GameFramework\Level\CLevel.cpp" />
+    <ClCompile Include="GameFramework\Managers\CGameManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CInputManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp" />
+    <ClCompile Include="GameFramework\Math\LCMath.cpp" />
+    <ClCompile Include="GameFramework\Transform\CChildTransform.cpp" />
+    <ClCompile Include="GameFramework\Transform\CRotator.cpp" />
+    <ClCompile Include="GameFramework\Transform\CTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CDice.h" />
-    <ClInclude Include="CTestLevel.h" />
-    <ClInclude Include="ExternalCode\Application.h" />
-    <ClInclude Include="ExternalCode\AssimpScene.h" />
-    <ClInclude Include="ExternalCode\CDirectInput.h" />
-    <ClInclude Include="ExternalCode\CDirectxGraphics.h" />
-    <ClInclude Include="ExternalCode\CWindow.h" />
-    <ClInclude Include="ExternalCode\CWindowCallback.h" />
-    <ClInclude Include="ExternalCode\dx11mathutil.h" />
-    <ClInclude Include="ExternalCode\DX11Settransform.h" />
-    <ClInclude Include="ExternalCode\Memory.h" />
-    <ClInclude Include="ExternalCode\Mesh.h" />
-    <ClInclude Include="ExternalCode\ModelData.h" />
-    <ClInclude Include="ExternalCode\Shader.h" />
-    <ClInclude Include="ExternalCode\utftosjisconv.h" />
-    <ClInclude Include="ExternalCode\VertexProto.h" />
-    <ClInclude Include="InternalCode\CActor.h" />
-    <ClInclude Include="InternalCode\CCameraComponent.h" />
-    <ClInclude Include="InternalCode\CChildTransform.h" />
-    <ClInclude Include="InternalCode\CComponent.h" />
-    <ClInclude Include="InternalCode\CGame.h" />
-    <ClInclude Include="InternalCode\CGameManager.h" />
-    <ClInclude Include="InternalCode\CInputManager.h" />
-    <ClInclude Include="InternalCode\CLevel.h" />
-    <ClInclude Include="InternalCode\CLightComponent.h" />
-    <ClInclude Include="InternalCode\CModelDataManager.h" />
-    <ClInclude Include="InternalCode\CRenderComponent.h" />
-    <ClInclude Include="InternalCode\CRotator.h" />
-    <ClInclude Include="InternalCode\CStaticMeshComponent.h" />
-    <ClInclude Include="InternalCode\CTransform.h" />
-    <ClInclude Include="InternalCode\IRender.h" />
-    <ClInclude Include="InternalCode\LCMath.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DirectXTex\include\DirectXTex.inl" />
+    <ClInclude Include="GameFramework\Actor\CActor.h" />
+    <ClInclude Include="GameFramework\Components\CCameraComponent.h" />
+    <ClInclude Include="GameFramework\Components\CComponent.h" />
+    <ClInclude Include="GameFramework\Components\CLightComponent.h" />
+    <ClInclude Include="GameFramework\Components\CRenderComponent.h" />
+    <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h" />
+    <ClInclude Include="GameFramework\ExternalCode\AssimpScene.h" />
+    <ClInclude Include="GameFramework\ExternalCode\CDirectInput.h" />
+    <ClInclude Include="GameFramework\ExternalCode\CDirectxGraphics.h" />
+    <ClInclude Include="GameFramework\ExternalCode\CWindow.h" />
+    <ClInclude Include="GameFramework\ExternalCode\CWindowCallback.h" />
+    <ClInclude Include="GameFramework\ExternalCode\dx11mathutil.h" />
+    <ClInclude Include="GameFramework\ExternalCode\DX11Settransform.h" />
+    <ClInclude Include="GameFramework\ExternalCode\Memory.h" />
+    <ClInclude Include="GameFramework\ExternalCode\Mesh.h" />
+    <ClInclude Include="GameFramework\ExternalCode\ModelData.h" />
+    <ClInclude Include="GameFramework\ExternalCode\Shader.h" />
+    <ClInclude Include="GameFramework\ExternalCode\utftosjisconv.h" />
+    <ClInclude Include="GameFramework\ExternalCode\VertexProto.h" />
+    <ClInclude Include="GameFramework\Game\Application.h" />
+    <ClInclude Include="GameFramework\Game\CGame.h" />
+    <ClInclude Include="GameFramework\Interfaces\IRender.h" />
+    <ClInclude Include="GameFramework\Level\CLevel.h" />
+    <ClInclude Include="GameFramework\Managers\CGameManager.h" />
+    <ClInclude Include="GameFramework\Managers\CInputManager.h" />
+    <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />
+    <ClInclude Include="GameFramework\Math\LCMath.h" />
+    <ClInclude Include="GameFramework\Transform\CChildTransform.h" />
+    <ClInclude Include="GameFramework\Transform\CRotator.h" />
+    <ClInclude Include="GameFramework\Transform\CTransform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -142,16 +137,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(ProjectDir)directxtex\lib\_x64\_debug;$(ProjectDir)assimp\assimp\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)ExternalCode;$(ProjectDir)InternalCode;$(ProjectDir)DirectXTex\include;$(ProjectDir)\Assimp\assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\GameFramework\Assimp\assimp\lib;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\GameFramework\DirectXTex\lib\_x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(ProjectDir)directxtex\lib\_x64\_release;$(ProjectDir)assimp\assimp\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)ExternalCode;$(ProjectDir)InternalCode;$(ProjectDir)DirectXTex\include;$(ProjectDir)\Assimp\assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\GameFramework\Assimp\assimp\lib;C:\Users\beast\Document\Origin\Programing\GameFramework\GameFramework\GameFramework\GameFramework\DirectXTex\lib\_x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

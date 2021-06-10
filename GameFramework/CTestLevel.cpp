@@ -1,9 +1,8 @@
+#include "GameFramework/Components/CCameraComponent.h"
+#include "GameFramework/Components/CLightComponent.h"
+
 #include "CTestLevel.h"
 #include "CDice.h"
-#include "CCameraComponent.h"
-#include "CLightComponent.h"
-
-#include "ExternalCode/DX11Settransform.h"
 
 void CTestLevel::Init()
 {

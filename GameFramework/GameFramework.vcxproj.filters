@@ -15,73 +15,79 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ExternalCode\Application.cpp">
+    <ClCompile Include="GameFramework\EntryPoint.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ExternalCode\CDirectXGraphics.cpp">
+    <ClCompile Include="GameFramework\Transform\CChildTransform.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ExternalCode\CWindow.cpp">
+    <ClCompile Include="GameFramework\Transform\CRotator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ExternalCode\CWindowCallback.cpp">
+    <ClCompile Include="GameFramework\Transform\CTransform.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ExternalCode\dx11mathutil.cpp">
+    <ClCompile Include="GameFramework\Math\LCMath.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\CGame.cpp">
+    <ClCompile Include="GameFramework\Managers\CGameManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\WinMain.cpp">
+    <ClCompile Include="GameFramework\Managers\CInputManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ExternalCode\Shader.cpp">
+    <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXTex\include\DDSTextureLoader.cpp">
+    <ClCompile Include="GameFramework\Level\CLevel.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXTex\include\WICTextureLoader.cpp">
+    <ClCompile Include="GameFramework\Game\CGame.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\CComponent.cpp">
+    <ClCompile Include="GameFramework\ExternalCode\AssimpScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\CActor.cpp">
+    <ClCompile Include="GameFramework\ExternalCode\CDirectXGraphics.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\CLevel.cpp">
+    <ClCompile Include="GameFramework\ExternalCode\CWindow.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\CTransform.cpp">
+    <ClCompile Include="GameFramework\ExternalCode\CWindowCallback.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\CInputManager.cpp">
+    <ClCompile Include="GameFramework\ExternalCode\dx11mathutil.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\CGameManager.cpp">
+    <ClCompile Include="GameFramework\ExternalCode\Mesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ExternalCode\AssimpScene.cpp">
+    <ClCompile Include="GameFramework\ExternalCode\ModelData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ExternalCode\ModelData.cpp">
+    <ClCompile Include="GameFramework\ExternalCode\Shader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ExternalCode\Mesh.cpp">
+    <ClCompile Include="GameFramework\ExternalCode\utftosjisconv.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ExternalCode\utftosjisconv.cpp">
+    <ClCompile Include="GameFramework\Components\CComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\CRenderComponent.cpp">
+    <ClCompile Include="GameFramework\Components\CRenderComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\CModelDataManager.cpp">
+    <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\CStaticMeshComponent.cpp">
+    <ClCompile Include="GameFramework\Actor\CActor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\DirectXTex\include\DDSTextureLoader.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\DirectXTex\include\WICTextureLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="CDice.cpp">
@@ -90,117 +96,100 @@
     <ClCompile Include="CTestLevel.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternalCode\CRotator.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="InternalCode\CChildTransform.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="InternalCode\LCMath.cpp">
+    <ClCompile Include="GameFramework\Game\Application.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ExternalCode\Application.h">
+    <ClInclude Include="GameFramework\Transform\CChildTransform.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\CDirectInput.h">
+    <ClInclude Include="GameFramework\Transform\CRotator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\CDirectxGraphics.h">
+    <ClInclude Include="GameFramework\Transform\CTransform.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\CWindow.h">
+    <ClInclude Include="GameFramework\Math\LCMath.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\CWindowCallback.h">
+    <ClInclude Include="GameFramework\Managers\CGameManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\dx11mathutil.h">
+    <ClInclude Include="GameFramework\Managers\CInputManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\DX11Settransform.h">
+    <ClInclude Include="GameFramework\Managers\CModelDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CGame.h">
+    <ClInclude Include="GameFramework\Level\CLevel.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\Memory.h">
+    <ClInclude Include="GameFramework\Interfaces\IRender.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\Shader.h">
+    <ClInclude Include="GameFramework\Game\CGame.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CComponent.h">
+    <ClInclude Include="GameFramework\ExternalCode\AssimpScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CActor.h">
+    <ClInclude Include="GameFramework\ExternalCode\CDirectInput.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CLevel.h">
+    <ClInclude Include="GameFramework\ExternalCode\CDirectxGraphics.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CTransform.h">
+    <ClInclude Include="GameFramework\ExternalCode\CWindow.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CInputManager.h">
+    <ClInclude Include="GameFramework\ExternalCode\CWindowCallback.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CGameManager.h">
+    <ClInclude Include="GameFramework\ExternalCode\dx11mathutil.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\AssimpScene.h">
+    <ClInclude Include="GameFramework\ExternalCode\DX11Settransform.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\ModelData.h">
+    <ClInclude Include="GameFramework\ExternalCode\Memory.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\Mesh.h">
+    <ClInclude Include="GameFramework\ExternalCode\Mesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\VertexProto.h">
+    <ClInclude Include="GameFramework\ExternalCode\ModelData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\utftosjisconv.h">
+    <ClInclude Include="GameFramework\ExternalCode\Shader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CRenderComponent.h">
+    <ClInclude Include="GameFramework\ExternalCode\utftosjisconv.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CModelDataManager.h">
+    <ClInclude Include="GameFramework\ExternalCode\VertexProto.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CStaticMeshComponent.h">
+    <ClInclude Include="GameFramework\Components\CCameraComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CDice.h">
+    <ClInclude Include="GameFramework\Components\CComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CCameraComponent.h">
+    <ClInclude Include="GameFramework\Components\CLightComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\IRender.h">
+    <ClInclude Include="GameFramework\Components\CRenderComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CTestLevel.h">
+    <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CRotator.h">
+    <ClInclude Include="GameFramework\Actor\CActor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\CChildTransform.h">
+    <ClInclude Include="GameFramework\Game\Application.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InternalCode\LCMath.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="InternalCode\CLightComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DirectXTex\include\DirectXTex.inl">
-      <Filter>ヘッダー ファイル</Filter>
-    </None>
   </ItemGroup>
 </Project>
