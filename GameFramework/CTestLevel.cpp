@@ -16,12 +16,6 @@ void CTestLevel::Init()
 	{
 		CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*ref);
 		this->RequestSetCamera(camera);
-		if (buf.GetComponentFromAttribute(CComponent::EAttribute::LIGHT, glow))
-		{
-			CLightComponent& light = dynamic_cast<CLightComponent&>(*glow);
-			light.Init(camera.GetEye(), XMFLOAT4(1, 1, -1, 0));
-			light.SetAmbient(XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f));
-			light.Update();
-		}
+		
 	}
 }
