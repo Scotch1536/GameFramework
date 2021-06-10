@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <functional>
 
 #include "CActor.h"
 #include "IRender.h"
@@ -25,12 +26,15 @@ public:
 	virtual void AddActor(CActor& actor) = 0;
 };
 
+//レベルクラス
 class CLevel :public ILevel , public ILevelToActor
 {
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;		//アクター
 
 	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
+
+	std::vector<std::function<void()>> mDoAfterUpdateFunction;		//更新後に行う関数オブジェクト
 
 	//アクターの破壊
 	void DestroyActor(CActor& target)override;

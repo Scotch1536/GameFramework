@@ -27,6 +27,8 @@ private:
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
 	std::vector<IRender*> mRenderAttributeComponents;			//描画の属性をもつコンポーネント
 
+	ILevel& mOwnerInterface;		//インターフェース
+
 	//コピー禁止
 	CActor(const CActor&) = delete;
 	CActor& operator=(const CActor&) = delete;
@@ -46,13 +48,11 @@ private:
 protected:
 	CTransform mTransform;			//トランスフォーム
 
-	ILevel& mOwnerInterface;		//インターフェース
-
 public:
 	//★超重要★　アクターのコンストラクタを呼ぶことはレベルにアクターを追加することを意味する
 	CActor(CLevel& owner);
 
-	virtual ~CActor() {};
+	virtual ~CActor();
 
 	/*更新
 	★超重要★このメソッドをオーバーライドする場合は必ず最後に親のメソッドを呼ぶこと

@@ -7,6 +7,7 @@ using namespace DirectX;
 class CTransform;
 class CChildTransform;
 
+//ローテータークラス
 class CRotator
 {
 private:
@@ -20,17 +21,13 @@ private:
 	std::unique_ptr<XMFLOAT4> mToQuaternion;			//クォータニオン（移動後）
 
 	bool mIsNowFrameCompareResult = true;
-	//bool mIsLastUpdate = false;
 public:
-	XMFLOAT3 angle = { 0.f,0.f,0.f };			//角度（度数法）
+	XMFLOAT3 Angle = { 0.f,0.f,0.f };			//角度（度数法）
 
 	CRotator();
 
 	//更新
 	bool Update();
-
-	////球面線形補間をリクエスト
-	//void RequestSLerp(XMFLOAT3 angle , float lerpTime);
 
 	//マトリックス取得
 	XMFLOAT4X4 GenerateMatrix(CTransform& partner);

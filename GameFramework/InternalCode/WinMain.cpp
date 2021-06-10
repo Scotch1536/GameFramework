@@ -43,7 +43,7 @@ INT APIENTRY WinMain(HINSTANCE  h_hInst,
 	/*★超重要★
 		ここに開始したいレベルのコンストラクタを
 		引数をCGameManager&で呼び出す
-		メモリ解放ははゲームマネージャーが行うので考えなくてよい
+		メモリ解放はゲームマネージャーが行うので考えなくてよい
 		new StartLevelType(CGameManager&);
 	*/
 	*new CTestLevel(gameManager);

@@ -14,7 +14,6 @@ private:
 	ModelData* mModel;							//モデルデータ
 	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
 public:
-
 	CStaticMeshComponent(IActor& owner , ModelData& model , int priority = 90);
 
 	//モデルのセット

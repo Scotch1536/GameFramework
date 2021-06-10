@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDice.h" />
-    <ClInclude Include="CLightComponent.h" />
     <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="ExternalCode\Application.h" />
     <ClInclude Include="ExternalCode\AssimpScene.h" />
@@ -74,6 +73,7 @@
     <ClInclude Include="InternalCode\CGameManager.h" />
     <ClInclude Include="InternalCode\CInputManager.h" />
     <ClInclude Include="InternalCode\CLevel.h" />
+    <ClInclude Include="InternalCode\CLightComponent.h" />
     <ClInclude Include="InternalCode\CModelDataManager.h" />
     <ClInclude Include="InternalCode\CRenderComponent.h" />
     <ClInclude Include="InternalCode\CRotator.h" />

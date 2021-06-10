@@ -1,5 +1,4 @@
 #pragma once
-
 #include <memory>
 
 #include "CGame.h"
@@ -16,7 +15,7 @@ public:
 	virtual void SetStartLevel(CLevel& startLevel) = 0;
 };
 
-//ゲームマネージャークラス　（シングルトン）
+//ゲームマネージャークラス：シングルトン
 class CGameManager :public IGameManagerToLevel
 {
 private:

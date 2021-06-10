@@ -1,10 +1,16 @@
 #include "CActor.h"
 #include "CLevel.h"
 #include "IRender.h"
+#include "CInputManager.h"
 
 CActor::CActor(CLevel& owner):mOwnerInterface(owner) , mTransform(*this)
 {
 	static_cast<ILevelToActor&>(owner).AddActor(*this);
+}
+
+CActor::~CActor()
+{
+	CInputManager::GetInstance().ReleaseBindTarget(*this);
 }
 
 void CActor::AddComponent(CComponent& component)

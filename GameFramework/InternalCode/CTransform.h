@@ -15,6 +15,7 @@ public:
 	virtual void AttachChildTransform(CChildTransform& targetChild) = 0;
 };
 
+//トランスフォームクラス
 class CTransform :public ITransform
 {
 private:
@@ -33,10 +34,10 @@ protected:
 	CTransform();
 
 public:
-	XMFLOAT3 location = { 0.f,0.f,0.f };			//ロケーション
-	XMFLOAT3 scale = { 1.f,1.f,1.f };				//スケール
+	XMFLOAT3 Location = { 0.f,0.f,0.f };			//ロケーション
+	XMFLOAT3 Scale = { 1.f,1.f,1.f };				//スケール
 
-	CRotator rotation;								//ローテーション
+	CRotator Rotation;								//ローテーション
 
 	CTransform(CActor& partner);
 	virtual ~CTransform() = default;
@@ -49,11 +50,4 @@ public:
 
 	//引数の子コンポーネントとの親子関係をを切り離す
 	void DetachChildTransform(CChildTransform& targetChild);
-
-	////球面線形補間をリクエスト
-	//void RequestSLerp(XMFLOAT3 angle , float lerpTime)
-	//{
-	//	mRotation.RequestSLerp(angle , lerpTime);
-	//}
-
 };

@@ -32,19 +32,17 @@ void CTransform::DetachChildTransform(CChildTransform& targetChild)
 
 void CTransform::Update()
 {
-	//bool isSLerp = rotation.Update();
-	rotation.Update();
+	Rotation.Update();
 
-	if(!LCMath::CompareFloat3(location , mCompareLocation) || !LCMath::CompareFloat3(scale , mCompareScale) || !rotation.GetIsNowCompareResult())
+	if(!LCMath::CompareFloat3(Location , mCompareLocation) || !LCMath::CompareFloat3(Scale , mCompareScale) || !Rotation.GetIsNowCompareResult())
 	{
 		mShouldUpdateMatrix = true;
-		mCompareLocation = location;
-		mCompareScale = scale;
+		mCompareLocation = Location;
+		mCompareScale = Scale;
 	}
 
 	if(mShouldUpdateMatrix)
 	{
-		//if(isSLerp != true)mShouldUpdateMatrix = false;
 		mShouldUpdateMatrix = false;
 
 		for(auto& child : mChildTransform)
@@ -52,7 +50,7 @@ void CTransform::Update()
 			child->mShouldUpdateMatrix = true;
 		}
 
-		LCMath::UpdateMatrix(location , scale , rotation.GenerateMatrix(*this) , mWorldMatrix);
+		LCMath::UpdateMatrix(Location , Scale , Rotation.GenerateMatrix(*this) , mWorldMatrix);
 	}
 
 	for(auto& child : mChildTransform)

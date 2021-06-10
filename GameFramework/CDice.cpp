@@ -13,6 +13,11 @@
 
 CDice::CDice(CLevel& owner):CActor(owner)
 {
+	/*
+	★超重要★
+	コンポーネントはコンストラクタの引数ownerにいれたアクターに自動で追加される
+	その際原則ヒープ領域に(newで)作成すること
+	*/
 	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this , CModelManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/"));
 	CCameraComponent* camera = new CCameraComponent(*this);
 	CLightComponent* light = new CLightComponent(*this);
@@ -29,14 +34,19 @@ CDice::CDice(CLevel& owner):CActor(owner)
 		Application::CLIENT_HEIGHT ,	//スクリーンの高さ
 		eye , lookat , up);
 
-	CInputManager::GetInstance().AddAction("test" , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CDice::Test , std::ref(*this)));
-	CInputManager::GetInstance().AddAction("XP" , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CDice::Rot , std::ref(*this) , 0));
-	CInputManager::GetInstance().AddAction("XM" , { EButtonType::KEYBOARD,DIK_D } , std::bind(&CDice::Rot , std::ref(*this) , 1));
-	CInputManager::GetInstance().AddAction("YP" , { EButtonType::KEYBOARD,DIK_F } , std::bind(&CDice::Rot , std::ref(*this) , 2));
-	CInputManager::GetInstance().AddAction("YM" , { EButtonType::KEYBOARD,DIK_G } , std::bind(&CDice::Rot , std::ref(*this) , 3));
-	CInputManager::GetInstance().AddAction("ZP" , { EButtonType::KEYBOARD,DIK_H } , std::bind(&CDice::Rot , std::ref(*this) , 4));
-	CInputManager::GetInstance().AddAction("ZM" , { EButtonType::KEYBOARD,DIK_J } , std::bind(&CDice::Rot , std::ref(*this) , 5));
-	CInputManager::GetInstance().AddAction("Dst" , { EButtonType::KEYBOARD,DIK_L } , std::bind(&CDice::Destroy , std::ref(*this)));
+	/*
+	★超重要★
+	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
+	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
+	*/
+	CInputManager::GetInstance().AddAction("test" , *this , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CDice::Test , std::ref(*this)));
+	CInputManager::GetInstance().AddAction("XP" , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CDice::Rot , std::ref(*this) , 0));
+	CInputManager::GetInstance().AddAction("XM" , *this , { EButtonType::KEYBOARD,DIK_D } , std::bind(&CDice::Rot , std::ref(*this) , 1));
+	CInputManager::GetInstance().AddAction("YP" , *this , { EButtonType::KEYBOARD,DIK_F } , std::bind(&CDice::Rot , std::ref(*this) , 2));
+	CInputManager::GetInstance().AddAction("YM" , *this , { EButtonType::KEYBOARD,DIK_G } , std::bind(&CDice::Rot , std::ref(*this) , 3));
+	CInputManager::GetInstance().AddAction("ZP" , *this , { EButtonType::KEYBOARD,DIK_H } , std::bind(&CDice::Rot , std::ref(*this) , 4));
+	CInputManager::GetInstance().AddAction("ZM" , *this , { EButtonType::KEYBOARD,DIK_J } , std::bind(&CDice::Rot , std::ref(*this) , 5));
+	CInputManager::GetInstance().AddAction("Dst" , *this , { EButtonType::KEYBOARD,DIK_L } , std::bind(&CActor::Destroy , std::ref(*this)));
 }
 
 void CDice::Test()
@@ -49,29 +59,24 @@ void CDice::Rot(int dire)
 	switch(dire)
 	{
 	case 0:
-		mTransform.rotation.angle.x++;
+		mTransform.Rotation.Angle.x++;
 		break;
 	case 1:
-		mTransform.rotation.angle.x--;
+		mTransform.Rotation.Angle.x--;
 		break;
 	case 2:
-		mTransform.rotation.angle.y++;
+		mTransform.Rotation.Angle.y++;
 		break;
 	case 3:
-		mTransform.rotation.angle.y--;
+		mTransform.Rotation.Angle.y--;
 		break;
 	case 4:
-		mTransform.rotation.angle.z++;
+		mTransform.Rotation.Angle.z++;
 		break;
 	case 5:
-		mTransform.rotation.angle.z--;
+		mTransform.Rotation.Angle.z--;
 		break;
 	default:
 		break;
 	}
-}
-
-void CDice::Destroy()
-{
-	mOwnerInterface.DestroyActor(*this);
 }

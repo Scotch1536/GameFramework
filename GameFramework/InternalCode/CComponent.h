@@ -6,6 +6,7 @@ class IActor;
 class CComponent
 {
 public:
+	//属性構造体
 	enum class EAttribute
 	{
 		NONE ,
