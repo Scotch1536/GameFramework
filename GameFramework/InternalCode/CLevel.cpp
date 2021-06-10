@@ -65,7 +65,7 @@ void CLevel::Render()
 	bufMTX = mRenderingCamera->GetProjectionMatrix();
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , bufMTX);
 
-	bufMTX = mRenderingCamera->GetCameraMatrix();
+	bufMTX = mRenderingCamera->GetViewMatrix();
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::VIEW , bufMTX);
 
 	for(auto& actor : mActors)

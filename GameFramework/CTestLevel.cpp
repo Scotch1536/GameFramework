@@ -7,12 +7,12 @@
 
 void CTestLevel::Init()
 {
-	CActor& buf = *new CDice(*this);
+	CActor& dice = *new CDice(*this);
 
-	CComponent* ref = nullptr;
-	if (buf.GetComponentFromAttribute(CComponent::EAttribute::CAMERA, ref))
+	CComponent* buf = nullptr;
+	if(dice.GetComponentFromAttribute(CComponent::EAttribute::CAMERA , buf))
 	{
-		CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*ref);
+		CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*buf);
 		this->RequestSetCamera(camera);
 	}
 }

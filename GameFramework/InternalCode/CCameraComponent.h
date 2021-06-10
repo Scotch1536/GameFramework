@@ -1,26 +1,50 @@
-#include <directxmath.h>
+#include <DirectXMath.h>
 
 #include "Memory.h"
 #include "CComponent.h"
 #include "DX11Settransform.h"
 
-using namespace DirectX;
-
 class CCameraComponent :public CComponent
 {
 private:
-	XMFLOAT4X4		m_Projection;
+	XMFLOAT4X4 mProjection;		//プロジェクション行列
 
-	XMFLOAT4X4		m_Camera;
+	XMFLOAT4X4 mView;			//ビュー行列
 
-	XMFLOAT3		m_Eye;				// カメラ位置
-	XMFLOAT3		m_Lookat;			// 注視点
-	XMFLOAT3		m_Up;				// 上向きベクトル
+	XMFLOAT3 mEye;				//カメラ位置
+	XMFLOAT3 mLookat;			//注視点
+	XMFLOAT3 mUp;				//上向きベクトル
 
-	float			m_near;
-	float			m_Aspect;
-	float			m_Fov;
-	float			m_far;
+	float mNear;				//ニアクリップ
+	float mFar;					//ファークリップ
+	float mAspect;				//アスペクト比
+	float mFov;					//視野角
+
+	bool mShouldUpdateProjectionMatrix = true;		//プロジェクション行列を更新すべきか
+	bool mShouldUpdateViewMatrix = true;			//ビュー行列を更新すべきか
+
+	//プロジェクション行列作成
+	void CreateProjectionMatrix()
+	{
+		ALIGN16 XMMATRIX projection;
+
+		projection = XMMatrixPerspectiveFovLH(mFov , mAspect , mNear , mFar);
+
+		XMStoreFloat4x4(&mProjection , projection);
+	}
+
+	//ビュー行列作成
+	void CreateViewMatrix()
+	{
+		ALIGN16 XMVECTOR Eye = XMVectorSet(mEye.x , mEye.y , mEye.z , 0.0f);
+		ALIGN16 XMVECTOR At = XMVectorSet(mLookat.x , mLookat.y , mLookat.z , 0.0f);
+		ALIGN16 XMVECTOR Up = XMVectorSet(mUp.x , mUp.y , mUp.z , 0.0f);
+
+		ALIGN16 XMMATRIX camera;
+		camera = XMMatrixLookAtLH(Eye , At , Up);
+
+		XMStoreFloat4x4(&mView , camera);
+	}
 
 public:
 	CCameraComponent(IActor& owner , int priority = 80):CComponent(owner , priority)
@@ -28,33 +52,22 @@ public:
 		mAttribute = CComponent::EAttribute::CAMERA;
 	}
 
-	void Init(float nearclip , float farclip , float fov ,
-		float width , float height ,
-		XMFLOAT3 eye , XMFLOAT3 lookat , XMFLOAT3 up)
+	//更新
+	void Update()override
 	{
+		if(mShouldUpdateProjectionMatrix)
+		{
+			mShouldUpdateProjectionMatrix = false;
 
-		SetProjection(nearclip , farclip , fov , width , height);
-		SetCamera(eye , lookat , up);
-	}
+			CreateProjectionMatrix();
+		}
 
-	void SetNear(float nearclip)
-	{
-		m_near = nearclip;
-	}
+		if(mShouldUpdateViewMatrix)
+		{
+			mShouldUpdateViewMatrix = false;
 
-	void SetFar(float farclip)
-	{
-		m_far = farclip;
-	}
-
-	void SetFov(float fov)
-	{
-		m_Fov = fov;
-	}
-
-	void SetAspect(float width , float height)
-	{
-		m_Aspect = width / height;
+			CreateViewMatrix();
+		}
 	}
 
 	void SetProjection(float nearclip , float farclip , float fov , float width , float height)
@@ -63,83 +76,91 @@ public:
 		SetFar(farclip);
 		SetFov(fov);
 		SetAspect(width , height);
-		CreateProjectionMatrix();
 	}
 
-	void SetCamera(const XMFLOAT3& eye , const XMFLOAT3& lookat , const XMFLOAT3& up)
+	void SetView(const XMFLOAT3& eye , const XMFLOAT3& lookat , const XMFLOAT3& up)
 	{
-
 		SetEye(eye);
 		SetLookat(lookat);
 		SetUp(up);
-		CreateCameraMatrix();
-	}
-
-	void SetEye(const XMFLOAT3& eye)
-	{
-		m_Eye = eye;
-	}
-
-	void SetLookat(const XMFLOAT3& lookat)
-	{
-		m_Lookat = lookat;
-	}
-
-	void SetUp(const XMFLOAT3& up)
-	{
-		m_Up = up;
-	}
-
-	void CreateCameraMatrix()
-	{
-		ALIGN16 XMVECTOR Eye = XMVectorSet(m_Eye.x , m_Eye.y , m_Eye.z , 0.0f);
-		ALIGN16 XMVECTOR At = XMVectorSet(m_Lookat.x , m_Lookat.y , m_Lookat.z , 0.0f);
-		ALIGN16 XMVECTOR Up = XMVectorSet(m_Up.x , m_Up.y , m_Up.z , 0.0f);
-
-		ALIGN16 XMMATRIX camera;
-		camera = XMMatrixLookAtLH(Eye , At , Up);
-
-		XMStoreFloat4x4(&m_Camera , camera);
-	}
-
-	void CreateProjectionMatrix()
-	{
-
-		ALIGN16 XMMATRIX projection;
-
-		projection = XMMatrixPerspectiveFovLH(m_Fov , m_Aspect , m_near , m_far);
-
-		XMStoreFloat4x4(&m_Projection , projection);
-
-	}
-
-	const XMFLOAT4X4& GetCameraMatrix()
-	{
-		return m_Camera;
 	}
 
 	const XMFLOAT4X4& GetProjectionMatrix()
 	{
-		return m_Projection;
+		return mProjection;
 	}
 
-	float GetFov() const
+	const XMFLOAT4X4& GetViewMatrix()
 	{
-		return m_Fov;
+		return mView;
 	}
 
 	const XMFLOAT3& GetEye() const
 	{
-		return m_Eye;
+		return mEye;
 	}
 
 	const XMFLOAT3& GetLookat() const
 	{
-		return m_Lookat;
+		return mLookat;
 	}
 
 	const XMFLOAT3& GetUp() const
 	{
-		return m_Up;
+		return mUp;
+	}
+
+	float GetFov() const
+	{
+		return mFov;
+	}
+
+	void SetNear(float nearclip)
+	{
+		if(!mShouldUpdateProjectionMatrix)mShouldUpdateProjectionMatrix = true;
+
+		mNear = nearclip;
+	}
+
+	void SetFar(float farclip)
+	{
+		if(!mShouldUpdateProjectionMatrix)mShouldUpdateProjectionMatrix = true;
+
+		mFar = farclip;
+	}
+
+	void SetFov(float fov)
+	{
+		if(!mShouldUpdateProjectionMatrix)mShouldUpdateProjectionMatrix = true;
+
+		mFov = fov;
+	}
+
+	void SetAspect(float width , float height)
+	{
+		if(!mShouldUpdateProjectionMatrix)mShouldUpdateProjectionMatrix = true;
+
+		mAspect = width / height;
+	}
+
+	void SetEye(const XMFLOAT3& eye)
+	{
+		if(!mShouldUpdateViewMatrix)mShouldUpdateViewMatrix = true;
+
+		mEye = eye;
+	}
+
+	void SetLookat(const XMFLOAT3& lookat)
+	{
+		if(!mShouldUpdateViewMatrix)mShouldUpdateViewMatrix = true;
+
+		mLookat = lookat;
+	}
+
+	void SetUp(const XMFLOAT3& up)
+	{
+		if(!mShouldUpdateViewMatrix)mShouldUpdateViewMatrix = true;
+
+		mUp = up;
 	}
 };
