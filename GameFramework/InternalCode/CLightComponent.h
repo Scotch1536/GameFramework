@@ -1,19 +1,23 @@
 #pragma once
 #include	<DirectXMath.h>
 #include	"memory.h"
+#include	"CComponent.h"
 #include	"Shader.h"
 #include	"CDirectXGraphics.h"
 
-class CLight {
-	ALIGN16 struct ConstantBufferLight {
+class CLightComponent :public CComponent
+{
+	ALIGN16 struct ConstantBufferLight
+	{
 		DirectX::XMFLOAT4 LightDirection;
 		DirectX::XMFLOAT4 EyePos;
 		DirectX::XMFLOAT4 Ambient;
 	};
 
-	enum class LightType {
-		DIRECTIONAL,
-		POINT,
+	enum class LightType
+	{
+		DIRECTIONAL ,
+		POINT ,
 		SPOT
 	};
 	LightType			m_type;
@@ -22,18 +26,25 @@ class CLight {
 	ID3D11Buffer*       m_pConstantBufferLight = nullptr;
 	DirectX::XMFLOAT4	m_ambient;
 public:
-	bool Init(DirectX::XMFLOAT3 eyepos,DirectX::XMFLOAT4 lightpos) {
+	CLightComponent(IActor& owner , int priority = 40):CComponent(owner , priority)
+	{
+		mAttribute = CComponent::EAttribute::LIGHT;
+	}
+
+	bool Init(DirectX::XMFLOAT3 eyepos , DirectX::XMFLOAT4 lightpos)
+	{
 		m_lightpos = lightpos;
 		m_eyepos = eyepos;
 		m_type = LightType::DIRECTIONAL;
 
 		// コンスタントバッファ作成
 		bool sts = CreateConstantBuffer(
-			CDirectXGraphics::GetInstance()->GetDXDevice(),					// デバイス
-			sizeof(ConstantBufferLight),		// サイズ
+			CDirectXGraphics::GetInstance()->GetDXDevice() ,					// デバイス
+			sizeof(ConstantBufferLight) ,		// サイズ
 			&m_pConstantBufferLight);			// コンスタントバッファ４
-		if (!sts) {
-			MessageBox(NULL, "CreateBuffer(constant buffer Light) error", "Error", MB_OK);
+		if(!sts)
+		{
+			MessageBox(NULL , "CreateBuffer(constant buffer Light) error" , "Error" , MB_OK);
 			return false;
 		}
 
@@ -42,7 +53,8 @@ public:
 		return true;
 	}
 
-	void Update() {
+	void Update()
+	{
 		ConstantBufferLight		cb;
 
 		cb.EyePos.w = 1.0;
@@ -57,35 +69,40 @@ public:
 
 		cb.Ambient = m_ambient;
 
-		CDirectXGraphics::GetInstance()->GetImmediateContext()->UpdateSubresource(m_pConstantBufferLight,
-			0, 
-			nullptr, 
-			&cb, 
-			0, 0);
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->UpdateSubresource(m_pConstantBufferLight ,
+			0 ,
+			nullptr ,
+			&cb ,
+			0 , 0);
 
 		// コンスタントバッファ4をｂ3レジスタへセット（頂点シェーダー用）
-		CDirectXGraphics::GetInstance()->GetImmediateContext()->VSSetConstantBuffers(4, 1, &m_pConstantBufferLight);
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->VSSetConstantBuffers(4 , 1 , &m_pConstantBufferLight);
 		// コンスタントバッファ4をｂ3レジスタへセット(ピクセルシェーダー用)
-		CDirectXGraphics::GetInstance()->GetImmediateContext()->PSSetConstantBuffers(4, 1, &m_pConstantBufferLight);
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->PSSetConstantBuffers(4 , 1 , &m_pConstantBufferLight);
 
 	}
 
-	void Uninit() {
-		if (m_pConstantBufferLight) {
+	void Uninit()
+	{
+		if(m_pConstantBufferLight)
+		{
 			m_pConstantBufferLight->Release();
 			m_pConstantBufferLight = nullptr;
 		}
 	}
 
-	void SetEyePos(DirectX::XMFLOAT3 eyepos) {
+	void SetEyePos(DirectX::XMFLOAT3 eyepos)
+	{
 		m_eyepos = eyepos;
 	}
 
-	void SetLightPos(DirectX::XMFLOAT4 lightpos) {
+	void SetLightPos(DirectX::XMFLOAT4 lightpos)
+	{
 		m_lightpos = lightpos;
 	}
 
-	void SetAmbient(DirectX::XMFLOAT4 amb) {
+	void SetAmbient(DirectX::XMFLOAT4 amb)
+	{
 		m_ambient = amb;
 	}
 };

@@ -6,6 +6,7 @@
 
 #include "ExternalCode/CDirectInput.h"
 #include "InternalCode/CCameraComponent.h"
+#include "InternalCode/CLightComponent.h"
 #include "ExternalCode/Application.h"
 #include "InternalCode/CInputManager.h"
 #include "InternalCode/CModelDataManager.h"
@@ -14,6 +15,7 @@ CDice::CDice(CLevel& owner):CActor(owner)
 {
 	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this , CModelManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/"));
 	CCameraComponent* camera = new CCameraComponent(*this);
+	CLightComponent* light = new CLightComponent(*this);
 
 	DirectX::XMFLOAT3 eye(0 , 0 , -100);	//ÉJÉÅÉâà íu
 	DirectX::XMFLOAT3 lookat(0 , 0 , 0);	//íçéãì_

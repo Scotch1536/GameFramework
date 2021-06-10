@@ -125,9 +125,6 @@
     <ClInclude Include="InternalCode\CGame.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ExternalCode\CLight.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ExternalCode\Memory.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -195,6 +192,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="InternalCode\LCMath.h">
+       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CLightComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
