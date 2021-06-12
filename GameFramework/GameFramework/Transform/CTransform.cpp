@@ -65,17 +65,12 @@ void CTransform::Update()
 	{
 		mShouldUpdateMatrix = false;
 
-		for(auto& child : mChildTransform)
-		{
-			child->mShouldUpdateMatrix = true;
-		}
-
 		LCMath::UpdateMatrix(Location , Scale , Rotation.GenerateMatrix(*this) , mWorldMatrixSelf);
 	}
 
 	if(mParentTransform != nullptr)
 	{
-		DX11MtxMultiply(mWorldMatrixResult , mWorldMatrixSelf , mParentTransform->GetWorldMatrixSelf(*this));
+		DX11MtxMultiply(mWorldMatrixResult , mWorldMatrixSelf , mParentTransform->GetWorldMatrixResult(*this));
 	}
 	else
 	{

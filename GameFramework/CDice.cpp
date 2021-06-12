@@ -1,11 +1,7 @@
-#include <dinput.h>
-#include <functional>
-
 #include "GameFramework/Components/CStaticMeshComponent.h"
 #include "GameFramework/Level/CLevel.h"
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CLightComponent.h"
-#include "GameFramework/Game/Application.h"
 #include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/Managers/CModelDataManager.h"
 
@@ -19,19 +15,9 @@ CDice::CDice(CLevel& owner):CActor(owner)
 	その際原則ヒープ領域に(newで)作成すること
 	*/
 	CStaticMeshComponent* staticMesh =
-		new CStaticMeshComponent(*this , CModelManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/") , "Shader/vs.hlsl" , "Shader/ps.hlsl");
+		new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/") , "Shader/vs.hlsl" , "Shader/ps.hlsl");
 
-	staticMesh->mTransform.Location.x = 5;
-
-	CCameraComponent* camera = new CCameraComponent(*this);
-	CLightComponent* light = new CLightComponent(*this);
-
-	camera->SetProjection(10.f , 10000.f , XM_PI / 4.f , Application::CLIENT_WIDTH , Application::CLIENT_HEIGHT);
-	camera->SetView({ 0.f,0.f,-100.f } , { 0.f,0.f,0.f } , { 0.f,1.f,0.f });
-
-	light->SetEyePos(camera->GetEye());
-	light->SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
-	light->SetAmbient(XMFLOAT4(0.f , 0.f , 0.f , 0.f));
+	staticMesh->Transform.Location.x = 10;
 
 	/*
 	★超重要★
@@ -46,7 +32,7 @@ CDice::CDice(CLevel& owner):CActor(owner)
 	CInputManager::GetInstance().AddAction("ZP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_H } , std::bind(&CDice::Rot , std::ref(*this) , 4));
 	CInputManager::GetInstance().AddAction("ZM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_J } , std::bind(&CDice::Rot , std::ref(*this) , 5));
 	CInputManager::GetInstance().AddAction("CameraMove" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_K } , std::bind(&CDice::Rot , std::ref(*this) , 6));
-	CInputManager::GetInstance().AddAction("Destroy" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_L } , std::bind(&CActor::Destroy , std::ref(*this)));
+	CInputManager::GetInstance().AddAction("Destroy" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_L } , std::bind(&CActor::Destroy , std::ref(*this)));
 }
 
 void CDice::Test()
@@ -59,22 +45,22 @@ void CDice::Rot(int dire)
 	switch(dire)
 	{
 	case 0:
-		mTransform.Rotation.Angle.x++;
+		Transform.Rotation.Angle.x++;
 		return;
 	case 1:
-		mTransform.Rotation.Angle.x--;
+		Transform.Rotation.Angle.x--;
 		return;
 	case 2:
-		mTransform.Rotation.Angle.y++;
+		Transform.Rotation.Angle.y++;
 		return;
 	case 3:
-		mTransform.Rotation.Angle.y--;
+		Transform.Rotation.Angle.y--;
 		return;
 	case 4:
-		mTransform.Rotation.Angle.z++;
+		Transform.Rotation.Angle.z++;
 		return;
 	case 5:
-		mTransform.Rotation.Angle.z--;
+		Transform.Rotation.Angle.z--;
 		return;
 	case 6:
 		CComponent* buf;

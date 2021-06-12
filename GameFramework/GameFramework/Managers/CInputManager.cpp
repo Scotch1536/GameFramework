@@ -50,7 +50,7 @@ void CInputManager::AddAction(const std::string& actionName , const EButtonOptio
 void CInputManager::ReleaseBindTarget(CActor& target)
 {
 	//アクションリストが空だった場合終了
-	if(!mActionList.size() > 0)return;
+	if(!(mActionList.size() > 0))return;
 
 	for(auto& action : mActionList)
 	{

@@ -17,17 +17,12 @@ class ILevel
 public:
 	virtual ~ILevel() {};
 	virtual void DestroyActor(CActor& target) = 0;
-};
-
-class ILevelToActor
-{
-public:
-	virtual ~ILevelToActor() {};
 	virtual void AddActor(CActor& actor) = 0;
+	virtual void RequestSetCamera(CCameraComponent& camera) = 0;
 };
 
 //レベルクラス
-class CLevel :public ILevel , public ILevelToActor
+class CLevel :public ILevel
 {
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;		//アクター
@@ -54,7 +49,7 @@ private:
 	void AddActor(CActor& actor)override;
 protected:
 	//カメラのセットをリクエスト
-	void RequestSetCamera(CCameraComponent& camera);
+	void RequestSetCamera(CCameraComponent& camera)override;
 
 public:
 	//★超重要★　コンストラクタを呼ぶことはレベルの遷移を意味する

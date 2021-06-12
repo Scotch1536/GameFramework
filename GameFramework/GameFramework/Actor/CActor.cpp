@@ -4,9 +4,9 @@
 
 #include "CActor.h"
 
-CActor::CActor(CLevel& owner):mOwnerInterface(owner)
+CActor::CActor(ILevel& owner):mOwnerInterface(owner)
 {
-	static_cast<ILevelToActor&>(owner).AddActor(*this);
+	mOwnerInterface.AddActor(*this);
 }
 
 CActor::~CActor()
@@ -35,14 +35,9 @@ void CActor::RegisterRenderComponent(IRender& component)
 	mRenderAttributeComponents.emplace_back(&component);
 }
 
-CTransform& CActor::GetTransform()
-{
-	return mTransform;
-}
-
 void CActor::Update()
 {
-	if(!mTransform.GetIsChild())mTransform.Update();
+	if(!Transform.GetIsChild())Transform.Update();
 
 	for(auto& component : mComponents)
 	{

@@ -8,7 +8,7 @@
 
 CStaticMeshComponent::CStaticMeshComponent(CActor& owner , ModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority)
 	:CComponent(owner , priority) ,
-	mTransform(owner) ,
+	Transform(owner) ,
 	mModel(&model) ,
 	mRenderComponent(*new CRenderComponent(owner))
 {
@@ -32,7 +32,7 @@ CStaticMeshComponent::CStaticMeshComponent(CActor& owner , ModelData& model , st
 
 void CStaticMeshComponent::Render()
 {
-	mTransform.RequestSetMatrix();
+	Transform.RequestSetMatrix();
 
 	for(auto& mesh : mModel->GetMeshes())
 	{

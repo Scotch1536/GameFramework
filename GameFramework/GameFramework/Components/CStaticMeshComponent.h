@@ -16,7 +16,7 @@ private:
 	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
 
 public:
-	CTransform mTransform;						//トランスフォーム
+	CTransform Transform;			//トランスフォーム
 
 	CStaticMeshComponent(CActor& owner , ModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority = 90);
 

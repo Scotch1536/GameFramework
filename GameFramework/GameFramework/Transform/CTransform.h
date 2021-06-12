@@ -8,16 +8,8 @@
 class CChildTransform;
 class IActor;
 
-class ITransform
-{
-public:
-	virtual ~ITransform() {};
-	virtual void AttachTransform(CTransform& attachTarget) = 0;
-	virtual void DetachTransform(CTransform& detachTarget) = 0;
-};
-
 //トランスフォームクラス
-class CTransform :public ITransform
+class CTransform
 {
 private:
 	XMFLOAT4X4 mWorldMatrixSelf;			//自身のワールド行列
@@ -31,12 +23,6 @@ private:
 
 	bool mShouldUpdateMatrix = true;		//行列を更新すべきか
 	bool mIsChild = false;					//自分が子トランスフォームか
-
-	//引数のトランスフォームをアタッチ（親子付け）する
-	void AttachTransform(CTransform& attachTarget)override;
-
-	//引数のトランスフォームをデタッチ（親子付け解除）する
-	void DetachTransform(CTransform& detachTarget)override;
 
 public:
 	XMFLOAT3 Location = { 0.f,0.f,0.f };			//ロケーション
@@ -54,9 +40,15 @@ public:
 	//行列をDirectxにセットしてもらうリクエスト
 	virtual void RequestSetMatrix();
 
-	const XMFLOAT4X4& GetWorldMatrixSelf(const CTransform& partner)const
+	//引数のトランスフォームをアタッチ（親子付け）する
+	void AttachTransform(CTransform& attachTarget);
+
+	//引数のトランスフォームをデタッチ（親子付け解除）する
+	void DetachTransform(CTransform& detachTarget);
+
+	const XMFLOAT4X4& GetWorldMatrixResult(const CTransform& partner)const
 	{
-		return mWorldMatrixSelf;
+		return mWorldMatrixResult;
 	}
 
 	const bool& GetIsChild()const
