@@ -11,7 +11,7 @@ using Microsoft::WRL::ComPtr;
 //レンダーコンポーネントクラス
 class CRenderComponent :public CComponent
 {
-protected:
+private:
 	ComPtr<ID3D11VertexShader> mVertexShader;			// 頂点シェーダー
 	ComPtr<ID3D11PixelShader> mPixelShader;				// ピクセルシェーダー
 	ComPtr<ID3D11InputLayout> mVertexLayout;			// 頂点フォーマット
