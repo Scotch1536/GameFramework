@@ -4,7 +4,7 @@
 
 #include "CActor.h"
 
-CActor::CActor(CLevel& owner):mOwnerInterface(owner) , mTransform(*this)
+CActor::CActor(CLevel& owner):mOwnerInterface(owner)
 {
 	static_cast<ILevelToActor&>(owner).AddActor(*this);
 }
@@ -42,7 +42,7 @@ CTransform& CActor::GetTransform()
 
 void CActor::Update()
 {
-	mTransform.Update();
+	if(!mTransform.GetIsChild())mTransform.Update();
 
 	for(auto& component : mComponents)
 	{

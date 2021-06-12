@@ -1,28 +1,47 @@
 #include "../ExternalCode/DX11Settransform.h"
 #include "../ExternalCode/dx11mathutil.h"
 #include "../Math/LCMath.h"
+#include "../Actor/CActor.h"
 
 #include "CTransform.h"
-#include "CChildTransform.h"
 
 CTransform::CTransform()
 {
-	DX11MtxIdentity(mWorldMatrix);
+	DX11MtxIdentity(mWorldMatrixSelf);
+	DX11MtxIdentity(mWorldMatrixResult);
 }
 
-CTransform::CTransform(CActor& partner):CTransform()
-{}
-
-void CTransform::AttachChildTransform(CChildTransform& targetChild)
+CTransform::CTransform(IActor& partner):CTransform()
 {
-	mChildTransform.emplace_back(&targetChild);
+	partner.GetTransform().AttachTransform(*this);
 }
 
-void CTransform::DetachChildTransform(CChildTransform& targetChild)
+CTransform::~CTransform()
 {
+	if(mParentTransform != nullptr)mParentTransform->DetachTransform(*this);
+	for(auto child : mChildTransform)
+	{
+		child->DetachTransform(*this);
+	}
+}
+
+void CTransform::AttachTransform(CTransform& attachTarget)
+{
+	mChildTransform.emplace_back(&attachTarget);
+	attachTarget.mParentTransform = this;
+	attachTarget.mIsChild = true;
+}
+
+void CTransform::DetachTransform(CTransform& detachTarget)
+{
+	if(mParentTransform == &detachTarget)
+	{
+		mParentTransform = nullptr;
+		mIsChild = false;
+	}
 	for(auto itr = mChildTransform.begin(); itr != mChildTransform.end(); ++itr)
 	{
-		if((*itr) == &targetChild)
+		if((*itr) == &detachTarget)
 		{
 			mChildTransform.erase(itr);
 			mChildTransform.shrink_to_fit();
@@ -35,7 +54,7 @@ void CTransform::Update()
 {
 	Rotation.Update();
 
-	if(!LCMath::CompareFloat3(Location , mCompareLocation) || !LCMath::CompareFloat3(Scale , mCompareScale) || !Rotation.GetIsNowCompareResult())
+	if(!LCMath::CompareFloat3(Location , mCompareLocation) || !LCMath::CompareFloat3(Scale , mCompareScale) || !Rotation.GetIsSameAngle())
 	{
 		mShouldUpdateMatrix = true;
 		mCompareLocation = Location;
@@ -51,7 +70,16 @@ void CTransform::Update()
 			child->mShouldUpdateMatrix = true;
 		}
 
-		LCMath::UpdateMatrix(Location , Scale , Rotation.GenerateMatrix(*this) , mWorldMatrix);
+		LCMath::UpdateMatrix(Location , Scale , Rotation.GenerateMatrix(*this) , mWorldMatrixSelf);
+	}
+
+	if(mParentTransform != nullptr)
+	{
+		DX11MtxMultiply(mWorldMatrixResult , mWorldMatrixSelf , mParentTransform->GetWorldMatrixSelf(*this));
+	}
+	else
+	{
+		mWorldMatrixResult = mWorldMatrixSelf;
 	}
 
 	for(auto& child : mChildTransform)
@@ -62,5 +90,5 @@ void CTransform::Update()
 
 void CTransform::RequestSetMatrix()
 {
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD , mWorldMatrix);
+	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD , mWorldMatrixResult);
 }

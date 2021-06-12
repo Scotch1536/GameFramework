@@ -11,17 +11,17 @@ CRotator::CRotator()
 
 bool CRotator::Update()
 {
-	if(!LCMath::CompareFloat3(Angle , mCompareAngle))
+	if(!LCMath::CompareFloat3(Angle , mLastFrameAngle))
 	{
 		LCMath::TransformFromEulerAnglesToQuaternion(Angle , mQuaternion);
 
-		mCompareAngle = Angle;
+		mLastFrameAngle = Angle;
 
-		mIsNowFrameCompareResult = false;
+		mIsSameAngle = false;
 	}
 	else
 	{
-		mIsNowFrameCompareResult = true;
+		mIsSameAngle = true;
 	}
 	return false;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 class IActor;
+class CActor;
 
 //コンポーネントクラス
 class CComponent
@@ -29,7 +30,7 @@ protected:
 
 public:
 	//★超重要★　コンストラクタを呼ぶことはアクターにコンポーネントを追加することを意味する
-	CComponent(IActor& owner , int priority);
+	CComponent(CActor& owner , int priority);
 	virtual ~CComponent() = 0;
 
 	//更新

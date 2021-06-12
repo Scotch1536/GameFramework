@@ -2,7 +2,7 @@
 
 #include "CComponent.h"
 
-CComponent::CComponent(IActor& owner , int priority):mPriority(priority),mOwnerInterface(owner)
+CComponent::CComponent(CActor& owner , int priority):mPriority(priority),mOwnerInterface(owner)
 {
 	mOwnerInterface.AddComponent(*this);
 }
