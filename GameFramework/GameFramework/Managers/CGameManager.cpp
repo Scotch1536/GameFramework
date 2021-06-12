@@ -24,7 +24,7 @@ void CGameManager::SetStartLevel(CLevel& startLevel)
 		mCanSetStartLevel = false;
 
 		static_cast<IGameToGameManager&>(*mGame).SetLevel(startLevel);
-		startLevel.SetOwnerInterface(dynamic_cast<CGame&>(*mGame));
+		startLevel.SetOwnerInterface(*mGame);
 	}
 	else
 	{

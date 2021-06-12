@@ -6,7 +6,6 @@
 #include "../Transform/CTransform.h"
 #include "../Interfaces/IRender.h"
 
-class CLevel;
 class ILevel;
 class CTransform;
 
@@ -43,14 +42,15 @@ private:
 	void RegisterRenderComponent(IRender& component)override;
 
 	//トランスフォーム取得
-	CTransform& GetTransform()override;
-
-protected:
-	CTransform mTransform;			//トランスフォーム
-
+	CTransform& GetTransform() override
+	{
+		return Transform;
+	}
 public:
+	CTransform Transform;			//トランスフォーム
+
 	//★超重要★　アクターのコンストラクタを呼ぶことはレベルにアクターを追加することを意味する
-	CActor(CLevel& owner);
+	CActor(ILevel& owner);
 
 	virtual ~CActor();
 
@@ -70,4 +70,5 @@ public:
 
 	//コンポーネントの属性から指定のコンポーネントをゲット
 	bool GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& result)const;
+
 };

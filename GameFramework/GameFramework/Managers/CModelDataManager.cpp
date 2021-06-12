@@ -1,6 +1,6 @@
 #include "CModelDataManager.h"
 
-ModelData& CModelManager::GetModel(std::string filePath , std::string resourceFolderPath)
+ModelData& CModelDataManager::GetModel(std::string filePath , std::string resourceFolderPath)
 {
 	if (mModelData.count(filePath) == 0) {
 		mModelData[filePath];		//モデルデータ作成

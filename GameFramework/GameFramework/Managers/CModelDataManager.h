@@ -5,20 +5,20 @@
 
 #include "../ExternalCode/ModelData.h"
 
-class CModelManager
+class CModelDataManager
 {
 private:
-	CModelManager() = default;
-	~CModelManager() = default;
+	CModelDataManager() = default;
+	~CModelDataManager() = default;
 public:
-	CModelManager(const CModelManager&) = delete;
-	CModelManager& operator=(const CModelManager&) = delete;
-	CModelManager(CModelManager&&) = delete;
-	CModelManager& operator=(CModelManager&&) = delete;
+	CModelDataManager(const CModelDataManager&) = delete;
+	CModelDataManager& operator=(const CModelDataManager&) = delete;
+	CModelDataManager(CModelDataManager&&) = delete;
+	CModelDataManager& operator=(CModelDataManager&&) = delete;
 
-	static CModelManager& GetInstance()
+	static CModelDataManager& GetInstance()
 	{
-		static CModelManager instance;
+		static CModelDataManager instance;
 		return instance;
 	}
 

@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CDice.cpp" />
+    <ClCompile Include="CTestCharacter.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
@@ -40,6 +41,9 @@
     <ClCompile Include="GameFramework\Transform\CTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CDice.h" />
+    <ClInclude Include="CTestCharacter.h" />
+    <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
     <ClInclude Include="GameFramework\Components\CCameraComponent.h" />
     <ClInclude Include="GameFramework\Components\CComponent.h" />
