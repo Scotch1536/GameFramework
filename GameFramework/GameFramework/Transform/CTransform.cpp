@@ -54,11 +54,11 @@ void CTransform::Update()
 {
 	Rotation.Update();
 
-	if(!LCMath::CompareFloat3(Location , mCompareLocation) || !LCMath::CompareFloat3(Scale , mCompareScale) || !Rotation.GetIsSameAngle())
+	if(!LCMath::CompareFloat3(Location , mLastFrameLocation) || !LCMath::CompareFloat3(Scale , mLastFrameScale) || !Rotation.GetIsSameAngle())
 	{
 		mShouldUpdateMatrix = true;
-		mCompareLocation = Location;
-		mCompareScale = Scale;
+		mLastFrameLocation = Location;
+		mLastFrameScale = Scale;
 	}
 
 	if(mShouldUpdateMatrix)
