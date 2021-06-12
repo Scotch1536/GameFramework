@@ -24,7 +24,7 @@ public:
 	bool Update();
 
 	//マトリックス取得
-	XMFLOAT4X4 GenerateMatrix(CTransform& partner);
+	XMFLOAT4X4 GenerateMatrix();
 
 	const bool& GetIsSameAngle()const
 	{

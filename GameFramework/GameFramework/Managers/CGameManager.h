@@ -39,7 +39,7 @@ public:
 	void RequestExecute(HINSTANCE hInst , int winMode);
 
 	//ゲームクラスの取得（アプリケーションクラスの参照が必要）
-	CGame& GetGame(Application& partner)
+	CGame& GetGame(const Application& partner)
 	{
 		return mGame;
 	}
