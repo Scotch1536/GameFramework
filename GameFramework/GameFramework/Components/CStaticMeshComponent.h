@@ -12,7 +12,7 @@ class CRenderComponent;
 class CStaticMeshComponent :public CComponent , public IRender
 {
 private:
-	ModelData* mModel;							//モデルデータ
+	ModelData& mModel;							//モデルデータ
 	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
 
 public:
@@ -23,7 +23,7 @@ public:
 	//モデルのセット
 	void SetModel(ModelData& model)
 	{
-		mModel = &model;
+		mModel = model;
 	}
 
 	//描画

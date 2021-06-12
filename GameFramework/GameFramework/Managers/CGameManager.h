@@ -1,6 +1,4 @@
 #pragma once
-#include <memory>
-
 #include "../Game/CGame.h"
 
 class CLevel;
@@ -19,7 +17,7 @@ public:
 class CGameManager :public IGameManagerToLevel
 {
 private:
-	std::unique_ptr<CGame> mGame;			//ゲームクラス
+	CGame mGame;			//ゲームクラス
 
 	bool mCanExecute = true;				//実行できるか
 	bool mCanSetStartLevel = true;			//スタートレベルをセットできるか
@@ -41,10 +39,13 @@ public:
 	void RequestExecute(HINSTANCE hInst , int winMode);
 
 	//ゲームクラスの取得（アプリケーションクラスの参照が必要）
-	CGame& GetGame(Application& partner);
+	CGame& GetGame(Application& partner)
+	{
+		return mGame;
+	}
 
 	IGame& GetGameInterface()
 	{
-		return *mGame;
+		return mGame;
 	}
 };

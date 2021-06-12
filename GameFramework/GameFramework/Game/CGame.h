@@ -28,7 +28,8 @@ public:
 class CGame :public IGame , public IGameToGameManager
 {
 private:
-	std::unique_ptr<Application> mApp;		//アプリケーション
+	Application mApp;		//アプリケーション
+
 	std::unique_ptr<CLevel> mLevel;			//レベル
 
 	//コピー＆ムーブ禁止
