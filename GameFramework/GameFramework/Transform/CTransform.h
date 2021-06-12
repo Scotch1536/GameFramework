@@ -35,10 +35,10 @@ public:
 	~CTransform();
 
 	//更新
-	virtual void Update();
+	void Update();
 
 	//行列をDirectxにセットしてもらうリクエスト
-	virtual void RequestSetMatrix();
+	void RequestSetMatrix();
 
 	//引数のトランスフォームをアタッチ（親子付け）する
 	void AttachTransform(CTransform& attachTarget);
