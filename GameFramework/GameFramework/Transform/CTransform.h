@@ -46,8 +46,13 @@ public:
 	virtual void Update();
 
 	//行列をDirectxにセットしてもらうリクエスト
-	void RequestSetMatrix();
+	virtual void RequestSetMatrix();
 
 	//引数の子コンポーネントとの親子関係をを切り離す
 	void DetachChildTransform(CChildTransform& targetChild);
+
+	const XMFLOAT4X4& GetWorldMatrix(const CChildTransform& child)const
+	{
+		return mWorldMatrix;
+	}
 };

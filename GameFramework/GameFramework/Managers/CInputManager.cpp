@@ -29,15 +29,19 @@ void CInputManager::RequestBindAction(std::string actionName , CActor& instanceP
 	mActionList[actionName].ActionInfo = func;
 }
 
-void CInputManager::AddAction(const std::string& actionName , CActor& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& func)
+void CInputManager::AddAction(const std::string& actionName , const EButtonOption& buttonOption ,
+	CActor& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& func)
 {
+	mActionList[actionName].ButtonOption = buttonOption;
 	mActionList[actionName].InstancePointer = &instancePtr;
 	mActionList[actionName].ButtonInfoList = buttonInfoList;
 	mActionList[actionName].ActionInfo = func;
 }
 
-void CInputManager::AddAction(const std::string& actionName , CActor& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& func)
+void CInputManager::AddAction(const std::string& actionName , const EButtonOption& buttonOption ,
+	CActor& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& func)
 {
+	mActionList[actionName].ButtonOption = buttonOption;
 	mActionList[actionName].InstancePointer = &instancePtr;
 	mActionList[actionName].ButtonInfoList.emplace_back(buttonInfo);
 	mActionList[actionName].ActionInfo = func;
@@ -70,13 +74,31 @@ void CInputManager::CheckInput()
 		for(auto& buttonInfo : action.second.ButtonInfoList)
 		{
 			//ボタンタイプ別の処理を記述
-			switch(buttonInfo.ButtonType)
+			if(buttonInfo.ButtonType == EButtonType::NONE)
 			{
-			case EButtonType::KEYBOARD:
-				if(CDirectInput::GetInstance().CheckKeyBuffer(buttonInfo.ButtonNum))
+				MessageBox(NULL , "ButtonType is NONE" , "error" , MB_OK);
+			}
+			else if(buttonInfo.ButtonType == EButtonType::KEYBOARD)
+			{
+				if(action.second.ButtonOption == EButtonOption::NONE)
 				{
-					shouldAction = true;
-					break;
+					MessageBox(NULL , "ButtonType is NONE" , "error" , MB_OK);
+				}
+				else if(action.second.ButtonOption == EButtonOption::PRESS)
+				{
+					if(CDirectInput::GetInstance().CheckKeyBuffer(buttonInfo.ButtonNum))
+					{
+						shouldAction = true;
+						break;
+					}
+				}
+				else if(action.second.ButtonOption == EButtonOption::TRIGGER)
+				{
+					if(CDirectInput::GetInstance().CheckKeyBufferTrigger(buttonInfo.ButtonNum))
+					{
+						shouldAction = true;
+						break;
+					}
 				}
 			}
 		}

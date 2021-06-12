@@ -30,6 +30,7 @@ void CLevel::Update()
 	for(auto& actor : mActors)
 	{
 		actor->Update();
+		actor->Tick();
 	}
 
 	//更新後に行う関数を実行

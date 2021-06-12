@@ -59,6 +59,9 @@ public:
 	*/
 	virtual void Update();
 
+	//毎フレーム行う処理（子クラスのための機能）
+	virtual void Tick() {};
+
 	//描画
 	void Render();
 
