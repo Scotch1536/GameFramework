@@ -18,8 +18,8 @@ private:
 	CTransform* mParentTransform = nullptr;				//親トランスフォーム
 	std::vector<CTransform*> mChildTransform;			//子トランスフォーム
 
-	XMFLOAT3 mCompareLocation = { 0.f,0.f,0.f };		//比較するためのロケーション
-	XMFLOAT3 mCompareScale = { 0.f,0.f,0.f };			//比較するためのスケール
+	XMFLOAT3 mLastFrameLocation = { 0.f,0.f,0.f };		//前フレームのロケーション
+	XMFLOAT3 mLastFrameScale = { 0.f,0.f,0.f };			//前フレームのスケール
 
 	bool mShouldUpdateMatrix = true;		//行列を更新すべきか
 	bool mIsChild = false;					//自分が子トランスフォームか
