@@ -26,7 +26,7 @@ bool CRotator::Update()
 	return false;
 }
 
-XMFLOAT4X4 CRotator::GenerateMatrix(CTransform& partner)
+XMFLOAT4X4 CRotator::GenerateMatrix()
 {
 	XMFLOAT4X4 ansMTX;
 
