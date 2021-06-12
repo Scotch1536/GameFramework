@@ -3,7 +3,7 @@
 
 #include "CRenderComponent.h"
 
-CRenderComponent::CRenderComponent(IActor& owner , int priority):CComponent(owner , priority)
+CRenderComponent::CRenderComponent(CActor& owner , int priority):CComponent(owner , priority)
 {}
 
 bool CRenderComponent::GenerateVertexShader(D3D11_INPUT_ELEMENT_DESC* layout , unsigned int layoutSize , const char* vsfile)

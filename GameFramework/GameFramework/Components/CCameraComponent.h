@@ -48,7 +48,7 @@ private:
 	}
 
 public:
-	CCameraComponent(IActor& owner , int priority = 80):CComponent(owner , priority)
+	CCameraComponent(CActor& owner , int priority = 80):CComponent(owner , priority)
 	{
 		mAttribute = CComponent::EAttribute::CAMERA;
 	}

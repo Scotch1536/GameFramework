@@ -6,32 +6,37 @@
 #include "CRotator.h"
 
 class CChildTransform;
-class CActor;
+class IActor;
 
 class ITransform
 {
 public:
 	virtual ~ITransform() {};
-	virtual void AttachChildTransform(CChildTransform& targetChild) = 0;
+	virtual void AttachTransform(CTransform& attachTarget) = 0;
+	virtual void DetachTransform(CTransform& detachTarget) = 0;
 };
 
 //トランスフォームクラス
 class CTransform :public ITransform
 {
 private:
-	std::vector<CTransform*> mChildTransform;			//従属するの子トランスフォーム
+	XMFLOAT4X4 mWorldMatrixSelf;			//自身のワールド行列
+	XMFLOAT4X4 mWorldMatrixResult;			//最終的な結果のワールド行列
+
+	CTransform* mParentTransform = nullptr;				//親トランスフォーム
+	std::vector<CTransform*> mChildTransform;			//子トランスフォーム
 
 	XMFLOAT3 mCompareLocation = { 0.f,0.f,0.f };		//比較するためのロケーション
 	XMFLOAT3 mCompareScale = { 0.f,0.f,0.f };			//比較するためのスケール
 
-	//子トランスフォームの追加
-	void AttachChildTransform(CChildTransform& targetChild)override;
-protected:
-	XMFLOAT4X4 mWorldMatrix;		//ワールド行列
-
 	bool mShouldUpdateMatrix = true;		//行列を更新すべきか
+	bool mIsChild = false;					//自分が子トランスフォームか
 
-	CTransform();
+	//引数のトランスフォームをアタッチ（親子付け）する
+	void AttachTransform(CTransform& attachTarget)override;
+
+	//引数のトランスフォームをデタッチ（親子付け解除）する
+	void DetachTransform(CTransform& detachTarget)override;
 
 public:
 	XMFLOAT3 Location = { 0.f,0.f,0.f };			//ロケーション
@@ -39,8 +44,9 @@ public:
 
 	CRotator Rotation;								//ローテーション
 
-	CTransform(CActor& partner);
-	virtual ~CTransform() = default;
+	CTransform();
+	CTransform(IActor& partner);
+	~CTransform();
 
 	//更新
 	virtual void Update();
@@ -48,11 +54,13 @@ public:
 	//行列をDirectxにセットしてもらうリクエスト
 	virtual void RequestSetMatrix();
 
-	//引数の子コンポーネントとの親子関係をを切り離す
-	void DetachChildTransform(CChildTransform& targetChild);
-
-	const XMFLOAT4X4& GetWorldMatrix(const CChildTransform& child)const
+	const XMFLOAT4X4& GetWorldMatrixSelf(const CTransform& partner)const
 	{
-		return mWorldMatrix;
+		return mWorldMatrixSelf;
+	}
+
+	const bool& GetIsChild()const
+	{
+		return mIsChild;
 	}
 };

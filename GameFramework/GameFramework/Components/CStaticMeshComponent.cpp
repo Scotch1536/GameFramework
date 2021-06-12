@@ -1,22 +1,21 @@
 #include <string>
 
-#include "../Transform/CChildTransform.h"
 #include "../Managers/CModelDataManager.h"
 #include "../Actor/CActor.h"
 
 #include "CStaticMeshComponent.h"
 #include "CRenderComponent.h"
 
-CStaticMeshComponent::CStaticMeshComponent(IActor& owner , ModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority)
+CStaticMeshComponent::CStaticMeshComponent(CActor& owner , ModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority)
 	:CComponent(owner , priority) ,
-	mTransform(owner.GetTransform()) ,
+	mTransform(owner) ,
 	mModel(&model) ,
 	mRenderComponent(*new CRenderComponent(owner))
 {
 	mAttribute = CComponent::EAttribute::RENDER;
 
 	//アクター(owner)にレンダー担当のコンポーネントとして登録
-	owner.RegisterRenderComponent(*this);
+	mOwnerInterface.RegisterRenderComponent(*this);
 
 	// 頂点データの定義（アニメーション対応）
 	D3D11_INPUT_ELEMENT_DESC layout[] =

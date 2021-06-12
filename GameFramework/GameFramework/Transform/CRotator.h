@@ -11,16 +11,11 @@ class CChildTransform;
 class CRotator
 {
 private:
-	float mAlpha;					//Slerpで使用するアルファ値
-	float mIncreaceAlpha;			//アルファの増加値
-
 	XMFLOAT4 mQuaternion;							//クォータニオン（現在地）
-	XMFLOAT3 mCompareAngle = { 0.f,0.f,0.f };		//比較するための角度
+	XMFLOAT3 mLastFrameAngle = { 0.f,0.f,0.f };		//比較するための角度
 
-	std::unique_ptr<XMFLOAT4> mFromQuaternion;			//クォータニオン（移動前）
-	std::unique_ptr<XMFLOAT4> mToQuaternion;			//クォータニオン（移動後）
+	bool mIsSameAngle = true;		//比較結果（今のフレームの角度と前のフレーム角度の）
 
-	bool mIsNowFrameCompareResult = true;
 public:
 	XMFLOAT3 Angle = { 0.f,0.f,0.f };			//角度（度数法）
 
@@ -37,9 +32,9 @@ public:
 		return mQuaternion;
 	}
 
-	const bool& GetIsNowCompareResult()const
+	const bool& GetIsSameAngle()const
 	{
-		return mIsNowFrameCompareResult;
+		return mIsSameAngle;
 	}
 
 	void SetQuaternion(CChildTransform& partner , XMFLOAT4& qua)

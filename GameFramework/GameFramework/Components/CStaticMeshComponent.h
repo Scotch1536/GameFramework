@@ -3,7 +3,7 @@
 
 #include "../ExternalCode/ModelData.h"
 #include "../Interfaces/IRender.h"
-#include "../Transform/CChildTransform.h"
+#include "../Transform/CTransform.h"
 
 #include "CComponent.h"
 
@@ -16,9 +16,9 @@ private:
 	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
 
 public:
-	CChildTransform mTransform;					//トランスフォーム
+	CTransform mTransform;						//トランスフォーム
 
-	CStaticMeshComponent(IActor& owner , ModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority = 90);
+	CStaticMeshComponent(CActor& owner , ModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority = 90);
 
 	//モデルのセット
 	void SetModel(ModelData& model)

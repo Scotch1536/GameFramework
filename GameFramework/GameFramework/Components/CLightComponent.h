@@ -43,7 +43,7 @@ private:
 		return true;
 	}
 public:
-	CLightComponent(IActor& owner , int priority = 40):CComponent(owner , priority)
+	CLightComponent(CActor& owner , int priority = 40):CComponent(owner , priority)
 	{
 		mAttribute = CComponent::EAttribute::LIGHT;
 
