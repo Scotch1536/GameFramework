@@ -31,8 +31,6 @@ private:
 
 	std::vector<std::function<void()>> mDoAfterUpdateFunction;		//更新後に行う関数オブジェクト
 
-	//アクターの破壊
-	void DestroyActor(CActor& target)override;
 protected:
 	IGame* mOwnerInterface;			//ゲームインターフェース
 
@@ -47,6 +45,9 @@ private:
 	アクターのコンストラクタを呼ぶことでアクターの参照から辿ってこのメソッドが呼ばれる
 	*/
 	void AddActor(CActor& actor)override;
+
+	//アクターの破壊
+	void DestroyActor(CActor& target)override;
 protected:
 	//カメラのセットをリクエスト
 	void RequestSetCamera(CCameraComponent& camera)override;

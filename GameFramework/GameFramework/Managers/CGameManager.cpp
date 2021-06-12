@@ -5,10 +5,8 @@
 
 #include "CGameManager.h"
 
-CGameManager::CGameManager()
-{
-	mGame.reset(new CGame(*this));
-}
+CGameManager::CGameManager():mGame(*this)
+{}
 
 CGameManager& CGameManager::GetInstance()
 {
@@ -23,8 +21,8 @@ void CGameManager::SetStartLevel(CLevel& startLevel)
 	{
 		mCanSetStartLevel = false;
 
-		static_cast<IGameToGameManager&>(*mGame).SetLevel(startLevel);
-		startLevel.SetOwnerInterface(*mGame);
+		static_cast<IGameToGameManager&>(mGame).SetLevel(startLevel);
+		startLevel.SetOwnerInterface(mGame);
 	}
 	else
 	{
@@ -39,20 +37,10 @@ void CGameManager::RequestExecute(HINSTANCE hInst , int winMode)
 	{
 		mCanExecute = false;
 
-		static_cast<IGameToGameManager&>(*mGame).Execute(hInst , winMode);
+		static_cast<IGameToGameManager&>(mGame).Execute(hInst , winMode);
 	}
 	else
 	{
 		MessageBox(NULL , "Not Execute" , "error" , MB_OK);
 	}
 }
-
-CGame& CGameManager::GetGame(Application& partner)
-{
-	return *mGame;
-}
-
-//IGame& CGameManager::GetGameInterface()
-//{
-//	return dynamic_cast<IGame&>(*mGame);
-//}

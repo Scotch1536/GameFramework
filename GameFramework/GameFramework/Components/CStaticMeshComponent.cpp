@@ -9,7 +9,7 @@
 CStaticMeshComponent::CStaticMeshComponent(CActor& owner , ModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority)
 	:CComponent(owner , priority) ,
 	Transform(owner) ,
-	mModel(&model) ,
+	mModel(model) ,
 	mRenderComponent(*new CRenderComponent(owner))
 {
 	mAttribute = CComponent::EAttribute::RENDER;
@@ -34,7 +34,7 @@ void CStaticMeshComponent::Render()
 {
 	Transform.RequestSetMatrix();
 
-	for(auto& mesh : mModel->GetMeshes())
+	for(auto& mesh : mModel.GetMeshes())
 	{
 		unsigned int indexSize = static_cast <unsigned int>(mesh.m_indices.size());
 

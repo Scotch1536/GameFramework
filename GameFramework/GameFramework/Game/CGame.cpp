@@ -8,26 +8,25 @@
 #include "CGame.h"
 #include "Application.h"
 
-CGame::CGame(CGameManager& partner)
+CGame::CGame(CGameManager& partner):mApp(*this)
 {}
 
 long CGame::Execute(HINSTANCE hInst , int winMode)
 {
 	// アプリケーション初期処理
-	mApp.reset(new Application(*this));
-	mApp->Init(hInst);
+	mApp.Init(hInst);
 
 	// ウインドウを表示する
-	ShowWindow(mApp->GetHWnd() , winMode);
-	UpdateWindow(mApp->GetHWnd());
+	ShowWindow(mApp.GetHWnd() , winMode);
+	UpdateWindow(mApp.GetHWnd());
 
 	Init();
 
 	// メインループ
-	long ret = mApp->MainLoop();
+	long ret = mApp.MainLoop();
 
 	// アプリケーション終了処理
-	mApp->Dispose();
+	mApp.Dispose();
 
 	return ret;
 }
@@ -43,13 +42,13 @@ void CGame::Init()
 	bool sts;
 
 	sts = CDirectXGraphics::GetInstance()->Init(
-		mApp->GetHWnd() ,
+		mApp.GetHWnd() ,
 		Application::CLIENT_WIDTH ,
 		Application::CLIENT_HEIGHT ,
 		false);
 	if(!sts)
 	{
-		MessageBox(mApp->GetHWnd() , "DX11 init error" , "error" , MB_OK);
+		MessageBox(mApp.GetHWnd() , "DX11 init error" , "error" , MB_OK);
 		exit(1);
 	}
 
@@ -66,8 +65,8 @@ void CGame::Init()
 	//DIRECTINPUT初期化
 	CDirectInput::GetInstance().Init
 	(
-		mApp->GetHInst() ,
-		mApp->GetHWnd() ,
+		mApp.GetHInst() ,
+		mApp.GetHWnd() ,
 		Application::CLIENT_WIDTH ,
 		Application::CLIENT_HEIGHT
 	);
