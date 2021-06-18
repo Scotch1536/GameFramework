@@ -17,6 +17,7 @@
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp" />
     <ClCompile Include="GameFramework\EntryPoint.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\AssimpScene.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="GameFramework\Components\CComponent.h" />
     <ClInclude Include="GameFramework\Components\CLightComponent.h" />
     <ClInclude Include="GameFramework\Components\CRenderComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSpringArmComponent.h" />
     <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h" />
     <ClInclude Include="GameFramework\ExternalCode\AssimpScene.h" />
     <ClInclude Include="GameFramework\ExternalCode\CDirectInput.h" />
@@ -125,6 +127,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,6 +145,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

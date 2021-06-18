@@ -17,4 +17,7 @@ public:
 
 	//w’è‚ÌFloat3“¯m‚ªˆê’v‚µ‚Ä‚¢‚é‚©‚Ì”äŠr
 	static bool CompareFloat3(const XMFLOAT3& target1 , const XMFLOAT3& target2);
+
+	//üŒ`•âŠÔ
+	static float Lerp(float start , float end , float alpha);
 };
