@@ -2,8 +2,11 @@
 
 #include "../ExternalCode/DX11Settransform.h"
 #include "../ExternalCode/Memory.h"
+#include "../Actor/CActor.h"
 
 #include "CComponent.h"
+
+class CSpringArmComponent;
 
 class CCameraComponent :public CComponent
 {
@@ -12,7 +15,7 @@ private:
 
 	XMFLOAT4X4 mView;			//ビュー行列
 
-	XMFLOAT3 mEye;				//カメラ位置
+	XMFLOAT3 mEye;				//カメラ位置(相対座標)
 	XMFLOAT3 mLookat;			//注視点
 	XMFLOAT3 mUp;				//上向きベクトル
 
@@ -23,6 +26,7 @@ private:
 
 	bool mShouldUpdateProjectionMatrix = true;		//プロジェクション行列を更新すべきか
 	bool mShouldUpdateViewMatrix = true;			//ビュー行列を更新すべきか
+	bool mIsJoinSpringArm = false;					//スプリングアームが繋がっているか
 
 	//プロジェクション行列作成
 	void CreateProjectionMatrix()
@@ -37,21 +41,34 @@ private:
 	//ビュー行列作成
 	void CreateViewMatrix()
 	{
-		ALIGN16 XMVECTOR Eye = XMVectorSet(mEye.x , mEye.y , mEye.z , 0.0f);
-		ALIGN16 XMVECTOR At = XMVectorSet(mLookat.x , mLookat.y , mLookat.z , 0.0f);
-		ALIGN16 XMVECTOR Up = XMVectorSet(mUp.x , mUp.y , mUp.z , 0.0f);
+		if(mIsJoinSpringArm)
+		{
+			ALIGN16 XMVECTOR Eye = XMVectorSet(mEye.x , mEye.y , mEye.z , 0.0f);
+			ALIGN16 XMVECTOR At = XMVectorSet(mLookat.x , mLookat.y , mLookat.z , 0.0f);
+			ALIGN16 XMVECTOR Up = XMVectorSet(mUp.x , mUp.y , mUp.z , 0.0f);
 
-		ALIGN16 XMMATRIX camera;
-		camera = XMMatrixLookAtLH(Eye , At , Up);
+			ALIGN16 XMMATRIX camera;
+			camera = XMMatrixLookAtLH(Eye , At , Up);
 
-		XMStoreFloat4x4(&mView , camera);
+			XMStoreFloat4x4(&mView , camera);
+		}
+		else
+		{
+			XMFLOAT3 pLoc = mOwnerInterface.GetTransform().Location;
+
+			ALIGN16 XMVECTOR Eye = XMVectorSet(pLoc.x + mEye.x , pLoc.y + mEye.y , pLoc.z + mEye.z , 0.0f);
+			ALIGN16 XMVECTOR At = XMVectorSet(mLookat.x , mLookat.y , mLookat.z , 0.0f);
+			ALIGN16 XMVECTOR Up = XMVectorSet(mUp.x , mUp.y , mUp.z , 0.0f);
+
+			ALIGN16 XMMATRIX camera;
+			camera = XMMatrixLookAtLH(Eye , At , Up);
+
+			XMStoreFloat4x4(&mView , camera);
+		}
 	}
 
 public:
-	CCameraComponent(CActor& owner , int priority = 80):CComponent(owner , priority)
-	{
-		mAttribute = CComponent::EAttribute::CAMERA;
-	}
+	CCameraComponent(CActor& owner , int priority = 80):CComponent(owner , priority) {}
 
 	//更新
 	void Update()override
@@ -111,9 +128,14 @@ public:
 		return mUp;
 	}
 
-	float GetFov() const
+	const float& GetFov() const
 	{
 		return mFov;
+	}
+
+	const bool& GetShouldUpdateViewMatrix()const
+	{
+		return mShouldUpdateViewMatrix;
 	}
 
 	void SetNear(float nearclip)
@@ -163,5 +185,10 @@ public:
 		if(!mShouldUpdateViewMatrix)mShouldUpdateViewMatrix = true;
 
 		mUp = up;
+	}
+
+	void JoinSpringArm(const CSpringArmComponent& partner)
+	{
+		mIsJoinSpringArm = true;
 	}
 };

@@ -20,12 +20,26 @@ void CTestLevel::Init()
 
 	CTestCharacter& testChara = *new CTestCharacter(*this);
 
-	testChara.Transform.AttachTransform(dice.Transform);
+	//testChara.Transform.AttachTransform(dice.Transform);
 
 	CComponent* buf = nullptr;
-	if(testChara.GetComponentFromAttribute(CComponent::EAttribute::CAMERA , buf))
+	//std::vector<CComponent*> buf2;
+	//if(testChara.GetComponentFromAttribute(CComponent::EAttribute::CAMERA , buf))
+	//{
+	//	CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*buf);
+	//	this->RequestSetCamera(camera);
+	//}
+
+	if(testChara.GetComponent<CCameraComponent>(buf))
 	{
 		CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*buf);
 		this->RequestSetCamera(camera);
 	}
+	//if(testChara.GetAllComponents<CCameraComponent>(buf2))
+	//{
+	//	for(auto& buf : buf2)
+	//	{
+	//		buf->GetPriority();
+	//	}
+	//}
 }

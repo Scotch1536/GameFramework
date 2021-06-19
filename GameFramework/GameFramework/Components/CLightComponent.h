@@ -45,8 +45,6 @@ private:
 public:
 	CLightComponent(CActor& owner , int priority = 40):CComponent(owner , priority)
 	{
-		mAttribute = CComponent::EAttribute::LIGHT;
-
 		Init();
 	}
 

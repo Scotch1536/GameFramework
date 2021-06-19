@@ -29,6 +29,11 @@ void CLevel::Update()
 {
 	for(auto& actor : mActors)
 	{
+		if(!actor->Transform.GetIsChild())actor->Transform.Update();
+	}
+
+	for(auto& actor : mActors)
+	{
 		actor->Update();
 		actor->Tick();
 	}
@@ -85,7 +90,7 @@ void CLevel::DestroyActor(CActor& target)
 	{
 		CComponent* refCamera;
 
-		if(target.GetComponentFromAttribute(CComponent::EAttribute::CAMERA , refCamera))
+		if(target.GetComponent<CCameraComponent>(refCamera))
 		{
 			if(refCamera == mRenderingCamera)mRenderingCamera = nullptr;
 		}

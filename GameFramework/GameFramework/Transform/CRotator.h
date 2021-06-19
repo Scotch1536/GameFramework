@@ -13,8 +13,8 @@ private:
 	XMFLOAT4 mQuaternion;							//クォータニオン（現在地）
 	XMFLOAT3 mLastFrameAngle = { 0.f,0.f,0.f };		//前フレームの角度
 
-	bool mIsSameAngle = true;		//比較結果（今のフレームの角度と前のフレーム角度の）
-
+	bool mIsSameAngle = true;				//比較結果（今のフレームの角度と前のフレーム角度の）
+	bool mIsFirstTimeToUpdate = true;		//更新が一回目かどうか
 public:
 	XMFLOAT3 Angle = { 0.f,0.f,0.f };			//角度（度数法）
 

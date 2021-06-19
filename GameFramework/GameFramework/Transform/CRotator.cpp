@@ -11,8 +11,10 @@ CRotator::CRotator()
 
 bool CRotator::Update()
 {
-	if(!LCMath::CompareFloat3(Angle , mLastFrameAngle))
+	if(!LCMath::CompareFloat3(Angle , mLastFrameAngle)||mIsFirstTimeToUpdate)
 	{
+		mIsFirstTimeToUpdate = false;
+
 		LCMath::TransformFromEulerAnglesToQuaternion(Angle , mQuaternion);
 
 		mLastFrameAngle = Angle;

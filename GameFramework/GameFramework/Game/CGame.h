@@ -42,11 +42,11 @@ private:
 	long Execute(HINSTANCE hInst , int winMode)override;
 
 	void SetLevel(CLevel& level)override;
-public:
-	CGame(CGameManager& partner);
 
 	//レベルのロード（遷移）
 	void LoadLevel(CLevel& level)override;
+public:
+	CGame(CGameManager& partner);
 
 	//ゲームの初期化（ウィンドウ作成後に呼び出し）
 	void Init();

@@ -68,3 +68,8 @@ bool LCMath::CompareFloat3(const XMFLOAT3& target1 , const XMFLOAT3& target2)
 	if(target1.z != target2.z)return false;
 	return true;
 }
+
+float LCMath::Lerp(float start , float end , float alpha)
+{
+	return (1 - alpha)*start + alpha * end;
+}

@@ -60,7 +60,6 @@ void CTransform::Update()
 		mLastFrameLocation = Location;
 		mLastFrameScale = Scale;
 	}
-
 	if(mShouldUpdateMatrix)
 	{
 		mShouldUpdateMatrix = false;
@@ -70,7 +69,7 @@ void CTransform::Update()
 
 	if(mParentTransform != nullptr)
 	{
-		DX11MtxMultiply(mWorldMatrixResult , mWorldMatrixSelf , mParentTransform->GetWorldMatrixResult(*this));
+		DX11MtxMultiply(mWorldMatrixResult , mWorldMatrixSelf , mParentTransform->GetWorldMatrixResult());
 	}
 	else
 	{

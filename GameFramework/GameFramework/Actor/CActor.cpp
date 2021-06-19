@@ -37,8 +37,6 @@ void CActor::RegisterRenderComponent(IRender& component)
 
 void CActor::Update()
 {
-	if(!Transform.GetIsChild())Transform.Update();
-
 	for(auto& component : mComponents)
 	{
 		component->Update();
@@ -56,17 +54,4 @@ void CActor::Render()
 void CActor::Destroy()
 {
 	mOwnerInterface.DestroyActor(*this);
-}
-
-bool CActor::GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& result)const
-{
-	for(auto& component : mComponents)
-	{
-		if(component->GetAttribute() == attribute)
-		{
-			result = component.get();
-			return true;
-		}
-	}
-	return false;
 }
