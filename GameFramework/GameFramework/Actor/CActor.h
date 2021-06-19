@@ -68,7 +68,31 @@ public:
 	//破壊
 	void Destroy();
 
-	//コンポーネントの属性から指定のコンポーネントをゲット
-	bool GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& result)const;
+	template<class T>
+	bool GetComponent(CComponent*& result)
+	{
+		for(auto& component : mComponents)
+		{
+			if(typeid(T) == typeid(*component))
+			{
+				result = component.get();
+				return true;
+			}
+		}
+		return false;
+	}
 
+	template<class T>
+	bool GetAllComponents(std::vector<CComponent*>& result)
+	{
+		for(auto& component : mComponents)
+		{
+			if(typeid(T) == typeid(*component))
+			{
+				result.emplace_back(component.get());
+			}
+		}
+		if(result.size() != 0)return true;
+		else return false;
+	}
 };

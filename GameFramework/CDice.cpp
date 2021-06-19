@@ -32,7 +32,6 @@ CDice::CDice(CLevel& owner):CActor(owner)
 	//CInputManager::GetInstance().AddAction("ZP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_H } , std::bind(&CDice::Rot , std::ref(*this) , 4));
 	//CInputManager::GetInstance().AddAction("ZM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_J } , std::bind(&CDice::Rot , std::ref(*this) , 5));
 	//CInputManager::GetInstance().AddAction("CameraMove" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_K } , std::bind(&CDice::Rot , std::ref(*this) , 6));
-	CInputManager::GetInstance().AddAction("Destroy" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_L } , std::bind(&CActor::Destroy , std::ref(*this)));
 }
 
 void CDice::Test()
@@ -61,16 +60,6 @@ void CDice::Rot(int dire)
 		return;
 	case 5:
 		Transform.Rotation.Angle.z--;
-		return;
-	case 6:
-		CComponent* buf;
-		if(GetComponentFromAttribute(CComponent::EAttribute::CAMERA , buf))
-		{
-			CCameraComponent* camera = dynamic_cast<CCameraComponent*>(buf);
-			XMFLOAT3 eye = camera->GetEye();
-			eye.x += 2;
-			camera->SetEye(eye);
-		}
 		return;
 	default:
 		break;

@@ -5,17 +5,16 @@
 class CTransform;
 class CCameraComponent;
 
+enum class ESyncMode
+{
+	ALL_SYNC ,
+	LOCATION_ONLY_SYNC ,
+};
+
 class CSpringArmComponent :public CComponent
 {
-public:
-	enum class EMovement
-	{
-		TARGET_SYNC ,
-		FOLLOW_BEHIND ,
-	};
-
 private:
-	EMovement mMovement = EMovement::TARGET_SYNC;		//カメラの動き方
+	ESyncMode mSyncMode = ESyncMode::ALL_SYNC;		//カメラの動き方
 
 	XMFLOAT4X4 mLocalMatrix;						//ローカル行列
 	const CTransform& mParentTransform;				//親トランスフォーム
@@ -25,12 +24,12 @@ private:
 	void UpdateLocalMatrix();
 
 public:
-	CSpringArmComponent(CActor& owner , const CTransform& parentTrans , CCameraComponent& useCamera , EMovement move = EMovement::TARGET_SYNC , int priority = 10);
+	CSpringArmComponent(CActor& owner , const CTransform& parentTrans , CCameraComponent& useCamera , ESyncMode syncMode = ESyncMode::ALL_SYNC , int priority = 10);
 
 	void Update()override;
 
-	void SetMovement(EMovement move)
+	void SetMovement(ESyncMode move)
 	{
-		mMovement = move;
+		mSyncMode = move;
 	}
 };

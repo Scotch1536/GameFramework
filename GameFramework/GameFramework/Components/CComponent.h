@@ -6,22 +6,10 @@ class CActor;
 //コンポーネントクラス
 class CComponent
 {
-public:
-	//属性構造体
-	enum class EAttribute
-	{
-		NONE ,
-		CAMERA ,
-		RENDER ,
-		LIGHT,
-	};
-
 private:
 	int mPriority = 0;		//優先度 0～100を想定
 
 protected:
-	EAttribute mAttribute = EAttribute::NONE;		//属性
-
 	IActor& mOwnerInterface;		//インターフェース
 
 	//コピー禁止
@@ -39,10 +27,5 @@ public:
 	const int& GetPriority()const
 	{
 		return mPriority;
-	}
-
-	const EAttribute& GetAttribute()const
-	{
-		return mAttribute;
 	}
 };

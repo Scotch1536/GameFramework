@@ -19,7 +19,7 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 	camera->SetProjection(10.f , 10000.f , XM_PI / 4.f , Application::CLIENT_WIDTH , Application::CLIENT_HEIGHT);
 	camera->SetView({ 0.f,0.f,-100.f } , { 0.f,0.f,0.f } , { 0.f,1.f,0.f });
 
-	CSpringArmComponent* spr = new CSpringArmComponent(*this , Transform , *camera);
+	CSpringArmComponent* spr = new CSpringArmComponent(*this , Transform , *camera , ESyncMode::LOCATION_ONLY_SYNC);
 
 	light->SetEyePos(camera->GetEye());
 	light->SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
@@ -32,7 +32,8 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 	CInputManager::GetInstance().AddAction("YM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_G } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 3));
 	CInputManager::GetInstance().AddAction("ZP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_H } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 4));
 	CInputManager::GetInstance().AddAction("ZM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_J } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 5));
-	CInputManager::GetInstance().AddAction("CameraMove" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_K } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 6));
+	CInputManager::GetInstance().AddAction("XPM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_K } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 6));
+	CInputManager::GetInstance().AddAction("Destroy" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_L } , std::bind(&CActor::Destroy , std::ref(*this)));
 }
 
 void CTestCharacter::Move()
@@ -63,14 +64,7 @@ void CTestCharacter::Rot(int dire)
 		Transform.Rotation.Angle.z--;
 		return;
 	case 6:
-		CComponent* buf;
-		if(GetComponentFromAttribute(CComponent::EAttribute::CAMERA , buf))
-		{
-			CCameraComponent* camera = dynamic_cast<CCameraComponent*>(buf);
-			XMFLOAT3 eye = camera->GetEye();
-			eye.x += 2;
-			camera->SetEye(eye);
-		}
+		Transform.Location.x++;
 		return;
 	default:
 		break;

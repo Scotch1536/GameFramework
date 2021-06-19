@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 // スタティック　メンバー
 //-----------------------------------------------------------------------------
-const char*			Application::WINDOW_TITLE = "アプリケーションクラス";
+const char*			Application::WINDOW_TITLE = "GameFramework";
 const char*			Application::WINDOW_CLASS_NAME = "win32app";
 
 const uint32_t		Application::WINDOW_STYLE_WINDOWED = (WS_VISIBLE | WS_CAPTION | WS_SYSMENU);

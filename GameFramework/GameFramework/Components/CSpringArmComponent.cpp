@@ -5,12 +5,16 @@
 #include "CCameraComponent.h"
 #include "CSpringArmComponent.h"
 
-CSpringArmComponent::CSpringArmComponent(CActor& owner , const CTransform& parentTrans , CCameraComponent& useCamera , EMovement move , int priority)
+CSpringArmComponent::CSpringArmComponent(CActor& owner , const CTransform& parentTrans , CCameraComponent& useCamera , ESyncMode syncMode , int priority)
 	:CComponent(owner , priority) ,
+	mSyncMode(syncMode) ,
 	mParentTransform(parentTrans) ,
 	mUseCamera(useCamera)
 {
-	UpdateLocalMatrix();
+	//カメラコンポーネントにスプリングアームを繋げたことを通知
+	mUseCamera.JoinSpringArm(*this);
+
+	DX11MtxIdentity(mLocalMatrix);
 }
 
 void CSpringArmComponent::UpdateLocalMatrix()
@@ -48,7 +52,16 @@ void CSpringArmComponent::Update()
 
 	DX11MtxMultiply(cameraWorld , mLocalMatrix , mParentTransform.GetWorldMatrixResult());
 
-	mUseCamera.SetEye({ cameraWorld._11,cameraWorld._12,cameraWorld._13 });
-	mUseCamera.SetLookat({ cameraWorld._31,cameraWorld._32,cameraWorld._33 });
-	mUseCamera.SetUp({ cameraWorld._21,cameraWorld._22,cameraWorld._23 });
+	if(mSyncMode == ESyncMode::ALL_SYNC)
+	{
+		mUseCamera.SetEye({ cameraWorld._11,cameraWorld._12,cameraWorld._13 });
+		mUseCamera.SetLookat({ cameraWorld._31,cameraWorld._32,cameraWorld._33 });
+		mUseCamera.SetUp({ cameraWorld._21,cameraWorld._22,cameraWorld._23 });
+	}
+	else if(mSyncMode == ESyncMode::LOCATION_ONLY_SYNC)
+	{
+		XMFLOAT3 pLoc = mParentTransform.Location;
+		mUseCamera.SetEye({ pLoc.x + mLocalMatrix._11,pLoc.y + mLocalMatrix._12 , pLoc.z + mLocalMatrix._13 });
+		mUseCamera.SetLookat({ pLoc.x,pLoc.y,pLoc.z });
+	}
 }

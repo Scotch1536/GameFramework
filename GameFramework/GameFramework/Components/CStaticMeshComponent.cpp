@@ -12,8 +12,6 @@ CStaticMeshComponent::CStaticMeshComponent(CActor& owner , ModelData& model , st
 	mModel(model) ,
 	mRenderComponent(*new CRenderComponent(owner))
 {
-	mAttribute = CComponent::EAttribute::RENDER;
-
 	//アクター(owner)にレンダー担当のコンポーネントとして登録
 	mOwnerInterface.RegisterRenderComponent(*this);
 

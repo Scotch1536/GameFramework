@@ -90,7 +90,7 @@ void CLevel::DestroyActor(CActor& target)
 	{
 		CComponent* refCamera;
 
-		if(target.GetComponentFromAttribute(CComponent::EAttribute::CAMERA , refCamera))
+		if(target.GetComponent<CCameraComponent>(refCamera))
 		{
 			if(refCamera == mRenderingCamera)mRenderingCamera = nullptr;
 		}

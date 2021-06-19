@@ -55,16 +55,3 @@ void CActor::Destroy()
 {
 	mOwnerInterface.DestroyActor(*this);
 }
-
-bool CActor::GetComponentFromAttribute(CComponent::EAttribute attribute , CComponent*& result)const
-{
-	for(auto& component : mComponents)
-	{
-		if(component->GetAttribute() == attribute)
-		{
-			result = component.get();
-			return true;
-		}
-	}
-	return false;
-}
