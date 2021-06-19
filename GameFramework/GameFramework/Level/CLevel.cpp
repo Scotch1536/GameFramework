@@ -29,6 +29,11 @@ void CLevel::Update()
 {
 	for(auto& actor : mActors)
 	{
+		if(!actor->Transform.GetIsChild())actor->Transform.Update();
+	}
+
+	for(auto& actor : mActors)
+	{
 		actor->Update();
 		actor->Tick();
 	}

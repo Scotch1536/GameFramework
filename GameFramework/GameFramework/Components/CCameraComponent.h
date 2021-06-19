@@ -111,9 +111,14 @@ public:
 		return mUp;
 	}
 
-	float GetFov() const
+	const float& GetFov() const
 	{
 		return mFov;
+	}
+
+	const bool& GetShouldUpdateViewMatrix()const
+	{
+		return mShouldUpdateViewMatrix;
 	}
 
 	void SetNear(float nearclip)

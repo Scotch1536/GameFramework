@@ -37,8 +37,6 @@ void CActor::RegisterRenderComponent(IRender& component)
 
 void CActor::Update()
 {
-	if(!Transform.GetIsChild())Transform.Update();
-
 	for(auto& component : mComponents)
 	{
 		component->Update();

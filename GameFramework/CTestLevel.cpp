@@ -20,7 +20,7 @@ void CTestLevel::Init()
 
 	CTestCharacter& testChara = *new CTestCharacter(*this);
 
-	testChara.Transform.AttachTransform(dice.Transform);
+	//testChara.Transform.AttachTransform(dice.Transform);
 
 	CComponent* buf = nullptr;
 	if(testChara.GetComponentFromAttribute(CComponent::EAttribute::CAMERA , buf))

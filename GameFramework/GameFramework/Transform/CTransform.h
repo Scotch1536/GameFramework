@@ -46,7 +46,7 @@ public:
 	//引数のトランスフォームをデタッチ（親子付け解除）する
 	void DetachTransform(CTransform& detachTarget);
 
-	const XMFLOAT4X4& GetWorldMatrixResult(const CTransform& partner)const
+	const XMFLOAT4X4& GetWorldMatrixResult()const
 	{
 		return mWorldMatrixResult;
 	}
