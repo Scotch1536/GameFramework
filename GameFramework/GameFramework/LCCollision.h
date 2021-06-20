@@ -6,6 +6,6 @@ using namespace DirectX;
 static class LCCollision
 {
 public:
-	static bool Intersect(XMFLOAT3& AMin, XMFLOAT3& AMax, XMFLOAT3& BMin, XMFLOAT3& BMax);
-	static bool Contains(XMFLOAT3& AMin, XMFLOAT3& AMax, XMFLOAT3& point);
+	static bool Intersect(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& BMin, const XMFLOAT3& BMax);
+	static bool Contains(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& point);
 };

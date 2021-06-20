@@ -1,11 +1,12 @@
 #pragma once
 
 #include "CComponent.h"
+#include "../Transform/CTransform.h"
 
 class CCollisionComponent :public CComponent
 {
 public:
-	enum class Type
+	enum class EType
 	{
 		AABB,
 		OBB,
@@ -13,9 +14,14 @@ public:
 	};
 
 private:
-	Type mType;
-	bool mFlg;
+	EType mType;
+	CTransform mTransform;
+	
+protected:
+	CCollisionComponent(CActor& owner, int priority = 40);
 
 public:
-	CCollisionComponent(CActor& owner, int priority = 40) :CComponent(owner, priority) {}
+	virtual ~CCollisionComponent() = 0;
+	
+	void Update() override;
 };

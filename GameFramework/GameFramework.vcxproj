@@ -36,6 +36,7 @@
     <ClCompile Include="GameFramework\Game\CGame.cpp" />
     <ClCompile Include="GameFramework\LCCollision.cpp" />
     <ClCompile Include="GameFramework\Level\CLevel.cpp" />
+    <ClCompile Include="GameFramework\Managers\CCollisionManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CGameManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CInputManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="GameFramework\Interfaces\IRender.h" />
     <ClInclude Include="GameFramework\LCCollision.h" />
     <ClInclude Include="GameFramework\Level\CLevel.h" />
+    <ClInclude Include="GameFramework\Managers\CCollisionManager.h" />
     <ClInclude Include="GameFramework\Managers\CGameManager.h" />
     <ClInclude Include="GameFramework\Managers\CInputManager.h" />
     <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />

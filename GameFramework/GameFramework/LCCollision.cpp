@@ -1,6 +1,6 @@
 #include "LCCollision.h"
 
-bool LCCollision::Intersect(XMFLOAT3& AMin, XMFLOAT3& AMax, XMFLOAT3& BMin, XMFLOAT3& BMax)
+bool LCCollision::Intersect(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& BMin, const XMFLOAT3& BMax)
 {
 	if (AMax.x < BMin.x ||
 		AMax.y < BMin.y ||
@@ -14,7 +14,7 @@ bool LCCollision::Intersect(XMFLOAT3& AMin, XMFLOAT3& AMax, XMFLOAT3& BMin, XMFL
 	return true;
 }
 
-bool LCCollision::Contains(XMFLOAT3& AMin, XMFLOAT3& AMax, XMFLOAT3& point)
+bool LCCollision::Contains(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& point)
 {
 	if (point.x<AMin.x ||
 		point.y<AMin.y ||
