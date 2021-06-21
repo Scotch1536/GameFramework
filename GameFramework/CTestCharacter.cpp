@@ -24,7 +24,7 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 
 	light->SetEyePos(camera->GetEye());
 	light->SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
-	light->SetAmbient(XMFLOAT4(0.5f , 0.5f , 0.5f , 0.5f));
+	light->SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
 	CInputManager::GetInstance().AddAction("Move" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CTestCharacter::Move , std::ref(*this)));
 	CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_R } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 0));

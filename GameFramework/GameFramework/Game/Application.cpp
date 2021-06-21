@@ -158,7 +158,6 @@ unsigned long Application::MainLoop()
 
 	while(window->ExecMessage())
 	{
-
 		// timeGetTime関数は、ミリ秒単位でシステム時刻を取得します。 
 		// システム時間は、Windowsを起動してからの経過時間です。
 		current_time = ::timeGetTime();

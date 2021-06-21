@@ -24,53 +24,53 @@
 //!	@param	Lパラメータ
 //!	@retval	終了状況
 //==============================================================================
-static LRESULT APIENTRY WindowProc( HWND   h_Handle,
-								    UINT   h_Message,
-									WPARAM h_WParam,
-									LPARAM h_LParam )
+static LRESULT APIENTRY WindowProc(HWND   h_Handle ,
+	UINT   h_Message ,
+	WPARAM h_WParam ,
+	LPARAM h_LParam)
 {
 
 	// コールバックが設定されていなければ終了
 	CWindowCallback* callback = CWindow::Instance()->GetCallback();
-	if( callback == nullptr )
-		return DefWindowProc( h_Handle, h_Message, h_WParam, h_LParam );
+	if(callback == nullptr)
+		return DefWindowProc(h_Handle , h_Message , h_WParam , h_LParam);
 
 	// メッセージ処理
-	switch( h_Message )
+	switch(h_Message)
 	{
 		// キー押下
-		case WM_KEYDOWN:
-			return callback->OnKeyDown( h_Handle, h_Message, h_WParam, h_LParam );
+	case WM_KEYDOWN:
+		return callback->OnKeyDown(h_Handle , h_Message , h_WParam , h_LParam);
 
 		// キー解放
-		case WM_KEYUP:
-			return callback->OnKeyUp( h_Handle, h_Message, h_WParam, h_LParam );
+	case WM_KEYUP:
+		return callback->OnKeyUp(h_Handle , h_Message , h_WParam , h_LParam);
 
 		// システムキー押下
-		case WM_SYSKEYDOWN:
-			return callback->OnSysKeyDown( h_Handle, h_Message, h_WParam, h_LParam );
+	case WM_SYSKEYDOWN:
+		return callback->OnSysKeyDown(h_Handle , h_Message , h_WParam , h_LParam);
 
 		// システムキー解放
-		case WM_SYSKEYUP:
-			return callback->OnSysKeyUp( h_Handle, h_Message, h_WParam, h_LParam );
+	case WM_SYSKEYUP:
+		return callback->OnSysKeyUp(h_Handle , h_Message , h_WParam , h_LParam);
 
 		// ×
-		case WM_CLOSE:
-			return callback->OnClose( h_Handle, h_Message, h_WParam, h_LParam );
+	case WM_CLOSE:
+		return callback->OnClose(h_Handle , h_Message , h_WParam , h_LParam);
 
 		// ウインドウ解放
-		case WM_DESTROY:
-			return callback->OnDestroy( h_Handle, h_Message, h_WParam, h_LParam );
+	case WM_DESTROY:
+		return callback->OnDestroy(h_Handle , h_Message , h_WParam , h_LParam);
 
 		// 再描画
-		case WM_PAINT:
-			return callback->OnPaint( h_Handle, h_Message, h_WParam, h_LParam );
+	case WM_PAINT:
+		return callback->OnPaint(h_Handle , h_Message , h_WParam , h_LParam);
 
-		default:
-			return DefWindowProc( h_Handle, h_Message, h_WParam, h_LParam );
+	default:
+		return DefWindowProc(h_Handle , h_Message , h_WParam , h_LParam);
 	}
 
-	return 0;	
+	return 0;
 }
 
 //==============================================================================
@@ -79,7 +79,7 @@ static LRESULT APIENTRY WindowProc( HWND   h_Handle,
 //!	@param	
 //!	@retval	
 //==============================================================================
-CWindow :: CWindow()
+CWindow::CWindow()
 {}
 
 //==============================================================================
@@ -113,32 +113,32 @@ CWindow* CWindow::Instance()
 //!	@param	ウインドウスタイル
 //!	@retval true 成功 / false 失敗
 //==============================================================================
-bool CWindow :: RegisterClass( HINSTANCE	 h_Instance,
-							   const char*	 h_ClassName,
-							   unsigned long h_Style )
+bool CWindow::RegisterClass(HINSTANCE	 h_Instance ,
+	const char*	 h_ClassName ,
+	unsigned long h_Style)
 {
-    // ウィンドウクラス登録
+	// ウィンドウクラス登録
 	WNDCLASSEX WndClassEx;
-    WndClassEx.cbSize        = sizeof( WNDCLASSEX );
-    WndClassEx.style         = h_Style;
-    WndClassEx.lpfnWndProc   = WindowProc;
-    WndClassEx.cbClsExtra    = 0L;
-    WndClassEx.cbWndExtra    = 0L;
-    WndClassEx.hInstance     = h_Instance;
-    WndClassEx.hIcon         = nullptr;
-    WndClassEx.hCursor       = nullptr;
-    WndClassEx.hbrBackground = nullptr;
-    WndClassEx.lpszMenuName  = nullptr;
-    WndClassEx.lpszClassName = h_ClassName;
-    WndClassEx.hIconSm       = NULL;
+	WndClassEx.cbSize = sizeof(WNDCLASSEX);
+	WndClassEx.style = h_Style;
+	WndClassEx.lpfnWndProc = WindowProc;
+	WndClassEx.cbClsExtra = 0L;
+	WndClassEx.cbWndExtra = 0L;
+	WndClassEx.hInstance = h_Instance;
+	WndClassEx.hIcon = nullptr;
+	WndClassEx.hCursor = nullptr;
+	WndClassEx.hbrBackground = nullptr;
+	WndClassEx.lpszMenuName = nullptr;
+	WndClassEx.lpszClassName = h_ClassName;
+	WndClassEx.hIconSm = NULL;
 
-    if( !RegisterClassEx( &WndClassEx ) )
+	if(!RegisterClassEx(&WndClassEx))
 	{
-    	MessageBox( NULL, "RegisterClassEx", "Error!", MB_OK );
-        return false;
-    }
+		MessageBox(NULL , "RegisterClassEx" , "Error!" , MB_OK);
+		return false;
+	}
 
-    return true;
+	return true;
 }
 
 //==============================================================================
@@ -155,65 +155,68 @@ bool CWindow :: RegisterClass( HINSTANCE	 h_Instance,
 //!	@param	コールバック関数
 //!	@retval ウインドウポインタ
 //==============================================================================
-void CWindow :: SetWindow( HINSTANCE		h_Instance,
-						   unsigned long	h_Style,
-						   unsigned long	h_ExStyle,
-						   HWND				h_Parent,
-						   long				h_Width,
-						   long				h_Height,
-						   const char*		h_ClassName,
-						   const char*		h_Title,
-						   bool				FULLSCREEN)		
+void CWindow::SetWindow(HINSTANCE		h_Instance ,
+	unsigned long	h_Style ,
+	unsigned long	h_ExStyle ,
+	HWND				h_Parent ,
+	long				h_Width ,
+	long				h_Height ,
+	const char*		h_ClassName ,
+	const char*		h_Title ,
+	bool				FULLSCREEN)
 {
-	if (FULLSCREEN) {
+	if(FULLSCREEN)
+	{
 		m_Handle = CreateWindowEx(
-			h_ExStyle,
-			h_ClassName,					// ウィンドウクラスの名前
-			h_Title,						// タイトル
-			h_Style,						// ウィンドウスタイル
-			0, 0,							// ウィンドウ位置 縦, 横
-			h_Width, h_Height,				// ウィンドウサイズ
-			NULL,							// 親ウィンドウなし
-			(HMENU)NULL,					// メニューなし
-			h_Instance,						// インスタンスハンドル
+			h_ExStyle ,
+			h_ClassName ,					// ウィンドウクラスの名前
+			h_Title ,						// タイトル
+			h_Style ,						// ウィンドウスタイル
+			0 , 0 ,							// ウィンドウ位置 縦, 横
+			h_Width , h_Height ,				// ウィンドウサイズ
+			NULL ,							// 親ウィンドウなし
+			(HMENU)NULL ,					// メニューなし
+			h_Instance ,						// インスタンスハンドル
 			(LPVOID)NULL);					// 追加引数なし
 	}
-	else {
-		RECT	rWindow, rClient;
+	else
+	{
+		RECT	rWindow , rClient;
 
 		m_Handle = CreateWindowEx(
-			h_ExStyle,
-			h_ClassName,					// ウィンドウクラスの名前
-			h_Title,						// タイトル
-			WS_CAPTION | WS_SYSMENU,		// ウィンドウスタイル
-			0, 0,							// ウィンドウ位置 縦, 横(あとで中央に移動させます)
-			h_Width, h_Height,				// ウィンドウサイズ
-			HWND_DESKTOP,					// 親ウィンドウなし
-			(HMENU)NULL,					// メニューなし
-			h_Instance,						// インスタンスハンドル
+			h_ExStyle ,
+			h_ClassName ,					// ウィンドウクラスの名前
+			h_Title ,						// タイトル
+			WS_CAPTION | WS_SYSMENU ,		// ウィンドウスタイル
+			0 , 0 ,							// ウィンドウ位置 縦, 横(あとで中央に移動させます)
+			h_Width , h_Height ,				// ウィンドウサイズ
+			HWND_DESKTOP ,					// 親ウィンドウなし
+			(HMENU)NULL ,					// メニューなし
+			h_Instance ,						// インスタンスハンドル
 			(LPVOID)NULL);					// 追加引数なし
 
 		// ウインドウサイズを再計算（Metricsだけでは、フレームデザインでクライアント領域サイズが変わってしまうので）
-		GetWindowRect(m_Handle, &rWindow);
-		GetClientRect(m_Handle, &rClient);
+		GetWindowRect(m_Handle , &rWindow);
+		GetClientRect(m_Handle , &rClient);
 		int width = (rWindow.right - rWindow.left) - (rClient.right - rClient.left) + h_Width;
 		int height = (rWindow.bottom - rWindow.top) - (rClient.bottom - rClient.top) + h_Height;
 		SetWindowPos(
-			m_Handle,
-			NULL,
-			GetSystemMetrics(SM_CXSCREEN) / 2 - width / 2,
-			GetSystemMetrics(SM_CYSCREEN) / 2 - height / 2,
-			width - 1,
-			height - 1,
+			m_Handle ,
+			NULL ,
+			GetSystemMetrics(SM_CXSCREEN) / 2 - width / 2 ,
+			GetSystemMetrics(SM_CYSCREEN) / 2 - height / 2 ,
+			width - 1 ,
+			height - 1 ,
 			SWP_NOZORDER);
 	}
 
-	if (!m_Handle) {
-		MessageBox(nullptr,"CreateWindow Error","error",MB_OK);
+	if(!m_Handle)
+	{
+		MessageBox(nullptr , "CreateWindow Error" , "error" , MB_OK);
 	}
-	
+
 	// コールバック関数設定
-    m_cpCallback.reset(new CWindowCallback);
+	m_cpCallback.reset(new CWindowCallback);
 }
 
 //==============================================================================
@@ -222,20 +225,20 @@ void CWindow :: SetWindow( HINSTANCE		h_Instance,
 //!	@param	
 //!	@retval	true 正常 / false 異常
 //==============================================================================
-bool CWindow :: ExecMessage()
+bool CWindow::ExecMessage()
 {
 	// メッセージ確認
-    if( PeekMessage( &m_Message, NULL, 0, 0, PM_NOREMOVE ) )
+	while(PeekMessage(&m_Message , NULL , 0 , 0 , PM_REMOVE))
 	{
 		// メッセージなし
-		if( !( ::GetMessage( &m_Message, NULL, 0, 0 ) ) ) 
-			return false;
+		//if( !( ::GetMessage( &m_Message, NULL, 0, 0 ) ) ) 
+		if(m_Message.message == WM_QUIT)return false;
 
-        TranslateMessage( &m_Message );	// キーメッセージの変換
-        DispatchMessage( &m_Message );	// メッセージの送出
-    }
+		TranslateMessage(&m_Message);	// キーメッセージの変換
+		DispatchMessage(&m_Message);	// メッセージの送出
+	}
 
-    return true;
+	return true;
 }
 
 //==============================================================================
@@ -244,9 +247,9 @@ bool CWindow :: ExecMessage()
 //!	@param	
 //!	@retval	ウインドウメッセージ
 //==============================================================================
-long CWindow :: GetMessage() const
+long CWindow::GetMessage() const
 {
-    return m_Message.message;
+	return m_Message.message;
 }
 
 //==============================================================================
@@ -255,9 +258,9 @@ long CWindow :: GetMessage() const
 //!	@param	
 //!	@retval	ウィンドウハンドル
 //==============================================================================
-HWND CWindow :: GetHandle() const
+HWND CWindow::GetHandle() const
 {
-    return m_Handle;
+	return m_Handle;
 }
 
 //==============================================================================
@@ -266,9 +269,9 @@ HWND CWindow :: GetHandle() const
 //!	@param	
 //!	@retval	コールバック
 //==============================================================================
-CWindowCallback* CWindow :: GetCallback() const
+CWindowCallback* CWindow::GetCallback() const
 {
-    return m_cpCallback.get();
+	return m_cpCallback.get();
 }
 
 //******************************************************************************
