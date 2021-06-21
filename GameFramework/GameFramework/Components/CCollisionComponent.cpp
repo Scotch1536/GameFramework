@@ -11,13 +11,5 @@ CCollisionComponent::CCollisionComponent(CActor& owner, int priority) :CComponen
 
 void CCollisionComponent::Update()
 {
-	std::vector<CCollisionComponent*> colliders;
-
-	if (CCollisionManager::GetInstance().GetColliders(*this, colliders))
-	{
-		for (auto collider : colliders)
-		{
-						
-		}
-	}
+	CCollisionManager::GetInstance().GetColliders(*this, mColliders);
 }

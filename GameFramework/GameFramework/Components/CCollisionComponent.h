@@ -9,7 +9,6 @@ public:
 	enum class EType
 	{
 		AABB,
-		OBB,
 		SPHERE,
 	};
 
@@ -17,11 +16,15 @@ private:
 	EType mType;
 	CTransform mTransform;
 	
+	
 protected:
 	CCollisionComponent(CActor& owner, int priority = 40);
+
+	std::vector<CCollisionComponent*> mColliders;
 
 public:
 	virtual ~CCollisionComponent() = 0;
 	
 	void Update() override;
+	const EType& GetType()const { return mType; }
 };
