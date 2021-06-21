@@ -9,5 +9,7 @@ public:
 private:
 	void Move();
 	void Rot(int dire);
+	void ChangeCameraMove();
+	void ChangeCameraMode();
 };
 

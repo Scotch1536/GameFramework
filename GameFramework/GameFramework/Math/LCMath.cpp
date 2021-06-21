@@ -69,7 +69,43 @@ bool LCMath::CompareFloat3(const XMFLOAT3& target1 , const XMFLOAT3& target2)
 	return true;
 }
 
+bool LCMath::CompareMatrix(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2)
+{
+	if(target1._11 != target2._11)return false;
+	if(target1._12 != target2._12)return false;
+	if(target1._13 != target2._13)return false;
+	if(target1._14 != target2._14)return false;
+
+	if(target1._21 != target2._21)return false;
+	if(target1._22 != target2._22)return false;
+	if(target1._23 != target2._23)return false;
+	if(target1._24 != target2._24)return false;
+
+	if(target1._31 != target2._31)return false;
+	if(target1._32 != target2._32)return false;
+	if(target1._33 != target2._33)return false;
+	if(target1._34 != target2._34)return false;
+
+	if(target1._41 != target2._41)return false;
+	if(target1._42 != target2._42)return false;
+	if(target1._43 != target2._43)return false;
+	if(target1._44 != target2._44)return false;
+
+	return true;
+}
+
 float LCMath::Lerp(float start , float end , float alpha)
 {
 	return (1 - alpha)*start + alpha * end;
+}
+
+XMFLOAT3 LCMath::Lerp(const XMFLOAT3& start , const XMFLOAT3& end , float alpha)
+{
+	XMFLOAT3 result;
+
+	result.x = Lerp(start.x , end.x , alpha);
+	result.y = Lerp(start.y , end.y , alpha);
+	result.z = Lerp(start.z , end.z , alpha);
+
+	return result;
 }
