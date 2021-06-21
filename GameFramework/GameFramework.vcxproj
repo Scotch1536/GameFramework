@@ -15,6 +15,8 @@
     <ClCompile Include="CTestCharacter.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
+    <ClCompile Include="GameFramework\Components\CAABBComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CCollisionComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp" />
@@ -33,7 +35,9 @@
     <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.cpp" />
     <ClCompile Include="GameFramework\Game\Application.cpp" />
     <ClCompile Include="GameFramework\Game\CGame.cpp" />
+    <ClCompile Include="GameFramework\LCCollision.cpp" />
     <ClCompile Include="GameFramework\Level\CLevel.cpp" />
+    <ClCompile Include="GameFramework\Managers\CCollisionManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CGameManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CInputManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp" />
@@ -46,7 +50,9 @@
     <ClInclude Include="CTestCharacter.h" />
     <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
+    <ClInclude Include="GameFramework\Components\CAABBComponent.h" />
     <ClInclude Include="GameFramework\Components\CCameraComponent.h" />
+    <ClInclude Include="GameFramework\Components\CCollisionComponent.h" />
     <ClInclude Include="GameFramework\Components\CComponent.h" />
     <ClInclude Include="GameFramework\Components\CLightComponent.h" />
     <ClInclude Include="GameFramework\Components\CRenderComponent.h" />
@@ -68,7 +74,9 @@
     <ClInclude Include="GameFramework\Game\Application.h" />
     <ClInclude Include="GameFramework\Game\CGame.h" />
     <ClInclude Include="GameFramework\Interfaces\IRender.h" />
+    <ClInclude Include="GameFramework\LCCollision.h" />
     <ClInclude Include="GameFramework\Level\CLevel.h" />
+    <ClInclude Include="GameFramework\Managers\CCollisionManager.h" />
     <ClInclude Include="GameFramework\Managers\CGameManager.h" />
     <ClInclude Include="GameFramework\Managers\CInputManager.h" />
     <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />
