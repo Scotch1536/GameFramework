@@ -16,7 +16,6 @@ private:
 	EType mType;
 	CTransform mTransform;
 	
-	
 protected:
 	CCollisionComponent(CActor& owner, int priority = 40);
 

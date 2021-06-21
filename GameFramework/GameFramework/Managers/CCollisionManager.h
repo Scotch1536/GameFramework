@@ -15,6 +15,7 @@ private:
 	CCollisionManager& operator=(const CCollisionManager&) = delete;
 	CCollisionManager(CCollisionManager&&) = delete;
 	CCollisionManager& operator=(CCollisionManager&&) = delete;
+
 public:
 	static CCollisionManager& GetInstance();
 
