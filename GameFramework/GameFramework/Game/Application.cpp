@@ -12,6 +12,7 @@
 #include <Windows.h>
 #include <chrono>
 #include <thread>
+#include <iostream>
 
 #include "../ExternalCode/CWindow.h"
 #include "../ExternalCode/DX11Settransform.h"
@@ -157,7 +158,6 @@ unsigned long Application::MainLoop()
 
 	while(window->ExecMessage())
 	{
-
 		// timeGetTime関数は、ミリ秒単位でシステム時刻を取得します。 
 		// システム時間は、Windowsを起動してからの経過時間です。
 		current_time = ::timeGetTime();
@@ -179,6 +179,10 @@ unsigned long Application::MainLoop()
 			//printf("sleep:%f \n", tt);
 			std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(tt)));
 			//指定した相対時間だけ現スレッドをブロックする (function template)
+		}
+		else if(sleep_time < 0)
+		{
+			std::cout << "FPS60を保てていません" << std::endl;
 		}
 	}
 

@@ -19,6 +19,7 @@ void CTestLevel::Init()
 	//CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , dice , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CDice::Rot , std::ref(dice) , 0));
 
 	CTestCharacter& testChara = *new CTestCharacter(*this);
+	testChara.Transform.Rotation.Angle.z = 180.f;
 
 	//testChara.Transform.AttachTransform(dice.Transform);
 
