@@ -125,8 +125,6 @@ void CSpringArmComponent::Update()
 
 		IncreaseAlpha();
 
-		LCMath::Lerp(mUseCamera.GetEye() , *mGoalEye , mAlpha);
-
 		mUseCamera.SetEye(LCMath::Lerp(mUseCamera.GetEye() , *mGoalEye , mAlpha));
 		mUseCamera.SetLookat({ mParentTransform.Location.x,mParentTransform.Location.y,mParentTransform.Location.z });
 	}
