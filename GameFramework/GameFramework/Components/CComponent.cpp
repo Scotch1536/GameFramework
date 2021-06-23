@@ -8,3 +8,8 @@ CComponent::CComponent(CActor& owner , int priority):mPriority(priority),mOwnerI
 }
 
 CComponent::~CComponent() {}
+
+CActor& CComponent::GetOwner()const
+{
+	return mOwnerInterface.GetActor();
+}

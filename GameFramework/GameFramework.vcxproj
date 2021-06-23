@@ -37,11 +37,11 @@
     <ClCompile Include="GameFramework\Game\CGame.cpp" />
     <ClCompile Include="GameFramework\Level\CLevel.cpp" />
     <ClCompile Include="GameFramework\Library\LCCollision.cpp" />
+    <ClCompile Include="GameFramework\Library\LCMath.cpp" />
     <ClCompile Include="GameFramework\Managers\CCollisionManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CGameManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CInputManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp" />
-    <ClCompile Include="GameFramework\Math\LCMath.cpp" />
     <ClCompile Include="GameFramework\Transform\CRotator.cpp" />
     <ClCompile Include="GameFramework\Transform\CTransform.cpp" />
   </ItemGroup>
@@ -76,11 +76,11 @@
     <ClInclude Include="GameFramework\Interfaces\IRender.h" />
     <ClInclude Include="GameFramework\Level\CLevel.h" />
     <ClInclude Include="GameFramework\Library\LCCollision.h" />
+    <ClInclude Include="GameFramework\Library\LCMath.h" />
     <ClInclude Include="GameFramework\Managers\CCollisionManager.h" />
     <ClInclude Include="GameFramework\Managers\CGameManager.h" />
     <ClInclude Include="GameFramework\Managers\CInputManager.h" />
     <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />
-    <ClInclude Include="GameFramework\Math\LCMath.h" />
     <ClInclude Include="GameFramework\Transform\CRotator.h" />
     <ClInclude Include="GameFramework\Transform\CTransform.h" />
   </ItemGroup>

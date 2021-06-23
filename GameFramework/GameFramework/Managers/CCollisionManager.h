@@ -8,7 +8,7 @@ class CCollisionManager
 {
 private:
 	std::vector<CCollisionComponent*> mColliders;
-	std::unordered_map<const CCollisionComponent& , bool> mIsBefore;
+	std::unordered_map<CCollisionComponent* , bool> mIsBefore;
 
 	CCollisionManager() = default;
 
@@ -25,5 +25,5 @@ public:
 	void AddCollider(CCollisionComponent& collider);
 
 	//自分以外のコリジョンコンポーネントのポインタをあげる
-	bool GetColliders(const CCollisionComponent& caller, std::vector<CCollisionComponent*>& result);
+	bool GetColliders(CCollisionComponent& caller, std::vector<CCollisionComponent*>& result);
 };

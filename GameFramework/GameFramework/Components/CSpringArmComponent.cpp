@@ -1,7 +1,7 @@
 #include "../Actor/CActor.h"
 #include "../Transform/CTransform.h"
 #include "../ExternalCode/dx11mathutil.h"
-#include "../Math/LCMath.h"
+#include "../Library/LCMath.h"
 
 #include "CCameraComponent.h"
 #include "CSpringArmComponent.h"

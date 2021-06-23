@@ -3,9 +3,6 @@
 
 using namespace DirectX;
 
-class CCollisionComponent;
-class CAABBComponent;
-
 static class LCCollision
 {
 public:

@@ -29,8 +29,5 @@ public:
 		return mPriority;
 	}
 
-	CActor& GetOwner()const
-	{
-		return mOwnerInterface.GetActor();
-	}
+	CActor& GetOwner()const;
 };
