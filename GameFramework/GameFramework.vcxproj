@@ -15,6 +15,7 @@
     <ClCompile Include="CTestCharacter.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
+    <ClCompile Include="GameFramework\Components\C2DTextureComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CAABBComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CCollisionComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="CTestCharacter.h" />
     <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
+    <ClInclude Include="GameFramework\Components\C2DTextureComponent.h" />
     <ClInclude Include="GameFramework\Components\CAABBComponent.h" />
     <ClInclude Include="GameFramework\Components\CCameraComponent.h" />
     <ClInclude Include="GameFramework\Components\CCollisionComponent.h" />

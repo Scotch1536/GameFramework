@@ -9,6 +9,11 @@ CCollisionComponent::CCollisionComponent(CActor& owner, int priority) :CComponen
 	CCollisionManager::GetInstance().AddCollider(*this);	//自分をコリジョンマネージャーに登録
 }
 
+CCollisionComponent::~CCollisionComponent()
+{
+
+}
+
 void CCollisionComponent::Update()
 {
 	CCollisionManager::GetInstance().GetColliders(*this, mColliders);
