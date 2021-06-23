@@ -55,6 +55,28 @@ public:
 	{
 		return mIsChild;
 	}
+	
+	XMFLOAT3 GetRightVector()
+	{
+		XMFLOAT3 result;
+
+		result.x = mWorldMatrixResult._11 / Scale.x;
+		result.y = mWorldMatrixResult._12 / Scale.y;
+		result.z = mWorldMatrixResult._13 / Scale.z;
+
+		return result;
+	}	
+	
+	XMFLOAT3 GetUpwardVector()
+	{
+		XMFLOAT3 result;
+
+		result.x = mWorldMatrixResult._21 / Scale.x;
+		result.y = mWorldMatrixResult._22 / Scale.y;
+		result.z = mWorldMatrixResult._23 / Scale.z;
+
+		return result;
+	}
 
 	XMFLOAT3 GetForwardVector()
 	{
@@ -65,5 +87,5 @@ public:
 		result.z = mWorldMatrixResult._33 / Scale.z;
 
 		return result;
-	}
+	}	
 };

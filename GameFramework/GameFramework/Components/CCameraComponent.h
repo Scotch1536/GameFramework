@@ -16,7 +16,7 @@ private:
 	XMFLOAT4X4 mView;			//ビュー行列
 
 	XMFLOAT3 mEye;				//カメラ位置(相対座標)
-	XMFLOAT3 mLookat;			//注視点
+	XMFLOAT3 mLookAt;			//注視点
 	XMFLOAT3 mUp;				//上向きベクトル
 
 	float mNear;				//ニアクリップ
@@ -44,7 +44,7 @@ private:
 		if(mIsJoinSpringArm)
 		{
 			ALIGN16 XMVECTOR Eye = XMVectorSet(mEye.x , mEye.y , mEye.z , 0.0f);
-			ALIGN16 XMVECTOR At = XMVectorSet(mLookat.x , mLookat.y , mLookat.z , 0.0f);
+			ALIGN16 XMVECTOR At = XMVectorSet(mLookAt.x , mLookAt.y , mLookAt.z , 0.0f);
 			ALIGN16 XMVECTOR Up = XMVectorSet(mUp.x , mUp.y , mUp.z , 0.0f);
 
 			ALIGN16 XMMATRIX camera;
@@ -57,7 +57,7 @@ private:
 			XMFLOAT3 pLoc = mOwnerInterface.GetTransform().Location;
 
 			ALIGN16 XMVECTOR Eye = XMVectorSet(pLoc.x + mEye.x , pLoc.y + mEye.y , pLoc.z + mEye.z , 0.0f);
-			ALIGN16 XMVECTOR At = XMVectorSet(mLookat.x , mLookat.y , mLookat.z , 0.0f);
+			ALIGN16 XMVECTOR At = XMVectorSet(mLookAt.x , mLookAt.y , mLookAt.z , 0.0f);
 			ALIGN16 XMVECTOR Up = XMVectorSet(mUp.x , mUp.y , mUp.z , 0.0f);
 
 			ALIGN16 XMMATRIX camera;
@@ -118,9 +118,9 @@ public:
 		return mEye;
 	}
 
-	const XMFLOAT3& GetLookat() const
+	const XMFLOAT3& GetLookAt() const
 	{
-		return mLookat;
+		return mLookAt;
 	}
 
 	const XMFLOAT3& GetUp() const
@@ -177,7 +177,7 @@ public:
 	{
 		if(!mShouldUpdateViewMatrix)mShouldUpdateViewMatrix = true;
 
-		mLookat = lookat;
+		mLookAt = lookat;
 	}
 
 	void SetUp(const XMFLOAT3& up)
