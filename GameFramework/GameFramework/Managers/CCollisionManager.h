@@ -25,5 +25,5 @@ public:
 	void AddCollider(CCollisionComponent& collider);
 
 	//自分以外のコリジョンコンポーネントのポインタをあげる
-	bool GetColliders(CCollisionComponent& caller, std::vector<CCollisionComponent*>& result);
+	bool GetColliders(CCollisionComponent* caller, std::vector<CCollisionComponent*>& result);
 };

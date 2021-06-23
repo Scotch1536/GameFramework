@@ -27,5 +27,5 @@ void CCollisionComponent::ExecuteAction(CActor& argument)
 
 void CCollisionComponent::Update()
 {
-	if(!CCollisionManager::GetInstance().GetColliders(*this , mColliders))mShouldCompare = false;
+	if(!CCollisionManager::GetInstance().GetColliders(this , mColliders))mShouldCompare = false;
 }

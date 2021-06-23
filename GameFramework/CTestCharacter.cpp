@@ -29,9 +29,10 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 
 	CAABBComponent* aabb = new CAABBComponent(*this);
 
-	aabb->BindCollisionAction(std::bind(&CTestCharacter::CollisionAction , std::ref(*this),std::placeholders::_1));
+	aabb->BindCollisionAction(std::bind(&CTestCharacter::CollisionAction , std::ref(*this) , std::placeholders::_1));
 
-	CInputManager::GetInstance().AddAction("Move" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CTestCharacter::Move , std::ref(*this)));
+	CInputManager::GetInstance().AddAction("MoveM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CTestCharacter::Move , std::ref(*this) , 0));
+	CInputManager::GetInstance().AddAction("MoveP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CTestCharacter::Move , std::ref(*this) , 1));
 	CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_R } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 0));
 	CInputManager::GetInstance().AddAction("XM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_T } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 1));
 	CInputManager::GetInstance().AddAction("YP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_F } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 2));
@@ -43,9 +44,10 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 	CInputManager::GetInstance().AddAction("CCMode" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_X } , std::bind(&CTestCharacter::ChangeCameraMode , std::ref(*this)));
 }
 
-void CTestCharacter::Move()
+void CTestCharacter::Move(int num)
 {
-	Transform.Location.z--;
+	if(num == 0)Transform.Location.z--;
+	else if(num == 1)Transform.Location.z++;
 }
 
 void CTestCharacter::ChangeCameraMove()
