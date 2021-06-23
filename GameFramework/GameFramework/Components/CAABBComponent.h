@@ -9,6 +9,7 @@ class CAABBComponent :public CCollisionComponent
 private:
 	XMFLOAT3 mMin;
 	XMFLOAT3 mMax;
+
 public:
 	CAABBComponent(CActor& owner, int priority = 40);
 	~CAABBComponent() {};

@@ -11,17 +11,32 @@ CCollisionManager& CCollisionManager::GetInstance()
 void CCollisionManager::AddCollider(CCollisionComponent& collider)
 {
 	mColliders.emplace_back(&collider);
+
+	for(auto& isCache : mIsBefore)
+	{
+		isCache.second = false;
+	}
 }
 
-bool CCollisionManager::GetColliders(const CCollisionComponent& caller, std::vector<CCollisionComponent*>& result)
+bool CCollisionManager::GetColliders(CCollisionComponent* caller , std::vector<CCollisionComponent*>& result)
 {
-	for (auto& collider : mColliders)
+	if(mIsBefore.count(caller) == 0)
 	{
-		if (collider != &caller)
+		mIsBefore[caller] = false;
+	}
+
+	if(mIsBefore[caller] == true)return true;
+
+	for(auto& collider : mColliders)
+	{
+		if(collider != caller)
 		{
 			result.push_back(collider);
 		}
 	}
-	if (result.size() != 0)return true;		//•Ô‚·”z—ñ‚ª‚ ‚éê‡‚Ítrue•Ô‚·
+
+	mIsBefore[caller] = true;
+
+	if(result.size() != 0)return true;		//•Ô‚·”z—ñ‚ª‚ ‚éê‡‚Ítrue•Ô‚·
 	else return false;						//‚È‚¢ê‡‚Ífalse‚ğ•Ô‚·
 }

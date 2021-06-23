@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CDice.cpp" />
+    <ClCompile Include="CSkyDome.cpp" />
     <ClCompile Include="CTestCharacter.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
@@ -36,18 +37,19 @@
     <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.cpp" />
     <ClCompile Include="GameFramework\Game\Application.cpp" />
     <ClCompile Include="GameFramework\Game\CGame.cpp" />
-    <ClCompile Include="GameFramework\LCCollision.cpp" />
     <ClCompile Include="GameFramework\Level\CLevel.cpp" />
+    <ClCompile Include="GameFramework\Library\LCCollision.cpp" />
+    <ClCompile Include="GameFramework\Library\LCMath.cpp" />
     <ClCompile Include="GameFramework\Managers\CCollisionManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CGameManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CInputManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp" />
-    <ClCompile Include="GameFramework\Math\LCMath.cpp" />
     <ClCompile Include="GameFramework\Transform\CRotator.cpp" />
     <ClCompile Include="GameFramework\Transform\CTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDice.h" />
+    <ClInclude Include="CSkyDome.h" />
     <ClInclude Include="CTestCharacter.h" />
     <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
@@ -76,13 +78,13 @@
     <ClInclude Include="GameFramework\Game\Application.h" />
     <ClInclude Include="GameFramework\Game\CGame.h" />
     <ClInclude Include="GameFramework\Interfaces\IRender.h" />
-    <ClInclude Include="GameFramework\LCCollision.h" />
     <ClInclude Include="GameFramework\Level\CLevel.h" />
+    <ClInclude Include="GameFramework\Library\LCCollision.h" />
+    <ClInclude Include="GameFramework\Library\LCMath.h" />
     <ClInclude Include="GameFramework\Managers\CCollisionManager.h" />
     <ClInclude Include="GameFramework\Managers\CGameManager.h" />
     <ClInclude Include="GameFramework\Managers\CInputManager.h" />
     <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />
-    <ClInclude Include="GameFramework\Math\LCMath.h" />
     <ClInclude Include="GameFramework\Transform\CRotator.h" />
     <ClInclude Include="GameFramework\Transform\CTransform.h" />
   </ItemGroup>

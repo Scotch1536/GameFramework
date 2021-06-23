@@ -5,12 +5,13 @@
 #include "CTestLevel.h"
 #include "CDice.h"
 #include "CTestCharacter.h"
+#include "CSkyDome.h"
 
 void CTestLevel::Init()
 {
 	CDice& dice = *new CDice(*this);
 
-	dice.Transform.Location = { 20.f,20.f,0.f };
+	dice.Transform.Location = { 0.f,20.f,0.f };
 
 	/*
 	レベルから指定のアクターインスタンスのメソッドをインプットマネージャーにバインドすることは可能
@@ -20,8 +21,11 @@ void CTestLevel::Init()
 
 	CTestCharacter& testChara = *new CTestCharacter(*this);
 	//testChara.Transform.Rotation.Angle.z = 180.f;
+	//testChara.Transform.Rotation.Angle.y = 180.f;
 
 	//testChara.Transform.AttachTransform(dice.Transform);
+
+	CSkyDome& skyDome = *new CSkyDome(*this);
 
 	CComponent* buf = nullptr;
 	//std::vector<CComponent*> buf2;

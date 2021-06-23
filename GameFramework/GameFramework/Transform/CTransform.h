@@ -55,4 +55,15 @@ public:
 	{
 		return mIsChild;
 	}
+
+	XMFLOAT3 GetForwardVector()
+	{
+		XMFLOAT3 result;
+
+		result.x = mWorldMatrixResult._31 / Scale.x;
+		result.y = mWorldMatrixResult._32 / Scale.y;
+		result.z = mWorldMatrixResult._33 / Scale.z;
+
+		return result;
+	}
 };

@@ -1,6 +1,4 @@
 #include "LCCollision.h"
-#include "../GameFramework/Components/CCollisionComponent.h"
-#include "Components/CAABBComponent.h"
 
 bool LCCollision::Intersect(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& BMin, const XMFLOAT3& BMax)
 {
