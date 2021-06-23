@@ -18,7 +18,7 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 	CCameraComponent* camera = new CCameraComponent(*this);
 
 	camera->SetProjection(10.f , 10000.f , XM_PI / 4.f , Application::CLIENT_WIDTH , Application::CLIENT_HEIGHT);
-	camera->SetView({ 0.f,0.f,100.f } , { 0.f,0.f,0.f } , { 0.f,1.f,0.f });
+	camera->SetView({ 0.f,0.f,-100.f } , { 0.f,0.f,0.f } , { 0.f,-1.f,0.f });
 
 	CSpringArmComponent* spr = new CSpringArmComponent(*this , Transform , *camera);
 	spr->SetLerpTime(1.0f);
@@ -31,8 +31,8 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 
 	aabb->BindCollisionAction(std::bind(&CTestCharacter::CollisionAction , std::ref(*this) , std::placeholders::_1));
 
-	CInputManager::GetInstance().AddAction("MoveM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CTestCharacter::Move , std::ref(*this) , 0));
-	CInputManager::GetInstance().AddAction("MoveP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CTestCharacter::Move , std::ref(*this) , 1));
+	CInputManager::GetInstance().AddAction("MoveM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CTestCharacter::Move , std::ref(*this) , 0));
+	CInputManager::GetInstance().AddAction("MoveP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CTestCharacter::Move , std::ref(*this) , 1));
 	CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_R } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 0));
 	CInputManager::GetInstance().AddAction("XM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_T } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 1));
 	CInputManager::GetInstance().AddAction("YP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_F } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 2));
@@ -46,8 +46,22 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 
 void CTestCharacter::Move(int num)
 {
-	if(num == 0)Transform.Location.z--;
-	else if(num == 1)Transform.Location.z++;
+	if(num == 0)
+	{
+		XMFLOAT3 fv = Transform.GetForwardVector();
+
+		Transform.Location.x += fv.x * 1;
+		Transform.Location.y += fv.y * 1;
+		Transform.Location.z += fv.z * 1;
+	}
+	else if(num == 1)
+	{
+		XMFLOAT3 fv = Transform.GetForwardVector();
+
+		Transform.Location.x -= fv.x * 1;
+		Transform.Location.y -= fv.y * 1;
+		Transform.Location.z -= fv.z * 1;
+	}
 }
 
 void CTestCharacter::ChangeCameraMove()

@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CDice.cpp" />
+    <ClCompile Include="CSkyDome.cpp" />
     <ClCompile Include="CTestCharacter.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
@@ -47,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDice.h" />
+    <ClInclude Include="CSkyDome.h" />
     <ClInclude Include="CTestCharacter.h" />
     <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
