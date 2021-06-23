@@ -18,6 +18,9 @@ public:
 	//w’è‚ÌFloat3“¯m‚ªˆê’v‚µ‚Ä‚¢‚é‚©‚Ì”äŠr
 	static bool CompareFloat3(const XMFLOAT3& target1 , const XMFLOAT3& target2);
 
+	static bool CompareMatrix(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2);
+
 	//üŒ`•âŠÔ
 	static float Lerp(float start , float end , float alpha);
+	static XMFLOAT3 Lerp(const XMFLOAT3& start , const XMFLOAT3& end , float alpha);
 };

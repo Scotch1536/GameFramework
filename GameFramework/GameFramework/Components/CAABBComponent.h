@@ -11,6 +11,7 @@ private:
 	XMFLOAT3 mMax;
 public:
 	CAABBComponent(CActor& owner, int priority = 40);
+	~CAABBComponent() {};
 
 	void Update() override;
 };

@@ -4,17 +4,15 @@
 #include "CAABBComponent.h"
 #include "../Managers/CCollisionManager.h"
 
-CCollisionComponent::CCollisionComponent(CActor& owner, int priority) :CComponent(owner, priority)
+CCollisionComponent::CCollisionComponent(CActor& owner , int priority):CComponent(owner , priority)
 {
 	CCollisionManager::GetInstance().AddCollider(*this);	//自分をコリジョンマネージャーに登録
 }
 
 CCollisionComponent::~CCollisionComponent()
-{
-
-}
+{}
 
 void CCollisionComponent::Update()
 {
-	CCollisionManager::GetInstance().GetColliders(*this, mColliders);
+	CCollisionManager::GetInstance().GetColliders(*this , mColliders);
 }
