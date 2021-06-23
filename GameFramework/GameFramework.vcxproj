@@ -35,8 +35,8 @@
     <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.cpp" />
     <ClCompile Include="GameFramework\Game\Application.cpp" />
     <ClCompile Include="GameFramework\Game\CGame.cpp" />
-    <ClCompile Include="GameFramework\LCCollision.cpp" />
     <ClCompile Include="GameFramework\Level\CLevel.cpp" />
+    <ClCompile Include="GameFramework\Library\LCCollision.cpp" />
     <ClCompile Include="GameFramework\Managers\CCollisionManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CGameManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CInputManager.cpp" />
@@ -74,8 +74,8 @@
     <ClInclude Include="GameFramework\Game\Application.h" />
     <ClInclude Include="GameFramework\Game\CGame.h" />
     <ClInclude Include="GameFramework\Interfaces\IRender.h" />
-    <ClInclude Include="GameFramework\LCCollision.h" />
     <ClInclude Include="GameFramework\Level\CLevel.h" />
+    <ClInclude Include="GameFramework\Library\LCCollision.h" />
     <ClInclude Include="GameFramework\Managers\CCollisionManager.h" />
     <ClInclude Include="GameFramework\Managers\CGameManager.h" />
     <ClInclude Include="GameFramework\Managers\CInputManager.h" />

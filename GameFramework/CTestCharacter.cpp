@@ -3,6 +3,7 @@
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CSpringArmComponent.h"
+#include "GameFramework/Components/CAABBComponent.h"
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/Game/Application.h"
@@ -25,6 +26,10 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 	light->SetEyePos(camera->GetEye());
 	light->SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
 	light->SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
+
+	CAABBComponent* aabb = new CAABBComponent(*this);
+
+	aabb->BindCollisionAction(std::bind(&CTestCharacter::CollisionAction , std::ref(*this),std::placeholders::_1));
 
 	CInputManager::GetInstance().AddAction("Move" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CTestCharacter::Move , std::ref(*this)));
 	CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_R } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 0));
@@ -117,4 +122,9 @@ void CTestCharacter::Rot(int dire)
 	default:
 		break;
 	}
+}
+
+void CTestCharacter::CollisionAction(CActor& collideActor)
+{
+	collideActor.Destroy();
 }

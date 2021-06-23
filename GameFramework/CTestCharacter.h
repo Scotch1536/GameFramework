@@ -11,5 +11,6 @@ private:
 	void Rot(int dire);
 	void ChangeCameraMove();
 	void ChangeCameraMode();
+	void CollisionAction(CActor& collideActor);
 };
 

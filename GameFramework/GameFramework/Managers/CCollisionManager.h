@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <unordered_map>
 
 class CCollisionComponent;
 
@@ -7,6 +8,7 @@ class CCollisionManager
 {
 private:
 	std::vector<CCollisionComponent*> mColliders;
+	std::unordered_map<const CCollisionComponent& , bool> mIsBefore;
 
 	CCollisionManager() = default;
 
