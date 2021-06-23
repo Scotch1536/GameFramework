@@ -1,4 +1,4 @@
-#include "../Math/LCMath.h"
+#include "../Library/LCMath.h"
 #include "../ExternalCode/dx11mathutil.h"
 
 #include "CRotator.h"

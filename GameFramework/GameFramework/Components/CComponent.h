@@ -28,4 +28,6 @@ public:
 	{
 		return mPriority;
 	}
+
+	CActor& GetOwner()const;
 };

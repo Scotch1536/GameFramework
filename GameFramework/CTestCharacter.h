@@ -7,9 +7,10 @@ public:
 	CTestCharacter(ILevel& owner);
 
 private:
-	void Move();
+	void Move(int num);
 	void Rot(int dire);
 	void ChangeCameraMove();
 	void ChangeCameraMode();
+	void CollisionAction(CActor& collideActor);
 };
 

@@ -1,6 +1,6 @@
 #include "../ExternalCode/DX11Settransform.h"
 #include "../ExternalCode/dx11mathutil.h"
-#include "../Math/LCMath.h"
+#include "../Library/LCMath.h"
 #include "../Actor/CActor.h"
 
 #include "CTransform.h"

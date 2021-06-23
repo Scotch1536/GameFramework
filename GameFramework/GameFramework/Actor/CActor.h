@@ -16,6 +16,7 @@ public:
 	virtual ~IActor() {};
 	virtual void AddComponent(CComponent& component) = 0;
 	virtual void RegisterRenderComponent(IRender& component) = 0;
+	virtual CActor& GetActor() = 0;
 	virtual CTransform& GetTransform() = 0;
 };
 
@@ -41,8 +42,14 @@ private:
 	//レンダー機能を持つコンポーネントを登録
 	void RegisterRenderComponent(IRender& component)override;
 
+	//アクター情報取得
+	CActor& GetActor()override
+	{
+		return *this;
+	}
+
 	//トランスフォーム取得
-	CTransform& GetTransform() override
+	CTransform& GetTransform()override
 	{
 		return Transform;
 	}

@@ -1,25 +1,30 @@
+#include "../Library/LCCollision.h"
+
 #include "CAABBComponent.h"
-#include "../LCCollision.h"
 
-CAABBComponent::CAABBComponent(CActor& owner, int priority) :CCollisionComponent(owner, priority) 
-{
-
-}
+CAABBComponent::CAABBComponent(CActor& owner , int priority):CCollisionComponent(owner , priority)
+{}
 
 void CAABBComponent::Update()
 {
 	CCollisionComponent::Update();
 
-	for (auto collider : mColliders)
+	if(mShouldCompare)
 	{
-		if (collider->GetType() == EType::AABB)
+		for(auto collider : mColliders)
 		{
-			CAABBComponent& AABBobj = dynamic_cast<CAABBComponent&>(*collider);
-			LCCollision::Intersect(this->mMin, this->mMax, AABBobj.mMin, AABBobj.mMax);
-		}
-		else if (collider->GetType() == EType::SPHERE)
-		{
+			if(collider->GetType() == EType::AABB)
+			{
+				CAABBComponent& AABBobj = dynamic_cast<CAABBComponent&>(*collider);
+				if(LCCollision::Intersect(this->mMin , this->mMax , AABBobj.mMin , AABBobj.mMax))
+				{
+					ExecuteAction(collider->GetOwner());
+				}
+			}
+			else if(collider->GetType() == EType::SPHERE)
+			{
 
+			}
 		}
 	}
 }
