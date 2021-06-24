@@ -10,7 +10,7 @@ public:
 	static void TransformFromEulerAnglesToQuaternion(const XMFLOAT3& angle , XMFLOAT4& qua);
 
 	//クォータニオンからオイラー角に変換
-	static void TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua , XMFLOAT3& angle);
+	//static void TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua , XMFLOAT3& angle);
 
 	//ロケーション、スケール、回転行列から指定の行列を更新
 	static void UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , XMFLOAT4X4 rotMTX , XMFLOAT4X4& result);

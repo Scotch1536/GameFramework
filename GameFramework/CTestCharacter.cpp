@@ -18,7 +18,7 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 	CCameraComponent* camera = new CCameraComponent(*this);
 
 	camera->SetProjection(10.f , 10000.f , XM_PI / 4.f , Application::CLIENT_WIDTH , Application::CLIENT_HEIGHT);
-	camera->SetView({ 0.f,0.f,-100.f } , { 0.f,0.f,0.f } , { 0.f,-1.f,0.f });
+	camera->SetView({ 0.f,0.f,-100.f } , Transform.Location , { 0.f,1.f,0.f });
 
 	CSpringArmComponent* spr = new CSpringArmComponent(*this , Transform , *camera);
 	spr->SetLerpTime(1.0f);
@@ -93,7 +93,7 @@ void CTestCharacter::ChangeCameraMode()
 		CCameraComponent* camera = dynamic_cast<CCameraComponent*>(buf);
 		if(cnt % 2 == 0)
 		{
-			camera->SetView({ 0.f,0.f,100.f } , { 0.f,0.f,0.f } , { 0.f,1.f,0.f });
+			camera->SetView({ 0.f,0.f,-100.f } , { 0.f,0.f,0.f } , { 0.f,1.f,0.f });
 			if(GetComponent<CSpringArmComponent>(buf))
 			{
 				CSpringArmComponent* spr = dynamic_cast<CSpringArmComponent*>(buf);
@@ -102,12 +102,12 @@ void CTestCharacter::ChangeCameraMode()
 		}
 		else
 		{
-			camera->SetView({ 0.f,0.f,10.f } , { 0.f,0.f,0.f } , { 0.f,1.f,0.f });
+			camera->SetView({ 0.f,0.f,-10.f } , { 0.f,0.f,0.f } , { 0.f,1.f,0.f });
 			if(GetComponent<CSpringArmComponent>(buf))
 			{
 				CSpringArmComponent* spr = dynamic_cast<CSpringArmComponent*>(buf);
 				spr->SetLerpTime(0.0f);
-				spr->SetSyncMode(ESyncMode::ALL_SYNC);
+				//spr->SetSyncMode(ESyncMode::ALL_SYNC);
 			}
 		}
 	}
