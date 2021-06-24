@@ -93,13 +93,10 @@ ModelData::ModelData()
 {}
 
 ModelData::~ModelData()
-{
-	Exit();
-}
+{}
 
 void ModelData::LoadMaterial()
 {
-
 	// マテリアルが存在するか？
 	if(m_assimpscene.GetScene()->HasMaterials())
 	{

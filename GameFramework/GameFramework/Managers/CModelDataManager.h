@@ -9,7 +9,7 @@ class CModelDataManager
 {
 private:
 	CModelDataManager() = default;
-	~CModelDataManager() = default;
+	~CModelDataManager();
 public:
 	CModelDataManager(const CModelDataManager&) = delete;
 	CModelDataManager& operator=(const CModelDataManager&) = delete;
