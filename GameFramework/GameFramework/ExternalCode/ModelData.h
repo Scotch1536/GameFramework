@@ -21,7 +21,7 @@ public:
 	
 	void Exit();
 
-	std::vector<Mesh>& GetMeshes() {
+	const std::vector<Mesh>& GetMeshes()const {
 		return m_meshes;
 	}
 

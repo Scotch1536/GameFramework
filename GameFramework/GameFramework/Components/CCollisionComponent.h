@@ -9,8 +9,8 @@ class CCollisionComponent :public CComponent
 public:
 	enum class EType
 	{
-		AABB ,
-		SPHERE ,
+		AABB,
+		SPHERE,
 	};
 
 private:
@@ -24,9 +24,11 @@ protected:
 	bool mShouldCompare = true;
 
 	void ExecuteAction(CActor& argument);
+	virtual void ConvertWorldCollider() = 0;
+
 public:
-	CCollisionComponent(CActor& owner , int priority = 40);
-	virtual ~CCollisionComponent() = 0;
+	CCollisionComponent(CActor& owner, int priority = 40);
+	virtual ~CCollisionComponent() = default;
 
 	void Update() override;
 

@@ -10,9 +10,6 @@ CCollisionComponent::CCollisionComponent(CActor& owner , int priority):CComponen
 	CCollisionManager::GetInstance().AddCollider(*this);	//自分をコリジョンマネージャーに登録
 }
 
-CCollisionComponent::~CCollisionComponent()
-{}
-
 void CCollisionComponent::ExecuteAction(CActor& argument)
 {
 	if(mCollisionAction != nullptr)
@@ -28,4 +25,5 @@ void CCollisionComponent::ExecuteAction(CActor& argument)
 void CCollisionComponent::Update()
 {
 	if(!CCollisionManager::GetInstance().GetColliders(this , mColliders))mShouldCompare = false;
+	else mShouldCompare = true;
 }

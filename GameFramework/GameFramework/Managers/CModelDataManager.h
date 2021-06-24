@@ -23,7 +23,7 @@ public:
 	}
 
 	//モデルを取得する
-	ModelData& GetModel(std::string filePath , std::string resourceFolderPath);
+	const ModelData& GetModel(std::string filePath , std::string resourceFolderPath);
 private:
 	std::unordered_map<std::string , ModelData> mModelData;		//モデルデータ格納辞書
 };

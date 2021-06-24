@@ -27,7 +27,7 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 	light->SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
 	light->SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
-	CAABBComponent* aabb = new CAABBComponent(*this);
+	CAABBComponent* aabb = new CAABBComponent(*this, staticMesh.GetModel());
 
 	aabb->BindCollisionAction(std::bind(&CTestCharacter::CollisionAction , std::ref(*this) , std::placeholders::_1));
 
