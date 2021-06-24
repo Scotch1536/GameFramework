@@ -2,6 +2,7 @@
 #include "GameFramework/Level/CLevel.h"
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CLightComponent.h"
+#include "GameFramework/Components/CAABBComponent.h"
 #include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/Managers/CModelDataManager.h"
 
@@ -16,7 +17,7 @@ CDice::CDice(CLevel& owner):CActor(owner)
 	*/
 	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
-
+	CAABBComponent* aabb = new CAABBComponent(*this, staticMesh->GetModel());
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
