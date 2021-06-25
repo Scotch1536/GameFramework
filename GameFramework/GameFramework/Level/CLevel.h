@@ -3,7 +3,7 @@
 #include <memory>
 #include <functional>
 
-#include "../Abstract/ACObject.h"
+#include "../Object/CObject.h"
 #include "../Actor/CActor.h"
 #include "../Interfaces/IRender.h"
 
@@ -23,7 +23,7 @@ public:
 };
 
 //レベルクラス
-class CLevel :public ACObject , public ILevel
+class CLevel :public CObject , public ILevel
 {
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;					//アクター
@@ -70,10 +70,10 @@ public:
 	virtual void Init() = 0;
 
 	//更新
-	void Update();
+	void Update()override;
 
 	//描画
-	void Render();
+	void Render()override;
 
 	//インターフェースのセット　ゲームマネージャーからしか呼び出す想定をしていない
 	void SetOwnerInterface(CGame& owner);

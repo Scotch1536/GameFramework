@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-#include "../Abstract/ACObject.h"
+#include "../Object/CObject.h"
 #include "../Components/CComponent.h"
 #include "../Transform/CTransform.h"
 #include "../Interfaces/IRender.h"
@@ -23,7 +23,7 @@ public:
 };
 
 //アクタークラス
-class CActor :public ACObject , public IActor
+class CActor :public CObject , public IActor
 {
 private:
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
@@ -69,13 +69,13 @@ public:
 	/*更新
 	★超重要★このメソッドをオーバーライドする場合は必ず最後に親のメソッドを呼ぶこと
 	*/
-	void Update();
+	void Update()override;
 
 	//毎フレーム行う処理（子クラスのための機能）
 	virtual void Tick() {};
 
 	//描画
-	void Render();
+	void Render()override;
 
 	//破壊
 	void Destroy();

@@ -5,12 +5,12 @@
 
 #include "CLevel.h"
 
-CLevel::CLevel(CGame& owner):ACObject("Level") , mOwnerInterface(&owner)
+CLevel::CLevel(CGame& owner):CObject("Level") , mOwnerInterface(&owner)
 {
 	mOwnerInterface->LoadLevel(*this);
 }
 
-CLevel::CLevel(IGameManagerToLevel& receiver) : ACObject("Level")
+CLevel::CLevel(IGameManagerToLevel& receiver) : CObject("Level")
 {
 	receiver.SetStartLevel(*this);
 }
