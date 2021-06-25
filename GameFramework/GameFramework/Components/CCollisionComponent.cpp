@@ -10,6 +10,11 @@ CCollisionComponent::CCollisionComponent(CActor& owner , int priority):CComponen
 	CCollisionManager::GetInstance().AddCollider(*this);	//自分をコリジョンマネージャーに登録
 }
 
+CCollisionComponent::~CCollisionComponent()
+{
+	CCollisionManager::GetInstance().ReleaseCollider(*this);
+}
+
 void CCollisionComponent::ExecuteAction(CActor& argument)
 {
 	if(mCollisionAction != nullptr)

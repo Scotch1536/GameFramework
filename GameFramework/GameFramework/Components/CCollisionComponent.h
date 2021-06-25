@@ -1,8 +1,15 @@
 #pragma once
 #include <functional>
+#include <unordered_map>
 
 #include "CComponent.h"
 #include "../Transform/CTransform.h"
+
+struct SCollideCacheData
+{
+	bool IsCollide = false;
+	bool IsLastFrameCollide = false;
+};
 
 class CCollisionComponent :public CComponent
 {
@@ -20,6 +27,7 @@ private:
 protected:
 	std::vector<CCollisionComponent*> mColliders;
 	std::function<void(CActor&)> mCollisionAction;
+	std::unordered_map<CCollisionComponent*, SCollideCacheData> mCollideCache;
 
 	bool mShouldCompare = true;
 
@@ -28,7 +36,7 @@ protected:
 
 public:
 	CCollisionComponent(CActor& owner, int priority = 40);
-	virtual ~CCollisionComponent() = default;
+	virtual ~CCollisionComponent();
 
 	void Update() override;
 
