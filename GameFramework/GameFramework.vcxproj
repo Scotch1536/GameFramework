@@ -52,6 +52,7 @@
     <ClInclude Include="CSkyDome.h" />
     <ClInclude Include="CTestCharacter.h" />
     <ClInclude Include="CTestLevel.h" />
+    <ClInclude Include="GameFramework\Abstract\ACObject.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
     <ClInclude Include="GameFramework\Components\C2DTextureComponent.h" />
     <ClInclude Include="GameFramework\Components\CAABBComponent.h" />
@@ -87,6 +88,9 @@
     <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />
     <ClInclude Include="GameFramework\Transform\CRotator.h" />
     <ClInclude Include="GameFramework\Transform\CTransform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

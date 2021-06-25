@@ -89,11 +89,10 @@ std::vector<Texture> ModelData::loadMaterialTextures(
 	return textures;
 }
 
-ModelData::ModelData()
-{}
-
 ModelData::~ModelData()
-{}
+{
+	Exit();
+}
 
 void ModelData::LoadMaterial()
 {

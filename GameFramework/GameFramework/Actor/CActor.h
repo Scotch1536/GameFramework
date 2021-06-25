@@ -1,7 +1,9 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <string>
 
+#include "../Abstract/ACObject.h"
 #include "../Components/CComponent.h"
 #include "../Transform/CTransform.h"
 #include "../Interfaces/IRender.h"
@@ -21,13 +23,16 @@ public:
 };
 
 //アクタークラス
-class CActor :public IActor
+class CActor :public ACObject , public IActor
 {
 private:
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
 	std::vector<IRender*> mRenderAttributeComponents;			//描画の属性をもつコンポーネント
+	std::vector<std::string> mActorTags;						//タグ
 
 	ILevel& mOwnerInterface;		//インターフェース
+
+	bool mIsAffectToPause;			//ポーズの影響を受けるかどうか
 
 	//コピー禁止
 	CActor(const CActor&) = delete;
@@ -57,7 +62,7 @@ public:
 	CTransform Transform;			//トランスフォーム
 
 	//★超重要★　アクターのコンストラクタを呼ぶことはレベルにアクターを追加することを意味する
-	CActor(ILevel& owner);
+	CActor(ILevel& owner , bool isAffectToPause = true);
 
 	virtual ~CActor();
 
@@ -74,6 +79,20 @@ public:
 
 	//破壊
 	void Destroy();
+
+	void AddTag(std::string tag)
+	{
+		mActorTags.emplace_back(tag);
+	}
+
+	bool HasTag(std::string tag)
+	{
+		for(auto& actorTag : mActorTags)
+		{
+			if(actorTag == tag)return true;
+		}
+		return false;
+	}
 
 	template<class T>
 	bool GetComponent(CComponent*& result)
@@ -101,5 +120,15 @@ public:
 		}
 		if(result.size() != 0)return true;
 		else return false;
+	}
+
+	void SetIsAffectToPause(bool flg)
+	{
+		mIsAffectToPause = flg;
+	}
+
+	const bool& GetIsAffectToPause()const
+	{
+		return mIsAffectToPause;
 	}
 };

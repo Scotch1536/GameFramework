@@ -1,6 +1,7 @@
 #include <Windows.h>
 
 #include "../ExternalCode/CDirectInput.h"
+#include "../Managers/CGameManager.h"
 #include "../Actor/CActor.h"
 
 #include "CInputManager.h"
@@ -17,7 +18,7 @@ CInputManager& CInputManager::GetInstance()
 	return instance;
 }
 
-void CInputManager::RequestBindAction(std::string actionName , CActor& instancePtr , std::function<void()>& func)
+void CInputManager::RequestBindAction(std::string actionName , ACObject& instancePtr , std::function<void()>& func)
 {
 	//指定のキーがなければエラー表示
 	if(mActionList.count(actionName) == 0)
@@ -30,7 +31,7 @@ void CInputManager::RequestBindAction(std::string actionName , CActor& instanceP
 }
 
 void CInputManager::AddAction(const std::string& actionName , const EButtonOption& buttonOption ,
-	CActor& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& func)
+	ACObject& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& func)
 {
 	mActionList[actionName].ButtonOption = buttonOption;
 	mActionList[actionName].InstancePointer = &instancePtr;
@@ -39,7 +40,7 @@ void CInputManager::AddAction(const std::string& actionName , const EButtonOptio
 }
 
 void CInputManager::AddAction(const std::string& actionName , const EButtonOption& buttonOption ,
-	CActor& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& func)
+	ACObject& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& func)
 {
 	mActionList[actionName].ButtonOption = buttonOption;
 	mActionList[actionName].InstancePointer = &instancePtr;
@@ -47,7 +48,7 @@ void CInputManager::AddAction(const std::string& actionName , const EButtonOptio
 	mActionList[actionName].ActionInfo = func;
 }
 
-void CInputManager::ReleaseBindTarget(CActor& target)
+void CInputManager::ReleaseBindTarget(ACObject& target)
 {
 	//アクションリストが空だった場合終了
 	if(!(mActionList.size() > 0))return;
@@ -71,6 +72,15 @@ void CInputManager::CheckInput()
 
 	for(auto& action : mActionList)
 	{
+		//ゲームがポーズ状態の場合そのアクターがポーズの影響を受けるなら入力処理をとばす
+		if(CGameManager::GetInstance().GetIsPause())
+		{
+			if(action.second.InstancePointer->GetID() == "Actor")
+			{
+				if(dynamic_cast<CActor*>(action.second.InstancePointer)->GetIsAffectToPause())continue;
+			}
+		}
+
 		for(auto& buttonInfo : action.second.ButtonInfoList)
 		{
 			//ボタンタイプ別の処理を記述

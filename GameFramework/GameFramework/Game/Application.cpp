@@ -166,10 +166,12 @@ unsigned long Application::MainLoop()
 
 		last_time = current_time;
 
+		CGameManager::GetInstance().SetDeltaTime(*this , delta_time);
+
 		//ƒQ[ƒ€ƒtƒ[
-		game.Input(delta_time);
-		game.Update(delta_time);
-		game.Render(delta_time);
+		game.Input();
+		game.Update();
+		game.Render();
 
 		int64_t sleep_time = 16666 - delta_time;
 

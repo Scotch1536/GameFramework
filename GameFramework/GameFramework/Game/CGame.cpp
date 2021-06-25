@@ -77,17 +77,17 @@ void CGame::Init()
 	}
 }
 
-void CGame::Input(uint64_t deltataime)
+void CGame::Input()
 {
 	CInputManager::GetInstance().CheckInput();
 }
 
-void CGame::Update(uint64_t deltataime)
+void CGame::Update()
 {
 	mLevel->Update();
 }
 
-void CGame::Render(uint64_t deltataime)
+void CGame::Render()
 {
 	mLevel->Render();
 }

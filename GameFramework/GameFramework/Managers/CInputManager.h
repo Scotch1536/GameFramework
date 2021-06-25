@@ -6,7 +6,9 @@
 #include <unordered_map>
 #include <dinput.h>
 
-class CActor;
+#include "../Abstract/ACObject.h"
+
+class ACObject;
 
 //ボタンタイプ
 enum class EButtonType
@@ -41,9 +43,12 @@ struct SButtonInfo
 //インプット定義構造体
 struct SInputDefinition
 {
+	ACObject* InstancePointer = nullptr;					//インスタンスのポインタ
+
 	EButtonOption ButtonOption = EButtonOption::NONE;		//ボタンのオプション
-	CActor* InstancePointer = nullptr;						//インスタンスのポインタ
+
 	std::vector<SButtonInfo> ButtonInfoList;				//ボタンの情報リスト
+
 	std::function<void()> ActionInfo;						//行いたいメソッド（関数）
 };
 
@@ -65,17 +70,17 @@ public:
 	static CInputManager& GetInstance();
 
 	//アクションのバインドをリクエスト　※actionNameのキーがmActionListになければエラー表示
-	void RequestBindAction(std::string actionName , CActor& instancePtr , std::function<void()>& func);
+	void RequestBindAction(std::string actionName , ACObject& instancePtr , std::function<void()>& func);
 
 	//アクションの追加　※actionNameのキーがmActionListに既にあっても上書きする
 	void AddAction(const std::string& actionName , const EButtonOption& buttonOption ,
-		CActor& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& func);
+		ACObject& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& func);
 
 	void AddAction(const std::string& actionName , const EButtonOption& buttonOption ,
-		CActor& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& func);
+		ACObject& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& func);
 
 	//指定のターゲットのバインドを解除
-	void ReleaseBindTarget(CActor& target);
+	void ReleaseBindTarget(ACObject& target);
 
 	//入力されているかのチェック
 	void CheckInput();

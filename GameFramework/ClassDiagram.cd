@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CDice" Collapsed="true">
+    <Position X="3.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAIAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>CDice.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSkyDome" Collapsed="true">
+    <Position X="8.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>CSkyDome.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CTestCharacter" Collapsed="true">
+    <Position X="10.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAABAAAAQAAAAAAgAAAAAAAAAIAAA=</HashCode>
+      <FileName>CTestCharacter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CTestLevel" Collapsed="true">
+    <Position X="5.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCAAAAAA=</HashCode>
+      <FileName>CTestLevel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IActor" Collapsed="true">
+    <Position X="8.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAABAAAAAAAIEAACAAAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\Actor\CActor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CActor" Collapsed="true">
+    <Position X="6" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAEAAAAIAAEAAgBEBAQEAAJAAACAABCgACQASBA=</HashCode>
+      <FileName>GameFramework\Actor\CActor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="C2DTextureComponent" Collapsed="true">
+    <Position X="9.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\Components\C2DTextureComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CAABBComponent" Collapsed="true">
+    <Position X="16" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAJgAAAAAGAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\Components\CAABBComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CCameraComponent" Collapsed="true">
+    <Position X="13.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ICQBgEAQAgAAIggAAAgEAQAIIjAIAAgQAAIAANSAGQA=</HashCode>
+      <FileName>GameFramework\Components\CCameraComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CCollisionComponent" Collapsed="true">
+    <Position X="16" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAABAAAQAAAAQAEAAABAAAAAAAAEAIACAABAAAEA=</HashCode>
+      <FileName>GameFramework\Components\CCollisionComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CComponent" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAIBAAEAAAAAAAAAABQAAAAAAAAAgACAAAAA=</HashCode>
+      <FileName>GameFramework\Components\CComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CLightComponent" Collapsed="true">
+    <Position X="18.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAASAAAgAAAQAAAAAAAAAAAAAAAAAAAwGoAAAAAA=</HashCode>
+      <FileName>GameFramework\Components\CLightComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CRenderComponent" Collapsed="true">
+    <Position X="4.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAgAAAACAAAAAAAAAABAAAAAAAAAAAABAAABAAACA=</HashCode>
+      <FileName>GameFramework\Components\CRenderComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSpringArmComponent" Collapsed="true">
+    <Position X="9.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAkgCAAREEIAQAAAQgAAAAAAAAAAACICAABCIIAA=</HashCode>
+      <FileName>GameFramework\Components\CSpringArmComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CStaticMeshComponent" Collapsed="true">
+    <Position X="6.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAACACAIAAQAAAAAAQAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\Components\CStaticMeshComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AssimpScene" Collapsed="true">
+    <Position X="22.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAQKAACAAAAAAA=</HashCode>
+      <FileName>GameFramework\ExternalCode\AssimpScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CDirectInput" Collapsed="true">
+    <Position X="26" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABMAAUgEAQAAABAQEJAAABBACAAACIIAAiAAAIAAA=</HashCode>
+      <FileName>GameFramework\ExternalCode\CDirectInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CDirectXGraphics" Collapsed="true">
+    <Position X="20.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAUAAAAAGgAIEgBQAAAAAOQBAAEAAKAIAOiMAABAAI=</HashCode>
+      <FileName>GameFramework\ExternalCode\CDirectxGraphics.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CWindow" Collapsed="true">
+    <Position X="22.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKAAEAAAAAAAQAgAAAAAAEAAAAAAAQAgQAAgAAgIQAA=</HashCode>
+      <FileName>GameFramework\ExternalCode\CWindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CWindowCallback" Collapsed="true">
+    <Position X="24.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACBAAAAAACAAAAAAAAAAAAAAgIAAAACABIAAAAIAAA=</HashCode>
+      <FileName>GameFramework\ExternalCode\CWindowCallback.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DX11SetTransform" Collapsed="true">
+    <Position X="26" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAgAAAAEAAAAAAABAAAAAAQABAAAEAAgAAAiAAQIAAA=</HashCode>
+      <FileName>GameFramework\ExternalCode\DX11Settransform.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Mesh" Collapsed="true">
+    <Position X="24.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAQNAAAIIABAAAQAAIAAAAAAAAAAQAAAAAAEAg=</HashCode>
+      <FileName>GameFramework\ExternalCode\Mesh.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModelData" Collapsed="true">
+    <Position X="26" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAwAAAAAQABiAEAASAgAAAAAAAAAAAoAAAEAAAAAA=</HashCode>
+      <FileName>GameFramework\ExternalCode\ModelData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Application" Collapsed="true">
+    <Position X="20.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gEQAAAAAADAAAAgAAhAAgSAQGABCAIQAABAiADAAWAA=</HashCode>
+      <FileName>GameFramework\Game\Application.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IGame" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\Game\CGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IGameToGameManager" Collapsed="true">
+    <Position X="11.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAQAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>GameFramework\Game\CGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CGame" Collapsed="true">
+    <Position X="1.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABAAAABQAAAAQAAAEEABAAAAAABAiAAAAAAA=</HashCode>
+      <FileName>GameFramework\Game\CGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IRender" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\Interfaces\IRender.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ILevel" Collapsed="true">
+    <Position X="1.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>GameFramework\Level\CLevel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CLevel" Collapsed="true">
+    <Position X="5.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAAAAAAAAAEAAAAYBAIEAAAAAAAABAiACQAAAQ=</HashCode>
+      <FileName>GameFramework\Level\CLevel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LCCollision" Collapsed="true">
+    <Position X="20.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>GameFramework\Library\LCCollision.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LCMath" Collapsed="true">
+    <Position X="22.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgIAAAAAAAAoAAAAAAAACA=</HashCode>
+      <FileName>GameFramework\Library\LCMath.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CCollisionManager" Collapsed="true">
+    <Position X="24.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAACAAAAAAAAAAAAAAAQBAAAAAAAAAAgAAAAAEA=</HashCode>
+      <FileName>GameFramework\Managers\CCollisionManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IGameManagerToLevel" Collapsed="true">
+    <Position X="1.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>GameFramework\Managers\CGameManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CGameManager" Collapsed="true">
+    <Position X="1.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAACAAACAAAAQABIAAoAAAABACAAgEQAAAoAAAQAAA=</HashCode>
+      <FileName>GameFramework\Managers\CGameManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CInputManager" Collapsed="true">
+    <Position X="22.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAgAAABAAAAAAABAAAAAAACAAgAAAgAAA=</HashCode>
+      <FileName>GameFramework\Managers\CInputManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CModelDataManager" Collapsed="true">
+    <Position X="24.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAABAQAAAAAAAAgAAAAAAg=</HashCode>
+      <FileName>GameFramework\Managers\CModelDataManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CRotator" Collapsed="true">
+    <Position X="26" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAQAAAAAEAEAAQAAAAAAAAAAAAAAgEAAAACAAAA=</HashCode>
+      <FileName>GameFramework\Transform\CRotator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CTransform" Collapsed="true">
+    <Position X="20.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUCAgQIAAAggIAAEAIAABgCABAAQAAACABAEAAAAAg=</HashCode>
+      <FileName>GameFramework\Transform\CTransform.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ACObject" Collapsed="true">
+    <Position X="3.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\Abstract\ACObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="DDS_PIXELFORMAT" Collapsed="true">
+    <Position X="26" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAQAAAIAAAAAAAAAAAAAAAAAAACAFIAQ=</HashCode>
+      <FileName>GameFramework\ExternalLibrary\DirectXTex\include\DDSTextureLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DDS_HEADER" Collapsed="true">
+    <Position X="22.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAASAAAAAAAgQIQIAAIAAEgAAAAAAAAAAQIAAAAAQ=</HashCode>
+      <FileName>GameFramework\ExternalLibrary\DirectXTex\include\DDSTextureLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DDS_HEADER_DXT10" Collapsed="true">
+    <Position X="24.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAgAAAAAAACAAAAAAAAAAAQAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>GameFramework\ExternalLibrary\DirectXTex\include\DDSTextureLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="PLANE" Collapsed="true">
+    <Position X="24.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACkAQAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\ExternalCode\dx11mathutil.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Vertex" Collapsed="true">
+    <Position X="24.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>GameFramework\ExternalCode\VertexProto.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Material" Collapsed="true">
+    <Position X="22.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAQAAAAAAAAAAEAAAEACIAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\ExternalCode\VertexProto.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ConstantBufferMaterial" Collapsed="true">
+    <Position X="20.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAACAAAA=</HashCode>
+      <FileName>GameFramework\ExternalCode\VertexProto.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Texture" Collapsed="true">
+    <Position X="22.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAABABAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\ExternalCode\VertexProto.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="SButtonInfo" Collapsed="true">
+    <Position X="26" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\Managers\CInputManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="SInputDefinition" Collapsed="true">
+    <Position X="20.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAIAAAAAAAAAIAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\Managers\CInputManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::handle_closer" Collapsed="true">
+    <Position X="20.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\ExternalLibrary\DirectXTex\include\DDSTextureLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::WICTranslate" Collapsed="true">
+    <Position X="20.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::WICConvert" Collapsed="true">
+    <Position X="26" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="DDS_MISC_FLAGS2" Collapsed="true">
+    <Position X="20.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>GameFramework\ExternalLibrary\DirectXTex\include\DDSTextureLoader.cpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ESyncMode" Collapsed="true">
+    <Position X="26" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\Components\CSpringArmComponent.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EButtonType" Collapsed="true">
+    <Position X="24.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAABAAAAAAACAAAAAAAQAAAAAA=</HashCode>
+      <FileName>GameFramework\Managers\CInputManager.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EButtonOption" Collapsed="true">
+    <Position X="22.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQEEAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameFramework\Managers\CInputManager.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Yu Gothic UI" Size="9" />
+</ClassDiagram>

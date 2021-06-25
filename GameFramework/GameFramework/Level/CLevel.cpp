@@ -5,12 +5,12 @@
 
 #include "CLevel.h"
 
-CLevel::CLevel(CGame& owner):mOwnerInterface(&owner)
+CLevel::CLevel(CGame& owner):ACObject("Level") , mOwnerInterface(&owner)
 {
 	mOwnerInterface->LoadLevel(*this);
 }
 
-CLevel::CLevel(IGameManagerToLevel& receiver)
+CLevel::CLevel(IGameManagerToLevel& receiver) : ACObject("Level")
 {
 	receiver.SetStartLevel(*this);
 }
@@ -29,11 +29,21 @@ void CLevel::Update()
 {
 	for(auto& actor : mActors)
 	{
+		if(CGameManager::GetInstance().GetIsPause())
+		{
+			if(actor->GetIsAffectToPause())continue;
+		}
+
 		if(!actor->Transform.GetIsChild())actor->Transform.Update();
 	}
 
 	for(auto& actor : mActors)
 	{
+		if(CGameManager::GetInstance().GetIsPause())
+		{
+			if(actor->GetIsAffectToPause())continue;
+		}
+
 		actor->Update();
 		actor->Tick();
 	}

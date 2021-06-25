@@ -10,7 +10,7 @@ public:
 	*/
 	CDice(CLevel& owner);
 
-	void Test();
+	void GamePause();
 
 	void Rot(int dire);
 };

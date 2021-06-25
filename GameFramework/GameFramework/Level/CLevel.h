@@ -3,6 +3,7 @@
 #include <memory>
 #include <functional>
 
+#include "../Abstract/ACObject.h"
 #include "../Actor/CActor.h"
 #include "../Interfaces/IRender.h"
 
@@ -22,14 +23,13 @@ public:
 };
 
 //レベルクラス
-class CLevel :public ILevel
+class CLevel :public ACObject , public ILevel
 {
 private:
-	std::vector<std::unique_ptr<CActor>> mActors;		//アクター
+	std::vector<std::unique_ptr<CActor>> mActors;					//アクター
+	std::vector<std::function<void()>> mDoAfterUpdateFunction;		//更新後に行う関数オブジェクト
 
 	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
-
-	std::vector<std::function<void()>> mDoAfterUpdateFunction;		//更新後に行う関数オブジェクト
 
 protected:
 	IGame* mOwnerInterface;			//ゲームインターフェース
@@ -48,6 +48,7 @@ private:
 
 	//アクターの破壊
 	void DestroyActor(CActor& target)override;
+
 protected:
 	//カメラのセットをリクエスト
 	void RequestSetCamera(CCameraComponent& camera)override;
