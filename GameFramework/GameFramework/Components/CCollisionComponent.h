@@ -35,7 +35,7 @@ protected:
 	virtual void ConvertWorldCollider() = 0;
 
 public:
-	CCollisionComponent(CActor& owner, int priority = 40);
+	CCollisionComponent(CActor& owner, EType type, int priority = 40);
 	virtual ~CCollisionComponent();
 
 	void Update() override;
@@ -49,4 +49,5 @@ public:
 	{
 		return mType;
 	}
+
 };

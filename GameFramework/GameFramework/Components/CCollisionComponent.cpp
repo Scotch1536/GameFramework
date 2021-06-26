@@ -5,9 +5,10 @@
 
 #include "CCollisionComponent.h"
 
-CCollisionComponent::CCollisionComponent(CActor& owner , int priority):CComponent(owner , priority)
+CCollisionComponent::CCollisionComponent(CActor& owner ,EType type, int priority):CComponent(owner , priority)
 {
 	CCollisionManager::GetInstance().AddCollider(*this);	//自分をコリジョンマネージャーに登録
+	mType = type;
 }
 
 CCollisionComponent::~CCollisionComponent()

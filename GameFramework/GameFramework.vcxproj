@@ -20,6 +20,7 @@
     <ClCompile Include="GameFramework\Components\CCollisionComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSphereComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp" />
     <ClCompile Include="GameFramework\EntryPoint.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="GameFramework\Components\CComponent.h" />
     <ClInclude Include="GameFramework\Components\CLightComponent.h" />
     <ClInclude Include="GameFramework\Components\CRenderComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSphereComponent.h" />
     <ClInclude Include="GameFramework\Components\CSpringArmComponent.h" />
     <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h" />
     <ClInclude Include="GameFramework\ExternalCode\AssimpScene.h" />

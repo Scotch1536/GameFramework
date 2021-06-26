@@ -17,8 +17,8 @@ private:
 	void ConvertWorldCollider() override;
 
 public:
-	CAABBComponent(CActor& owner, const ModelData& model, int priority = 40);
-	CAABBComponent(CActor& owner, XMFLOAT3 min, XMFLOAT3 max, int priority = 40);
+	CAABBComponent(CActor& owner, const ModelData& model, EType type = EType::AABB, int priority = 40);
+	CAABBComponent(CActor& owner, XMFLOAT3 min, XMFLOAT3 max, EType type = EType::AABB, int priority = 40);
 	~CAABBComponent() {};
 
 	void Update() override;
