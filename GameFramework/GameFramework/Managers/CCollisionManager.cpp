@@ -52,12 +52,15 @@ void CCollisionManager::ReleaseCollider(CCollisionComponent& collider)
 			break;
 		}
 	}
-	for (auto isBefore : mIsBefore)
+	if (mIsBefore.size() != 0)
 	{
-		if (isBefore.first == &collider)
+		for (auto isBefore : mIsBefore)
 		{
-			mIsBefore.erase(&collider);
-			break;
+			if (isBefore.first == &collider)
+			{
+				mIsBefore.erase(&collider);
+				break;
+			}
 		}
 	}
 }

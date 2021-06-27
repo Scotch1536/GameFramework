@@ -8,7 +8,6 @@ CAABBComponent::CAABBComponent(CActor& owner, const ModelData& model, EType type
 {
 	const std::vector<Mesh>& meshes = model.GetMeshes();
 
-
 	for (auto m : meshes)
 	{
 		for (auto v : m.m_vertices)
