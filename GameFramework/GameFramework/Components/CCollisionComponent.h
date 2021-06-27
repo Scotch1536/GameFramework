@@ -30,7 +30,6 @@ protected:
 	std::function<void(CActor&)> mCollisionAction;
 	std::unordered_map<CCollisionComponent*, SCollideCacheData> mCollideCache;
 
-	const CTransform& mParentTransform;
 
 	bool mShouldCompare = true;
 
@@ -38,9 +37,9 @@ protected:
 	virtual void ConvertWorldCollider() = 0;
 
 public:
-	CTransform mTransform;
+	CTransform Transform;
 
-	CCollisionComponent(CActor& owner, const CTransform& parentTrans, EType type, int priority = 40);
+	CCollisionComponent(CActor& owner,CTransform& parentTrans, EType type, int priority = 40);
 	virtual ~CCollisionComponent();
 
 	void Update() override;

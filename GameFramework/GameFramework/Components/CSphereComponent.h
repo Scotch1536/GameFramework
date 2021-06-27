@@ -15,8 +15,8 @@ private:
 	void ConvertWorldCollider() override;
 	float Distance(const XMFLOAT3& vMax, const XMFLOAT3& vMin);
 public:
-	CSphereComponent(CActor& owner, const ModelData& model, const CTransform& parentTrans, int priority = 40);
-	CSphereComponent(CActor& owner, float radius, const CTransform& parentTrans, int priority = 40);
+	CSphereComponent(CActor& owner, const ModelData& model,CTransform& parentTrans, int priority = 40);
+	CSphereComponent(CActor& owner, float radius,CTransform& parentTrans, int priority = 40);
 	~CSphereComponent() {};
 
 	void Update() override;
