@@ -52,12 +52,12 @@ public:
 	void Init();
 
 	//“ü—Í
-	void Input(uint64_t deltatime);
+	void Input();
 
 	//XV
-	void Update(uint64_t deltatime);
+	void Update();
 
 	//•`‰æ
-	void Render(uint64_t deltatime);
+	void Render();
 };
 

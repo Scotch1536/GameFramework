@@ -3,6 +3,7 @@
 #include <memory>
 #include <functional>
 
+#include "../Object/CObject.h"
 #include "../Actor/CActor.h"
 #include "../Interfaces/IRender.h"
 
@@ -22,14 +23,13 @@ public:
 };
 
 //レベルクラス
-class CLevel :public ILevel
+class CLevel :public CObject , public ILevel
 {
 private:
-	std::vector<std::unique_ptr<CActor>> mActors;		//アクター
+	std::vector<std::unique_ptr<CActor>> mActors;					//アクター
+	std::vector<std::function<void()>> mDoAfterUpdateFunction;		//更新後に行う関数オブジェクト
 
 	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
-
-	std::vector<std::function<void()>> mDoAfterUpdateFunction;		//更新後に行う関数オブジェクト
 
 protected:
 	IGame* mOwnerInterface;			//ゲームインターフェース
@@ -48,6 +48,7 @@ private:
 
 	//アクターの破壊
 	void DestroyActor(CActor& target)override;
+
 protected:
 	//カメラのセットをリクエスト
 	void RequestSetCamera(CCameraComponent& camera)override;
@@ -69,10 +70,10 @@ public:
 	virtual void Init() = 0;
 
 	//更新
-	void Update();
+	void Update()override;
 
 	//描画
-	void Render();
+	void Render()override;
 
 	//インターフェースのセット　ゲームマネージャーからしか呼び出す想定をしていない
 	void SetOwnerInterface(CGame& owner);

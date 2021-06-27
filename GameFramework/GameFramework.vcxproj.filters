@@ -239,5 +239,8 @@
     <ClInclude Include="GameFramework\Components\C2DTextureComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="GameFramework\Object\CObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
