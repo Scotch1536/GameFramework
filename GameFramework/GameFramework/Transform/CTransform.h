@@ -62,7 +62,7 @@ public:
 		return mIsChild;
 	}
 
-	XMFLOAT3 GetRightVector()
+	XMFLOAT3 GetRightVector()const
 	{
 		XMFLOAT3 result;
 
@@ -73,7 +73,7 @@ public:
 		return result;
 	}
 
-	XMFLOAT3 GetUpwardVector()
+	XMFLOAT3 GetUpwardVector()const
 	{
 		XMFLOAT3 result;
 
@@ -84,7 +84,7 @@ public:
 		return result;
 	}
 
-	XMFLOAT3 GetForwardVector()
+	XMFLOAT3 GetForwardVector()const
 	{
 		XMFLOAT3 result;
 

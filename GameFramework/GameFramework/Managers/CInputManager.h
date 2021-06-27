@@ -43,7 +43,7 @@ struct SButtonInfo
 //インプット定義構造体
 struct SInputDefinition
 {
-	CObject* InstancePointer = nullptr;					//インスタンスのポインタ
+	CObject* InstancePointer = nullptr;			//インスタンスのポインタ
 
 	EButtonOption ButtonOption = EButtonOption::NONE;		//ボタンのオプション
 
