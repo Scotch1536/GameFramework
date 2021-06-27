@@ -5,9 +5,16 @@
 
 #include "CCollisionComponent.h"
 
-CCollisionComponent::CCollisionComponent(CActor& owner , int priority):CComponent(owner , priority)
+CCollisionComponent::CCollisionComponent(CActor& owner, CTransform& parentTrans, EType type, int priority) :CComponent(owner, priority)
 {
+	parentTrans.AttachTransform(Transform);
 	CCollisionManager::GetInstance().AddCollider(*this);	//自分をコリジョンマネージャーに登録
+	mType = type;
+}
+
+CCollisionComponent::~CCollisionComponent()
+{
+	CCollisionManager::GetInstance().ReleaseCollider(*this);
 }
 
 void CCollisionComponent::ExecuteAction(CActor& argument)

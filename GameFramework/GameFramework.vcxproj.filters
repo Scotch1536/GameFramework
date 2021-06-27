@@ -117,7 +117,7 @@
     <ClCompile Include="CSkyDome.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Components\C2DTextureComponent.cpp">
+    <ClCompile Include="GameFramework\Components\CSphereComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -236,7 +236,7 @@
     <ClInclude Include="CSkyDome.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Components\C2DTextureComponent.h">
+    <ClInclude Include="GameFramework\Components\CSphereComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Object\CObject.h">

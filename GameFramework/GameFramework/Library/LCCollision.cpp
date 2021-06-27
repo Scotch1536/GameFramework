@@ -27,3 +27,14 @@ bool LCCollision::Contains(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMF
 	}
 	return true;
 }
+
+bool LCCollision::Intersect(const XMFLOAT3& ACenter, const float& ARadius, const XMFLOAT3& BCenter, const float& BRadius)
+{
+	float xAns = ACenter.x - BCenter.x;
+	float yAns = ACenter.y - BCenter.y;
+	float zAns = ACenter.z - BCenter.z;
+
+	float distSq = sqrt((xAns * xAns) + (yAns * yAns) + (zAns * zAns));
+	float sumRadius = ARadius + BRadius;
+	return distSq <= (sumRadius*sumRadius);
+}

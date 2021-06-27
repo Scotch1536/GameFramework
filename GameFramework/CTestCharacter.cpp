@@ -4,6 +4,7 @@
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CSpringArmComponent.h"
 #include "GameFramework/Components/CAABBComponent.h"
+#include "GameFramework/Components/CSphereComponent.h"
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CGameManager.h"
 #include "GameFramework/Managers/CInputManager.h"
@@ -33,7 +34,7 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 
 	CAABBComponent* aabb = new CAABBComponent(*this , staticMesh.GetModel());
 
-	aabb->BindCollisionAction(std::bind(&CTestCharacter::CollisionAction , std::ref(*this) , std::placeholders::_1));
+	sphere->BindCollisionAction(std::bind(&CTestCharacter::CollisionAction , std::ref(*this) , std::placeholders::_1));
 
 	CInputManager::GetInstance().AddAction("MoveM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CTestCharacter::Move , std::ref(*this) , 0));
 	CInputManager::GetInstance().AddAction("MoveP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CTestCharacter::Move , std::ref(*this) , 1));

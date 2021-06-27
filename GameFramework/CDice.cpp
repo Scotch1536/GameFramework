@@ -3,6 +3,7 @@
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CAABBComponent.h"
+#include "GameFramework/Components/CSphereComponent.h"
 #include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CGameManager.h"
@@ -22,7 +23,7 @@ CDice::CDice(CLevel& owner):CActor(owner , false)
 
 	//タグ追加
 	AddTag("Dice");
-
+  
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
