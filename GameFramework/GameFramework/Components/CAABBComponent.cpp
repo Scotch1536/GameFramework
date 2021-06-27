@@ -4,7 +4,7 @@
 #include "../Actor/CActor.h"
 #include "../ExternalCode/ModelData.h"
 
-CAABBComponent::CAABBComponent(CActor& owner, const ModelData& model, EType type, int priority) :CCollisionComponent(owner, type, priority)
+CAABBComponent::CAABBComponent(CActor& owner, const ModelData& model, const CTransform& parentTrans, int priority) :CCollisionComponent(owner, parentTrans, CCollisionComponent::EType::AABB, priority)
 {
 	const std::vector<Mesh>& meshes = model.GetMeshes();
 
@@ -24,7 +24,7 @@ CAABBComponent::CAABBComponent(CActor& owner, const ModelData& model, EType type
 	}
 }
 
-CAABBComponent::CAABBComponent(CActor& owner, XMFLOAT3 min, XMFLOAT3 max, EType type, int priority) : CCollisionComponent(owner, type, priority)
+CAABBComponent::CAABBComponent(CActor& owner, XMFLOAT3 min, XMFLOAT3 max, const CTransform& parentTrans, int priority) : CCollisionComponent(owner, parentTrans, CCollisionComponent::EType::AABB, priority)
 {
 	mLocalMin = min;
 	mLocalMax = max;
@@ -57,8 +57,8 @@ void CAABBComponent::Update()
 
 void CAABBComponent::ConvertWorldCollider()
 {
-	XMFLOAT3 scale = mOwnerInterface.GetTransform().Scale;
-	XMFLOAT3 location = mOwnerInterface.GetTransform().Location;
+	XMFLOAT3 scale = mParentTransform.Scale;
+	XMFLOAT3 location = mParentTransform.Location;
 
 	mWorldMin.x = (mLocalMin.x * scale.x) + location.x;
 	mWorldMin.y = (mLocalMin.y * scale.y) + location.y;

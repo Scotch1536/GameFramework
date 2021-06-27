@@ -28,7 +28,7 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 	light->SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
 	light->SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
-	CSphereComponent* sphere = new CSphereComponent(*this, staticMesh.GetModel());
+	CSphereComponent* sphere = new CSphereComponent(*this, staticMesh.GetModel(), staticMesh.Transform);
 
 	sphere->BindCollisionAction(std::bind(&CTestCharacter::CollisionAction , std::ref(*this) , std::placeholders::_1));
 

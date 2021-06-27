@@ -5,6 +5,8 @@
 #include "CComponent.h"
 #include "../Transform/CTransform.h"
 
+class CTransform;
+
 struct SCollideCacheData
 {
 	bool IsCollide = false;
@@ -22,12 +24,13 @@ public:
 
 private:
 	EType mType;
-	CTransform mTransform;
 
 protected:
 	std::vector<CCollisionComponent*> mColliders;
 	std::function<void(CActor&)> mCollisionAction;
 	std::unordered_map<CCollisionComponent*, SCollideCacheData> mCollideCache;
+
+	const CTransform& mParentTransform;
 
 	bool mShouldCompare = true;
 
@@ -35,7 +38,9 @@ protected:
 	virtual void ConvertWorldCollider() = 0;
 
 public:
-	CCollisionComponent(CActor& owner, EType type, int priority = 40);
+	CTransform mTransform;
+
+	CCollisionComponent(CActor& owner, const CTransform& parentTrans, EType type, int priority = 40);
 	virtual ~CCollisionComponent();
 
 	void Update() override;

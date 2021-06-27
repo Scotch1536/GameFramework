@@ -5,7 +5,7 @@
 
 #include "CCollisionComponent.h"
 
-CCollisionComponent::CCollisionComponent(CActor& owner ,EType type, int priority):CComponent(owner , priority)
+CCollisionComponent::CCollisionComponent(CActor& owner, const CTransform& parentTrans, EType type, int priority) :CComponent(owner, priority),mParentTransform(parentTrans)
 {
 	CCollisionManager::GetInstance().AddCollider(*this);	//自分をコリジョンマネージャーに登録
 	mType = type;

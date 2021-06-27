@@ -18,7 +18,7 @@ CDice::CDice(CLevel& owner):CActor(owner)
 	*/
 	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
-	CSphereComponent* aabb = new CSphereComponent(*this, staticMesh->GetModel());
+	CSphereComponent* aabb = new CSphereComponent(*this, staticMesh->GetModel(),staticMesh->Transform);
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる

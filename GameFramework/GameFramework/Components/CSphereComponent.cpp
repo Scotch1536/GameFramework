@@ -4,7 +4,7 @@
 #include "../Actor/CActor.h"
 #include "../ExternalCode/ModelData.h"
 
-CSphereComponent::CSphereComponent(CActor& owner, const ModelData& model, EType type, int priority) :CCollisionComponent(owner, type, priority)
+CSphereComponent::CSphereComponent(CActor& owner, const ModelData& model, const CTransform& parentTrans, int priority) :CCollisionComponent(owner, parentTrans,CCollisionComponent::EType::SPHERE, priority)
 {
 	const std::vector<Mesh>& meshes = model.GetMeshes();
 	XMFLOAT3 mMin = { 0,0,0 };
@@ -27,7 +27,7 @@ CSphereComponent::CSphereComponent(CActor& owner, const ModelData& model, EType 
 	mRadius = Distance(mMax, mMin);
 }
 
-CSphereComponent::CSphereComponent(CActor& owner, float radius, EType type, int priority) : CCollisionComponent(owner, type, priority)
+CSphereComponent::CSphereComponent(CActor& owner, float radius, const CTransform& parentTrans, int priority) : CCollisionComponent(owner, parentTrans, CCollisionComponent::EType::SPHERE, priority)
 {
 	mRadius = radius;
 }
@@ -71,7 +71,7 @@ void CSphereComponent::Update()
 
 void CSphereComponent::ConvertWorldCollider()
 {
-	mWorldPosition.x = mOwnerInterface.GetTransform().GetWorldMatrixResult()._41;
-	mWorldPosition.y = mOwnerInterface.GetTransform().GetWorldMatrixResult()._42;
-	mWorldPosition.z = mOwnerInterface.GetTransform().GetWorldMatrixResult()._43;
+	mWorldPosition.x = mParentTransform.GetWorldMatrixResult()._41;
+	mWorldPosition.y = mParentTransform.GetWorldMatrixResult()._42;
+	mWorldPosition.z = mParentTransform.GetWorldMatrixResult()._43;
 }
