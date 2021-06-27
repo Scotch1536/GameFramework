@@ -19,8 +19,11 @@ class CGameManager :public IGameManagerToLevel
 private:
 	CGame mGame;			//ゲームクラス
 
+	int64_t mDeltaTime;		//デルタタイム
+
 	bool mCanExecute = true;				//実行できるか
 	bool mCanSetStartLevel = true;			//スタートレベルをセットできるか
+	bool mIsPause = false;
 
 	CGameManager();
 
@@ -44,8 +47,28 @@ public:
 		return mGame;
 	}
 
-	IGame& GetGameInterface()
+	const IGame& GetGameInterface()const
 	{
 		return mGame;
+	}
+
+	const bool& GetIsPause()const
+	{
+		return mIsPause;
+	}
+
+	const int64_t& GetDeltaTime()const
+	{
+		return mDeltaTime;
+	}
+
+	void SetIsPause(bool flg)
+	{
+		mIsPause = flg;
+	}
+
+	void SetDeltaTime(const Application& partner , int64_t dt)
+	{
+		mDeltaTime = dt;
 	}
 };

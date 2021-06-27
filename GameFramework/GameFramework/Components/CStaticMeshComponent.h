@@ -12,16 +12,16 @@ class CRenderComponent;
 class CStaticMeshComponent :public CComponent , public IRender
 {
 private:
-	ModelData mModel;							//モデルデータ
+	ModelData& mModel;							//モデルデータ
 	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
 
 public:
 	CTransform Transform;			//トランスフォーム
 
-	CStaticMeshComponent(CActor& owner , const ModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority = 90);
+	CStaticMeshComponent(CActor& owner , ModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority = 90);
 
 	//モデルのセット
-	void SetModel(const ModelData& model)
+	void SetModel(ModelData& model)
 	{
 		mModel = model;
 	}

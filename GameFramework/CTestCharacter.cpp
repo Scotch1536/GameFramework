@@ -6,13 +6,17 @@
 #include "GameFramework/Components/CAABBComponent.h"
 #include "GameFramework/Components/CSphereComponent.h"
 #include "GameFramework/Managers/CModelDataManager.h"
+#include "GameFramework/Managers/CGameManager.h"
 #include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/Game/Application.h"
 
 CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 {
+	//Transform.Scale = { 2,2,2 };
 	CStaticMeshComponent& staticMesh = *new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("Assets/dice/Playerbox.x" , "Assets/dice/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
+
+	//staticMesh.Transform.Scale = { 2,2,2 };
 
 	CLightComponent* light = new CLightComponent(*this);
 
@@ -28,7 +32,7 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 	light->SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
 	light->SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
-	CSphereComponent* sphere = new CSphereComponent(*this, staticMesh.GetModel(), staticMesh.Transform);
+	CAABBComponent* aabb = new CAABBComponent(*this , staticMesh.GetModel());
 
 	sphere->BindCollisionAction(std::bind(&CTestCharacter::CollisionAction , std::ref(*this) , std::placeholders::_1));
 
@@ -143,5 +147,9 @@ void CTestCharacter::Rot(int dire)
 
 void CTestCharacter::CollisionAction(CActor& collideActor)
 {
-	collideActor.Destroy();
+	if(collideActor.HasTag("Dice"))
+	{
+		collideActor.Destroy();
+		//CGameManager::GetInstance().SetIsPause(true);
+	}
 }

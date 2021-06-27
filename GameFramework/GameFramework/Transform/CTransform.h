@@ -31,7 +31,13 @@ public:
 	CRotator Rotation;								//ローテーション
 
 	CTransform();
+
+	/*
+	コンポーネントにトランスフォームを作る時のコンストラクタ
+	（アクターのトランスフォームに従属させる）
+	*/
 	CTransform(IActor& partner);
+
 	~CTransform();
 
 	//更新
@@ -55,8 +61,8 @@ public:
 	{
 		return mIsChild;
 	}
-	
-	XMFLOAT3 GetRightVector()
+
+	XMFLOAT3 GetRightVector()const
 	{
 		XMFLOAT3 result;
 
@@ -65,9 +71,9 @@ public:
 		result.z = mWorldMatrixResult._13 / Scale.z;
 
 		return result;
-	}	
-	
-	XMFLOAT3 GetUpwardVector()
+	}
+
+	XMFLOAT3 GetUpwardVector()const
 	{
 		XMFLOAT3 result;
 
@@ -78,7 +84,7 @@ public:
 		return result;
 	}
 
-	XMFLOAT3 GetForwardVector()
+	XMFLOAT3 GetForwardVector()const
 	{
 		XMFLOAT3 result;
 
@@ -87,5 +93,5 @@ public:
 		result.z = mWorldMatrixResult._33 / Scale.z;
 
 		return result;
-	}	
+	}
 };

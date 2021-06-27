@@ -11,7 +11,7 @@ void CTestLevel::Init()
 {
 	CDice& dice = *new CDice(*this);
 
-	dice.Transform.Location = { 0.f,20.f,0.f };
+	dice.Transform.Location = { 0.f,40.f,0.f };
 
 	/*
 	レベルから指定のアクターインスタンスのメソッドをインプットマネージャーにバインドすることは可能

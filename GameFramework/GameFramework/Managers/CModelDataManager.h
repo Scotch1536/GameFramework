@@ -8,8 +8,9 @@
 class CModelDataManager
 {
 private:
+	std::unordered_map<std::string , ModelData> mModelData;		//モデルデータ格納辞書
+
 	CModelDataManager() = default;
-	~CModelDataManager();
 public:
 	CModelDataManager(const CModelDataManager&) = delete;
 	CModelDataManager& operator=(const CModelDataManager&) = delete;
@@ -23,7 +24,5 @@ public:
 	}
 
 	//モデルを取得する
-	const ModelData& GetModel(std::string filePath , std::string resourceFolderPath);
-private:
-	std::unordered_map<std::string , ModelData> mModelData;		//モデルデータ格納辞書
+	ModelData& GetModel(std::string filePath , std::string resourceFolderPath);
 };

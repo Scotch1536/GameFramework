@@ -23,10 +23,6 @@ void CCollisionComponent::ExecuteAction(CActor& argument)
 	{
 		mCollisionAction(argument);
 	}
-	else
-	{
-		MessageBox(NULL , "Not Found Function" , "error" , MB_OK);
-	}
 }
 
 void CCollisionComponent::Update()

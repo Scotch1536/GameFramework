@@ -85,6 +85,7 @@
     <ClInclude Include="GameFramework\Managers\CGameManager.h" />
     <ClInclude Include="GameFramework\Managers\CInputManager.h" />
     <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />
+    <ClInclude Include="GameFramework\Object\CObject.h" />
     <ClInclude Include="GameFramework\Transform\CRotator.h" />
     <ClInclude Include="GameFramework\Transform\CTransform.h" />
   </ItemGroup>

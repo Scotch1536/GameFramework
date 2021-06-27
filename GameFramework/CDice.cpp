@@ -6,10 +6,11 @@
 #include "GameFramework/Components/CSphereComponent.h"
 #include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/Managers/CModelDataManager.h"
+#include "GameFramework/Managers/CGameManager.h"
 
 #include "CDice.h"
 
-CDice::CDice(CLevel& owner):CActor(owner)
+CDice::CDice(CLevel& owner):CActor(owner , false)
 {
 	/*
 	★超重要★
@@ -18,13 +19,17 @@ CDice::CDice(CLevel& owner):CActor(owner)
 	*/
 	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
-	CSphereComponent* aabb = new CSphereComponent(*this, staticMesh->GetModel(),staticMesh->Transform);
+	CAABBComponent* aabb = new CAABBComponent(*this , staticMesh->GetModel());
+
+	//タグ追加
+	AddTag("Dice");
+  
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
 	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
 	*/
-	CInputManager::GetInstance().AddAction("Test" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CDice::Test , std::ref(*this)));
+	CInputManager::GetInstance().AddAction("Test" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CDice::GamePause , std::ref(*this)));
 	//CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CDice::Rot , std::ref(*this) , 0));
 	//CInputManager::GetInstance().AddAction("XM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_D } , std::bind(&CDice::Rot , std::ref(*this) , 1));
 	//CInputManager::GetInstance().AddAction("YP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_F } , std::bind(&CDice::Rot , std::ref(*this) , 2));
@@ -34,9 +39,9 @@ CDice::CDice(CLevel& owner):CActor(owner)
 	//CInputManager::GetInstance().AddAction("CameraMove" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_K } , std::bind(&CDice::Rot , std::ref(*this) , 6));
 }
 
-void CDice::Test()
+void CDice::GamePause()
 {
-	MessageBox(NULL , "Test" , "error" , MB_OK);
+	CGameManager::GetInstance().SetIsPause(false);
 }
 
 void CDice::Rot(int dire)
