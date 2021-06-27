@@ -11,8 +11,11 @@
 
 CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 {
+	//Transform.Scale = { 2,2,2 };
 	CStaticMeshComponent& staticMesh = *new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("Assets/dice/Playerbox.x" , "Assets/dice/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
+
+	//staticMesh.Transform.Scale = { 2,2,2 };
 
 	CLightComponent* light = new CLightComponent(*this);
 
