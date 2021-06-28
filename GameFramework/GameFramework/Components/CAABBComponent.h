@@ -21,5 +21,5 @@ public:
 	CAABBComponent(CActor& owner, XMFLOAT3 min, XMFLOAT3 max, CTransform& parentTrans, int priority = 40);
 	~CAABBComponent() {};
 
-	void Update() override;
+	void Update()override;
 };
