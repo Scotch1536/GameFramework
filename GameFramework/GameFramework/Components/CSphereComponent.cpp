@@ -24,7 +24,7 @@ CSphereComponent::CSphereComponent(CActor& owner, const ModelData& model, CTrans
 			else if (mMax.z < v.m_Pos.z) mMax.z = v.m_Pos.z;
 		}
 	}
-	mRadius = Distance(mMax, mMin);
+	mRadius = Distance(mMax, mMin) / 2;
 }
 
 CSphereComponent::CSphereComponent(CActor& owner, float radius, CTransform& parentTrans, int priority) : CCollisionComponent(owner, parentTrans, CCollisionComponent::EType::SPHERE, priority)
@@ -71,7 +71,7 @@ void CSphereComponent::Update()
 
 void CSphereComponent::ConvertWorldCollider()
 {
-	mWorldPosition.x = Transform.GetWorldMatrixResult()._41;
-	mWorldPosition.y = Transform.GetWorldMatrixResult()._42;
-	mWorldPosition.z = Transform.GetWorldMatrixResult()._43;
+	mWorldPosition = Transform.GetWorldLocation();
+	//mWorldPosition.y = Transform.GetWorldLocation().y;
+	//mWorldPosition.z = Transform.GetWorldLocation().z;
 }

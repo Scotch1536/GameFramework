@@ -34,7 +34,7 @@ bool LCCollision::Intersect(const XMFLOAT3& ACenter, const float& ARadius, const
 	float yAns = ACenter.y - BCenter.y;
 	float zAns = ACenter.z - BCenter.z;
 
-	float distSq = sqrt((xAns * xAns) + (yAns * yAns) + (zAns * zAns));
+	float dist =(xAns * xAns) + (yAns * yAns) + (zAns * zAns);
 	float sumRadius = ARadius + BRadius;
-	return distSq <= (sumRadius*sumRadius);
+	return dist <= (sumRadius*sumRadius);
 }
