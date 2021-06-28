@@ -19,11 +19,11 @@ CDice::CDice(CLevel& owner):CActor(owner , false)
 	*/
 	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
-	CAABBComponent* aabb = new CAABBComponent(*this , staticMesh->GetModel());
+	CAABBComponent* aabb = new CAABBComponent(*this , staticMesh->GetModel() , staticMesh->Transform);
 
 	//タグ追加
 	AddTag("Dice");
-  
+
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる

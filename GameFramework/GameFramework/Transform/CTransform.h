@@ -62,36 +62,15 @@ public:
 		return mIsChild;
 	}
 
-	XMFLOAT3 GetRightVector()const
-	{
-		XMFLOAT3 result;
+	XMFLOAT3 GetRightVector()const;
 
-		result.x = mWorldMatrixResult._11 / Scale.x;
-		result.y = mWorldMatrixResult._12 / Scale.y;
-		result.z = mWorldMatrixResult._13 / Scale.z;
+	XMFLOAT3 GetUpwardVector()const;
 
-		return result;
-	}
+	XMFLOAT3 GetForwardVector()const;
 
-	XMFLOAT3 GetUpwardVector()const
-	{
-		XMFLOAT3 result;
+	XMFLOAT3 GetWorldLocation()const;
 
-		result.x = mWorldMatrixResult._21 / Scale.x;
-		result.y = mWorldMatrixResult._22 / Scale.y;
-		result.z = mWorldMatrixResult._23 / Scale.z;
+	XMFLOAT3 GetWorldScale()const;
 
-		return result;
-	}
-
-	XMFLOAT3 GetForwardVector()const
-	{
-		XMFLOAT3 result;
-
-		result.x = mWorldMatrixResult._31 / Scale.x;
-		result.y = mWorldMatrixResult._32 / Scale.y;
-		result.z = mWorldMatrixResult._33 / Scale.z;
-
-		return result;
-	}
+	XMFLOAT3 GetWorldRotatorAngle()const;
 };

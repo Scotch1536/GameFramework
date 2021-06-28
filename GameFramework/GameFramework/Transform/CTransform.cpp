@@ -86,3 +86,93 @@ void CTransform::RequestSetMatrix()
 {
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD , mWorldMatrixResult);
 }
+
+XMFLOAT3 CTransform::GetRightVector()const
+{
+	XMFLOAT3 result;
+
+	result.x = mWorldMatrixResult._11;
+	result.y = mWorldMatrixResult._12;
+	result.z = mWorldMatrixResult._13;
+
+	DX11Vec3Normalize(result , result);
+
+	return result;
+}
+
+XMFLOAT3 CTransform::GetUpwardVector()const
+{
+	XMFLOAT3 result;
+
+	result.x = mWorldMatrixResult._21;
+	result.y = mWorldMatrixResult._22;
+	result.z = mWorldMatrixResult._23;
+
+	DX11Vec3Normalize(result , result);
+
+	return result;
+}
+
+XMFLOAT3 CTransform::GetForwardVector()const
+{
+	XMFLOAT3 result;
+
+	result.x = mWorldMatrixResult._31;
+	result.y = mWorldMatrixResult._32;
+	result.z = mWorldMatrixResult._33;
+
+	DX11Vec3Normalize(result , result);
+
+	return result;
+}
+
+XMFLOAT3 CTransform::GetWorldLocation()const
+{
+	XMFLOAT3 result;
+
+	if(mParentTransform != nullptr)
+	{
+		result = mParentTransform->GetWorldLocation();
+
+		result.x += Location.x;
+		result.y += Location.y;
+		result.z += Location.z;
+
+		return result;
+	}
+	else return Location;
+}
+
+XMFLOAT3 CTransform::GetWorldScale()const
+{
+	XMFLOAT3 result;
+
+	if(mParentTransform != nullptr)
+	{
+		result = mParentTransform->GetWorldScale();
+
+		result.x *= Scale.x;
+		result.y *= Scale.y;
+		result.z *= Scale.z;
+
+		return result;
+	}
+	else return Scale;
+}
+
+XMFLOAT3 CTransform::GetWorldRotatorAngle()const
+{
+	XMFLOAT3 result;
+
+	if(mParentTransform != nullptr)
+	{
+		result = mParentTransform->GetWorldRotatorAngle();
+
+		result.x += Rotation.Angle.x;
+		result.y += Rotation.Angle.y;
+		result.z += Rotation.Angle.z;
+
+		return result;
+	}
+	else return Rotation.Angle;
+}
