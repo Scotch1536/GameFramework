@@ -72,6 +72,14 @@ public:
 	//更新
 	void Update()override;
 
+	/*
+	毎フレーム行う処理（子クラスのための機能）
+	プロトタイプなどの簡単に試したい時のために用意したので
+	本制作での利用は非推奨
+	ポーズなどの制御がされていないのでバグの温床になる
+	*/
+	virtual void Tick() {};
+
 	//描画
 	void Render()override;
 
