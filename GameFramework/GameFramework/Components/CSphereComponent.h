@@ -10,6 +10,7 @@ class CSphereComponent :public CCollisionComponent
 {
 private:
 	float mRadius;
+	//XMFLOAT3 mLocalPosition;
 	XMFLOAT3 mWorldPosition;
 
 	void ConvertWorldCollider() override;
