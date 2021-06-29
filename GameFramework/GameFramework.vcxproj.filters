@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameFramework\EntryPoint.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\Transform\CRotator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -118,6 +115,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CSphereComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EntryPoint.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

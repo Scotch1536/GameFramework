@@ -15,6 +15,7 @@
     <ClCompile Include="CSkyDome.cpp" />
     <ClCompile Include="CTestCharacter.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
+    <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
     <ClCompile Include="GameFramework\Components\CAABBComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CCollisionComponent.cpp" />
@@ -23,7 +24,6 @@
     <ClCompile Include="GameFramework\Components\CSphereComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp" />
-    <ClCompile Include="GameFramework\EntryPoint.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\AssimpScene.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\CDirectXGraphics.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\CWindow.cpp" />
