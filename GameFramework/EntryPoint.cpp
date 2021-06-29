@@ -24,9 +24,9 @@
 //	Include header files.
 //-----------------------------------------------------------------------------
 #include <Windows.h>
-#include "Managers/CGameManager.h"
+#include "GameFramework/Managers/CGameManager.h"
 
-#include "../CTestLevel.h"
+#include "CTestLevel.h"
 
 //==============================================================================
 //!	@fn		WinMain
