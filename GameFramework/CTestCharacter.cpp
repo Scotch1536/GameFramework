@@ -36,6 +36,8 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 
 	aabb->BindCollisionAction(std::bind(&CTestCharacter::CollisionAction , std::ref(*this) , std::placeholders::_1));
 
+	AddTag("Player");
+
 	CInputManager::GetInstance().AddAction("MoveM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CTestCharacter::Move , std::ref(*this) , 0));
 	CInputManager::GetInstance().AddAction("MoveP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CTestCharacter::Move , std::ref(*this) , 1));
 	CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_R } , std::bind(&CTestCharacter::Rot , std::ref(*this) , 0));

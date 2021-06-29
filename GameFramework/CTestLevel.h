@@ -3,6 +3,11 @@
 
 class CTestLevel :public CLevel
 {
+
+private:
+	CTransform *mPlayerTrans;
+	CTransform *mEnemyTrans;
+
 public:
 	/*
 	継承コンストラクタを使うことで楽にコンストラクタを継承できる
@@ -33,5 +38,7 @@ public:
 	コンポーネントはアクターのコンストラクタで追加することを推奨
 	*/
 	void Init()override;
+
+	void Tick()override;
 };
 
