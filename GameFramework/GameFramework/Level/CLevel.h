@@ -20,6 +20,7 @@ public:
 	virtual void DestroyActor(CActor& target) = 0;
 	virtual void AddActor(CActor& actor) = 0;
 	virtual void RequestSetCamera(CCameraComponent& camera) = 0;
+	virtual void AddImGuiDrawMethod(std::function<void()> method) = 0;
 };
 
 //レベルクラス
@@ -28,11 +29,17 @@ class CLevel :public CObject , public ILevel
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;					//アクター
 	std::vector<std::function<void()>> mDoAfterUpdateFunction;		//更新後に行う関数オブジェクト
+	std::vector<std::function<void()>> mImGuiDrawMethod;			//ImGuiに行わせる描画の関数オブジェクト
 
 	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
 
 protected:
 	IGame* mOwnerInterface;			//ゲームインターフェース
+
+	void AddImGuiDrawMethod(std::function<void()> method)override
+	{
+		mImGuiDrawMethod.emplace_back(method);
+	}
 
 private:
 	//コピー禁止

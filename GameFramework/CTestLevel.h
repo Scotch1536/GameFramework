@@ -3,6 +3,10 @@
 
 class CTestLevel :public CLevel
 {
+private:
+	int mCnt = 0;
+	float mTime = 0;
+
 public:
 	/*
 	継承コンストラクタを使うことで楽にコンストラクタを継承できる
@@ -33,5 +37,7 @@ public:
 	コンポーネントはアクターのコンストラクタで追加することを推奨
 	*/
 	void Init()override;
+
+	void Tick()override;
 };
 

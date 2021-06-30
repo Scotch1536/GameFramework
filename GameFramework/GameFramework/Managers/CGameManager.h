@@ -4,7 +4,7 @@
 class CLevel;
 class CGame;
 class IGame;
-class Application;
+class CApplication;
 
 class IGameManagerToLevel
 {
@@ -42,7 +42,7 @@ public:
 	void RequestExecute(HINSTANCE hInst , int winMode);
 
 	//ゲームクラスの取得（アプリケーションクラスの参照が必要）
-	CGame& GetGame(const Application& partner)
+	CGame& GetGame(const CApplication& partner)
 	{
 		return mGame;
 	}
@@ -67,8 +67,13 @@ public:
 		mIsPause = flg;
 	}
 
-	void SetDeltaTime(const Application& partner , int64_t dt)
+	void SetDeltaTime(const CApplication& partner , int64_t dt)
 	{
 		mDeltaTime = dt;
+	}
+
+	HWND GetHWnd()
+	{
+		return static_cast<IGameToGameManager&>(mGame).GetApp().GetHWnd();
 	}
 };
