@@ -1,15 +1,21 @@
 #include <Windows.h>
 
+#include "../DebugTools/imgui/myimgui.h"
 #include "../ExternalCode/CDirectxGraphics.h"
 #include "../ExternalCode/DX11Settransform.h"
 #include "../ExternalCode/CDirectInput.h"
 #include "../Managers/CInputManager.h"
 
 #include "CGame.h"
-#include "Application.h"
+#include "CApplication.h"
 
 CGame::CGame(CGameManager& partner):mApp(*this)
 {}
+
+CGame::~CGame()
+{
+	imguiExit();
+}
 
 long CGame::Execute(HINSTANCE hInst , int winMode)
 {
@@ -43,8 +49,8 @@ void CGame::Init()
 
 	sts = CDirectXGraphics::GetInstance()->Init(
 		mApp.GetHWnd() ,
-		Application::CLIENT_WIDTH ,
-		Application::CLIENT_HEIGHT ,
+		CApplication::CLIENT_WIDTH ,
+		CApplication::CLIENT_HEIGHT ,
 		false);
 	if(!sts)
 	{
@@ -67,9 +73,11 @@ void CGame::Init()
 	(
 		mApp.GetHInst() ,
 		mApp.GetHWnd() ,
-		Application::CLIENT_WIDTH ,
-		Application::CLIENT_HEIGHT
+		CApplication::CLIENT_WIDTH ,
+		CApplication::CLIENT_HEIGHT
 	);
+
+	imguiInit();
 
 	if(mLevel != nullptr)
 	{

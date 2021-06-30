@@ -1,9 +1,13 @@
+//#include <Windows.h>
 #include <functional>
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_dx11.h"
-#include "imgui/imgui_impl_win32.h"
-#include "Application.h"
-#include "dx11util.h"
+
+#include "imgui.h"
+#include "imgui_impl_dx11.h"
+#include "imgui_impl_win32.h"
+
+#include "../../Game/CApplication.h"
+#include "../../Managers/CGameManager.h"
+#include "../../ExternalCode/CDirectxGraphics.h"
 
 static const ImWchar glyphRangesJapanese[] = {
 
@@ -1042,21 +1046,30 @@ static const ImWchar glyphRangesJapanese[] = {
 };
 
 // 初期化
-void imguiInit() {
+void imguiInit()
+{
+	CDirectXGraphics* buf = CDirectXGraphics::GetInstance();
 
 	// im gui 初期化
 	ImGui::CreateContext();
+
 	ImGuiIO& io = ImGui::GetIO();
-	io.Fonts->AddFontFromFileTTF("assets\\font\\UDDigiKyokashoN-R.ttc", 14.0f, nullptr, glyphRangesJapanese);
-	ImGui_ImplWin32_Init(Application::Instance()->GetHWnd());
-	ImGui_ImplDX11_Init(GetDX11Device(), GetDX11DeviceContext());
+	io.Fonts->AddFontFromFileTTF("Assets\\Fonts\\UDDigiKyokashoN-R.ttc" , 14.0f , nullptr , glyphRangesJapanese);
+
+	ImGui_ImplWin32_Init(CGameManager::GetInstance().GetHWnd());
+	ImGui_ImplDX11_Init(buf->GetDXDevice() , buf->GetImmediateContext());
 
 	// スタイルをクラシックに
 	ImGui::StyleColorsClassic();
-
 }
 
-void imguiDraw(std::function<void(void)> func){
+void imguiDraw(std::function<void(void)> func)
+{
+	//if(ImGui::GetCurrentContext() == nullptr)
+	//{
+	//	MessageBox(NULL , "NotFoundImGuiContext" , "error" , MB_OK);
+	//	exit(1);
+	//}
 
 	// Start the Dear ImGui frame
 	ImGui_ImplDX11_NewFrame();
@@ -1070,7 +1083,8 @@ void imguiDraw(std::function<void(void)> func){
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
 
-void imguiExit() {
+void imguiExit()
+{
 	ImGui_ImplDX11_Shutdown();
 	ImGui::DestroyContext();
 }
