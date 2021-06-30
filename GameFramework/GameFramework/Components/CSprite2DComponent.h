@@ -3,11 +3,16 @@
 
 #include "../ExternalCode/dx11mathutil.h"
 #include "../ExternalCode/CDirectxGraphics.h"
+#include "../Interfaces/IRender.h"
+
 #include "CComponent.h"
 
-class CSprite2DComponent :public CComponent
+class CRenderComponent;
+
+class CSprite2DComponent :public CComponent,public IRender
 {
 private:
+
 	// í∏ì_ç\ë¢ëÃ
 	typedef struct {
 		XMFLOAT3 pos; // ç¿ïW		
@@ -28,4 +33,6 @@ public:
 	CSprite2DComponent(CActor& owner, std::string fileName, int priority = 45);
 
 	void Update()override;
+
+	void Render()override;
 };

@@ -1,5 +1,6 @@
 #include "CSprite2DComponent.h"
 #include "../ExternalCode/shaderhashmap.h"
+#include "../ExternalCode/DX11Settransform.h"
 
 CSprite2DComponent::CSprite2DComponent(CActor& owner, std::string fileName, int priority) :CComponent(owner, priority)
 {
@@ -119,4 +120,74 @@ void CSprite2DComponent::Update()
 		memcpy_s(pData.pData, pData.RowPitch, (void*)(mVertex), sizeof(Vertex) * 4);
 		devcontext->Unmap(mVertexBuffer.Get(), 0);
 	}
+}
+
+void CSprite2DComponent::Render()
+{
+	// 使用する頂点シェーダー名
+	const char* vsfilename[] = {
+		"shader/basicvs.hlsl"
+	};
+
+	// 使用するピクセルシェーダー名
+	const char* psfilename[] = {
+		"shader/basicps.hlsl", //テクスチャ貼る用
+		"shader/basicnotexps.hlsl" //テクスチャ貼らない用
+	};
+
+	// 座標変換用の行列をセット
+	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD, mWorldmtx);
+
+	// デバイスコンテキストを取得する
+	ID3D11DeviceContext* devicecontext = CDirectXGraphics::GetInstance()->GetImmediateContext();
+
+	unsigned int stride = sizeof(Vertex); // ストライドをセット（１頂点当たりのバイト数）
+	unsigned offset = 0; // オフセット値をセット
+
+	// 頂点バッファをデバイスコンテキストへセット
+	devicecontext->IASetVertexBuffers(0, 1, mVertexBuffer.GetAddressOf(), &stride, &offset);
+	// 第1引数：スタートスロット
+	// 第2引数：頂点バッファ個数
+	// 第3引数：頂点バッファの先頭アドレス
+	// 第4引数：ストライド
+	// 第5引数：オフセット
+
+// インデックスバッファをデバイスコンテキストへセット
+	devicecontext->IASetIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	// 第1引数：インデックスバッファ
+	// 第2引数：フォーマット
+	// 第3引数：オフセット
+
+// トポロジーをセット
+	devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	// 頂点シェーダー、ピクセルシェーダー取得
+	ID3D11VertexShader* vs = ShaderHashmap::GetInstance()->GetVertexShader(vsfilename[0]);
+	ID3D11PixelShader* ps;
+	ps = ShaderHashmap::GetInstance()->GetPixelShader(psfilename[0]);
+	/*if (texFg == true) {
+		ps = ShaderHashmap::GetInstance()->GetPixelShader(psfilename[0]);
+	}
+	else {
+		ps = ShaderHashmap::GetInstance()->GetPixelShader(psfilename[1]);
+	}*/
+
+	// 頂点レイアウト取得
+	ID3D11InputLayout* layout = ShaderHashmap::GetInstance()->GetVertexLayout(vsfilename[0]);
+
+	devicecontext->VSSetShader(vs, nullptr, 0);
+	devicecontext->GSSetShader(nullptr, nullptr, 0);
+	devicecontext->HSSetShader(nullptr, nullptr, 0);
+	devicecontext->DSSetShader(nullptr, nullptr, 0);
+	devicecontext->PSSetShader(ps, nullptr, 0);
+
+	// 頂点フォーマットをセット
+	devicecontext->IASetInputLayout(layout);
+
+	// ドローコール発行
+	devicecontext->DrawIndexed(4, 0, 0);
+	//第1引数：頂点数
+	//第2引数：開始頂点インデックス
+	//第3引数：基準頂点インデックス
+
 }
