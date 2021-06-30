@@ -23,6 +23,7 @@
     <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSphereComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSprite2DComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\AssimpScene.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\CDirectXGraphics.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="GameFramework\Components\CRenderComponent.h" />
     <ClInclude Include="GameFramework\Components\CSphereComponent.h" />
     <ClInclude Include="GameFramework\Components\CSpringArmComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSprite2DComponent.h" />
     <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h" />
     <ClInclude Include="GameFramework\ExternalCode\AssimpScene.h" />
     <ClInclude Include="GameFramework\ExternalCode\CDirectInput.h" />
@@ -73,6 +75,7 @@
     <ClInclude Include="GameFramework\ExternalCode\Mesh.h" />
     <ClInclude Include="GameFramework\ExternalCode\ModelData.h" />
     <ClInclude Include="GameFramework\ExternalCode\Shader.h" />
+    <ClInclude Include="GameFramework\ExternalCode\shaderhashmap.h" />
     <ClInclude Include="GameFramework\ExternalCode\utftosjisconv.h" />
     <ClInclude Include="GameFramework\ExternalCode\VertexProto.h" />
     <ClInclude Include="GameFramework\Game\Application.h" />

@@ -60,9 +60,8 @@ void CTestLevel::Tick()
 		float zAns = mPlayerTrans->GetWorldMatrixResult()._43 - mEnemyTrans->GetWorldMatrixResult()._43;
 
 		float dist = std::sqrt((xAns * xAns) + (yAns * yAns) + (zAns * zAns));
-		std::system("cls");
-		std::cout << "“G‚Æ‚Ì‹——£" << std::endl;
-		std::cout << "“G‚Æ‚Ì‹——£F" << dist-26 <<std::endl;
+		//std::system("cls");
+		//std::cout << "“G‚Æ‚Ì‹——£F" << dist-26 <<std::endl;
 	}
 	else
 	{
