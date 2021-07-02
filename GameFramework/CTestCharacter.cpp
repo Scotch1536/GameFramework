@@ -8,7 +8,7 @@
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CGameManager.h"
 #include "GameFramework/Managers/CInputManager.h"
-#include "GameFramework/Game/Application.h"
+#include "GameFramework/Game/CApplication.h"
 
 CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 {
@@ -22,7 +22,7 @@ CTestCharacter::CTestCharacter(ILevel& owner):CActor(owner)
 
 	CCameraComponent* camera = new CCameraComponent(*this);
 
-	camera->SetProjection(10.f , 10000.f , XM_PI / 4.f , Application::CLIENT_WIDTH , Application::CLIENT_HEIGHT);
+	camera->SetProjection(10.f , 10000.f , XM_PI / 4.f , CApplication::CLIENT_WIDTH , CApplication::CLIENT_HEIGHT);
 	camera->SetView({ 0.f,0.f,-100.f } , Transform.Location , { 0.f,1.f,0.f });
 
 	CSpringArmComponent* spr = new CSpringArmComponent(*this , Transform , *camera);

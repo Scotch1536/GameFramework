@@ -3,10 +3,11 @@
 #include <memory>
 
 #include "../Level/CLevel.h"
-#include "Application.h"
+#include "CApplication.h"
 
 class CLevel;
 class CGameManager;
+class CApplication;
 
 //インターフェース
 class IGame
@@ -22,13 +23,14 @@ public:
 	virtual ~IGameToGameManager() {};
 	virtual void SetLevel(CLevel& level) = 0;
 	virtual long Execute(HINSTANCE hInst , int winMode) = 0;
+	virtual CApplication& GetApp() = 0;
 };
 
 //ゲームクラス
 class CGame :public IGame , public IGameToGameManager
 {
 private:
-	Application mApp;		//アプリケーション
+	CApplication mApp;		//アプリケーション
 
 	std::unique_ptr<CLevel> mLevel;			//レベル
 
@@ -45,8 +47,15 @@ private:
 
 	//レベルのロード（遷移）
 	void LoadLevel(CLevel& level)override;
+
+	CApplication& GetApp()override
+	{
+		return mApp;
+	}
+
 public:
 	CGame(CGameManager& partner);
+	~CGame();
 
 	//ゲームの初期化（ウィンドウ作成後に呼び出し）
 	void Init();

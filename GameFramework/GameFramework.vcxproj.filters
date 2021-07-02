@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{7da443de-4dca-4fef-a713-10f04d3d9ac6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameFramework\Transform\CRotator.cpp">
@@ -78,9 +81,6 @@
     <ClCompile Include="CTestLevel.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Game\Application.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\DDSTextureLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -120,10 +120,31 @@
     <ClCompile Include="EntryPoint.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Components\CSprite2DComponent.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="GameFramework\DebugTools\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="CTest2DActor.cpp">
+    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_impl_dx11.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_impl_win32.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\DebugTools\imgui\myimgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Game\CApplication.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -209,9 +230,6 @@
     <ClInclude Include="GameFramework\Actor\CActor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Game\Application.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CTestCharacter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -248,13 +266,34 @@
     <ClInclude Include="GameFramework\Object\CObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Components\CSprite2DComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="GameFramework\DebugTools\imgui\imconfig.h">
+      <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\shaderhashmap.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="GameFramework\DebugTools\imgui\imgui.h">
+      <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="CTest2DActor.h">
+    <ClInclude Include="GameFramework\DebugTools\imgui\imgui_impl_dx11.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\DebugTools\imgui\imgui_impl_win32.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\DebugTools\imgui\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\DebugTools\imgui\imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\DebugTools\imgui\imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\DebugTools\imgui\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\DebugTools\imgui\myimgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Game\CApplication.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,8 +12,9 @@
 #include "CWindow.h"
 
 #include "CWindowCallback.h"
+#include "../DebugTools/imgui/imgui_impl_win32.h"
 
-//#include "macro.h"
+IMGUI_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd , UINT msg , WPARAM wParam , LPARAM lParam);
 
 //==============================================================================
 //!	@fn		WindowProc
@@ -29,6 +30,7 @@ static LRESULT APIENTRY WindowProc(HWND   h_Handle ,
 	WPARAM h_WParam ,
 	LPARAM h_LParam)
 {
+	if(ImGui_ImplWin32_WndProcHandler(h_Handle , h_Message , h_WParam , h_LParam))return true;
 
 	// コールバックが設定されていなければ終了
 	CWindowCallback* callback = CWindow::Instance()->GetCallback();

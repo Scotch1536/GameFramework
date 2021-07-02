@@ -1,6 +1,6 @@
 #include <Windows.h>
 
-#include "../Game/Application.h"
+#include "../Game/CApplication.h"
 #include "../Game/CGame.h"
 
 #include "CGameManager.h"

@@ -1,7 +1,10 @@
-#include <iostream>
+#include <string>
+
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Managers/CInputManager.h"
+#include "GameFramework/Managers/CGameManager.h"
+#include "GameFramework/DebugTools/imgui/myimgui.h"
 
 #include "CTestLevel.h"
 #include "CDice.h"
@@ -53,19 +56,40 @@ void CTestLevel::Init()
 
 void CTestLevel::Tick()
 {
-	if (mEnemyTrans != nullptr && mPlayerTrans != nullptr)
-	{
-		float xAns = mPlayerTrans->GetWorldMatrixResult()._41 - mEnemyTrans->GetWorldMatrixResult()._41;
-		float yAns = mPlayerTrans->GetWorldMatrixResult()._42 - mEnemyTrans->GetWorldMatrixResult()._42;
-		float zAns = mPlayerTrans->GetWorldMatrixResult()._43 - mEnemyTrans->GetWorldMatrixResult()._43;
+	mCnt++;
 
-		float dist = std::sqrt((xAns * xAns) + (yAns * yAns) + (zAns * zAns));
-		//std::system("cls");
-		//std::cout << "“G‚Æ‚Ì‹——£F" << dist-26 <<std::endl;
-	}
-	else
+	int64_t dt = CGameManager::GetInstance().GetDeltaTime();
+	if(dt != 0)
 	{
-		std::system("cls");
-		std::cout << "“GÁ–Å" << std::endl;
+		mTime += static_cast<float>(dt / 1000.0f);
+		//mTime = std::floorf(mTime * 100.0f) / 100.0f;
 	}
+
+	auto displayCount = [&]
+	{
+		ImGui::SetNextWindowPos(ImVec2(10 , 10) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
+
+		ImGui::Begin(u8"ƒJƒEƒ“ƒg");
+
+		ImGui::Text(std::to_string(mCnt).c_str());
+
+		ImGui::End();
+	};
+
+	auto displayTime = [&]
+	{
+		ImGui::SetNextWindowPos(ImVec2(10 , 220) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
+
+		ImGui::Begin(u8"ŽžŠÔ");
+
+		std::string buf = std::to_string(mTime);
+		ImGui::Text(std::to_string(mTime).c_str());
+
+		ImGui::End();
+	};
+
+	AddImGuiDrawMethod(displayCount);
+	AddImGuiDrawMethod(displayTime);
 }

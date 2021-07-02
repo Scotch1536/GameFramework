@@ -1,3 +1,4 @@
+#include "../DebugTools/imgui/myimgui.h"
 #include "../ExternalCode/DX11Settransform.h"
 #include "../Game/CGame.h"
 #include "../Managers/CGameManager.h"
@@ -89,6 +90,19 @@ void CLevel::Render()
 	{
 		actor->Render();
 	}
+
+	//ImGuiに渡す描画の関数オブジェクト一つの関数オブジェクトにまとめる
+	auto allGuiMethodExecute = [&]
+	{
+		for(auto& guiMethod : mImGuiDrawMethod)
+		{
+			guiMethod();
+		}
+	};
+
+	imguiDraw(allGuiMethodExecute);
+	mImGuiDrawMethod.clear();
+	mImGuiDrawMethod.shrink_to_fit();
 
 	CDirectXGraphics::GetInstance()->GetSwapChain()->Present(0 , 0);
 }

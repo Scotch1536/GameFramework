@@ -3,6 +3,10 @@
 
 class CTestLevel :public CLevel
 {
+private:
+	int mCnt = 0;
+	float mTime = 0;
+
 
 private:
 	CTransform *mPlayerTrans;
