@@ -14,7 +14,7 @@ using namespace std;
 using namespace DirectX;
 using Microsoft::WRL::ComPtr;
 
-Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures,Material mtrl){
+Mesh::Mesh(vector<VertexUV> vertices, vector<unsigned int> indices, vector<Texture> textures,Material mtrl){
 	m_vertices = vertices;
 	m_indices = indices;
 	m_dev = CDirectXGraphics::GetInstance()->GetDXDevice();
@@ -28,7 +28,7 @@ bool Mesh::SetupMesh()
 {
 	// 頂点バッファ生成
 	bool sts = CreateVertexBufferWrite(m_dev,
-		static_cast<unsigned int>(sizeof(Vertex)),			// ストライド
+		static_cast<unsigned int>(sizeof(VertexUV)),			// ストライド
 		static_cast<unsigned int>(m_vertices.size()),		// 頂点数
 		m_vertices.data(),									// 頂点データ
 		&m_VertexBuffer);

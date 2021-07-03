@@ -45,8 +45,8 @@ void CLevel::Update()
 			if(actor->GetIsAffectToPause())continue;
 		}
 
-		actor->Update();
 		actor->Tick();
+		actor->Update();
 	}
 
 	//更新後に行う関数を実行

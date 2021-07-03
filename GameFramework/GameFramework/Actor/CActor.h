@@ -58,6 +58,7 @@ private:
 	{
 		return Transform;
 	}
+
 public:
 	CTransform Transform;			//トランスフォーム
 

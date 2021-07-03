@@ -4,7 +4,7 @@
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CSpringArmComponent.h"
 #include "GameFramework/Components/CAABBComponent.h"
-#include "GameFramework/Components/CSphereComponent.h"
+#include "GameFramework/Components/CSphereColliderComponent.h"
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CGameManager.h"
 #include "GameFramework/Managers/CInputManager.h"

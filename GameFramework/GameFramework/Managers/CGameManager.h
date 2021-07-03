@@ -35,6 +35,7 @@ private:
 
 	//スタートレベルのセット
 	void SetStartLevel(CLevel& startLevel)override;
+
 public:
 	static CGameManager& GetInstance();
 

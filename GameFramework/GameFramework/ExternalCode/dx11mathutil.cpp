@@ -217,7 +217,7 @@ void DX11Vec4Length(XMFLOAT4& vec,float& length) {
 /*------------------------
 ƒxƒNƒgƒ‹‚Ì’·‚³‚ğ‹‚ß‚é
 --------------------------*/
-void DX11Vec3Length(XMFLOAT3& vec, float& length) {
+void DX11Vec3Length(const XMFLOAT3& vec, float& length) {
 
 	ALIGN16 XMVECTOR outvec;
 	ALIGN16 XMVECTOR invec;

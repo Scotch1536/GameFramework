@@ -5,17 +5,19 @@
 #include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/Managers/CGameManager.h"
 #include "GameFramework/DebugTools/imgui/myimgui.h"
+#include "GameFramework/Library/LCMath.h"
 
 #include "CTestLevel.h"
 #include "CDice.h"
 #include "CTestCharacter.h"
+#include "CFighter.h"
 #include "CSkyDome.h"
 
 void CTestLevel::Init()
 {
 	CDice& dice = *new CDice(*this);
 
-	dice.Transform.Location = { 0.f,40.f,0.f };
+	dice.Transform.Location = { 50.f,0.f,100.f };
 
 	/*
 	レベルから指定のアクターインスタンスのメソッドをインプットマネージャーにバインドすることは可能
@@ -23,34 +25,32 @@ void CTestLevel::Init()
 	*/
 	//CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , dice , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CDice::Rot , std::ref(dice) , 0));
 
-	CTestCharacter& testChara = *new CTestCharacter(*this);
+	//CTestCharacter& testChara = *new CTestCharacter(*this);
 	//testChara.Transform.Rotation.Angle.z = 180.f;
 	//testChara.Transform.Rotation.Angle.y = 180.f;
 
 	//testChara.Transform.AttachTransform(dice.Transform);
 
+
+	CFighter& fighter = *new CFighter(*this);
+	mFighter = &fighter;
+
 	CSkyDome& skyDome = *new CSkyDome(*this);
 
 	CComponent* buf = nullptr;
 	//std::vector<CComponent*> buf2;
-	//if(testChara.GetComponentFromAttribute(CComponent::EAttribute::CAMERA , buf))
+	//if(testChara.GetComponent<CCameraComponent>(buf))
 	//{
 	//	CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*buf);
 	//	this->RequestSetCamera(camera);
 	//}
 
-	if(testChara.GetComponent<CCameraComponent>(buf))
+	if(fighter.GetComponent<CCameraComponent>(buf))
 	{
 		CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*buf);
 		this->RequestSetCamera(camera);
 	}
-	//if(testChara.GetAllComponents<CCameraComponent>(buf2))
-	//{
-	//	for(auto& buf : buf2)
-	//	{
-	//		buf->GetPriority();
-	//	}
-	//}
+
 }
 
 void CTestLevel::Tick()
@@ -64,12 +64,21 @@ void CTestLevel::Tick()
 		//mTime = std::floorf(mTime * 100.0f) / 100.0f;
 	}
 
+	CActor* buf;
+	float distance;
+	if(GetActor<CDice>(buf))
+	{
+		XMFLOAT3 vec;
+		vec = LCMath::GetFloat3FromStartToGoal(mFighter->Transform.Location , buf->Transform.Location);
+		distance = LCMath::GetFloat3Length(vec);
+	}
+
 	auto displayCount = [&]
 	{
 		ImGui::SetNextWindowPos(ImVec2(10 , 10) , ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
 
-		ImGui::Begin(u8"カウント");
+		ImGui::Begin(u8"フレームカウント");
 
 		ImGui::Text(std::to_string(mCnt).c_str());
 
@@ -89,6 +98,32 @@ void CTestLevel::Tick()
 		ImGui::End();
 	};
 
+	auto displayHitStatus = [&]
+	{
+		ImGui::SetNextWindowPos(ImVec2(10 , 430) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
+
+		ImGui::Begin(u8"衝突判定");
+
+		if(mFighter->isHit)ImGui::Text(u8"当たっている");
+		else ImGui::Text(u8"当たっていない");
+
+		ImGui::End();
+	};
+
+	auto displayDistance = [& , distance]
+	{
+		ImGui::SetNextWindowPos(ImVec2(220 , 10) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
+
+		ImGui::Begin(u8"距離");
+		ImGui::Text(std::to_string(distance).c_str());
+
+		ImGui::End();
+	};
+
 	AddImGuiDrawMethod(displayCount);
 	AddImGuiDrawMethod(displayTime);
+	AddImGuiDrawMethod(displayHitStatus);
+	AddImGuiDrawMethod(displayDistance);
 }

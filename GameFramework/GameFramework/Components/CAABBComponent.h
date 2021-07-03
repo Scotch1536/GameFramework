@@ -1,12 +1,12 @@
 #pragma once
 #include <DirectXMath.h>
-#include "CCollisionComponent.h"
+#include "CColliderComponent.h"
 
 using namespace DirectX;
 
 class ModelData;
 
-class CAABBComponent :public CCollisionComponent
+class CAABBComponent :public CColliderComponent
 {
 private:
 	XMFLOAT3 mLocalMin;

@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CDice.cpp" />
+    <ClCompile Include="CFighter.cpp" />
     <ClCompile Include="CSkyDome.cpp" />
     <ClCompile Include="CTest2DActor.cpp" />
     <ClCompile Include="CTestCharacter.cpp" />
@@ -19,10 +20,11 @@
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
     <ClCompile Include="GameFramework\Components\CAABBComponent.cpp" />
-    <ClCompile Include="GameFramework\Components\CCollisionComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CColliderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
-    <ClCompile Include="GameFramework\Components\CSphereComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSphereColliderComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSphereMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSprite2DComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp" />
@@ -51,7 +53,8 @@
     <ClCompile Include="GameFramework\Level\CLevel.cpp" />
     <ClCompile Include="GameFramework\Library\LCCollision.cpp" />
     <ClCompile Include="GameFramework\Library\LCMath.cpp" />
-    <ClCompile Include="GameFramework\Managers\CCollisionManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CColliderManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CDirectXResourceManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CGameManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CInputManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp" />
@@ -61,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDice.h" />
+    <ClInclude Include="CFighter.h" />
     <ClInclude Include="CSkyDome.h" />
     <ClInclude Include="CTest2DActor.h" />
     <ClInclude Include="CTestCharacter.h" />
@@ -68,11 +72,12 @@
     <ClInclude Include="GameFramework\Actor\CActor.h" />
     <ClInclude Include="GameFramework\Components\CAABBComponent.h" />
     <ClInclude Include="GameFramework\Components\CCameraComponent.h" />
-    <ClInclude Include="GameFramework\Components\CCollisionComponent.h" />
+    <ClInclude Include="GameFramework\Components\CColliderComponent.h" />
     <ClInclude Include="GameFramework\Components\CComponent.h" />
     <ClInclude Include="GameFramework\Components\CLightComponent.h" />
     <ClInclude Include="GameFramework\Components\CRenderComponent.h" />
-    <ClInclude Include="GameFramework\Components\CSphereComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSphereColliderComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSphereMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CSpringArmComponent.h" />
     <ClInclude Include="GameFramework\Components\CSprite2DComponent.h" />
     <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h" />
@@ -106,7 +111,8 @@
     <ClInclude Include="GameFramework\Level\CLevel.h" />
     <ClInclude Include="GameFramework\Library\LCCollision.h" />
     <ClInclude Include="GameFramework\Library\LCMath.h" />
-    <ClInclude Include="GameFramework\Managers\CCollisionManager.h" />
+    <ClInclude Include="GameFramework\Managers\CColliderManager.h" />
+    <ClInclude Include="GameFramework\Managers\CDirectXResourceManager.h" />
     <ClInclude Include="GameFramework\Managers\CGameManager.h" />
     <ClInclude Include="GameFramework\Managers\CInputManager.h" />
     <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />
@@ -114,6 +120,32 @@
     <ClInclude Include="GameFramework\Object\CObject.h" />
     <ClInclude Include="GameFramework\Transform\CRotator.h" />
     <ClInclude Include="GameFramework\Transform\CTransform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\ps.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\psnotex.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\pstexcol.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\psvscommon.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\vs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\vsnotex.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

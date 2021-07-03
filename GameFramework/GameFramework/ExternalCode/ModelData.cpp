@@ -168,7 +168,7 @@ bool ModelData::Load(std::string resourceFolderPath ,
 // メッシュの解析
 Mesh ModelData::processMesh(aiMesh * mesh , const aiScene * scene , int meshidx)
 {
-	std::vector<Vertex> vertices;			// 頂点
+	std::vector<VertexUV> vertices;			// 頂点
 	std::vector<unsigned int> indices;		// 面の構成情報
 	std::vector<Texture> textures;			// テクスチャ
 	Material mtrl;
@@ -176,7 +176,7 @@ Mesh ModelData::processMesh(aiMesh * mesh , const aiScene * scene , int meshidx)
 	// 頂点情報を取得
 	for(unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
-		Vertex vertex;
+		VertexUV vertex;
 
 		vertex.m_Pos.x = mesh->mVertices[i].x;
 		vertex.m_Pos.y = mesh->mVertices[i].y;

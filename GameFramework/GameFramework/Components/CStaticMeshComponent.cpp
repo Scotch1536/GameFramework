@@ -1,6 +1,7 @@
 #include <string>
 
 #include "../Managers/CModelDataManager.h"
+#include "../Managers/CDirectXResourceManager.h"
 #include "../Actor/CActor.h"
 
 #include "CStaticMeshComponent.h"
@@ -43,8 +44,9 @@ void CStaticMeshComponent::Render()
 		}
 		else
 		{
-			MessageBox(NULL , "Not Found Texture!!" , "error" , MB_OK);
-			exit(1);
+			mRenderComponent.Render(indexSize ,
+				CDirectXResourceManager::GetInstance().GetTextureSRV("Assets/White/white.bmp") ,
+				mesh.GetVertexBuffer() , mesh.GetIndexBuffer() , mesh.GetConstantBuffer());
 		}
 	}
 }
