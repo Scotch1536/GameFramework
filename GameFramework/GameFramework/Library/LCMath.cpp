@@ -70,6 +70,27 @@ bool LCMath::CompareMatrix(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2
 	return true;
 }
 
+XMFLOAT3 LCMath::GetFloat3FromStartToGoal(const XMFLOAT3& start , const XMFLOAT3& goal)
+{
+	XMFLOAT3 result;
+
+	XMVECTOR startVec = XMLoadFloat3(&start);
+	XMVECTOR goalVec = XMLoadFloat3(&goal);
+
+	XMStoreFloat3(&result , XMVectorSubtract(goalVec , startVec));
+
+	return result;
+}
+
+float LCMath::GetFloat3Length(const XMFLOAT3& target)
+{
+	float result;
+
+	DX11Vec3Length(target , result);
+
+	return result;
+}
+
 float LCMath::Lerp(float start , float end , float alpha)
 {
 	return (1 - alpha)*start + alpha * end;

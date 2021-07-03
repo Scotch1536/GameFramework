@@ -18,7 +18,13 @@ public:
 	//指定のFloat3同士が一致しているかの比較
 	static bool CompareFloat3(const XMFLOAT3& target1 , const XMFLOAT3& target2);
 
+	//指定の行列同士が一致しているかの比較
 	static bool CompareMatrix(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2);
+
+	//スタートからゴールへのベクトルをゲット
+	static XMFLOAT3 GetFloat3FromStartToGoal(const XMFLOAT3& start , const XMFLOAT3& goal);
+
+	static float GetFloat3Length(const XMFLOAT3& target);
 
 	//線形補間
 	static float Lerp(float start , float end , float alpha);
