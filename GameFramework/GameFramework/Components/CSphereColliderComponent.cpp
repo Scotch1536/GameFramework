@@ -1,4 +1,5 @@
 #include "../Library/LCCollision.h"
+#include "../Library/LCMath.h"
 
 #include "CSphereColliderComponent.h"
 #include "../Actor/CActor.h"
@@ -6,25 +7,12 @@
 
 CSphereColliderComponent::CSphereColliderComponent(CActor& owner, const ModelData& model, CTransform& parentTrans, int priority) :CColliderComponent(owner, parentTrans, CColliderComponent::EType::SPHERE, priority)
 {
-	const std::vector<Mesh>& meshes = model.GetMeshes();
-	XMFLOAT3 mMin = { 0,0,0 };
-	XMFLOAT3 mMax = { 0,0,0 };
+	XMFLOAT3 min = { 0,0,0 };
+	XMFLOAT3 max = { 0,0,0 };
 
-	for (auto m : meshes)
-	{
-		for (auto v : m.m_vertices)
-		{
-			if (mMin.x > v.m_Pos.x)	mMin.x = v.m_Pos.x;
-			else if (mMax.x < v.m_Pos.x) mMax.x = v.m_Pos.x;
-
-			if (mMin.y > v.m_Pos.y)	mMin.y = v.m_Pos.y;
-			else if (mMax.y < v.m_Pos.y) mMax.y = v.m_Pos.y;
-
-			if (mMin.z > v.m_Pos.z)	mMin.z = v.m_Pos.z;
-			else if (mMax.z < v.m_Pos.z) mMax.z = v.m_Pos.z;
-		}
-	}
-	mRadius = Distance(mMax, mMin) / 2;
+	LCCollision::CalcMinMaxOfMeshes(model.GetMeshes(), min, max);
+	
+	mRadius = LCMath::GetFloat3Length(LCMath::GetFloat3FromStartToGoal(min, max)) / 2;
 }
 
 CSphereColliderComponent::CSphereColliderComponent(CActor& owner, float radius, CTransform& parentTrans, int priority) : CColliderComponent(owner, parentTrans, CColliderComponent::EType::SPHERE, priority)
