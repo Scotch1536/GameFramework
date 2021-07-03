@@ -26,6 +26,7 @@ CSprite2DComponent::CSprite2DComponent(CActor& owner, CTextureData& texture, std
 	mRenderComponent.GenerateVertexShader(layout, numElements, vertexShaderPath.c_str());
 	mRenderComponent.GeneratePixelShader(pixelShaderPath.c_str());
 
+	
 }
 
 void CSprite2DComponent::Render()

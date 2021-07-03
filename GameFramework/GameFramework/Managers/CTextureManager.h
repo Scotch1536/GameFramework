@@ -8,7 +8,7 @@
 class CTextureManager
 {
 private:
-	std::unordered_map<std::string, CTextureData> mTextureData;		//モデルデータ格納辞書
+	std::unordered_map<std::string, CTextureData> mTextureData;		//テクスチャデータ格納辞書
 
 	CTextureManager() = default;
 public:
@@ -23,6 +23,6 @@ public:
 		return instance;
 	}
 
-	//モデルを取得する
+	//テクスチャを取得する
 	CTextureData& GetTexture(std::string filePath);
 };
