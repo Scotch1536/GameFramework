@@ -790,22 +790,25 @@ bool CreateSRVfromDDS(const char* filename,
 　ファイルを読み込みシェーダーリソースビューを作成する
  --------------------------------------------------------------*/
 bool CreateSRVfromFile(
-	const char* filename,
+	//const char* filename,
+	std::string filename,
 	ID3D11Device* device,
 	ID3D11DeviceContext*	device11Context,
 	ID3D11Resource**		resource,
 	ID3D11ShaderResourceView** srv) {
 
-	std::string fname(filename);
+	//std::string fname(filename);
 
 	std::string ext;
 
 	// 拡張子を取得する
-	ext = GetFileExt(fname.c_str());
+	//ext = GetFileExt(fname.c_str());
+	ext = GetFileExt(filename.c_str());
 
 	// DDSファイル
 	if (ext == "dds") {
-		bool sts = CreateSRVfromDDS(fname.c_str(),
+		//bool sts = CreateSRVfromDDS(fname.c_str(),
+		bool sts = CreateSRVfromDDS(filename.c_str(),
 			device,
 			device11Context,
 			resource,
@@ -817,7 +820,8 @@ bool CreateSRVfromFile(
 	}
 	// TGAファイル
 	else if (ext == "tga") {
-		bool sts = CreateSRVfromTGAFile(fname.c_str(),
+		//bool sts = CreateSRVfromTGAFile(fname.c_str(),
+		bool sts = CreateSRVfromTGAFile(filename.c_str(),
 			device,
 			resource,
 			srv);
@@ -828,7 +832,8 @@ bool CreateSRVfromFile(
 	}
 	// その他ファイル
 	else {
-		bool sts = CreateSRVfromWICFile(fname.c_str(),
+		//bool sts = CreateSRVfromWICFile(fname.c_str(),
+		bool sts = CreateSRVfromWICFile(filename.c_str(),
 			device,
 			device11Context,
 			resource,

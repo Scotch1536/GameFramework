@@ -1,6 +1,8 @@
+#include	<wrl/client.h>
 #include "CTextureManager.h"
 
-CSprite2DComponent& CTextureManager::GetTexture(std::string filePath)
+
+CTextureData& CTextureManager::GetTexture(std::string filePath)
 {
 	if (mTextureData.count(filePath) == 0) {
 		mTextureData[filePath];		//モデルデータ作成

@@ -1,10 +1,9 @@
 #pragma once
 #include <string>
 
-#include "../ExternalCode/dx11mathutil.h"
-#include "../ExternalCode/CDirectxGraphics.h"
+#include "../ExternalCode/CTextureData.h"
 #include "../Interfaces/IRender.h"
-#include "../ExternalCode/VertexProto.h"
+#include "../Transform/CTransform.h"
 
 #include "CComponent.h"
 
@@ -13,14 +12,12 @@ class CRenderComponent;
 class CSprite2DComponent :public CComponent,public IRender
 {
 private:
-
-	ComPtr<ID3D11Buffer> mVertexBuffer = nullptr; // 頂点バッファ
-	ComPtr<ID3D11Buffer> mIndexBuffer = nullptr; // インデックスバッファ
-	Vertex mVertex[4]; // 矩形４頂点
+	CTextureData& mTexture;
+	CRenderComponent& mRenderComponent;
+	
 public:
-	CSprite2DComponent(CActor& owner, std::string fileName, int priority = 45);
-
-	void Update()override;
+	CTransform Transform;
+	CSprite2DComponent(CActor& owner, CTextureData& texture, std::string vertexShaderPath, std::string pixelShaderPath, int priority = 45);
 
 	void Render()override;
 };

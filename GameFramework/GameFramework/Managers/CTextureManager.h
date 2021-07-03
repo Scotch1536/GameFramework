@@ -3,12 +3,12 @@
 #include <unordered_map>
 #include <string>
 
-#include "../Components/CSprite2DComponent.h"
+#include "../ExternalCode/CTextureData.h"
 
 class CTextureManager
 {
 private:
-	std::unordered_map<std::string, CSprite2DComponent> mTextureData;		//モデルデータ格納辞書
+	std::unordered_map<std::string, CTextureData> mTextureData;		//モデルデータ格納辞書
 
 	CTextureManager() = default;
 public:
@@ -24,5 +24,5 @@ public:
 	}
 
 	//モデルを取得する
-	CSprite2DComponent& GetTexture(std::string filePath);
+	CTextureData& GetTexture(std::string filePath);
 };

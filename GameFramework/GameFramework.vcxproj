@@ -36,6 +36,7 @@
     <ClCompile Include="GameFramework\DebugTools\imgui\myimgui.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\AssimpScene.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\CDirectXGraphics.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\CTextureData.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\CWindow.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\CWindowCallback.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\dx11mathutil.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="GameFramework\ExternalCode\ModelData.h" />
     <ClInclude Include="GameFramework\ExternalCode\Shader.h" />
     <ClInclude Include="GameFramework\ExternalCode\shaderhashmap.h" />
+    <ClInclude Include="GameFramework\ExternalCode\CTextureData.h" />
     <ClInclude Include="GameFramework\ExternalCode\utftosjisconv.h" />
     <ClInclude Include="GameFramework\ExternalCode\VertexProto.h" />
     <ClInclude Include="GameFramework\Game\CApplication.h" />

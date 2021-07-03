@@ -16,7 +16,7 @@ void CTestLevel::Init()
 	CDice& dice = *new CDice(*this);
 
 	dice.Transform.Location = { 0.f,40.f,0.f };
-	mEnemyTrans = &dice.Transform;
+
 	/*
 	レベルから指定のアクターインスタンスのメソッドをインプットマネージャーにバインドすることは可能
 	アクターからでもレベルからでもどちらでも可能だ
@@ -24,7 +24,6 @@ void CTestLevel::Init()
 	//CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , dice , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CDice::Rot , std::ref(dice) , 0));
 
 	CTestCharacter& testChara = *new CTestCharacter(*this);
-	mPlayerTrans = &testChara.Transform;
 	//testChara.Transform.Rotation.Angle.z = 180.f;
 	//testChara.Transform.Rotation.Angle.y = 180.f;
 
@@ -40,7 +39,7 @@ void CTestLevel::Init()
 	//	this->RequestSetCamera(camera);
 	//}
 
-	if (testChara.GetComponent<CCameraComponent>(buf))
+	if(testChara.GetComponent<CCameraComponent>(buf))
 	{
 		CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*buf);
 		this->RequestSetCamera(camera);
