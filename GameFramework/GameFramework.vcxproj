@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="CDice.cpp" />
     <ClCompile Include="CSkyDome.cpp" />
+    <ClCompile Include="CTest2DActor.cpp" />
     <ClCompile Include="CTestCharacter.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
@@ -23,6 +24,7 @@
     <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSphereComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSprite2DComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp" />
     <ClCompile Include="GameFramework\DebugTools\imgui\imgui.cpp" />
     <ClCompile Include="GameFramework\DebugTools\imgui\imgui_demo.cpp" />
@@ -34,6 +36,7 @@
     <ClCompile Include="GameFramework\DebugTools\imgui\myimgui.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\AssimpScene.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\CDirectXGraphics.cpp" />
+    <ClCompile Include="GameFramework\ExternalCode\CTextureData.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\CWindow.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\CWindowCallback.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\dx11mathutil.cpp" />
@@ -52,12 +55,14 @@
     <ClCompile Include="GameFramework\Managers\CGameManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CInputManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CTextureManager.cpp" />
     <ClCompile Include="GameFramework\Transform\CRotator.cpp" />
     <ClCompile Include="GameFramework\Transform\CTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDice.h" />
     <ClInclude Include="CSkyDome.h" />
+    <ClInclude Include="CTest2DActor.h" />
     <ClInclude Include="CTestCharacter.h" />
     <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
@@ -69,6 +74,7 @@
     <ClInclude Include="GameFramework\Components\CRenderComponent.h" />
     <ClInclude Include="GameFramework\Components\CSphereComponent.h" />
     <ClInclude Include="GameFramework\Components\CSpringArmComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSprite2DComponent.h" />
     <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h" />
     <ClInclude Include="GameFramework\DebugTools\imgui\imconfig.h" />
     <ClInclude Include="GameFramework\DebugTools\imgui\imgui.h" />
@@ -90,6 +96,8 @@
     <ClInclude Include="GameFramework\ExternalCode\Mesh.h" />
     <ClInclude Include="GameFramework\ExternalCode\ModelData.h" />
     <ClInclude Include="GameFramework\ExternalCode\Shader.h" />
+    <ClInclude Include="GameFramework\ExternalCode\shaderhashmap.h" />
+    <ClInclude Include="GameFramework\ExternalCode\CTextureData.h" />
     <ClInclude Include="GameFramework\ExternalCode\utftosjisconv.h" />
     <ClInclude Include="GameFramework\ExternalCode\VertexProto.h" />
     <ClInclude Include="GameFramework\Game\CApplication.h" />
@@ -102,6 +110,7 @@
     <ClInclude Include="GameFramework\Managers\CGameManager.h" />
     <ClInclude Include="GameFramework\Managers\CInputManager.h" />
     <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />
+    <ClInclude Include="GameFramework\Managers\CTextureManager.h" />
     <ClInclude Include="GameFramework\Object\CObject.h" />
     <ClInclude Include="GameFramework\Transform\CRotator.h" />
     <ClInclude Include="GameFramework\Transform\CTransform.h" />
