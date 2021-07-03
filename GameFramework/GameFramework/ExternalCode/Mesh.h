@@ -17,7 +17,7 @@ private:
 	ComPtr<ID3D11Buffer>  m_cbmtrl;				// マテリアル用コンスタントバッファ
 
 public:
-	std::vector<Vertex> m_vertices;				// 頂点データ
+	std::vector<VertexUV> m_vertices;			// 頂点データ
 	std::vector<unsigned int> m_indices;		// インデックス
 	std::vector<Texture> m_textures;			// テクスチャ
 	ID3D11Device* m_dev;						// デバイス	
@@ -27,7 +27,7 @@ private:
 	bool SetupMesh();
 
 public:
-	Mesh(std::vector<Vertex> vertices , std::vector<unsigned int> indices , std::vector<Texture> textures , Material mtrl);
+	Mesh(std::vector<VertexUV> vertices , std::vector<unsigned int> indices , std::vector<Texture> textures , Material mtrl);
 
 	ID3D11Buffer* GetVertexBuffer()const
 	{

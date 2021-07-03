@@ -1,14 +1,21 @@
 #pragma once
+#include <d3d11.h>
 #include <directxmath.h>
 #include <string>
 
-using Microsoft::WRL::ComPtr;
+//using Microsoft::WRL::ComPtr;
 
 // 頂点
-struct Vertex {
-	DirectX::XMFLOAT3 m_Pos;		// 位置
-	DirectX::XMFLOAT3 m_Normal;		// 法線
-	DirectX::XMFLOAT2 m_Tex;		// UV座標
+struct VertexUV {
+	DirectX::XMFLOAT3 m_Pos;		//位置
+	DirectX::XMFLOAT3 m_Normal;		//法線
+	DirectX::XMFLOAT2 m_Tex;		//UV座標
+};
+
+struct VertexColor {
+	DirectX::XMFLOAT3 m_Pos;		//位置
+	DirectX::XMFLOAT3 m_Normal;		//法線
+	DirectX::XMFLOAT4 m_Color;		//カラー
 };
 
 // マテリアル

@@ -60,6 +60,34 @@ protected:
 	//カメラのセットをリクエスト
 	void RequestSetCamera(CCameraComponent& camera)override;
 
+	template<class T>
+	bool GetActor(CActor*& result)
+	{
+		for(auto& actor : mActors)
+		{
+			if(typeid(T) == typeid(*actor))
+			{
+				result = actor.get();
+				return true;
+			}
+		}
+		return false;
+	}
+
+	template<class T>
+	bool GetAllActor(std::vector<CActor*>& result)
+	{
+		for(auto& actor : mActors)
+		{
+			if(typeid(T) == typeid(*actor))
+			{
+				result.emplace_back(actor.get());
+			}
+		}
+		if(result.size() != 0)return true;
+		else return false;
+	}
+
 public:
 	//★超重要★　コンストラクタを呼ぶことはレベルの遷移を意味する
 	CLevel(CGame& owner);

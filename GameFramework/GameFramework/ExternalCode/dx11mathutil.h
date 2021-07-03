@@ -23,7 +23,7 @@ void DX11p2pLength(const XMFLOAT3& p1, const XMFLOAT3& p2, float& length);
 void DX11MtxTranslation(const XMFLOAT3& trans, XMFLOAT4X4& matrix);
 void DX11QtSlerp(const XMFLOAT4& fromqt, const XMFLOAT4& toqt, float t, XMFLOAT4& ansqt);
 void DX11QtIdentity(XMFLOAT4& qt);
-void DX11Vec3Length(XMFLOAT3& vec, float& length);
+void DX11Vec3Length(const XMFLOAT3& vec, float& length);
 void DX11MtxRotationAxis(const XMFLOAT3& axis, float angle, XMFLOAT4X4& outmtx);
 void DX11MtxMultiply(XMFLOAT4X4& ansmtx, const XMFLOAT4X4& p1mtx, const XMFLOAT4X4& p2mtx);
 bool IsInFrustum(const XMFLOAT3& pos, const XMFLOAT4X4& matrix);
