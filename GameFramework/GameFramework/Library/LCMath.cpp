@@ -2,7 +2,7 @@
 
 #include "../ExternalCode/dx11mathutil.h"
 
-void LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& angle , XMFLOAT4& qua)
+void LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& angle , XMFLOAT4& ansQua)
 {
 	XMFLOAT4 qtx , qty , qtz;
 	XMFLOAT4 axisX = { 1,0,0,0 };
@@ -13,11 +13,11 @@ void LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& angle , XMFLOA
 	DX11QtRotationAxis(qty , axisY , angle.y);
 	DX11QtRotationAxis(qtz , axisZ , angle.z);
 
-	DX11QtMul(qua , qtx , qty);
-	DX11QtMul(qua , qua , qtz);
+	DX11QtMul(ansQua , qtx , qty);
+	DX11QtMul(ansQua , ansQua , qtz);
 }
 
-void LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , XMFLOAT4X4 rotMTX , XMFLOAT4X4& result)
+void LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , const XMFLOAT4X4& rotMTX , XMFLOAT4X4& result)
 {
 	result._11 = scale.x * rotMTX._11;
 	result._12 = scale.y * rotMTX._12;
@@ -70,25 +70,17 @@ bool LCMath::CompareMatrix(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2
 	return true;
 }
 
-XMFLOAT3 LCMath::GetFloat3FromStartToGoal(const XMFLOAT3& start , const XMFLOAT3& goal)
+void LCMath::CalcFloat3FromStartToGoal(const XMFLOAT3& start , const XMFLOAT3& goal , XMFLOAT3& ansVec)
 {
-	XMFLOAT3 result;
-
 	XMVECTOR startVec = XMLoadFloat3(&start);
 	XMVECTOR goalVec = XMLoadFloat3(&goal);
 
-	XMStoreFloat3(&result , XMVectorSubtract(goalVec , startVec));
-
-	return result;
+	XMStoreFloat3(&ansVec , XMVectorSubtract(goalVec , startVec));
 }
 
-float LCMath::GetFloat3Length(const XMFLOAT3& target)
+void LCMath::CalcFloat3Length(const XMFLOAT3& target , float& ansLength)
 {
-	float result;
-
-	DX11Vec3Length(target , result);
-
-	return result;
+	DX11Vec3Length(target , ansLength);
 }
 
 float LCMath::Lerp(float start , float end , float alpha)

@@ -7,13 +7,13 @@ static class LCMath
 {
 public:
 	//オイラー角からクォータニオンに変換
-	static void TransformFromEulerAnglesToQuaternion(const XMFLOAT3& angle , XMFLOAT4& qua);
+	static void TransformFromEulerAnglesToQuaternion(const XMFLOAT3& angle , XMFLOAT4& ansQua);
 
 	//クォータニオンからオイラー角に変換
 	//static void TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua , XMFLOAT3& angle);
 
 	//ロケーション、スケール、回転行列から指定の行列を更新
-	static void UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , XMFLOAT4X4 rotMTX , XMFLOAT4X4& result);
+	static void UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , const XMFLOAT4X4& rotMTX , XMFLOAT4X4& result);
 
 	//指定のFloat3同士が一致しているかの比較
 	static bool CompareFloat3(const XMFLOAT3& target1 , const XMFLOAT3& target2);
@@ -22,9 +22,9 @@ public:
 	static bool CompareMatrix(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2);
 
 	//スタートからゴールへのベクトルをゲット
-	static XMFLOAT3 GetFloat3FromStartToGoal(const XMFLOAT3& start , const XMFLOAT3& goal);
+	static void CalcFloat3FromStartToGoal(const XMFLOAT3& start , const XMFLOAT3& goal , XMFLOAT3& ansVec);
 
-	static float GetFloat3Length(const XMFLOAT3& target);
+	static void CalcFloat3Length(const XMFLOAT3& target , float& ansLength);
 
 	//線形補間
 	static float Lerp(float start , float end , float alpha);
