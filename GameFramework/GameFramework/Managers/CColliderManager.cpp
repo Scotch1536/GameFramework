@@ -1,14 +1,14 @@
-#include "CCollisionManager.h"
-#include "../Components/CCollisionComponent.h"
+#include "CColliderManager.h"
+#include "../Components/CColliderComponent.h"
 
-CCollisionManager& CCollisionManager::GetInstance()
+CColliderManager& CColliderManager::GetInstance()
 {
-	static CCollisionManager instance;
+	static CColliderManager instance;
 
 	return instance;
 };
 
-void CCollisionManager::AddCollider(CCollisionComponent& collider)
+void CColliderManager::AddCollider(CColliderComponent& collider)
 {
 	mColliders.emplace_back(&collider);
 
@@ -18,7 +18,7 @@ void CCollisionManager::AddCollider(CCollisionComponent& collider)
 	}
 }
 
-bool CCollisionManager::GetColliders(CCollisionComponent* caller, std::vector<CCollisionComponent*>& result)
+bool CColliderManager::GetColliders(CColliderComponent* caller, std::vector<CColliderComponent*>& result)
 {
 	if (mIsBefore.count(caller) == 0)
 	{
@@ -41,7 +41,7 @@ bool CCollisionManager::GetColliders(CCollisionComponent* caller, std::vector<CC
 	else return false;						//‚È‚¢ê‡‚Ífalse‚ð•Ô‚·
 }
 
-void CCollisionManager::ReleaseCollider(CCollisionComponent& collider)
+void CColliderManager::ReleaseCollider(CColliderComponent& collider)
 {
 	for (auto itr = mColliders.begin(); itr != mColliders.end(); itr++)
 	{
