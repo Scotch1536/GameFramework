@@ -13,7 +13,7 @@ struct SCollideCacheData
 	bool IsLastFrameCollide = false;
 };
 
-class CCollisionComponent :public CComponent
+class CColliderComponent :public CComponent
 {
 public:
 	enum class EType
@@ -26,9 +26,9 @@ private:
 	EType mType;
 
 protected:
-	std::vector<CCollisionComponent*> mColliders;
+	std::vector<CColliderComponent*> mColliders;
 	std::function<void(CActor&)> mCollisionAction;
-	std::unordered_map<CCollisionComponent*, SCollideCacheData> mCollideCache;
+	std::unordered_map<CColliderComponent*, SCollideCacheData> mCollideCache;
 
 
 	bool mShouldCompare = true;
@@ -39,8 +39,8 @@ protected:
 public:
 	CTransform Transform;
 
-	CCollisionComponent(CActor& owner,CTransform& parentTrans, EType type, int priority = 40);
-	virtual ~CCollisionComponent();
+	CColliderComponent(CActor& owner,CTransform& parentTrans, EType type, int priority = 40);
+	virtual ~CColliderComponent();
 
 	void Update() override;
 

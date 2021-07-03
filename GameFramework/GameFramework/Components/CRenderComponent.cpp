@@ -56,7 +56,7 @@ void CRenderComponent::Render(unsigned int indexSize ,
 {
 	ID3D11DeviceContext*	devcontext;			// デバイスコンテキスト
 
-	unsigned int stride = sizeof(Vertex);
+	unsigned int stride = sizeof(VertexUV);
 	unsigned int offset = 0;
 
 	devcontext = CDirectXGraphics::GetInstance()->GetImmediateContext();

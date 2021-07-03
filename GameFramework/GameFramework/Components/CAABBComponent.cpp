@@ -4,7 +4,7 @@
 #include "../Actor/CActor.h"
 #include "../ExternalCode/ModelData.h"
 
-CAABBComponent::CAABBComponent(CActor& owner , const ModelData& model , CTransform& parentTrans , int priority):CCollisionComponent(owner , parentTrans , CCollisionComponent::EType::AABB , priority)
+CAABBComponent::CAABBComponent(CActor& owner , const ModelData& model , CTransform& parentTrans , int priority):CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority)
 {
 	const std::vector<Mesh>& meshes = model.GetMeshes();
 
@@ -24,7 +24,7 @@ CAABBComponent::CAABBComponent(CActor& owner , const ModelData& model , CTransfo
 	}
 }
 
-CAABBComponent::CAABBComponent(CActor& owner , XMFLOAT3 min , XMFLOAT3 max , CTransform& parentTrans , int priority): CCollisionComponent(owner , parentTrans , CCollisionComponent::EType::AABB , priority)
+CAABBComponent::CAABBComponent(CActor& owner , XMFLOAT3 min , XMFLOAT3 max , CTransform& parentTrans , int priority): CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority)
 {
 	mLocalMin = min;
 	mLocalMax = max;
@@ -32,7 +32,7 @@ CAABBComponent::CAABBComponent(CActor& owner , XMFLOAT3 min , XMFLOAT3 max , CTr
 
 void CAABBComponent::Update()
 {
-	CCollisionComponent::Update();
+	CColliderComponent::Update();
 
 	if(mShouldCompare)
 	{
