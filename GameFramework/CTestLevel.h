@@ -1,9 +1,12 @@
 #pragma once
 #include "GameFramework/Level/CLevel.h"
 
+class CFighter;
+
 class CTestLevel :public CLevel
 {
 private:
+	CFighter* mFighter;
 	int mCnt = 0;
 	float mTime = 0;
 
