@@ -10,6 +10,11 @@ private:
 	int mCnt = 0;
 	float mTime = 0;
 
+
+private:
+	CTransform *mPlayerTrans;
+	CTransform *mEnemyTrans;
+
 public:
 	/*
 	継承コンストラクタを使うことで楽にコンストラクタを継承できる

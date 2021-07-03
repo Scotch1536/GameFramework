@@ -852,12 +852,13 @@ bool CreateSRVfromFile(
 	ID3D11ShaderResourceView** srv)
 {
 
-	std::string fname(filename);
+	//std::string fname(filename);
 
 	std::string ext;
 
 	// 拡張子を取得する
-	ext = GetFileExt(fname.c_str());
+	//ext = GetFileExt(fname.c_str());
+	ext = GetFileExt(filename.c_str());
 
 	// DDSファイル
 	if(ext == "dds")

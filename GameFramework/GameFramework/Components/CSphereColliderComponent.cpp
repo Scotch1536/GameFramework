@@ -78,7 +78,7 @@ void CSphereColliderComponent::Update()
 
 void CSphereColliderComponent::ConvertWorldCollider()
 {
-	mWorldPosition.x = Transform.GetWorldMatrixResult()._41;
-	mWorldPosition.y = Transform.GetWorldMatrixResult()._42;
-	mWorldPosition.z = Transform.GetWorldMatrixResult()._43;
+	mWorldPosition = Transform.GetWorldLocation();
+	//mWorldPosition.y = Transform.GetWorldLocation().y;
+	//mWorldPosition.z = Transform.GetWorldLocation().z;
 }
