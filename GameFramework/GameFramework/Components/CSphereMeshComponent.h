@@ -34,6 +34,8 @@ private:
 	float mRadius;
 	int mDivisionNumber;
 
+	bool isAlpha = false;
+
 	void CreateVertex();
 	void CreateIndex();
 
@@ -41,6 +43,8 @@ public:
 	CTransform Transform;			//トランスフォーム
 
 	CSphereMeshComponent(CActor& owner , float radius , int divNum , XMFLOAT4 color);
+
+	void Update()override;
 
 	void Render()override;
 };

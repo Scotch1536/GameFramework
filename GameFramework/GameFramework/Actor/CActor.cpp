@@ -30,9 +30,14 @@ void CActor::AddComponent(CComponent& component)
 	this->mComponents.emplace(itr , &component);
 }
 
-void CActor::RegisterRenderComponent(IRender& component)
+void CActor::AddRenderComponent(IRender& component)
 {
-	mRenderAttributeComponents.emplace_back(&component);
+	mRenderComponents.emplace_back(&component);
+}
+
+void CActor::RequestAddAlphaRenderComponentToLevel(IRender& renderTarget)
+{
+	mOwnerInterface.AddAlphaRenderComponent(renderTarget);
 }
 
 void CActor::Update()
@@ -45,7 +50,7 @@ void CActor::Update()
 
 void CActor::Render()
 {
-	for(auto& renderComp : mRenderAttributeComponents)
+	for(auto& renderComp : mRenderComponents)
 	{
 		renderComp->Render();
 	}

@@ -120,8 +120,7 @@ bool CreatePixelShader(ID3D11Device* device,						// ÉsÉNÉZÉãÉVÉFÅ[É_Å[ÉIÉuÉWÉFÉ
 	ID3D11PixelShader** ppPixelShader);
 
 bool CreateSRVfromFile(
-	//const char* filename,
-	std::string filename,
+	const char* filename,
 	ID3D11Device* device,
 	ID3D11DeviceContext*	device11Context,
 	ID3D11Resource**		resource,

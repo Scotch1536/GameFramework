@@ -91,6 +91,13 @@ void CLevel::Render()
 		actor->Render();
 	}
 
+	for(auto& alphaRender : mAlphaRenderComponents)
+	{
+		alphaRender->Render();
+	}
+	mAlphaRenderComponents.clear();
+	mAlphaRenderComponents.shrink_to_fit();
+
 	//ImGuiに渡す描画の関数オブジェクト一つの関数オブジェクトにまとめる
 	auto allGuiMethodExecute = [&]
 	{

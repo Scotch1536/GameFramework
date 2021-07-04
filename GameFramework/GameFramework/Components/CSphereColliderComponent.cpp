@@ -28,6 +28,10 @@ CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const ModelDa
 	}
 	mRadius = Distance(mMax , mMin)/2;
 
+#ifndef _DEBUG
+	isMesh = false;
+#endif
+
 	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , mRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
 }
 
@@ -35,6 +39,10 @@ CSphereColliderComponent::CSphereColliderComponent(CActor& owner , float radius 
 	:CColliderComponent(owner , parentTrans , CColliderComponent::EType::SPHERE , priority)
 {
 	mRadius = radius;
+
+#ifndef _DEBUG
+	isMesh = false;
+#endif
 
 	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , mRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
 }

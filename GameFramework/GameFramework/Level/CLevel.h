@@ -8,6 +8,7 @@
 #include "../Interfaces/IRender.h"
 
 class IGame;
+class IRender;
 class CGame;
 class CGameManager;
 class IGameManagerToLevel;
@@ -21,6 +22,7 @@ public:
 	virtual void AddActor(CActor& actor) = 0;
 	virtual void RequestSetCamera(CCameraComponent& camera) = 0;
 	virtual void AddImGuiDrawMethod(std::function<void()> method) = 0;
+	virtual void AddAlphaRenderComponent(IRender& renderTarget) = 0;
 };
 
 //レベルクラス
@@ -30,8 +32,14 @@ private:
 	std::vector<std::unique_ptr<CActor>> mActors;					//アクター
 	std::vector<std::function<void()>> mDoAfterUpdateFunction;		//更新後に行う関数オブジェクト
 	std::vector<std::function<void()>> mImGuiDrawMethod;			//ImGuiに行わせる描画の関数オブジェクト
+	std::vector<IRender*> mAlphaRenderComponents;
 
 	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
+
+	void AddAlphaRenderComponent(IRender& renderTarget)override
+	{
+		mAlphaRenderComponents.emplace_back(&renderTarget);
+	}
 
 protected:
 	IGame* mOwnerInterface;			//ゲームインターフェース

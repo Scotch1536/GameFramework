@@ -7,7 +7,7 @@ bool CTextureData::Load(std::string filePath)
 	ID3D11Device* device = CDirectXGraphics::GetInstance()->GetDXDevice();
 	ID3D11DeviceContext* devicecontext = CDirectXGraphics::GetInstance()->GetImmediateContext();
 
-	bool sts = CreateSRVfromFile(filePath, device, devicecontext, &mResource, &mSRV);
+	bool sts = CreateSRVfromFile(filePath.c_str(), device, devicecontext, &mResource, &mSRV);
 	if (!sts)
 	{
 		MessageBox(nullptr, "CreateSRVfromfile ÉGÉâÅ[", "error!!", MB_OK);

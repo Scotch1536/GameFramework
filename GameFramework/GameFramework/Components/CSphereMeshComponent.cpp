@@ -7,15 +7,22 @@
 #include "CRenderComponent.h"
 
 CSphereMeshComponent::CSphereMeshComponent(CActor& owner , float radius , int divNum , XMFLOAT4 color)
-	:CComponent(owner , 0) ,
+	:CComponent(owner , 100) ,
 	mRenderComponent(*new CRenderComponent(owner)) ,
 	mColor(color) ,
 	mRadius(radius) ,
 	mDivisionNumber(divNum) ,
 	Transform(owner)
 {
-	//アクター(owner)にレンダー担当のコンポーネントとして登録
-	mOwnerInterface.RegisterRenderComponent(*this);
+	if(mColor.w < 1.0f)
+	{
+		isAlpha = true;
+	}
+	else
+	{
+		//アクター(owner)にレンダー担当のコンポーネントとして登録
+		mOwnerInterface.AddRenderComponent(*this);
+	}
 
 	CreateVertex();
 	CreateIndex();
@@ -110,6 +117,11 @@ void CSphereMeshComponent::CreateIndex()
 			mFace.emplace_back(f);
 		}
 	}
+}
+
+void CSphereMeshComponent::Update()
+{
+	if(isAlpha)mOwnerInterface.RequestAddAlphaRenderComponentToLevel(*this);
 }
 
 void CSphereMeshComponent::Render()
