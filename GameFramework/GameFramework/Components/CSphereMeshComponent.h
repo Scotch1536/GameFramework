@@ -4,6 +4,7 @@
 
 #include "../Interfaces/IRender.h"
 #include "../ExternalCode/VertexProto.h"
+#include "../Transform/CTransform.h"
 
 #include "CComponent.h"
 
@@ -20,6 +21,9 @@ private:
 		unsigned int idx[3];
 	};
 
+	ComPtr<ID3D11Buffer>  mVertexBuffer;		// 頂点バッファ
+	ComPtr<ID3D11Buffer>  mIndexBuffer;			// インデックスバッファ
+
 	CRenderComponent& mRenderComponent;
 
 	std::vector<VertexColor> mVertex;		//頂点データ
@@ -30,9 +34,17 @@ private:
 	float mRadius;
 	int mDivisionNumber;
 
+	bool isAlpha = false;
+
 	void CreateVertex();
 	void CreateIndex();
 
 public:
+	CTransform Transform;			//トランスフォーム
+
 	CSphereMeshComponent(CActor& owner , float radius , int divNum , XMFLOAT4 color);
+
+	void Update()override;
+
+	void Render()override;
 };

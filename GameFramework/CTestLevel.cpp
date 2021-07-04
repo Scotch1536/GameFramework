@@ -69,8 +69,8 @@ void CTestLevel::Tick()
 	if(GetActor<CDice>(buf))
 	{
 		XMFLOAT3 vec;
-		vec = LCMath::GetFloat3FromStartToGoal(mFighter->Transform.Location , buf->Transform.Location);
-		distance = LCMath::GetFloat3Length(vec);
+		LCMath::CalcFloat3FromStartToGoal(mFighter->Transform.Location , buf->Transform.Location , vec);
+		LCMath::CalcFloat3Length(vec , distance);
 	}
 
 	auto displayCount = [&]

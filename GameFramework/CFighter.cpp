@@ -1,7 +1,7 @@
 #include "CFighter.h"
 
 #include "GameFramework/Components/CStaticMeshComponent.h"
-#include "GameFramework/Components/CAABBComponent.h"
+#include "GameFramework/Components/CSphereColliderComponent.h"
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CSpringArmComponent.h"
@@ -12,7 +12,7 @@
 
 CFighter::CFighter(ILevel& owner):CActor(owner)
 {
-	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("Assets/Fighter01/Su-27.fbx" , "Assets/Fighter01/textures/") ,
+	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
 
 	mesh.Transform.Rotation.Angle.x = -90.f;
@@ -32,8 +32,8 @@ CFighter::CFighter(ILevel& owner):CActor(owner)
 	light.SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
 	light.SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
-	CAABBComponent& aabb = *new CAABBComponent(*this , mesh.GetModel() , mesh.Transform);
-	aabb.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));
+	CSphereColliderComponent& sphereCllider = *new CSphereColliderComponent(*this , mesh.GetModel() , mesh.Transform);
+	sphereCllider.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));
 
 	CInputManager::GetInstance().AddAction("Move" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CFighter::Move , std::ref(*this)));
 	CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_R } , std::bind(&CFighter::Rot , std::ref(*this) , 0));

@@ -17,9 +17,10 @@ class IActor
 public:
 	virtual ~IActor() {};
 	virtual void AddComponent(CComponent& component) = 0;
-	virtual void RegisterRenderComponent(IRender& component) = 0;
+	virtual void AddRenderComponent(IRender& component) = 0;
 	virtual CActor& GetActor() = 0;
 	virtual CTransform& GetTransform() = 0;
+	virtual void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget) = 0;
 };
 
 //アクタークラス
@@ -27,7 +28,7 @@ class CActor :public CObject , public IActor
 {
 private:
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
-	std::vector<IRender*> mRenderAttributeComponents;			//描画の属性をもつコンポーネント
+	std::vector<IRender*> mRenderComponents;					//描画の属性をもつコンポーネント
 	std::vector<std::string> mActorTags;						//タグ
 
 	ILevel& mOwnerInterface;		//インターフェース
@@ -45,7 +46,9 @@ private:
 	void AddComponent(CComponent& component)override;
 
 	//レンダー機能を持つコンポーネントを登録
-	void RegisterRenderComponent(IRender& component)override;
+	void AddRenderComponent(IRender& component)override;
+
+	void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget)override;
 
 	//アクター情報取得
 	CActor& GetActor()override

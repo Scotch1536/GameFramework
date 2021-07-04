@@ -34,9 +34,9 @@ bool LCCollision::Intersect(const XMFLOAT3& ACenter, const float& ARadius, const
 	float yAns = ACenter.y - BCenter.y;
 	float zAns = ACenter.z - BCenter.z;
 
-	float dist =(xAns * xAns) + (yAns * yAns) + (zAns * zAns);
 	float sumRadius = ARadius + BRadius;
-	return dist <= (sumRadius*sumRadius);
+
+	return (xAns * xAns) + (yAns * yAns) + (zAns * zAns) <= (sumRadius*sumRadius);
 }
 
 void LCCollision::CalcMinMaxOfMeshes(const std::vector<Mesh>& meshes, XMFLOAT3& min, XMFLOAT3& max)

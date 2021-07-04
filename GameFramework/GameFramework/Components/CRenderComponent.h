@@ -12,21 +12,22 @@ using Microsoft::WRL::ComPtr;
 class CRenderComponent :public CComponent
 {
 private:
-	ComPtr<ID3D11VertexShader> mVertexShader;			// 頂点シェーダー
-	ComPtr<ID3D11PixelShader> mPixelShader;				// ピクセルシェーダー
-	ComPtr<ID3D11InputLayout> mVertexLayout;			// 頂点フォーマット
+	ID3D11VertexShader* mVertexShader = nullptr;		// 頂点シェーダー
+	ID3D11PixelShader* mPixelShader = nullptr;			// ピクセルシェーダー
+	ID3D11InputLayout* mVertexLayout = nullptr;			// 頂点フォーマット
 
 public:
 	CRenderComponent(CActor& owner , int priority = 100);
 
 	//頂点シェーダ生成
-	bool GenerateVertexShader(D3D11_INPUT_ELEMENT_DESC* layout , unsigned int layoutSize , const char* vsfile);
+	void GenerateVertexShader(D3D11_INPUT_ELEMENT_DESC* layout , unsigned int layoutSize , std::string vsFilePath);
 
 	//ピクセルシェーダ生成
-	bool GeneratePixelShader(const char* psfile);
+	void GeneratePixelShader(std::string psFilePath);
 
 	//描画
-	void Render(unsigned int indexSize ,
+	void Render(unsigned int stride,
+		unsigned int indexSize ,
 		ID3D11ShaderResourceView* shaderResourceView ,
 		ID3D11Buffer* vertexBuffer ,
 		ID3D11Buffer* indexBuffer ,

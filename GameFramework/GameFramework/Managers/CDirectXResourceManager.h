@@ -6,8 +6,11 @@
 class CDirectXResourceManager
 {
 private:
-	std::unordered_map<std::string , ComPtr<ID3D11Resource>> mTextureResource;
-	std::unordered_map<std::string , ComPtr<ID3D11ShaderResourceView>> mTextureSRV;
+	std::unordered_map<std::string , ComPtr<ID3D11Resource>> mTextureResourceMap;
+	std::unordered_map<std::string , ComPtr<ID3D11ShaderResourceView>> mTextureSRVMap;
+	std::unordered_map<std::string , ComPtr<ID3D11VertexShader>> mVertexShaderMap;
+	std::unordered_map<std::string , ComPtr<ID3D11PixelShader>> mPixelShaderMap;
+	std::unordered_map<std::string , ComPtr<ID3D11InputLayout>> mVertexLayoutMap;
 
 	CDirectXResourceManager() = default;
 
@@ -21,4 +24,10 @@ public:
 	static CDirectXResourceManager& GetInstance();
 
 	ID3D11ShaderResourceView* GetTextureSRV(std::string filePath);
+
+	ID3D11VertexShader* GetVertexShader(std::string filePath);
+
+	ID3D11PixelShader* GetPixelShader(std::string filePath);
+
+	ID3D11InputLayout* GetVertexLayout(D3D11_INPUT_ELEMENT_DESC* layout , unsigned int layoutSize , std::string vsFilePath);
 };

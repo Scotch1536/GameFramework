@@ -14,7 +14,7 @@ CStaticMeshComponent::CStaticMeshComponent(CActor& owner , ModelData& model , st
 	mRenderComponent(*new CRenderComponent(owner))
 {
 	//アクター(owner)にレンダー担当のコンポーネントとして登録
-	mOwnerInterface.RegisterRenderComponent(*this);
+	mOwnerInterface.AddRenderComponent(*this);
 
 	// 頂点データの定義（アニメーション対応）
 	D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -25,8 +25,8 @@ CStaticMeshComponent::CStaticMeshComponent(CActor& owner , ModelData& model , st
 	};
 	unsigned int numElements = ARRAYSIZE(layout);
 
-	mRenderComponent.GenerateVertexShader(layout , numElements , vertexShaderPath.c_str());
-	mRenderComponent.GeneratePixelShader(pixelShaderPath.c_str());
+	mRenderComponent.GenerateVertexShader(layout , numElements , vertexShaderPath);
+	mRenderComponent.GeneratePixelShader(pixelShaderPath);
 }
 
 void CStaticMeshComponent::Render()
@@ -39,13 +39,12 @@ void CStaticMeshComponent::Render()
 
 		if(mesh.m_textures.size() >= 1)
 		{
-			mRenderComponent.Render(indexSize , mesh.m_textures[0].texture ,
+			mRenderComponent.Render(sizeof(VertexUV) , indexSize , mesh.m_textures[0].texture ,
 				mesh.GetVertexBuffer() , mesh.GetIndexBuffer() , mesh.GetConstantBuffer());
 		}
 		else
 		{
-			mRenderComponent.Render(indexSize ,
-				CDirectXResourceManager::GetInstance().GetTextureSRV("Assets/White/white.bmp") ,
+			mRenderComponent.Render(sizeof(VertexUV) , indexSize , CDirectXResourceManager::GetInstance().GetTextureSRV("Assets/White/white.bmp") ,
 				mesh.GetVertexBuffer() , mesh.GetIndexBuffer() , mesh.GetConstantBuffer());
 		}
 	}

@@ -2,7 +2,6 @@
 #include "GameFramework/Level/CLevel.h"
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CLightComponent.h"
-#include "GameFramework/Components/CAABBComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
 #include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/Managers/CModelDataManager.h"
@@ -19,7 +18,7 @@ CDice::CDice(CLevel& owner):CActor(owner , false)
 	*/
 	CStaticMeshComponent* staticMesh = new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
-	CAABBComponent* aabb = new CAABBComponent(*this , staticMesh->GetModel() , staticMesh->Transform);
+	CSphereColliderComponent* sphereCllider = new CSphereColliderComponent(*this , staticMesh->GetModel() , staticMesh->Transform);
 
 	//タグ追加
 	AddTag("Dice");

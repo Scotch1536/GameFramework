@@ -11,7 +11,7 @@ CSprite2DComponent::CSprite2DComponent(CActor& owner, CTextureData& texture, std
 	mTexture(texture), mRenderComponent(*new CRenderComponent(owner))
 {
 	//アクター(owner)にレンダー担当のコンポーネントとして登録
-	mOwnerInterface.RegisterRenderComponent(*this);
+	mOwnerInterface.AddRenderComponent(*this);
 
 	// 頂点データの定義（アニメーション対応）
 	D3D11_INPUT_ELEMENT_DESC layout[] =
