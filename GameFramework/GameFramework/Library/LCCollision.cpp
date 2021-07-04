@@ -35,5 +35,24 @@ bool LCCollision::Intersect(const XMFLOAT3& ACenter, const float& ARadius, const
 	float zAns = ACenter.z - BCenter.z;
 
 	float sumRadius = ARadius + BRadius;
+
 	return (xAns * xAns) + (yAns * yAns) + (zAns * zAns) <= (sumRadius*sumRadius);
+}
+
+void LCCollision::CalcMinMaxOfMeshes(const std::vector<Mesh>& meshes, XMFLOAT3& min, XMFLOAT3& max)
+{
+	for (auto m : meshes)
+	{
+		for (auto v : m.m_vertices)
+		{
+			if (min.x > v.m_Pos.x)	min.x = v.m_Pos.x;
+			else if (max.x < v.m_Pos.x) max.x = v.m_Pos.x;
+
+			if (min.y > v.m_Pos.y)	min.y = v.m_Pos.y;
+			else if (max.y < v.m_Pos.y) max.y = v.m_Pos.y;
+
+			if (min.z > v.m_Pos.z)	min.z = v.m_Pos.z;
+			else if (max.z < v.m_Pos.z) max.z = v.m_Pos.z;
+		}
+	}
 }

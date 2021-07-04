@@ -6,22 +6,7 @@
 
 CAABBComponent::CAABBComponent(CActor& owner , const ModelData& model , CTransform& parentTrans , int priority):CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority)
 {
-	const std::vector<Mesh>& meshes = model.GetMeshes();
-
-	for(auto m : meshes)
-	{
-		for(auto v : m.m_vertices)
-		{
-			if(mLocalMin.x > v.m_Pos.x)	mLocalMin.x = v.m_Pos.x;
-			else if(mLocalMax.x < v.m_Pos.x) mLocalMax.x = v.m_Pos.x;
-
-			if(mLocalMin.y > v.m_Pos.y)	mLocalMin.y = v.m_Pos.y;
-			else if(mLocalMax.y < v.m_Pos.y) mLocalMax.y = v.m_Pos.y;
-
-			if(mLocalMin.z > v.m_Pos.z)	mLocalMin.z = v.m_Pos.z;
-			else if(mLocalMax.z < v.m_Pos.z) mLocalMax.z = v.m_Pos.z;
-		}
-	}
+	LCCollision::CalcMinMaxOfMeshes(model.GetMeshes(), mLocalMin, mLocalMax);
 }
 
 CAABBComponent::CAABBComponent(CActor& owner , XMFLOAT3 min , XMFLOAT3 max , CTransform& parentTrans , int priority): CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority)
