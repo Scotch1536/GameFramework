@@ -1,4 +1,6 @@
 #include "../Library/LCCollision.h"
+#include "../Library/LCMath.h"
+#include "CSphereColliderComponent.h"
 #include "../Actor/CActor.h"
 #include "../Data/CModelData.h"
 #include "../Components/CSphereMeshComponent.h"
@@ -8,31 +10,18 @@
 CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , bool isMesh , int priority)
 	:CColliderComponent(owner , parentTrans , CColliderComponent::EType::SPHERE , priority)
 {
-	const std::vector<CMeshData>& meshes = model.GetMeshes();
-	XMFLOAT3 mMin = { 0,0,0 };
-	XMFLOAT3 mMax = { 0,0,0 };
-
-	for(auto m : meshes)
-	{
-		for(auto v : m.Vertices)
-		{
-			if(mMin.x > v.Pos.x)	mMin.x = v.Pos.x;
-			else if(mMax.x < v.Pos.x) mMax.x = v.Pos.x;
-
-			if(mMin.y > v.Pos.y)	mMin.y = v.Pos.y;
-			else if(mMax.y < v.Pos.y) mMax.y = v.Pos.y;
-
-			if(mMin.z > v.Pos.z)	mMin.z = v.Pos.z;
-			else if(mMax.z < v.Pos.z) mMax.z = v.Pos.z;
-		}
-	}
-	mRadius = Distance(mMax , mMin)/2;
+	XMFLOAT3 min = { 0,0,0 };
+	XMFLOAT3 max = { 0,0,0 };
 
 #ifndef _DEBUG
 	isMesh = false;
 #endif
 
-	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , mRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
+	LCCollision::CalcMinMaxOfMeshes(model.GetMeshes(), min, max);
+	
+	mRadius = LCMath::GetFloat3Length(LCMath::GetFloat3FromStartToGoal(min, max)) / 2;
+    
+  if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , mRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
 }
 
 CSphereColliderComponent::CSphereColliderComponent(CActor& owner , float radius , CTransform& parentTrans , bool isMesh , int priority)
