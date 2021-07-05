@@ -2,24 +2,24 @@
 
 #include "CAABBComponent.h"
 #include "../Actor/CActor.h"
-#include "../ExternalCode/ModelData.h"
+#include "../ExternalCode/CModelData.h"
 
-CAABBComponent::CAABBComponent(CActor& owner , const ModelData& model , CTransform& parentTrans , int priority):CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority)
+CAABBComponent::CAABBComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , int priority):CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority)
 {
-	const std::vector<Mesh>& meshes = model.GetMeshes();
+	const std::vector<CMeshData>& meshes = model.GetMeshes();
 
 	for(auto m : meshes)
 	{
-		for(auto v : m.m_vertices)
+		for(auto v : m.Vertices)
 		{
-			if(mLocalMin.x > v.m_Pos.x)	mLocalMin.x = v.m_Pos.x;
-			else if(mLocalMax.x < v.m_Pos.x) mLocalMax.x = v.m_Pos.x;
+			if(mLocalMin.x > v.Pos.x)	mLocalMin.x = v.Pos.x;
+			else if(mLocalMax.x < v.Pos.x) mLocalMax.x = v.Pos.x;
 
-			if(mLocalMin.y > v.m_Pos.y)	mLocalMin.y = v.m_Pos.y;
-			else if(mLocalMax.y < v.m_Pos.y) mLocalMax.y = v.m_Pos.y;
+			if(mLocalMin.y > v.Pos.y)	mLocalMin.y = v.Pos.y;
+			else if(mLocalMax.y < v.Pos.y) mLocalMax.y = v.Pos.y;
 
-			if(mLocalMin.z > v.m_Pos.z)	mLocalMin.z = v.m_Pos.z;
-			else if(mLocalMax.z < v.m_Pos.z) mLocalMax.z = v.m_Pos.z;
+			if(mLocalMin.z > v.Pos.z)	mLocalMin.z = v.Pos.z;
+			else if(mLocalMax.z < v.Pos.z) mLocalMax.z = v.Pos.z;
 		}
 	}
 }

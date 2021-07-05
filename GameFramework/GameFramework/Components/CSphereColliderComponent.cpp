@@ -1,29 +1,29 @@
 #include "../Library/LCCollision.h"
 #include "../Actor/CActor.h"
-#include "../ExternalCode/ModelData.h"
+#include "../ExternalCode/CModelData.h"
 #include "../Components/CSphereMeshComponent.h"
 
 #include "CSphereColliderComponent.h"
 
-CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const ModelData& model , CTransform& parentTrans , bool isMesh , int priority)
+CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , bool isMesh , int priority)
 	:CColliderComponent(owner , parentTrans , CColliderComponent::EType::SPHERE , priority)
 {
-	const std::vector<Mesh>& meshes = model.GetMeshes();
+	const std::vector<CMeshData>& meshes = model.GetMeshes();
 	XMFLOAT3 mMin = { 0,0,0 };
 	XMFLOAT3 mMax = { 0,0,0 };
 
 	for(auto m : meshes)
 	{
-		for(auto v : m.m_vertices)
+		for(auto v : m.Vertices)
 		{
-			if(mMin.x > v.m_Pos.x)	mMin.x = v.m_Pos.x;
-			else if(mMax.x < v.m_Pos.x) mMax.x = v.m_Pos.x;
+			if(mMin.x > v.Pos.x)	mMin.x = v.Pos.x;
+			else if(mMax.x < v.Pos.x) mMax.x = v.Pos.x;
 
-			if(mMin.y > v.m_Pos.y)	mMin.y = v.m_Pos.y;
-			else if(mMax.y < v.m_Pos.y) mMax.y = v.m_Pos.y;
+			if(mMin.y > v.Pos.y)	mMin.y = v.Pos.y;
+			else if(mMax.y < v.Pos.y) mMax.y = v.Pos.y;
 
-			if(mMin.z > v.m_Pos.z)	mMin.z = v.m_Pos.z;
-			else if(mMax.z < v.m_Pos.z) mMax.z = v.m_Pos.z;
+			if(mMin.z > v.Pos.z)	mMin.z = v.Pos.z;
+			else if(mMax.z < v.Pos.z) mMax.z = v.Pos.z;
 		}
 	}
 	mRadius = Distance(mMax , mMin)/2;

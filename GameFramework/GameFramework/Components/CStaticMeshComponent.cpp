@@ -7,7 +7,7 @@
 #include "CStaticMeshComponent.h"
 #include "CRenderComponent.h"
 
-CStaticMeshComponent::CStaticMeshComponent(CActor& owner , ModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority)
+CStaticMeshComponent::CStaticMeshComponent(CActor& owner , CModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority)
 	:CComponent(owner , priority) ,
 	Transform(owner) ,
 	mModel(model) ,
@@ -35,16 +35,16 @@ void CStaticMeshComponent::Render()
 
 	for(auto& mesh : mModel.GetMeshes())
 	{
-		unsigned int indexSize = static_cast <unsigned int>(mesh.m_indices.size());
+		unsigned int indexSize = static_cast <unsigned int>(mesh.Indices.size());
 
-		if(mesh.m_textures.size() >= 1)
+		if(mesh.Textures.size() >= 1)
 		{
-			mRenderComponent.Render(sizeof(VertexUV) , indexSize , mesh.m_textures[0].texture ,
+			mRenderComponent.Render(sizeof(SVertexUV) , indexSize , mesh.Textures[0].Texture ,
 				mesh.GetVertexBuffer() , mesh.GetIndexBuffer() , mesh.GetConstantBuffer());
 		}
 		else
 		{
-			mRenderComponent.Render(sizeof(VertexUV) , indexSize , CDirectXResourceManager::GetInstance().GetTextureSRV("Assets/White/white.bmp") ,
+			mRenderComponent.Render(sizeof(SVertexUV) , indexSize , CDirectXResourceManager::GetInstance().GetTextureSRV("Assets/White/white.bmp") ,
 				mesh.GetVertexBuffer() , mesh.GetIndexBuffer() , mesh.GetConstantBuffer());
 		}
 	}

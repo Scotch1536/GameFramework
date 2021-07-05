@@ -26,7 +26,7 @@ private:
 
 	CRenderComponent& mRenderComponent;
 
-	std::vector<VertexColor> mVertex;		//頂点データ
+	std::vector<SVertexColor> mVertex;		//頂点データ
 	std::vector<Face> mFace;				//インデックスデータ
 
 	XMFLOAT4 mColor;

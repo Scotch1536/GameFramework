@@ -1,16 +1,24 @@
 #pragma once
+#include <filesystem>
 #include <memory>
 #include <unordered_map>
 #include <string>
 
-#include "../ExternalCode/ModelData.h"
+#include "../ExternalCode/CModelData.h"
 
 class CModelDataManager
 {
 private:
-	std::unordered_map<std::string , ModelData> mModelData;		//モデルデータ格納辞書
+	std::unordered_map<std::string , CModelData> mModelData;		//モデルデータ格納辞書
+
+	std::filesystem::path mModelDataCachePath = "./ModelDataCache";
+	std::string mExtension = ".bin";
 
 	CModelDataManager() = default;
+
+	std::string MakeFileName(std::string filePath);
+	bool InputFile(CModelData& target , std::string filePath);
+	void OutputFile(CModelData& target , std::string filePath);
 public:
 	CModelDataManager(const CModelDataManager&) = delete;
 	CModelDataManager& operator=(const CModelDataManager&) = delete;
@@ -24,5 +32,5 @@ public:
 	}
 
 	//モデルを取得する
-	ModelData& GetModel(std::string filePath , std::string resourceFolderPath);
+	CModelData& GetModel(std::string filePath , std::string resourceFolderPath);
 };
