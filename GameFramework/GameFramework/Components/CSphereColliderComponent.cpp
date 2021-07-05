@@ -13,15 +13,21 @@ CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const CModelD
 	XMFLOAT3 min = { 0,0,0 };
 	XMFLOAT3 max = { 0,0,0 };
 
+	LCCollision::CalcMinMaxOfMeshes(model.GetMeshes() , min , max);
+
+	XMFLOAT3 vec;
+	float length;
+
+	LCMath::CalcFloat3FromStartToGoal(min , max , vec);
+	LCMath::CalcFloat3Length(vec , length);
+
+	mRadius = length / 2.0f;
+
 #ifndef _DEBUG
 	isMesh = false;
 #endif
 
-	LCCollision::CalcMinMaxOfMeshes(model.GetMeshes(), min, max);
-	
-	mRadius = LCMath::GetFloat3Length(LCMath::GetFloat3FromStartToGoal(min, max)) / 2;
-    
-  if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , mRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
+	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , mRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
 }
 
 CSphereColliderComponent::CSphereColliderComponent(CActor& owner , float radius , CTransform& parentTrans , bool isMesh , int priority)
