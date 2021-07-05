@@ -1,12 +1,13 @@
 #pragma once
 #include <string>
 
-#include "../ExternalCode/CModelData.h"
 #include "../Interfaces/IRender.h"
 #include "../Transform/CTransform.h"
+#include "../Data/CModelData.h"
 
 #include "CComponent.h"
 
+class CModelData;
 class CRenderComponent;
 
 class CStaticMeshComponent :public CComponent , public IRender

@@ -2,7 +2,7 @@
 
 #include "CAABBComponent.h"
 #include "../Actor/CActor.h"
-#include "../ExternalCode/CModelData.h"
+#include "../Data/CModelData.h"
 
 CAABBComponent::CAABBComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , int priority):CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority)
 {

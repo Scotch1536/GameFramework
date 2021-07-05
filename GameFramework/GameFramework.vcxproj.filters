@@ -153,19 +153,10 @@
     <ClCompile Include="GameFramework\Managers\CColliderManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CTest2DActor.cpp">
+    <ClCompile Include="GameFramework\Data\CMeshData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Components\CSprite2DComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Managers\CTextureManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalCode\CMeshData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalCode\CModelData.cpp">
+    <ClCompile Include="GameFramework\Data\CModelData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -222,9 +213,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\ExternalCode\utftosjisconv.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\VertexProto.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CCameraComponent.h">
@@ -320,10 +308,13 @@
     <ClInclude Include="GameFramework\Managers\CColliderManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\CMeshData.h">
+    <ClInclude Include="GameFramework\Data\CMeshData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\CModelData.h">
+    <ClInclude Include="GameFramework\Data\CModelData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Data\VertexProto.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -346,16 +337,7 @@
     <FxCompile Include="Shader\vsnotex.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <ClInclude Include="CTest2DActor.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Components\CSprite2DComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\ExternalCode\shaderhashmap.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Managers\CTextureManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

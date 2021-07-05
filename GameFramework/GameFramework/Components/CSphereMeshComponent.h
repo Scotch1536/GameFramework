@@ -3,7 +3,7 @@
 #include <DirectXMath.h>
 
 #include "../Interfaces/IRender.h"
-#include "../ExternalCode/VertexProto.h"
+#include "../Data/VertexProto.h"
 #include "../Transform/CTransform.h"
 
 #include "CComponent.h"

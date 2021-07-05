@@ -1,6 +1,6 @@
 #include "../Library/LCCollision.h"
 #include "../Actor/CActor.h"
-#include "../ExternalCode/CModelData.h"
+#include "../Data/CModelData.h"
 #include "../Components/CSphereMeshComponent.h"
 
 #include "CSphereColliderComponent.h"
