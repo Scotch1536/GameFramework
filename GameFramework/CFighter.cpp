@@ -12,7 +12,7 @@
 
 CFighter::CFighter(ILevel& owner):CActor(owner)
 {
-	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("assets/dice/PlayerBox.x" , "assets/dice/") ,
+	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("Assets/Fighter01/Su-27.fbx" , "Assets/Fighter01/textures/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
 
 	mesh.Transform.Rotation.Angle.x = -90.f;
