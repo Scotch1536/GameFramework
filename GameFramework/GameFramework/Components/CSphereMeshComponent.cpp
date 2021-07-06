@@ -2,6 +2,7 @@
 #include "../ExternalCode/dx11mathutil.h"
 #include "../ExternalCode/Shader.h"
 #include "../ExternalCode/CDirectxGraphics.h"
+#include "../Library/LCMath.h"
 
 #include "CSphereMeshComponent.h"
 #include "CRenderComponent.h"
@@ -82,7 +83,10 @@ void CSphereMeshComponent::CreateVertex()
 			v.Pos.y = mRadius * cosf(elevation);
 			v.Pos.z = r * sinf(azimuth);
 
-			DX11Vec3Normalize(Normal , Normal);			// 法線を計算
+			XMFLOAT3 normVec;
+			LCMath::CalcFloat3FromStartToGoal({ 0.0f,0.0f,0.0f } , v.Pos , normVec);
+
+			DX11Vec3Normalize(Normal , normVec);		// 法線を計算
 			v.Normal = Normal;							// 法線をセット
 
 			v.Color = mColor;				// 頂点カラー
