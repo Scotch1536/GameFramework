@@ -1,6 +1,6 @@
 #include "LCCollision.h"
 
-bool LCCollision::Intersect(const XMFLOAT3& AMin , const XMFLOAT3& AMax , const XMFLOAT3& BMin , const XMFLOAT3& BMax)
+bool LCCollision::IsCollide(const XMFLOAT3& AMin , const XMFLOAT3& AMax , const XMFLOAT3& BMin , const XMFLOAT3& BMax)
 {
 	if(AMax.x < BMin.x ||
 		AMax.y < BMin.y ||
@@ -14,7 +14,7 @@ bool LCCollision::Intersect(const XMFLOAT3& AMin , const XMFLOAT3& AMax , const 
 	return true;
 }
 
-bool LCCollision::Contains(const XMFLOAT3& AMin , const XMFLOAT3& AMax , const XMFLOAT3& point)
+bool LCCollision::IsCollide(const XMFLOAT3& AMin , const XMFLOAT3& AMax , const XMFLOAT3& point)
 {
 	if(point.x<AMin.x ||
 		point.y<AMin.y ||
@@ -28,7 +28,7 @@ bool LCCollision::Contains(const XMFLOAT3& AMin , const XMFLOAT3& AMax , const X
 	return true;
 }
 
-bool LCCollision::Intersect(const XMFLOAT3& ACenter , const float& ARadius , const XMFLOAT3& BCenter , const float& BRadius)
+bool LCCollision::IsCollide(const XMFLOAT3& ACenter , const float& ARadius , const XMFLOAT3& BCenter , const float& BRadius)
 {
 	float xAns = ACenter.x - BCenter.x;
 	float yAns = ACenter.y - BCenter.y;

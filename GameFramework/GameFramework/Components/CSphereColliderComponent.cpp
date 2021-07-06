@@ -66,7 +66,7 @@ void CSphereColliderComponent::Update()
 			if(collider->GetType() == EType::SPHERE)
 			{
 				CSphereColliderComponent& Sphereobj = dynamic_cast<CSphereColliderComponent&>(*collider);
-				if(LCCollision::Intersect(this->mWorldPosition , this->mRadius , Sphereobj.mWorldPosition , Sphereobj.mRadius))
+				if(LCCollision::IsCollide(this->mWorldPosition , this->mRadius , Sphereobj.mWorldPosition , Sphereobj.mRadius))
 				{
 					ExecuteAction(collider->GetOwner());
 				}
