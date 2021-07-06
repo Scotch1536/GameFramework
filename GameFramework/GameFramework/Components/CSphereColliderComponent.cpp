@@ -13,7 +13,7 @@ CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const CModelD
 	XMFLOAT3 min = { 0,0,0 };
 	XMFLOAT3 max = { 0,0,0 };
 
-	LCCollision::CalcMinMaxOfMeshes(model.GetMeshes() , min , max);
+	CalcMinMaxOfMeshes(model.GetMeshes() , min , max);
 
 	XMFLOAT3 vec;
 	float length;

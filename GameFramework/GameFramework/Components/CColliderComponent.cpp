@@ -30,3 +30,22 @@ void CColliderComponent::Update()
 	if(!CColliderManager::GetInstance().GetColliders(this , mColliders))mShouldCompare = false;
 	else mShouldCompare = true;
 }
+
+
+void CColliderComponent::CalcMinMaxOfMeshes(const std::vector<CMeshData>& meshes, XMFLOAT3& min, XMFLOAT3& max)
+{
+	for (auto m : meshes)
+	{
+		for (auto v : m.Vertices)
+		{
+			if (min.x > v.Pos.x)	min.x = v.Pos.x;
+			else if (max.x < v.Pos.x) max.x = v.Pos.x;
+
+			if (min.y > v.Pos.y)	min.y = v.Pos.y;
+			else if (max.y < v.Pos.y) max.y = v.Pos.y;
+
+			if (min.z > v.Pos.z)	min.z = v.Pos.z;
+			else if (max.z < v.Pos.z) max.z = v.Pos.z;
+		}
+	}
+}
