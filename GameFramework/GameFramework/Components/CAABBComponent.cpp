@@ -27,7 +27,7 @@ void CAABBComponent::Update()
 			if(collider->GetType() == EType::AABB)
 			{
 				CAABBComponent& AABBobj = dynamic_cast<CAABBComponent&>(*collider);
-				if(LCCollision::Intersect(this->mWorldMin , this->mWorldMax , AABBobj.mWorldMin , AABBobj.mWorldMax))
+				if(LCCollision::IsCollide(this->mWorldMin , this->mWorldMax , AABBobj.mWorldMin , AABBobj.mWorldMax))
 				{
 					ExecuteAction(collider->GetOwner());
 				}

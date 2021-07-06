@@ -4,6 +4,7 @@
 
 #include "CComponent.h"
 #include "../Transform/CTransform.h"
+#include "../Data/CMeshData.h"
 
 class CTransform;
 
