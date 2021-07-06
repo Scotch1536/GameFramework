@@ -2,7 +2,7 @@
 #include <d3d11.h>
 #include <wrl/client.h>
 
-#include "../ExternalCode/VertexProto.h"
+#include "../Data/VertexProto.h"
 
 #include "CComponent.h"
 

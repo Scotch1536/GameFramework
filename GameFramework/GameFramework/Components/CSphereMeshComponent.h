@@ -3,7 +3,7 @@
 #include <DirectXMath.h>
 
 #include "../Interfaces/IRender.h"
-#include "../ExternalCode/VertexProto.h"
+#include "../Data/VertexProto.h"
 #include "../Transform/CTransform.h"
 
 #include "CComponent.h"
@@ -26,7 +26,7 @@ private:
 
 	CRenderComponent& mRenderComponent;
 
-	std::vector<VertexColor> mVertex;		//頂点データ
+	std::vector<SVertexColor> mVertex;		//頂点データ
 	std::vector<Face> mFace;				//インデックスデータ
 
 	XMFLOAT4 mColor;

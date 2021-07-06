@@ -26,6 +26,7 @@ ID3D11ShaderResourceView* CDirectXResourceManager::GetTextureSRV(std::string fil
 			MessageBox(nullptr , "Texture couldn't be loaded" , "Error!" , MB_ICONERROR | MB_OK);
 			mTextureResourceMap[filePath] = nullptr;
 			mTextureSRVMap[filePath] = nullptr;
+			exit(1);
 		}
 	}
 	return mTextureSRVMap[filePath].Get();

@@ -2,9 +2,9 @@
 
 #include "CAABBComponent.h"
 #include "../Actor/CActor.h"
-#include "../ExternalCode/ModelData.h"
+#include "../Data/CModelData.h"
 
-CAABBComponent::CAABBComponent(CActor& owner , const ModelData& model , CTransform& parentTrans , int priority):CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority)
+CAABBComponent::CAABBComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , int priority):CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority)
 {
 	LCCollision::CalcMinMaxOfMeshes(model.GetMeshes(), mLocalMin, mLocalMax);
 }

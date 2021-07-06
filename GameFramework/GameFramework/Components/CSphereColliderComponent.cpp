@@ -2,12 +2,12 @@
 #include "../Library/LCMath.h"
 #include "CSphereColliderComponent.h"
 #include "../Actor/CActor.h"
-#include "../ExternalCode/ModelData.h"
+#include "../Data/CModelData.h"
 #include "../Components/CSphereMeshComponent.h"
 
 #include "CSphereColliderComponent.h"
 
-CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const ModelData& model , CTransform& parentTrans , bool isMesh , int priority)
+CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , bool isMesh , int priority)
 	:CColliderComponent(owner , parentTrans , CColliderComponent::EType::SPHERE , priority)
 {
 	XMFLOAT3 min = { 0,0,0 };

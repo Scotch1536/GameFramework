@@ -1,32 +1,33 @@
 #pragma once
 #include <string>
 
-#include "../ExternalCode/ModelData.h"
 #include "../Interfaces/IRender.h"
 #include "../Transform/CTransform.h"
+#include "../Data/CModelData.h"
 
 #include "CComponent.h"
 
+class CModelData;
 class CRenderComponent;
 
 class CStaticMeshComponent :public CComponent , public IRender
 {
 private:
-	ModelData& mModel;							//モデルデータ
+	CModelData& mModel;							//モデルデータ
 	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
 
 public:
 	CTransform Transform;			//トランスフォーム
 
-	CStaticMeshComponent(CActor& owner , ModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority = 90);
+	CStaticMeshComponent(CActor& owner , CModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority = 90);
 
 	//モデルのセット
-	void SetModel(ModelData& model)
+	void SetModel(CModelData& model)
 	{
 		mModel = model;
 	}
 
-	const ModelData& GetModel()
+	const CModelData& GetModel()
 	{
 		return mModel;
 	}

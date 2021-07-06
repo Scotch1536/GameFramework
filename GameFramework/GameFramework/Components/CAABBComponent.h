@@ -4,7 +4,7 @@
 
 using namespace DirectX;
 
-class ModelData;
+class CModelData;
 
 class CAABBComponent :public CColliderComponent
 {
@@ -17,7 +17,7 @@ private:
 	void ConvertWorldCollider() override;
 
 public:
-	CAABBComponent(CActor& owner, const ModelData& model, CTransform& parentTrans, int priority = 40);
+	CAABBComponent(CActor& owner, const CModelData& model, CTransform& parentTrans, int priority = 40);
 	CAABBComponent(CActor& owner, XMFLOAT3 min, XMFLOAT3 max, CTransform& parentTrans, int priority = 40);
 	~CAABBComponent() {};
 

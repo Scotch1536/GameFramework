@@ -30,7 +30,7 @@ CSphereMeshComponent::CSphereMeshComponent(CActor& owner , float radius , int di
 	ID3D11Device* buf = CDirectXGraphics::GetInstance()->GetDXDevice();
 
 	// 頂点バッファ生成
-	bool sts = CreateVertexBufferWrite(buf , static_cast<unsigned int>(sizeof(VertexUV)) ,
+	bool sts = CreateVertexBufferWrite(buf , static_cast<unsigned int>(sizeof(SVertexUV)) ,
 		static_cast<unsigned int>(mVertex.size()) ,
 		mVertex.data() , &mVertexBuffer);
 	if(!sts)
@@ -77,15 +77,15 @@ void CSphereMeshComponent::CreateVertex()
 		{
 			azimuth = (2 * XM_PI * static_cast<float>(x)) / static_cast<float>(mDivisionNumber);		// 方位角をセット
 
-			VertexColor v;
-			v.m_Pos.x = r * cosf(azimuth);
-			v.m_Pos.y = mRadius * cosf(elevation);
-			v.m_Pos.z = r * sinf(azimuth);
+			SVertexColor v;
+			v.Pos.x = r * cosf(azimuth);
+			v.Pos.y = mRadius * cosf(elevation);
+			v.Pos.z = r * sinf(azimuth);
 
 			DX11Vec3Normalize(Normal , Normal);			// 法線を計算
-			v.m_Normal = Normal;							// 法線をセット
+			v.Normal = Normal;							// 法線をセット
 
-			v.m_Color = mColor;				// 頂点カラー
+			v.Color = mColor;				// 頂点カラー
 
 			mVertex.emplace_back(v);
 		}
@@ -128,5 +128,5 @@ void CSphereMeshComponent::Render()
 {
 	Transform.RequestSetMatrix();
 
-	mRenderComponent.Render(sizeof(VertexColor) , static_cast<unsigned int>(mFace.size() * 3) , nullptr , mVertexBuffer.Get() , mIndexBuffer.Get() , nullptr);
+	mRenderComponent.Render(sizeof(SVertexColor) , static_cast<unsigned int>(mFace.size() * 3) , nullptr , mVertexBuffer.Get() , mIndexBuffer.Get() , nullptr);
 }
