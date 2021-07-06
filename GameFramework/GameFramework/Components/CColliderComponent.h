@@ -35,7 +35,6 @@ protected:
 	bool mShouldCompare = true;
 
 	void ExecuteAction(CActor& argument);
-	virtual void ConvertWorldCollider() = 0;
 
 	//頂点メッシュの最大最小を取り出す
 	static void CalcMinMaxOfMeshes(const std::vector<CModelMeshData>& meshes, XMFLOAT3& min, XMFLOAT3& max);
@@ -45,6 +44,8 @@ public:
 
 	CColliderComponent(CActor& owner,CTransform& parentTrans, EType type, int priority = 40);
 	virtual ~CColliderComponent();
+
+	virtual void ConvertWorldCollider() = 0;
 
 	void Update() override;
 

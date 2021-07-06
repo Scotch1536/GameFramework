@@ -10,8 +10,10 @@ class CSphereMeshComponent;
 class CSphereColliderComponent :public CColliderComponent
 {
 private:
-	XMFLOAT3 mWorldLocation;
-	float mRadius;
+	XMFLOAT3 mCenter;		//中心座標
+
+	float mLocalRadius;			//ローカル半径
+	float mWorldRadius;			//ワールド半径
 
 	CSphereMeshComponent* mSphereMesh = nullptr;
 
@@ -19,7 +21,7 @@ private:
 
 public:
 	CSphereColliderComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , bool isMesh = true , int priority = 40);
-	CSphereColliderComponent(CActor& owner , float radius , CTransform& parentTrans , bool isMesh = true , int priority = 40);
+	CSphereColliderComponent(CActor& owner , CTransform& parentTrans , bool isMesh = true , int priority = 40);
 
 	void Update()override;
 
