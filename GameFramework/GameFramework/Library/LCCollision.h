@@ -7,7 +7,6 @@ using namespace DirectX;
 static class LCCollision
 {
 public:
-
 	//AABB     Intersect:交差　　　　Contains:内包
 	static bool IsCollide(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& BMin, const XMFLOAT3& BMax);
 	static bool IsCollide(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& point);
