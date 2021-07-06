@@ -2,6 +2,7 @@
 #include "../ExternalCode/DX11Settransform.h"
 #include "../Game/CGame.h"
 #include "../Managers/CGameManager.h"
+#include "../Managers/CColliderManager.h"
 #include "../Components/CCameraComponent.h"
 
 #include "CLevel.h"
@@ -28,6 +29,8 @@ void CLevel::RequestSetCamera(CCameraComponent& camera)
 
 void CLevel::Update()
 {
+	CColliderManager::GetInstance().Update();
+
 	for(auto& actor : mActors)
 	{
 		if(CGameManager::GetInstance().GetIsPause())

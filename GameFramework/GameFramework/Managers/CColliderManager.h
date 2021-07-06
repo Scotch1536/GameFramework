@@ -29,4 +29,6 @@ public:
 
 	//登録しているコリジョンデータの削除
 	void ReleaseCollider(CColliderComponent& collider);
+
+	void Update();
 };

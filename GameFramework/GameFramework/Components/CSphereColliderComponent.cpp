@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "../Library/LCCollision.h"
 #include "../Library/LCMath.h"
 #include "../Actor/CActor.h"
@@ -20,25 +22,24 @@ CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const CModelD
 	LCMath::CalcFloat3FromStartToGoal(min , max , vec);
 	LCMath::CalcFloat3Length(vec , length);
 
-	mRadius = length / 2.0f;
+	mLocalRadius = length / 2.0f;
 
 #ifndef _DEBUG
 	isMesh = false;
 #endif
 
-	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , mRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
+	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , mLocalRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
 }
 
-CSphereColliderComponent::CSphereColliderComponent(CActor& owner , float radius , CTransform& parentTrans , bool isMesh , int priority)
-	:CColliderComponent(owner , parentTrans , CColliderComponent::EType::SPHERE , priority)
+CSphereColliderComponent::CSphereColliderComponent(CActor& owner , CTransform& parentTrans , bool isMesh , int priority)
+	:CColliderComponent(owner , parentTrans , CColliderComponent::EType::SPHERE , priority) ,
+	mLocalRadius(1.0f)
 {
-	mRadius = radius;
-
 #ifndef _DEBUG
 	isMesh = false;
 #endif
 
-	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , mRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
+	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , mLocalRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
 }
 
 void CSphereColliderComponent::Update()
@@ -47,20 +48,18 @@ void CSphereColliderComponent::Update()
 
 	if(mShouldCompare)
 	{
-		ConvertWorldCollider();
 		for(auto collider : mColliders)
 		{
 			if(collider->GetType() == EType::SPHERE)
 			{
 				CSphereColliderComponent& Sphereobj = dynamic_cast<CSphereColliderComponent&>(*collider);
-				if(LCCollision::IsCollide(this->mWorldLocation , this->mRadius , Sphereobj.mWorldLocation , Sphereobj.mRadius))
+				if(LCCollision::IsCollide(this->mCenter , this->mWorldRadius , Sphereobj.mCenter , Sphereobj.mWorldRadius))
 				{
 					ExecuteAction(collider->GetOwner());
 				}
 			}
 			else if(collider->GetType() == EType::AABB)
 			{
-
 			}
 		}
 	}
@@ -68,5 +67,11 @@ void CSphereColliderComponent::Update()
 
 void CSphereColliderComponent::ConvertWorldCollider()
 {
-	mWorldLocation = Transform.GetWorldLocation();
+	mCenter = Transform.GetWorldLocation();
+
+	XMFLOAT3 scale = Transform.GetWorldScale();
+
+	float max = (std::max)({ scale.x,scale.y,scale.z });
+
+	mWorldRadius = mLocalRadius * max;
 }
