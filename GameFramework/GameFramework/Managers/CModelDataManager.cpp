@@ -19,6 +19,10 @@ std::string CModelDataManager::MakeFileName(std::string filePath)
 	std::string buf;
 	std::getline(refString , buf , '/');
 	std::getline(refString , buf , '/');
+	if(buf == "Assets" || buf == "assets")
+	{
+		std::getline(refString , buf , '/');
+	}
 
 	fileName = buf;
 	fileName += mExtension;
