@@ -36,6 +36,9 @@ protected:
 	void ExecuteAction(CActor& argument);
 	virtual void ConvertWorldCollider() = 0;
 
+	//頂点メッシュの最大最小を取り出す
+	static void CalcMinMaxOfMeshes(const std::vector<CMeshData>& meshes, XMFLOAT3& min, XMFLOAT3& max);
+
 public:
 	CTransform Transform;
 

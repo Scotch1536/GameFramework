@@ -6,7 +6,7 @@
 
 CAABBComponent::CAABBComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , int priority):CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority)
 {
-	LCCollision::CalcMinMaxOfMeshes(model.GetMeshes(), mLocalMin, mLocalMax);
+	CalcMinMaxOfMeshes(model.GetMeshes(), mLocalMin, mLocalMax);
 }
 
 CAABBComponent::CAABBComponent(CActor& owner , XMFLOAT3 min , XMFLOAT3 max , CTransform& parentTrans , int priority): CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority)
