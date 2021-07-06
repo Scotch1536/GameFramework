@@ -7,13 +7,13 @@
 #include "../ExternalCode/shader.h"
 
 #include "VertexProto.h"
-#include "CMeshData.h"
+#include "CModelMeshData.h"
 
 using namespace std;
 using namespace DirectX;
 using Microsoft::WRL::ComPtr;
 
-CMeshData::CMeshData(vector<SVertexUV> vertices , vector<unsigned int> indices , vector<STexture> textures , SMaterial mtrl)
+CModelMeshData::CModelMeshData(vector<SVertexUV> vertices , vector<unsigned int> indices , vector<STexture> textures , SMaterial mtrl)
 {
 	Vertices = vertices;
 	Indices = indices;
@@ -23,7 +23,7 @@ CMeshData::CMeshData(vector<SVertexUV> vertices , vector<unsigned int> indices ,
 	SetupMesh();
 }
 
-bool CMeshData::SetupMesh()
+bool CModelMeshData::SetupMesh()
 {
 	ID3D11Device* dev = CDirectXGraphics::GetInstance()->GetDXDevice();
 

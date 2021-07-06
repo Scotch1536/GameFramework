@@ -3,17 +3,16 @@
 
 #include "CPrimitiveMeshComponent.h"
 
-class CSphereMeshComponent :public CPrimitiveMeshComponent
+class CBoxMeshComponent :public CPrimitiveMeshComponent
 {
 private:
-	float mRadius;				//îºåa
-	int mDivisionNumber;		//ï™äÑêî
+	XMFLOAT3 mMin , mMax;		//å¥ì_Ç∆í∏ì_Ç∆ÇÃä‘ÇÃí∑Ç≥
 
 	void CreateVertexData()override;
 	void CreateIndexData()override;
 
 public:
-	CSphereMeshComponent(CActor& owner , float radius , int divNum , XMFLOAT4 color ,
+	CBoxMeshComponent(CActor& owner , XMFLOAT3 min , XMFLOAT3 max , XMFLOAT4 color ,
 		std::string vertexShaderPath = "Shader/vsnotex.hlsl" , std::string pixelShaderPath = "Shader/psnotex.hlsl");
 
 };

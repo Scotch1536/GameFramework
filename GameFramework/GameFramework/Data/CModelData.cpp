@@ -168,7 +168,7 @@ bool CModelData::Load(std::string resourceFolderPath ,
 }
 
 // メッシュの解析
-CMeshData CModelData::ProcessMesh(aiMesh * mesh , const aiScene * scene , int meshidx)
+CModelMeshData CModelData::ProcessMesh(aiMesh * mesh , const aiScene * scene , int meshidx)
 {
 	std::vector<SVertexUV> vertices;			// 頂点
 	std::vector<unsigned int> indices;		// 面の構成情報
@@ -238,7 +238,7 @@ CMeshData CModelData::ProcessMesh(aiMesh * mesh , const aiScene * scene , int me
 		}
 	}
 
-	return CMeshData(vertices , indices , textures , mtrl);
+	return CModelMeshData(vertices , indices , textures , mtrl);
 }
 
 // ノードの解析

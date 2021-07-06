@@ -11,7 +11,7 @@ void DX11MakeWorldMatrix(XMFLOAT4X4& mat, XMFLOAT3& angle, XMFLOAT3& trans);
 void DX11Vec3MulMatrix(DirectX::XMFLOAT3& outvec, const DirectX::XMFLOAT3& invec, const DirectX::XMFLOAT4X4& mat);
 void DX11Vec3Cross(DirectX::XMFLOAT3& outvec, DirectX::XMFLOAT3& invec1, DirectX::XMFLOAT3& invec2);
 void DX11Vec3Dot(float& dot, const DirectX::XMFLOAT3& invec1, const DirectX::XMFLOAT3& invec2);
-void DX11Vec3Normalize(DirectX::XMFLOAT3& outvec, DirectX::XMFLOAT3& invec);
+void DX11Vec3Normalize(DirectX::XMFLOAT3& outvec, const DirectX::XMFLOAT3& invec);
 void DX11MtxIdentity(DirectX::XMFLOAT4X4& mat);
 void DX11GetQtfromMatrix(const XMFLOAT4X4& mat, XMFLOAT4& qt);
 void DX11QtRotationAxis(XMFLOAT4& qt, XMFLOAT4& axis, float angle);

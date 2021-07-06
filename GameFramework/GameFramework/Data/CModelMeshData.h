@@ -8,7 +8,7 @@
 
 using Microsoft::WRL::ComPtr;
 
-class CMeshData
+class CModelMeshData
 {
 private:
 	ComPtr<ID3D11Buffer>  mVertexBuffer;					// 頂点バッファ
@@ -21,8 +21,8 @@ public:
 	std::vector<STexture> Textures;				// テクスチャ
 	SMaterial Material;							// マテリアル
 
-	CMeshData() = default;
-	CMeshData(std::vector<SVertexUV> vertices , std::vector<unsigned int> indices , std::vector<STexture> textures , SMaterial mtrl);
+	CModelMeshData() = default;
+	CModelMeshData(std::vector<SVertexUV> vertices , std::vector<unsigned int> indices , std::vector<STexture> textures , SMaterial mtrl);
 
 	bool SetupMesh();
 
