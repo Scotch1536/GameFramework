@@ -79,7 +79,7 @@ void DX11Vec3Dot(float& dot , const DirectX::XMFLOAT3& invec1, const DirectX::XM
 /*------------------------
 ê≥ãKâªÇ∑ÇÈ
 --------------------------*/
-void DX11Vec3Normalize(DirectX::XMFLOAT3& outvec, DirectX::XMFLOAT3& invec) {
+void DX11Vec3Normalize(DirectX::XMFLOAT3& outvec, const DirectX::XMFLOAT3& invec) {
 
 	ALIGN16 XMVECTOR inv;
 	ALIGN16 XMVECTOR outv;

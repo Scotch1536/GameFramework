@@ -2,6 +2,7 @@
 
 #include "GameFramework/Components/CStaticMeshComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
+#include "GameFramework/Components/CAABBColliderComponent.h"
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CSpringArmComponent.h"
@@ -32,8 +33,10 @@ CFighter::CFighter(ILevel& owner):CActor(owner)
 	light.SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
 	light.SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
-	CSphereColliderComponent& sphereCllider = *new CSphereColliderComponent(*this , mesh.GetModel() , mesh.Transform);
-	sphereCllider.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));
+	/*CSphereColliderComponent& sphereCllider = *new CSphereColliderComponent(*this , mesh.GetModel() , mesh.Transform);
+	sphereCllider.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));*/
+	CAABBColliderComponent& aabb = *new CAABBColliderComponent(*this , mesh.GetModel() , Transform);
+	aabb.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));
 
 	CInputManager::GetInstance().AddAction("Move" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CFighter::Move , std::ref(*this)));
 	CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_R } , std::bind(&CFighter::Rot , std::ref(*this) , 0));

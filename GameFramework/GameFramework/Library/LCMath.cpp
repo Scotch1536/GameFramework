@@ -83,6 +83,12 @@ void LCMath::CalcFloat3Length(const XMFLOAT3& target , float& ansLength)
 	DX11Vec3Length(target , ansLength);
 }
 
+void LCMath::CalcFloat3Normalize(const XMFLOAT3& target , XMFLOAT3& ansvec)
+{
+	DX11Vec3Normalize(ansvec , target);
+}
+
+
 float LCMath::Lerp(float start , float end , float alpha)
 {
 	return (1 - alpha)*start + alpha * end;

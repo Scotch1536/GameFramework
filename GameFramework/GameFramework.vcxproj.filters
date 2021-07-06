@@ -93,9 +93,6 @@
     <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Components\CAABBComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\Library\LCCollision.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -153,10 +150,19 @@
     <ClCompile Include="GameFramework\Managers\CColliderManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Data\CMeshData.cpp">
+    <ClCompile Include="GameFramework\Data\CModelData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Data\CModelData.cpp">
+    <ClCompile Include="GameFramework\Components\CPrimitiveMeshComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CBoxMeshComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CAABBColliderComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Data\CModelMeshData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -245,9 +251,6 @@
     <ClInclude Include="GameFramework\Components\CSpringArmComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Components\CAABBComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Library\LCCollision.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -308,13 +311,22 @@
     <ClInclude Include="GameFramework\Managers\CColliderManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Data\CMeshData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Data\CModelData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Data\VertexProto.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CPrimitiveMeshComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CBoxMeshComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CAABBColliderComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Data\CModelMeshData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

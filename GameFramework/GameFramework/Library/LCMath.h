@@ -26,6 +26,8 @@ public:
 
 	static void CalcFloat3Length(const XMFLOAT3& target , float& ansLength);
 
+	static void CalcFloat3Normalize(const XMFLOAT3& target , XMFLOAT3& ansvec);
+
 	//ê¸å`ï‚ä‘
 	static float Lerp(float start , float end , float alpha);
 	static XMFLOAT3 Lerp(const XMFLOAT3& start , const XMFLOAT3& end , float alpha);

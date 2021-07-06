@@ -9,7 +9,7 @@
 #include "../ExternalCode/AssimpScene.h"
 
 #include "VertexProto.h"
-#include "CMeshData.h"
+#include "CModelMeshData.h"
 
 class CModelDataManager;
 
@@ -19,7 +19,7 @@ private:
 	AssimpScene mAssimpScene;		// assimp scene
 	std::string mDirectory;			// テクスチャファイルの位置
 
-	std::vector<CMeshData> mMeshes;				// メッシュの集合がモデル
+	std::vector<CModelMeshData> mMeshes;				// メッシュの集合がモデル
 	std::vector<STexture> mTexturesLoaded;		// 既にロードされているテクスチャ
 	std::vector<SMaterial> mMaterials;			// マテリアル群
 
@@ -27,7 +27,7 @@ private:
 	void ProcessNode(aiNode* node , const aiScene* scene);
 
 	// メッシュを解析
-	CMeshData ProcessMesh(aiMesh* mesh , const aiScene* scene , int meshidx);
+	CModelMeshData ProcessMesh(aiMesh* mesh , const aiScene* scene , int meshidx);
 
 	// マテリアルを読み込む
 	void LoadMaterial();
@@ -51,7 +51,7 @@ public:
 	void ReadData(const CModelDataManager& partner , std::fstream& file);
 	void ReadDataInit(const CModelDataManager& partner);
 
-	const std::vector<CMeshData>& GetMeshes()const
+	const std::vector<CModelMeshData>& GetMeshes()const
 	{
 		return mMeshes;
 	}

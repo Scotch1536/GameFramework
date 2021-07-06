@@ -1,11 +1,10 @@
 #include "../Library/LCCollision.h"
 #include "../Library/LCMath.h"
-#include "CSphereColliderComponent.h"
 #include "../Actor/CActor.h"
 #include "../Data/CModelData.h"
-#include "../Components/CSphereMeshComponent.h"
 
 #include "CSphereColliderComponent.h"
+#include "CSphereMeshComponent.h"
 
 CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , bool isMesh , int priority)
 	:CColliderComponent(owner , parentTrans , CColliderComponent::EType::SPHERE , priority)
@@ -42,18 +41,6 @@ CSphereColliderComponent::CSphereColliderComponent(CActor& owner , float radius 
 	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , mRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
 }
 
-float CSphereColliderComponent::Distance(const XMFLOAT3& vMax , const XMFLOAT3& vMin)
-{
-	XMVECTOR vector1 = XMLoadFloat3(&vMax);
-	XMVECTOR vector2 = XMLoadFloat3(&vMin);
-	XMVECTOR vectorSub = DirectX::XMVectorSubtract(vector1 , vector2);
-	XMVECTOR length = DirectX::XMVector3Length(vectorSub);
-
-	float distance = 0.0f;
-	XMStoreFloat(&distance , length);
-	return distance;
-}
-
 void CSphereColliderComponent::Update()
 {
 	CColliderComponent::Update();
@@ -66,7 +53,7 @@ void CSphereColliderComponent::Update()
 			if(collider->GetType() == EType::SPHERE)
 			{
 				CSphereColliderComponent& Sphereobj = dynamic_cast<CSphereColliderComponent&>(*collider);
-				if(LCCollision::IsCollide(this->mWorldPosition , this->mRadius , Sphereobj.mWorldPosition , Sphereobj.mRadius))
+				if(LCCollision::IsCollide(this->mWorldLocation , this->mRadius , Sphereobj.mWorldLocation , Sphereobj.mRadius))
 				{
 					ExecuteAction(collider->GetOwner());
 				}
@@ -81,7 +68,5 @@ void CSphereColliderComponent::Update()
 
 void CSphereColliderComponent::ConvertWorldCollider()
 {
-	mWorldPosition = Transform.GetWorldLocation();
-	//mWorldPosition.y = Transform.GetWorldLocation().y;
-	//mWorldPosition.z = Transform.GetWorldLocation().z;
+	mWorldLocation = Transform.GetWorldLocation();
 }
