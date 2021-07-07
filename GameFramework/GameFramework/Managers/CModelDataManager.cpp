@@ -17,14 +17,25 @@ std::string CModelDataManager::MakeFileName(std::string filePath)
 	std::string fileName;
 	std::stringstream refString { filePath };
 	std::string buf;
-	std::getline(refString , buf , '/');
-	std::getline(refString , buf , '/');
-	if(buf == "Assets" || buf == "assets")
+	std::string beforeBuf;
+	std::vector<std::string> fileDirectoryComponents;
+
+	while(1)
 	{
+		beforeBuf = buf;
 		std::getline(refString , buf , '/');
+
+		if(buf == beforeBuf)
+		{
+			fileName = fileDirectoryComponents.back();
+			break;
+		}
+		else
+		{
+			fileDirectoryComponents.emplace_back(beforeBuf);
+		}
 	}
 
-	fileName = buf;
 	fileName += mExtension;
 
 	return mModelDataCachePath.string() + "/" + fileName;
