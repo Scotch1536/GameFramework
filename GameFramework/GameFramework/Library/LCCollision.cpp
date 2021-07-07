@@ -1,8 +1,10 @@
+#include <algorithm>
+
 #include "LCCollision.h"
 
-bool LCCollision::IsCollide(const XMFLOAT3& AMin , const XMFLOAT3& AMax , const XMFLOAT3& BMin , const XMFLOAT3& BMax)
+bool LCCollision::IsCollide(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& BMin, const XMFLOAT3& BMax)
 {
-	if(AMax.x < BMin.x ||
+	if (AMax.x < BMin.x ||
 		AMax.y < BMin.y ||
 		AMax.z < BMin.z ||
 		BMax.x < AMin.x ||
@@ -14,9 +16,9 @@ bool LCCollision::IsCollide(const XMFLOAT3& AMin , const XMFLOAT3& AMax , const 
 	return true;
 }
 
-bool LCCollision::IsCollide(const XMFLOAT3& AMin , const XMFLOAT3& AMax , const XMFLOAT3& point)
+bool LCCollision::IsCollide(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& point)
 {
-	if(point.x<AMin.x ||
+	if (point.x<AMin.x ||
 		point.y<AMin.y ||
 		point.z<AMin.z ||
 		point.x>AMax.x ||
@@ -28,7 +30,7 @@ bool LCCollision::IsCollide(const XMFLOAT3& AMin , const XMFLOAT3& AMax , const 
 	return true;
 }
 
-bool LCCollision::IsCollide(const XMFLOAT3& ACenter , const float& ARadius , const XMFLOAT3& BCenter , const float& BRadius)
+bool LCCollision::IsCollide(const XMFLOAT3& ACenter, const float& ARadius, const XMFLOAT3& BCenter, const float& BRadius)
 {
 	float xAns = ACenter.x - BCenter.x;
 	float yAns = ACenter.y - BCenter.y;
@@ -36,6 +38,20 @@ bool LCCollision::IsCollide(const XMFLOAT3& ACenter , const float& ARadius , con
 
 	float sumRadius = ARadius + BRadius;
 
-	return (xAns * xAns) + (yAns * yAns) + (zAns * zAns) <= (sumRadius*sumRadius);
+	return (xAns * xAns) + (yAns * yAns) + (zAns * zAns) <= (sumRadius * sumRadius);
 }
 
+bool LCCollision::IsCollide(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& BCenter, const float& BRadius)
+{
+	//Ž²‚Ì·‚ðŒvŽZ
+	float dx = (std::max)(AMin.x - BCenter.x, 0.0f);
+	dx = (std::max)(dx, BCenter.x - AMax.x);
+	float dy = (std::max)(AMin.y - BCenter.y, 0.0f);
+	dy = (std::max)(dy, BCenter.y - AMax.y);
+	float dz = (std::max)(AMin.z - BCenter.z, 0.0f);
+	dz = (std::max)(dz, BCenter.z - AMax.z);
+
+	float dist = dx * dx + dy * dy + dz * dz;
+
+	return dist <= (BRadius * BRadius);
+}

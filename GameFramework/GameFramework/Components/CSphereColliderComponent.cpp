@@ -5,6 +5,7 @@
 #include "../Actor/CActor.h"
 #include "../Data/CModelData.h"
 
+#include "CAABBColliderComponent.h"
 #include "CSphereColliderComponent.h"
 #include "CSphereMeshComponent.h"
 
@@ -60,6 +61,11 @@ void CSphereColliderComponent::Update()
 			}
 			else if(collider->GetType() == EType::AABB)
 			{
+				CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);
+				if (LCCollision::IsCollide(AABBObj.GetWorldMin(), AABBObj.GetWorldMax(),mWorldLocation,mRadius))
+				{
+					ExecuteAction(collider->GetOwner());
+				}
 			}
 		}
 	}

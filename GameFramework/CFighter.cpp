@@ -35,7 +35,7 @@ CFighter::CFighter(ILevel& owner):CActor(owner)
 
 	/*CSphereColliderComponent& sphereCllider = *new CSphereColliderComponent(*this , mesh.GetModel() , mesh.Transform);
 	sphereCllider.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));*/
-	CAABBColliderComponent& aabb = *new CAABBColliderComponent(*this , mesh.GetModel() , Transform);
+	CSphereColliderComponent& aabb = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
 	aabb.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));
 
 	CInputManager::GetInstance().AddAction("Move" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CFighter::Move , std::ref(*this)));
