@@ -24,5 +24,15 @@ public:
 	CAABBColliderComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , bool isMesh = true , int priority = 40);
 	CAABBColliderComponent(CActor& owner , XMFLOAT3 min , XMFLOAT3 max , CTransform& parentTrans , bool isMesh = true , int priority = 40);
 
+	XMFLOAT3 GetWorldMin() 
+	{ 
+		return mWorldMin; 
+	}
+
+	XMFLOAT3 GetWorldMax()
+	{
+		return mWorldMax;
+	}
+
 	void Update()override;
 };

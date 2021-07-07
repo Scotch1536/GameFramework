@@ -3,6 +3,7 @@
 #include "../Actor/CActor.h"
 #include "../Data/CModelData.h"
 
+#include "CAABBColliderComponent.h"
 #include "CSphereColliderComponent.h"
 #include "CSphereMeshComponent.h"
 
@@ -53,14 +54,18 @@ void CSphereColliderComponent::Update()
 			if(collider->GetType() == EType::SPHERE)
 			{
 				CSphereColliderComponent& Sphereobj = dynamic_cast<CSphereColliderComponent&>(*collider);
-				if(LCCollision::IsCollide(this->mWorldLocation , this->mRadius , Sphereobj.mWorldLocation , Sphereobj.mRadius))
+				if(LCCollision::IsCollide(mWorldLocation , mRadius , Sphereobj.mWorldLocation , Sphereobj.mRadius))
 				{
 					ExecuteAction(collider->GetOwner());
 				}
 			}
 			else if(collider->GetType() == EType::AABB)
 			{
-
+				CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);
+				if (LCCollision::IsCollide(AABBObj.GetWorldMin(), AABBObj.GetWorldMax(),mWorldLocation,mRadius))
+				{
+					ExecuteAction(collider->GetOwner());
+				}
 			}
 		}
 	}
