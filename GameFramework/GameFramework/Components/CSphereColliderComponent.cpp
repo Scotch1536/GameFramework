@@ -62,7 +62,7 @@ void CSphereColliderComponent::Update()
 			else if(collider->GetType() == EType::AABB)
 			{
 				CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);
-				if (LCCollision::IsCollide(AABBObj.GetWorldMin(), AABBObj.GetWorldMax(),mWorldLocation,mRadius))
+				if(LCCollision::IsCollide(AABBObj.GetWorldMin() , AABBObj.GetWorldMax() , mCenter , mWorldRadius))
 				{
 					ExecuteAction(collider->GetOwner());
 				}

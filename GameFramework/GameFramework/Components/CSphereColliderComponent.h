@@ -23,14 +23,14 @@ public:
 	CSphereColliderComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , bool isMesh = true , int priority = 40);
 	CSphereColliderComponent(CActor& owner , CTransform& parentTrans , bool isMesh = true , int priority = 40);
 
-	XMFLOAT3 GetWorldLocation()
+	XMFLOAT3 GetCenter()
 	{
-		return mWorldLocation;
+		return mCenter;
 	}
 
-	float GetRadius()
+	float GetWorldRadius()
 	{
-		return mRadius;
+		return mWorldRadius;
 	}
 
 	void Update()override;
