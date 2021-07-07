@@ -19,6 +19,15 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{2cc4b330-84cf-498a-8c5f-6e90f06f142f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{5b6134b8-b698-4ed9-acd4-80c57eaca0f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ソースファイル">
+      <UniqueIdentifier>{e7b1dd70-b92b-4a4e-b36e-eef80591ad12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ヘッダーファイル">
+      <UniqueIdentifier>{e39a951d-6eb2-40e6-a599-06185b976966}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameFramework\Transform\CRotator.cpp">
@@ -63,15 +72,6 @@
     <ClCompile Include="GameFramework\ExternalCode\utftosjisconv.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Components\CComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Components\CRenderComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\Actor\CActor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -85,12 +85,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="CDice.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CTestCharacter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Library\LCCollision.cpp">
@@ -135,16 +129,7 @@
     <ClCompile Include="CFighter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Components\CSphereMeshComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\Managers\CDirectXResourceManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Components\CSphereColliderComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Components\CColliderComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Managers\CColliderManager.cpp">
@@ -153,17 +138,38 @@
     <ClCompile Include="GameFramework\Data\CModelData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Components\CPrimitiveMeshComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Components\CBoxMeshComponent.cpp">
+    <ClCompile Include="GameFramework\Data\CModelMeshData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CAABBColliderComponent.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Components\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Data\CModelMeshData.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="GameFramework\Components\CBoxMeshComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CColliderComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CPrimitiveMeshComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CRenderComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CSphereColliderComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CSphereMeshComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,34 +227,16 @@
     <ClInclude Include="GameFramework\ExternalCode\utftosjisconv.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Components\CCameraComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Components\CComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Components\CLightComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Components\CRenderComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Actor\CActor.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CTestCharacter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="CDice.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="CTestLevel.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Components\CSpringArmComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Library\LCCollision.h">
@@ -296,16 +284,7 @@
     <ClInclude Include="CFighter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Components\CSphereMeshComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Managers\CDirectXResourceManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Components\CSphereColliderComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Components\CColliderComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Managers\CColliderManager.h">
@@ -317,17 +296,41 @@
     <ClInclude Include="GameFramework\Data\VertexProto.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Components\CPrimitiveMeshComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Components\CBoxMeshComponent.h">
+    <ClInclude Include="GameFramework\Data\CModelMeshData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CAABBColliderComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Data\CModelMeshData.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="GameFramework\Components\CBoxMeshComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CCameraComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CColliderComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CLightComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CPrimitiveMeshComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CRenderComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CSphereColliderComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CSphereMeshComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CSpringArmComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

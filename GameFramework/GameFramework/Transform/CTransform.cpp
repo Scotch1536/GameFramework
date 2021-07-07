@@ -16,6 +16,11 @@ CTransform::CTransform(IActor& partner):CTransform()
 	partner.GetTransform().AttachTransform(*this);
 }
 
+CTransform::CTransform(CTransform& partner):CTransform()
+{
+	partner.AttachTransform(*this);
+}
+
 CTransform::~CTransform()
 {
 	if(mParentTransform != nullptr)mParentTransform->DetachTransform(*this);

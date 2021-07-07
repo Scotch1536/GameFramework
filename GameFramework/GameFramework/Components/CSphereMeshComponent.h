@@ -13,7 +13,7 @@ private:
 	void CreateIndexData()override;
 
 public:
-	CSphereMeshComponent(CActor& owner , float radius , int divNum , XMFLOAT4 color ,
+	CSphereMeshComponent(CActor& owner , CTransform& parentTrans , float radius , int divNum , XMFLOAT4 color ,
 		std::string vertexShaderPath = "Shader/vsnotex.hlsl" , std::string pixelShaderPath = "Shader/psnotex.hlsl");
 
 };

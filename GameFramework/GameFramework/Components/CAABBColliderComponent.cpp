@@ -16,7 +16,7 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner , const CModelData&
 	isMesh = false;
 #endif
 
-	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , mLocalMin , mLocalMax , { 1.0f,1.0f,1.0f,0.3f });
+	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , mLocalMin , mLocalMax , { 1.0f,1.0f,1.0f,0.3f });
 }
 
 CAABBColliderComponent::CAABBColliderComponent(CActor& owner , CTransform& parentTrans , bool isMesh , int priority)
@@ -27,7 +27,7 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner , CTransform& paren
 	isMesh = false;
 #endif
 
-	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , mLocalMin , mLocalMax , { 1.0f,1.0f,1.0f,0.3f });
+	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , mLocalMin , mLocalMax , { 1.0f,1.0f,1.0f,0.3f });
 }
 
 void CAABBColliderComponent::Update()
@@ -50,7 +50,7 @@ void CAABBColliderComponent::Update()
 			else if(collider->GetType() == EType::SPHERE)
 			{
 				CSphereColliderComponent& sphereObj = dynamic_cast<CSphereColliderComponent&>(*collider);
-				if (LCCollision::IsCollide(mWorldMin, mWorldMax, sphereObj.GetCenter(), sphereObj.GetWorldRadius()))
+				if(LCCollision::IsCollide(mWorldMin , mWorldMax , sphereObj.GetCenter() , sphereObj.GetWorldRadius()))
 				{
 					ExecuteAction(collider->GetOwner());
 				}

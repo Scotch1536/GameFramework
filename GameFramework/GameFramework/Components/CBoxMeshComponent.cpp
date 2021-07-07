@@ -2,9 +2,9 @@
 
 #include "CBoxMeshComponent.h"
 
-CBoxMeshComponent::CBoxMeshComponent(CActor& owner , XMFLOAT3 min , XMFLOAT3 max , XMFLOAT4 color ,
+CBoxMeshComponent::CBoxMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT3 min , XMFLOAT3 max , XMFLOAT4 color ,
 	std::string vertexShaderPath , std::string pixelShaderPath)
-	:CPrimitiveMeshComponent(owner , color , vertexShaderPath , pixelShaderPath) ,
+	:CPrimitiveMeshComponent(owner , parentTrans , color , vertexShaderPath , pixelShaderPath) ,
 	mMin(min) , mMax(max)
 {
 	CreateVertexData();

@@ -12,7 +12,7 @@ private:
 	void CreateIndexData()override;
 
 public:
-	CBoxMeshComponent(CActor& owner , XMFLOAT3 min , XMFLOAT3 max , XMFLOAT4 color ,
+	CBoxMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT3 min , XMFLOAT3 max , XMFLOAT4 color ,
 		std::string vertexShaderPath = "Shader/vsnotex.hlsl" , std::string pixelShaderPath = "Shader/psnotex.hlsl");
 
 };

@@ -7,9 +7,9 @@
 #include "CStaticMeshComponent.h"
 #include "CRenderComponent.h"
 
-CStaticMeshComponent::CStaticMeshComponent(CActor& owner , CModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority)
+CStaticMeshComponent::CStaticMeshComponent(CActor& owner , CTransform& parentTrans , CModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority)
 	:CComponent(owner , priority) ,
-	Transform(owner) ,
+	Transform(parentTrans) ,
 	mModel(model) ,
 	mRenderComponent(*new CRenderComponent(owner))
 {

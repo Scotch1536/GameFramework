@@ -9,7 +9,6 @@
 
 #include "CTestLevel.h"
 #include "CDice.h"
-#include "CTestCharacter.h"
 #include "CFighter.h"
 #include "CSkyDome.h"
 
@@ -25,32 +24,17 @@ void CTestLevel::Init()
 	*/
 	//CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , dice , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CDice::Rot , std::ref(dice) , 0));
 
-	//CTestCharacter& testChara = *new CTestCharacter(*this);
-	//testChara.Transform.Rotation.Angle.z = 180.f;
-	//testChara.Transform.Rotation.Angle.y = 180.f;
-
-	//testChara.Transform.AttachTransform(dice.Transform);
-
-
 	CFighter& fighter = *new CFighter(*this);
 	mFighter = &fighter;
 
 	CSkyDome& skyDome = *new CSkyDome(*this);
 
 	CComponent* buf = nullptr;
-	//std::vector<CComponent*> buf2;
-	//if(testChara.GetComponent<CCameraComponent>(buf))
-	//{
-	//	CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*buf);
-	//	this->RequestSetCamera(camera);
-	//}
-
 	if(fighter.GetComponent<CCameraComponent>(buf))
 	{
 		CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*buf);
 		this->RequestSetCamera(camera);
 	}
-
 }
 
 void CTestLevel::Tick()

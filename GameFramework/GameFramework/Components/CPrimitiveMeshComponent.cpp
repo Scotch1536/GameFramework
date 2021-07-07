@@ -5,11 +5,11 @@
 #include "CPrimitiveMeshComponent.h"
 #include "CRenderComponent.h"
 
-CPrimitiveMeshComponent::CPrimitiveMeshComponent(CActor& owner , XMFLOAT4 color , std::string vertexShaderPath , std::string pixelShaderPath)
+CPrimitiveMeshComponent::CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color , std::string vertexShaderPath , std::string pixelShaderPath)
 	:CComponent(owner , 100) ,
 	mRenderComponent(*new CRenderComponent(owner)) ,
 	mColor(color) ,
-	Transform(owner)
+	Transform(parentTrans)
 {
 	if(mColor.w < 1.0f)
 	{

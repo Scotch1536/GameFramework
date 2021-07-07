@@ -13,7 +13,8 @@
 
 CFighter::CFighter(ILevel& owner):CActor(owner)
 {
-	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("Assets/Fighter01/Su-27.fbx" , "Assets/Fighter01/textures/") ,
+	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , Transform ,
+		CModelDataManager::GetInstance().GetModel("Assets/Fighter01/Su-27.fbx" , "Assets/Fighter01/textures/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
 
 	mesh.Transform.Rotation.Angle.x = -90.f;
@@ -33,7 +34,7 @@ CFighter::CFighter(ILevel& owner):CActor(owner)
 	light.SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
 	light.SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
-	/*CSphereColliderComponent& sphereCllider = *new CSphereColliderComponent(*this , mesh.GetModel() , mesh.Transform);
+	/*CSphereColliderComponent& sphereCllider = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
 	sphereCllider.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));*/
 	CSphereColliderComponent& aabb = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
 	aabb.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));

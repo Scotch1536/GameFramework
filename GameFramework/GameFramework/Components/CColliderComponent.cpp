@@ -2,10 +2,10 @@
 
 #include "CColliderComponent.h"
 
-CColliderComponent::CColliderComponent(CActor& owner , CTransform& parentTrans , EType type , int priority):CComponent(owner , priority) , mType(type)
+CColliderComponent::CColliderComponent(CActor& owner , CTransform& parentTrans , EType type , int priority)
+	:CComponent(owner , priority) ,
+	mType(type) , Transform(parentTrans)
 {
-	parentTrans.AttachTransform(Transform);
-
 	CColliderManager::GetInstance().AddCollider(*this);			//コリジョンマネージャーに追加
 }
 
