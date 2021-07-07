@@ -20,8 +20,8 @@ CDice::CDice(CLevel& owner):CActor(owner , false)
 	CStaticMeshComponent& staticMesh = *new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("./Assets/dice/PlayerBox.x" , "assets/dice/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
 
-	CAABBColliderComponent& aabb = *new CAABBColliderComponent(*this , staticMesh.GetModel() , Transform);
-	//CSphereColliderComponent* sphereCllider = new CSphereColliderComponent(*this , staticMesh->GetModel() , staticMesh->Transform);
+	//CAABBColliderComponent& aabb = *new CAABBColliderComponent(*this , staticMesh.GetModel() , Transform);
+	CSphereColliderComponent* sphereCllider = new CSphereColliderComponent(*this , staticMesh.GetModel() , Transform);
 
 	//タグ追加
 	AddTag("Dice");
