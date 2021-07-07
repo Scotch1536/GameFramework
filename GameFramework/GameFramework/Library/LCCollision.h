@@ -7,10 +7,11 @@ using namespace DirectX;
 static class LCCollision
 {
 public:
-	//AABB     Intersect:交差　　　　Contains:内包
+	//AABB 
 	static bool IsCollide(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& BMin, const XMFLOAT3& BMax);
 	static bool IsCollide(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& point);
-	//Sphere   Intersect:交差
+	//Sphere 
 	static bool IsCollide(const XMFLOAT3& ACenter,const float& ARadius, const XMFLOAT3& BCenter, const float& BRadius);
-
+	//AABBとSphere 
+	static bool IsCollide(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& BCenter, const float& BRadius);
 };

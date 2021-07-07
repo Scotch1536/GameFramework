@@ -4,6 +4,7 @@
 #include "../Data/CModelData.h"
 
 #include "CAABBColliderComponent.h"
+#include "CSphereColliderComponent.h"
 #include "CBoxMeshComponent.h"
 
 CAABBColliderComponent::CAABBColliderComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , bool isMesh , int priority)
@@ -40,15 +41,19 @@ void CAABBColliderComponent::Update()
 		{
 			if(collider->GetType() == EType::AABB)
 			{
-				CAABBColliderComponent& AABBobj = dynamic_cast<CAABBColliderComponent&>(*collider);
-				if(LCCollision::IsCollide(this->mWorldMin , this->mWorldMax , AABBobj.mWorldMin , AABBobj.mWorldMax))
+				CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);
+				if(LCCollision::IsCollide(mWorldMin , mWorldMax , AABBObj.mWorldMin , AABBObj.mWorldMax))
 				{
 					ExecuteAction(collider->GetOwner());
 				}
 			}
 			else if(collider->GetType() == EType::SPHERE)
 			{
-
+				CSphereColliderComponent& sphereObj = dynamic_cast<CSphereColliderComponent&>(*collider);
+				if (LCCollision::IsCollide(mWorldMin, mWorldMax, sphereObj.GetCenter(), sphereObj.GetWorldRadius()))
+				{
+					ExecuteAction(collider->GetOwner());
+				}
 			}
 		}
 	}
