@@ -5,6 +5,7 @@
 
 CSkyDome::CSkyDome(ILevel& owner):CActor(owner)
 {
-	CStaticMeshComponent& staticMesh = *new CStaticMeshComponent(*this , CModelDataManager::GetInstance().GetModel("Assets/skydome/skydome.x" , "Assets/skydome/") ,
+	CStaticMeshComponent& staticMesh = *new CStaticMeshComponent(*this , Transform ,
+		CModelDataManager::GetInstance().GetModel("Assets/skydome/skydome.x" , "Assets/skydome/") ,
 		"Shader/vs.hlsl" , "Shader/pstexcol.hlsl");
 }

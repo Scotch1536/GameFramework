@@ -39,7 +39,7 @@ protected:
 public:
 	CTransform Transform;			//トランスフォーム
 
-	CPrimitiveMeshComponent(CActor& owner , XMFLOAT4 color , std::string vertexShaderPath , std::string pixelShaderPath);
+	CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color , std::string vertexShaderPath , std::string pixelShaderPath);
 
 	void Update()override;
 	void Render()override;

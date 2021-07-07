@@ -19,7 +19,7 @@ private:
 public:
 	CTransform Transform;			//トランスフォーム
 
-	CStaticMeshComponent(CActor& owner , CModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority = 90);
+	CStaticMeshComponent(CActor& owner , CTransform& parentTrans , CModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority = 90);
 
 	//モデルのセット
 	void SetModel(CModelData& model)

@@ -14,7 +14,6 @@
     <ClCompile Include="CDice.cpp" />
     <ClCompile Include="CFighter.cpp" />
     <ClCompile Include="CSkyDome.cpp" />
-    <ClCompile Include="CTestCharacter.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
@@ -64,7 +63,6 @@
     <ClInclude Include="CDice.h" />
     <ClInclude Include="CFighter.h" />
     <ClInclude Include="CSkyDome.h" />
-    <ClInclude Include="CTestCharacter.h" />
     <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
     <ClInclude Include="GameFramework\Components\CAABBColliderComponent.h" />

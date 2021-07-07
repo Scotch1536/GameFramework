@@ -25,10 +25,10 @@ private:
 	bool mIsChild = false;					//自分が子トランスフォームか
 
 public:
-	XMFLOAT3 Location = { 0.f,0.f,0.f };			//ロケーション
-	XMFLOAT3 Scale = { 1.f,1.f,1.f };				//スケール
+	XMFLOAT3 Location = { 0.f,0.f,0.f };		//ロケーション
+	XMFLOAT3 Scale = { 1.f,1.f,1.f };			//スケール
 
-	CRotator Rotation;								//ローテーション
+	CRotator Rotation;			//ローテーション
 
 	CTransform();
 
@@ -37,6 +37,9 @@ public:
 	（アクターのトランスフォームに従属させる）
 	*/
 	CTransform(IActor& partner);
+
+	//作るときから従属するトランスフォームが決まっている時のコンストラクタ
+	CTransform(CTransform& partner);
 
 	~CTransform();
 
