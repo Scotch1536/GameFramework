@@ -19,12 +19,10 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner , const CModelData&
 	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , mLocalMin , mLocalMax , { 1.0f,1.0f,1.0f,0.3f });
 }
 
-CAABBColliderComponent::CAABBColliderComponent(CActor& owner , XMFLOAT3 min , XMFLOAT3 max , CTransform& parentTrans , bool isMesh , int priority)
-	:CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority)
+CAABBColliderComponent::CAABBColliderComponent(CActor& owner , CTransform& parentTrans , bool isMesh , int priority)
+	:CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority) ,
+	mLocalMin({ -1.0f,-1.0f,-1.0f }) , mLocalMax({ 1.0f,1.0f,1.0f })
 {
-	mLocalMin = min;
-	mLocalMax = max;
-
 #ifndef _DEBUG
 	isMesh = false;
 #endif

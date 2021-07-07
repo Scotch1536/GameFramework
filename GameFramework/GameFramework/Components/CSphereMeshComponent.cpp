@@ -61,7 +61,7 @@ void CSphereMeshComponent::CreateIndexData()
 	{
 		for(int x = 0; x < mDivisionNumber; ++x)
 		{
-			int count = (mDivisionNumber + 1)*y + x;			// 左上座標のインデックス
+			int count = (mDivisionNumber + 1)*y + x;		// 左上座標のインデックス
 
 			// 上半分
 			mIndices.emplace_back(count);
