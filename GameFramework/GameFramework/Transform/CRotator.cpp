@@ -9,10 +9,26 @@ CRotator::CRotator(const CTransform& partner):mPartner(partner)
 	DX11QtIdentity(mQuaternion);
 }
 
+void CRotator::UpdateAngle(float& angle)
+{
+	if(angle < 0.0f)
+	{
+		angle = 360.0f + angle;
+	}
+	else if(angle > 360.0f)
+	{
+		angle = angle - 360.0f;
+	}
+}
+
 bool CRotator::Update()
 {
 	if(!LCMath::CompareFloat3(mAngle , mLastFrameAngle))
 	{
+		UpdateAngle(mAngle.x);
+		UpdateAngle(mAngle.y);
+		UpdateAngle(mAngle.z);
+
 		mLastFrameAngle = mAngle;
 
 		mIsSameAngle = false;
@@ -68,7 +84,12 @@ void CRotator::ChangeAngleToLocation(XMFLOAT3 location)
 	LCMath::CalcFloat3Normalize(vec , vec);
 
 	//クォータニオンに必要な角度を計算
-	angle = acosf(LCMath::CalcFloat3Dot(mPartner.GetForwardVector() , vec , angle));
+	LCMath::CalcFloat3Dot(mPartner.GetForwardVector() , vec , angle);
+
+	if(angle > 1.0f)angle = 1.0f;
+	else if(angle < 0.0f)angle = 0.0f;
+
+	angle = std::acosf(angle);
 	angle = XMConvertToDegrees(angle);
 
 	//角度が0なら終了
@@ -78,7 +99,7 @@ void CRotator::ChangeAngleToLocation(XMFLOAT3 location)
 	LCMath::CalcFloat3Cross(mPartner.GetForwardVector() , vec , axis);
 
 	//軸が全て0なら終了
-	if(axis.x == 0 && axis.y == 0 && axis.z == 0)return;
+	//if(axis.x == 0 && axis.y == 0 && axis.z == 0)return;
 
 	//クォータニオン作成
 	LCMath::CreateFromAxisAndAngleToQuaternion(axis , angle , mulQua);

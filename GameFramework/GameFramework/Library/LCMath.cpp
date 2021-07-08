@@ -1,3 +1,4 @@
+#include <cmath>
 #include "LCMath.h"
 
 #include "../ExternalCode/dx11mathutil.h"
@@ -29,26 +30,38 @@ const XMFLOAT4& LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& axi
 
 const XMFLOAT3& LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua , XMFLOAT3& resultAngle)
 {
-	float roll , pitch , yaw;
+	double pitch , yaw , roll;
 
-	float q0q0 = qua.x * qua.x;
-	float q0q1 = qua.x * qua.y;
-	float q0q2 = qua.x * qua.z;
-	float q0q3 = qua.x * qua.w;
-	float q1q1 = qua.y * qua.y;
-	float q1q2 = qua.y * qua.z;
-	float q1q3 = qua.y * qua.w;
-	float q2q2 = qua.z * qua.z;
-	float q2q3 = qua.z * qua.w;
-	float q3q3 = qua.w * qua.w;
+	//double q0q0 = qua.x * qua.x;
+	//double q0q1 = qua.x * qua.y;
+	//double q0q2 = qua.x * qua.z;
+	//double q0q3 = qua.x * qua.w;
+	//double q1q1 = qua.y * qua.y;
+	//double q1q2 = qua.y * qua.z;
+	//double q1q3 = qua.y * qua.w;
+	//double q2q2 = qua.z * qua.z;
+	//double q2q3 = qua.z * qua.w;
+	//double q3q3 = qua.w * qua.w;
 
-	roll = atan2(2.0 * (q2q3 + q0q1) , q0q0 - q1q1 - q2q2 + q3q3);
-	pitch = asin(2.0 * (q0q2 - q1q3));
-	yaw = atan2(2.0 * (q1q2 + q0q3) , q0q0 + q1q1 - q2q2 - q3q3);
+	//pitch = std::atan2(2.0 * (q2q3 + q0q1) , q0q0 - q1q1 - q2q2 + q3q3);
+	//yaw = std::asin(2.0 * (q0q2 - q1q3));
+	//roll = std::atan2(2.0 * (q1q2 + q0q3) , q0q0 + q1q1 - q2q2 - q3q3);
 
-	resultAngle.x = XMConvertToDegrees(roll);
-	resultAngle.y = XMConvertToDegrees(pitch);
-	resultAngle.z = XMConvertToDegrees(yaw);
+	double r11 , r12 , r21 , r31 , r32;
+
+	r11 = -2 * (qua.y*qua.z - qua.w*qua.x);
+	r12 = qua.w*qua.w - qua.x*qua.x - qua.y*qua.y + qua.z*qua.z;
+	r21 = 2 * (qua.x*qua.z + qua.w*qua.y);
+	r31 = -2 * (qua.x*qua.y + qua.w*qua.z);
+	r32 = qua.w*qua.w + qua.x*qua.x - qua.y*qua.y - qua.z*qua.z;
+
+	pitch = std::atan2(r31 , r32);
+	yaw = std::asin(r21);
+	roll = std::atan2(r11 , r12);
+
+	resultAngle.x = XMConvertToDegrees(pitch);
+	resultAngle.y = XMConvertToDegrees(yaw);
+	resultAngle.z = XMConvertToDegrees(roll);
 
 	return resultAngle;
 }
