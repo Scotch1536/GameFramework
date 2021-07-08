@@ -1,5 +1,3 @@
-#include <algorithm>
-
 #include "../Library/LCMath.h"
 #include "../ExternalCode/dx11mathutil.h"
 
@@ -88,12 +86,12 @@ void CRotator::ChangeAngleToLocation(XMFLOAT3 location)
 	//クォータニオンに必要な角度を計算
 	LCMath::CalcFloat3Dot(mPartner.GetForwardVector() , vec , angle);
 
-	//結果が1ならベクトル同士が平行なので終了
+	/*
+	結果が1(小数点がはみ出ることがあるので1以上)ならベクトル同士が平行なので終了
+	-1以下なら-1にする
+	*/
 	if(angle >= 1.0f)return;
 	else if(angle < -1.0f)angle = -1.0f;
-
-	//小数点以下がはみ出ることがあるのでclampする
-	std::clamp(angle , -1.0f , 1.0f);
 
 	//角度を求める
 	angle = std::acosf(angle);
