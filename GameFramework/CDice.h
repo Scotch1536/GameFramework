@@ -11,7 +11,5 @@ public:
 	CDice(CLevel& owner);
 
 	void GamePause();
-
-	void Rot(int dire);
 };
 

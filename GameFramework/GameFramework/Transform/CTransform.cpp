@@ -5,7 +5,7 @@
 
 #include "CTransform.h"
 
-CTransform::CTransform()
+CTransform::CTransform():Rotation(*this)
 {
 	DX11MtxIdentity(mWorldMatrixSelf);
 	DX11MtxIdentity(mWorldMatrixResult);
@@ -13,7 +13,7 @@ CTransform::CTransform()
 
 CTransform::CTransform(const CActor& partner):CTransform() {}
 
-CTransform::CTransform(CTransform& partner):CTransform()
+CTransform::CTransform(CTransform& partner) : CTransform()
 {
 	partner.AttachTransform(*this);
 }
@@ -164,17 +164,18 @@ XMFLOAT3 CTransform::GetWorldScale()const
 
 XMFLOAT3 CTransform::GetWorldRotatorAngle()const
 {
+	XMFLOAT3 angle = Rotation.GetAngle();
 	XMFLOAT3 result;
 
 	if(mParentTransform != nullptr)
 	{
 		result = mParentTransform->GetWorldRotatorAngle();
 
-		result.x += Rotation.Angle.x;
-		result.y += Rotation.Angle.y;
-		result.z += Rotation.Angle.z;
+		result.x += angle.x;
+		result.y += angle.y;
+		result.z += angle.z;
 
 		return result;
 	}
-	else return Rotation.Angle;
+	else return angle;
 }

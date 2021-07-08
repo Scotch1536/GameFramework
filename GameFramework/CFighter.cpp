@@ -17,8 +17,7 @@ CFighter::CFighter(ILevel& owner):CActor(owner)
 		CModelDataManager::GetInstance().GetModel("Assets/Fighter01/Su-27.fbx" , "Assets/Fighter01/textures/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
 
-	mesh.Transform.Rotation.Angle.x = -90.f;
-	mesh.Transform.Rotation.Angle.z = 180.f;
+	mesh.Transform.Rotation.SetAngle({ -90.0f ,0.0f,180.0f });
 
 	CLightComponent& light = *new CLightComponent(*this);
 
@@ -61,23 +60,25 @@ void CFighter::Rot(int num)
 	switch(num)
 	{
 	case 0:
-		Transform.Rotation.Angle.x--;
+		Transform.Rotation.AddAngle({ 1.0f,0.0f,0.0f });;
 		return;
 	case 1:
-		Transform.Rotation.Angle.x++;
+		Transform.Rotation.AddAngle({ -1.0f,0.0f,0.0f });
 		return;
 	case 2:
-		Transform.Rotation.Angle.y--;
+		Transform.Rotation.AddAngle({ 0.0f,1.0f,0.0f });
 		return;
 	case 3:
-		Transform.Rotation.Angle.y++;
+		Transform.Rotation.AddAngle({ 0.0f,-1.0f,0.0f });
 		return;
 	case 4:
-		Transform.Rotation.Angle.z++;
+		Transform.Rotation.AddAngle({ 0.0f,0.0f,1.0f });
 		return;
 	case 5:
-		Transform.Rotation.Angle.z--;
+		Transform.Rotation.AddAngle({ 0.0f,0.0f,-1.0f });
 		return;
+	default:
+		break;
 	}
 }
 

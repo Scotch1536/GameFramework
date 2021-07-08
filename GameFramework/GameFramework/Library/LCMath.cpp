@@ -2,39 +2,77 @@
 
 #include "../ExternalCode/dx11mathutil.h"
 
-void LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& angle , XMFLOAT4& ansQua)
+const XMFLOAT4& LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& axisX , const XMFLOAT3& axisY , const XMFLOAT3& axisZ ,
+	const XMFLOAT3& eulerAngle , XMFLOAT4& resultQua)
 {
+	//XMFLOAT3 vec , axis;
+	//XMFLOAT3 originAxis = { 1.0f,1.0f,1.0f };
+	//float angle;
+
+	//LCMath::CalcFloat3Normalize(eulerAngle , vec);
+	//angle = acosf(LCMath::CalcFloat3Dot(originAxis , vec , angle));
+	//angle = XMConvertToDegrees(angle);
+	//LCMath::CalcFloat3Cross(originAxis , vec , axis);
+	//LCMath::CreateFromAxisAndAngleToQuaternion(axis , angle , resultQua);
+
 	XMFLOAT4 qtx , qty , qtz;
-	XMFLOAT4 axisX = { 1,0,0,0 };
-	XMFLOAT4 axisY = { 0,1,0,0 };
-	XMFLOAT4 axisZ = { 0,0,1,0 };
 
-	DX11QtRotationAxis(qtx , axisX , angle.x);
-	DX11QtRotationAxis(qty , axisY , angle.y);
-	DX11QtRotationAxis(qtz , axisZ , angle.z);
+	CreateFromAxisAndAngleToQuaternion(axisX , eulerAngle.x , qtx);
+	CreateFromAxisAndAngleToQuaternion(axisY , eulerAngle.y , qty);
+	CreateFromAxisAndAngleToQuaternion(axisZ , eulerAngle.z , qtz);
 
-	DX11QtMul(ansQua , qtx , qty);
-	DX11QtMul(ansQua , ansQua , qtz);
+	DX11QtMul(resultQua , qtx , qty);
+	DX11QtMul(resultQua , resultQua , qtz);
+
+	return resultQua;
 }
 
-void LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , const XMFLOAT4X4& rotMTX , XMFLOAT4X4& result)
+const XMFLOAT3& LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua , XMFLOAT3& resultAngle)
 {
-	result._11 = scale.x * rotMTX._11;
-	result._12 = scale.y * rotMTX._12;
-	result._13 = scale.z * rotMTX._13;
+	float roll , pitch , yaw;
 
-	result._21 = scale.x * rotMTX._21;
-	result._22 = scale.y * rotMTX._22;
-	result._23 = scale.z * rotMTX._23;
+	float q0q0 = qua.x * qua.x;
+	float q0q1 = qua.x * qua.y;
+	float q0q2 = qua.x * qua.z;
+	float q0q3 = qua.x * qua.w;
+	float q1q1 = qua.y * qua.y;
+	float q1q2 = qua.y * qua.z;
+	float q1q3 = qua.y * qua.w;
+	float q2q2 = qua.z * qua.z;
+	float q2q3 = qua.z * qua.w;
+	float q3q3 = qua.w * qua.w;
 
-	result._31 = scale.x * rotMTX._31;
-	result._32 = scale.y * rotMTX._32;
-	result._33 = scale.z * rotMTX._33;
+	roll = atan2(2.0 * (q2q3 + q0q1) , q0q0 - q1q1 - q2q2 + q3q3);
+	pitch = asin(2.0 * (q0q2 - q1q3));
+	yaw = atan2(2.0 * (q1q2 + q0q3) , q0q0 + q1q1 - q2q2 - q3q3);
 
-	result._41 = location.x;
-	result._42 = location.y;
-	result._43 = location.z;
-	result._44 = 1;
+	resultAngle.x = XMConvertToDegrees(roll);
+	resultAngle.y = XMConvertToDegrees(pitch);
+	resultAngle.z = XMConvertToDegrees(yaw);
+
+	return resultAngle;
+}
+
+const XMFLOAT4X4& LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , const XMFLOAT4X4& rotMTX , XMFLOAT4X4& resultMTX)
+{
+	resultMTX._11 = scale.x * rotMTX._11;
+	resultMTX._12 = scale.y * rotMTX._12;
+	resultMTX._13 = scale.z * rotMTX._13;
+
+	resultMTX._21 = scale.x * rotMTX._21;
+	resultMTX._22 = scale.y * rotMTX._22;
+	resultMTX._23 = scale.z * rotMTX._23;
+
+	resultMTX._31 = scale.x * rotMTX._31;
+	resultMTX._32 = scale.y * rotMTX._32;
+	resultMTX._33 = scale.z * rotMTX._33;
+
+	resultMTX._41 = location.x;
+	resultMTX._42 = location.y;
+	resultMTX._43 = location.z;
+	resultMTX._44 = 1;
+
+	return resultMTX;
 }
 
 bool LCMath::CompareFloat3(const XMFLOAT3& target1 , const XMFLOAT3& target2)
@@ -42,6 +80,7 @@ bool LCMath::CompareFloat3(const XMFLOAT3& target1 , const XMFLOAT3& target2)
 	if(target1.x != target2.x)return false;
 	if(target1.y != target2.y)return false;
 	if(target1.z != target2.z)return false;
+
 	return true;
 }
 
@@ -70,37 +109,77 @@ bool LCMath::CompareMatrix(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2
 	return true;
 }
 
-void LCMath::CalcFloat3FromStartToGoal(const XMFLOAT3& start , const XMFLOAT3& goal , XMFLOAT3& ansVec)
+const XMFLOAT4& LCMath::CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis , const float& angle , XMFLOAT4& result)
+{
+	XMFLOAT4 sendAxis;
+
+	sendAxis.x = axis.x;
+	sendAxis.y = axis.y;
+	sendAxis.z = axis.z;
+	sendAxis.w = 0;
+
+	DX11QtRotationAxis(result , sendAxis , angle);
+
+	return result;
+}
+
+const XMFLOAT4& LCMath::CalcQuaternionMultiply(const XMFLOAT4& qua1 , const XMFLOAT4& qua2 , XMFLOAT4& result)
+{
+	DX11QtMul(result , qua1 , qua2);
+
+	return result;
+}
+
+const XMFLOAT3& LCMath::CalcFloat3FromStartToGoal(const XMFLOAT3& start , const XMFLOAT3& goal , XMFLOAT3& result)
 {
 	XMVECTOR startVec = XMLoadFloat3(&start);
 	XMVECTOR goalVec = XMLoadFloat3(&goal);
 
-	XMStoreFloat3(&ansVec , XMVectorSubtract(goalVec , startVec));
+	XMStoreFloat3(&result , XMVectorSubtract(goalVec , startVec));
+
+	return result;
 }
 
-void LCMath::CalcFloat3Length(const XMFLOAT3& target , float& ansLength)
+const float& LCMath::CalcFloat3Length(const XMFLOAT3& target , float& result)
 {
-	DX11Vec3Length(target , ansLength);
+	DX11Vec3Length(target , result);
+
+	return result;
 }
 
-void LCMath::CalcFloat3Normalize(const XMFLOAT3& target , XMFLOAT3& ansvec)
+const XMFLOAT3& LCMath::CalcFloat3Normalize(const XMFLOAT3& target , XMFLOAT3& result)
 {
-	DX11Vec3Normalize(ansvec , target);
+	DX11Vec3Normalize(result , target);
+
+	return result;
 }
 
-
-float LCMath::Lerp(float start , float end , float alpha)
+const float& LCMath::CalcFloat3Dot(const XMFLOAT3& target1 , const XMFLOAT3& target2 , float& result)
 {
-	return (1 - alpha)*start + alpha * end;
+	DX11Vec3Dot(result , target1 , target2);
+
+	return result;
 }
 
-XMFLOAT3 LCMath::Lerp(const XMFLOAT3& start , const XMFLOAT3& end , float alpha)
+const XMFLOAT3& LCMath::CalcFloat3Cross(const XMFLOAT3& target1 , const XMFLOAT3& target2 , XMFLOAT3& result)
 {
-	XMFLOAT3 result;
+	DX11Vec3Cross(result , target1 , target2);
 
-	result.x = Lerp(start.x , end.x , alpha);
-	result.y = Lerp(start.y , end.y , alpha);
-	result.z = Lerp(start.z , end.z , alpha);
+	return result;
+}
+
+const float& LCMath::Lerp(const float& start , const float& end , const float& alpha , float& result)
+{
+	result = (1 - alpha)*start + alpha * end;
+
+	return result;
+}
+
+const XMFLOAT3& LCMath::Lerp(const XMFLOAT3& start , const XMFLOAT3& end , const float& alpha , XMFLOAT3& result)
+{
+	Lerp(start.x , end.x , alpha , result.x);
+	Lerp(start.y , end.y , alpha , result.y);
+	Lerp(start.z , end.z , alpha , result.z);
 
 	return result;
 }

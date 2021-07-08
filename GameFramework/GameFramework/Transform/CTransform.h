@@ -73,4 +73,5 @@ public:
 	XMFLOAT3 GetWorldScale()const;
 
 	XMFLOAT3 GetWorldRotatorAngle()const;
+
 };

@@ -15,14 +15,9 @@
 void CTestLevel::Init()
 {
 	CDice& dice = *new CDice(*this);
+	mDice = &dice;
 
 	dice.Transform.Location = { 50.f,0.f,100.f };
-
-	/*
-	レベルから指定のアクターインスタンスのメソッドをインプットマネージャーにバインドすることは可能
-	アクターからでもレベルからでもどちらでも可能だ
-	*/
-	//CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , dice , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CDice::Rot , std::ref(dice) , 0));
 
 	CFighter& fighter = *new CFighter(*this);
 	mFighter = &fighter;
@@ -35,6 +30,12 @@ void CTestLevel::Init()
 		CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*buf);
 		this->RequestSetCamera(camera);
 	}
+
+	/*
+	レベルから指定のアクターインスタンスのメソッドをインプットマネージャーにバインドすることは可能
+	アクターからでもレベルからでもどちらでも可能だ
+	*/
+	CInputManager::GetInstance().AddEvent("ChangeDire" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_Q } , std::bind(&CTestLevel::ChangeFighterAngleToDirectionDice , std::ref(*this)));
 }
 
 void CTestLevel::Tick()
@@ -91,17 +92,24 @@ void CTestLevel::Tick()
 
 		if(mFighter->isHit)ImGui::Text(u8"当たっている");
 		else ImGui::Text(u8"当たっていない");
-
 		ImGui::End();
 	};
 
-	auto displayDistance = [& , distance]
+	XMFLOAT3 angle = mFighter->Transform.Rotation.GetAngle();
+	std::string angleStr = std::to_string((int)angle.x) + ',' + std::to_string((int)angle.y) + ',' + std::to_string((int)angle.z);
+	auto displayDistance = [& , distance , angleStr]
 	{
 		ImGui::SetNextWindowPos(ImVec2(220 , 10) , ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
 
-		ImGui::Begin(u8"距離");
+		ImGui::Begin("戦闘機情報");
+
+		ImGui::Text(u8"目標との距離");
 		ImGui::Text(std::to_string(distance).c_str());
+		
+		ImGui::Text("\n");
+		ImGui::Text(u8"角度");
+		ImGui::Text(angleStr.c_str());
 
 		ImGui::End();
 	};
@@ -110,4 +118,9 @@ void CTestLevel::Tick()
 	AddImGuiDrawMethod(displayTime);
 	AddImGuiDrawMethod(displayHitStatus);
 	AddImGuiDrawMethod(displayDistance);
+}
+
+void CTestLevel::ChangeFighterAngleToDirectionDice()
+{
+	mFighter->Transform.Rotation.ChangeAngleToLocation(mDice->Transform.Location);
 }
