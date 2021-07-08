@@ -31,8 +31,8 @@ private:
 
 	std::unordered_map<CColliderComponent* , SCollideCacheData> mCollidedCache;			//衝突情報のキャッシュデータ
 
-	std::function<void(CActor&)> mEventAtBeginCollide;		//衝突開始時に呼び出されるイベント
-	std::function<void(CActor&)> mEventAtEndCollide;		//衝突終了時に呼び出されるイベント
+	std::function<void(CActor&)> mEventAtBeginningCollided;		//衝突開始時に呼び出されるイベント
+	std::function<void(CActor&)> mEventAtEndCollided;			//衝突終了時に呼び出されるイベント
 
 	bool mShouldCompared = true;		//比較すべきか
 

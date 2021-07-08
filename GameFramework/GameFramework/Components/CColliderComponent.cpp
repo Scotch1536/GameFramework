@@ -8,8 +8,8 @@
 
 CColliderComponent::CColliderComponent(CActor& owner , CTransform& parentTrans , EType type , int priority)
 	:CComponent(owner , priority) ,
-	mType(type) , mEventAtBeginCollide(std::bind(&CActor::EventAtBeginCollide , std::ref(owner) , std::placeholders::_1)) ,
-	mEventAtEndCollide(std::bind(&CActor::EventAtEndCollide , std::ref(owner) , std::placeholders::_1)) ,
+	mType(type) , mEventAtBeginningCollided(std::bind(&CActor::EventAtBeginCollide , std::ref(owner) , std::placeholders::_1)) ,
+	mEventAtEndCollided(std::bind(&CActor::EventAtEndCollide , std::ref(owner) , std::placeholders::_1)) ,
 	Transform(parentTrans)
 {
 	CColliderManager::GetInstance().AddCollider(*this);			//コリジョンマネージャーに追加
@@ -32,11 +32,11 @@ void CColliderComponent::UpdateCollidedCache(CColliderComponent* target , bool i
 
 	if(mCollidedCache[target].IsCollide == true && mCollidedCache[target].IsLastFrameCollide == false)
 	{
-		mEventAtBeginCollide(target->GetOwner());
+		mEventAtBeginningCollided(target->GetOwner());
 	}
 	else if(mCollidedCache[target].IsCollide == false && mCollidedCache[target].IsLastFrameCollide == true)
 	{
-		mEventAtEndCollide(target->GetOwner());
+		mEventAtEndCollided(target->GetOwner());
 	}
 }
 

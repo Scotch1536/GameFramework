@@ -46,30 +46,3 @@ void CDice::GamePause()
 {
 	CGameManager::GetInstance().SetIsPause(false);
 }
-
-void CDice::Rot(int dire)
-{
-	switch(dire)
-	{
-	case 0:
-		Transform.Rotation.Angle.x++;
-		return;
-	case 1:
-		Transform.Rotation.Angle.x--;
-		return;
-	case 2:
-		Transform.Rotation.Angle.y++;
-		return;
-	case 3:
-		Transform.Rotation.Angle.y--;
-		return;
-	case 4:
-		Transform.Rotation.Angle.z++;
-		return;
-	case 5:
-		Transform.Rotation.Angle.z--;
-		return;
-	default:
-		break;
-	}
-}
