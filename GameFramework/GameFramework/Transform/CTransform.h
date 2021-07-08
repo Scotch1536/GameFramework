@@ -6,7 +6,7 @@
 #include "CRotator.h"
 
 class CChildTransform;
-class IActor;
+class CActor;
 
 //トランスフォームクラス
 class CTransform
@@ -24,19 +24,16 @@ private:
 	bool mShouldUpdateMatrix = true;		//行列を更新すべきか
 	bool mIsChild = false;					//自分が子トランスフォームか
 
+	CTransform();
+
 public:
 	XMFLOAT3 Location = { 0.f,0.f,0.f };		//ロケーション
 	XMFLOAT3 Scale = { 1.f,1.f,1.f };			//スケール
 
 	CRotator Rotation;			//ローテーション
 
-	CTransform();
-
-	/*
-	コンポーネントにトランスフォームを作る時のコンストラクタ
-	（アクターのトランスフォームに従属させる）
-	*/
-	CTransform(IActor& partner);
+	//アクターを作るとき限定のコンストラクタ
+	CTransform(const CActor& partner);
 
 	//作るときから従属するトランスフォームが決まっている時のコンストラクタ
 	CTransform(CTransform& partner);

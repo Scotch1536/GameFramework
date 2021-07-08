@@ -11,10 +11,7 @@ CTransform::CTransform()
 	DX11MtxIdentity(mWorldMatrixResult);
 }
 
-CTransform::CTransform(IActor& partner):CTransform()
-{
-	partner.GetTransform().AttachTransform(*this);
-}
+CTransform::CTransform(const CActor& partner):CTransform() {}
 
 CTransform::CTransform(CTransform& partner):CTransform()
 {

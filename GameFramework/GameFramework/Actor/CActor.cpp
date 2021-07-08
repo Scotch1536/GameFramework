@@ -4,7 +4,10 @@
 
 #include "CActor.h"
 
-CActor::CActor(ILevel& owner , bool isAffectToPause): CObject("Actor") , mOwnerInterface(owner) , mIsAffectToPause(isAffectToPause)
+CActor::CActor(ILevel& owner , bool isAffectToPause)
+	:CObject("Actor") ,
+	mOwnerInterface(owner) , mIsAffectToPause(isAffectToPause) ,
+	Transform(*this)
 {
 	mOwnerInterface.AddActor(*this);
 }
