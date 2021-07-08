@@ -1,3 +1,4 @@
+#include "../Actor/CActor.h"
 #include "../Managers/CColliderManager.h"
 
 #include "CColliderComponent.h"
@@ -6,6 +7,7 @@ CColliderComponent::CColliderComponent(CActor& owner , CTransform& parentTrans ,
 	:CComponent(owner , priority) ,
 	mType(type) , Transform(parentTrans)
 {
+	BindCollisionAction(std::bind(&CActor::CollisionAction , std::ref(owner) , std::placeholders::_1));
 	CColliderManager::GetInstance().AddCollider(*this);			//コリジョンマネージャーに追加
 }
 
@@ -16,9 +18,9 @@ CColliderComponent::~CColliderComponent()
 
 void CColliderComponent::ExecuteAction(CActor& argument)
 {
-	if(mCollisionAction != nullptr)
+	if(mCollideExecuteFunction != nullptr)
 	{
-		mCollisionAction(argument);
+		mCollideExecuteFunction(argument);
 	}
 }
 

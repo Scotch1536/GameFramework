@@ -84,6 +84,8 @@ public:
 	//”j‰ó
 	void Destroy();
 
+	virtual void CollisionAction(CActor& collideActor) {};
+
 	void AddTag(std::string tag)
 	{
 		mActorTags.emplace_back(tag);

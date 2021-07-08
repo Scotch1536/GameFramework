@@ -29,8 +29,9 @@ private:
 
 protected:
 	std::vector<CColliderComponent*> mColliders;
-	std::function<void(CActor&)> mCollisionAction;
 	std::unordered_map<CColliderComponent*, SCollideCacheData> mCollideCache;
+
+	std::function<void(CActor&)> mCollideExecuteFunction;		//Õ“Ë‚ÉŒÄ‚Ño‚³‚ê‚éŠÖ”
 
 	bool mShouldCompare = true;
 
@@ -51,7 +52,7 @@ public:
 
 	void BindCollisionAction(std::function<void(CActor&)> action)
 	{
-		mCollisionAction = action;
+		mCollideExecuteFunction = action;
 	}
 
 	const EType& GetType()const
