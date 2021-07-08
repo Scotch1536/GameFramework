@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "../Library/LCMath.h"
 #include "../ExternalCode/dx11mathutil.h"
 
@@ -9,10 +11,26 @@ CRotator::CRotator(const CTransform& partner):mPartner(partner)
 	DX11QtIdentity(mQuaternion);
 }
 
+void CRotator::UpdateAngle(float& angle)
+{
+	if(angle < 0.0f)
+	{
+		angle = 360.0f + angle;
+	}
+	else if(angle > 360.0f)
+	{
+		angle = angle - 360.0f;
+	}
+}
+
 bool CRotator::Update()
 {
 	if(!LCMath::CompareFloat3(mAngle , mLastFrameAngle))
 	{
+		UpdateAngle(mAngle.x);
+		UpdateAngle(mAngle.y);
+		UpdateAngle(mAngle.z);
+
 		mLastFrameAngle = mAngle;
 
 		mIsSameAngle = false;
@@ -68,17 +86,26 @@ void CRotator::ChangeAngleToLocation(XMFLOAT3 location)
 	LCMath::CalcFloat3Normalize(vec , vec);
 
 	//クォータニオンに必要な角度を計算
-	angle = acosf(LCMath::CalcFloat3Dot(mPartner.GetForwardVector() , vec , angle));
-	angle = XMConvertToDegrees(angle);
+	LCMath::CalcFloat3Dot(mPartner.GetForwardVector() , vec , angle);
 
-	//角度が0なら終了
-	if(angle == 0)return;
+	//結果が1ならベクトル同士が平行なので終了
+	if(angle >= 1.0f)return;
+	else if(angle < -1.0f)angle = -1.0f;
+
+	//小数点以下がはみ出ることがあるのでclampする
+	std::clamp(angle , -1.0f , 1.0f);
+
+	//角度を求める
+	angle = std::acosf(angle);
 
 	//クォータニオンに必要な軸を計算
 	LCMath::CalcFloat3Cross(mPartner.GetForwardVector() , vec , axis);
 
-	//軸が全て0なら終了
-	if(axis.x == 0 && axis.y == 0 && axis.z == 0)return;
+	//軸が全て0なら軸を自分の上向きベクトルにする
+	if(axis.x == 0 && axis.y == 0 && axis.z == 0)
+	{
+		axis = mPartner.GetUpwardVector();
+	};
 
 	//クォータニオン作成
 	LCMath::CreateFromAxisAndAngleToQuaternion(axis , angle , mulQua);

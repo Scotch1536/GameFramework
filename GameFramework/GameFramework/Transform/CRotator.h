@@ -21,6 +21,8 @@ private:
 
 	bool mIsSameAngle = true;				//比較結果（今のフレームの角度と前のフレーム角度の）
 
+	void UpdateAngle(float& angle);
+
 public:
 	CRotator(const CTransform& partner);
 

@@ -102,7 +102,7 @@ void CTestLevel::Tick()
 		ImGui::SetNextWindowPos(ImVec2(220 , 10) , ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
 
-		ImGui::Begin("í“¬‹@î•ñ");
+		ImGui::Begin(u8"í“¬‹@î•ñ");
 
 		ImGui::Text(u8"–Ú•W‚Æ‚Ì‹——£");
 		ImGui::Text(std::to_string(distance).c_str());
