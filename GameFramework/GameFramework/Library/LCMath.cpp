@@ -6,21 +6,11 @@
 const XMFLOAT4& LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& axisX , const XMFLOAT3& axisY , const XMFLOAT3& axisZ ,
 	const XMFLOAT3& eulerAngle , XMFLOAT4& resultQua)
 {
-	//XMFLOAT3 vec , axis;
-	//XMFLOAT3 originAxis = { 1.0f,1.0f,1.0f };
-	//float angle;
-
-	//LCMath::CalcFloat3Normalize(eulerAngle , vec);
-	//angle = acosf(LCMath::CalcFloat3Dot(originAxis , vec , angle));
-	//angle = XMConvertToDegrees(angle);
-	//LCMath::CalcFloat3Cross(originAxis , vec , axis);
-	//LCMath::CreateFromAxisAndAngleToQuaternion(axis , angle , resultQua);
-
 	XMFLOAT4 qtx , qty , qtz;
 
-	CreateFromAxisAndAngleToQuaternion(axisX , eulerAngle.x , qtx);
-	CreateFromAxisAndAngleToQuaternion(axisY , eulerAngle.y , qty);
-	CreateFromAxisAndAngleToQuaternion(axisZ , eulerAngle.z , qtz);
+	CreateFromAxisAndAngleToQuaternion(axisX , XMConvertToRadians(eulerAngle.x) , qtx);
+	CreateFromAxisAndAngleToQuaternion(axisY , XMConvertToRadians(eulerAngle.y) , qty);
+	CreateFromAxisAndAngleToQuaternion(axisZ , XMConvertToRadians(eulerAngle.z) , qtz);
 
 	DX11QtMul(resultQua , qtx , qty);
 	DX11QtMul(resultQua , resultQua , qtz);
@@ -124,14 +114,11 @@ bool LCMath::CompareMatrix(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2
 
 const XMFLOAT4& LCMath::CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis , const float& angle , XMFLOAT4& result)
 {
-	XMFLOAT4 sendAxis;
+	XMVECTOR axisVec = XMLoadFloat3(&axis);
 
-	sendAxis.x = axis.x;
-	sendAxis.y = axis.y;
-	sendAxis.z = axis.z;
-	sendAxis.w = 0;
+	XMVECTOR resultVec = XMQuaternionRotationAxis(axisVec , angle);
 
-	DX11QtRotationAxis(result , sendAxis , angle);
+	XMStoreFloat4(&result , resultVec);
 
 	return result;
 }
