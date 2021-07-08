@@ -30,35 +30,6 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner , CTransform& paren
 	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , mLocalMin , mLocalMax , { 1.0f,1.0f,1.0f,0.3f });
 }
 
-void CAABBColliderComponent::Update()
-{
-	CColliderComponent::Update();
-
-	if(mShouldCompare)
-	{
-		ConvertWorldCollider();
-		for(auto collider : mColliders)
-		{
-			if(collider->GetType() == EType::AABB)
-			{
-				CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);
-				if(LCCollision::IsCollide(mWorldMin , mWorldMax , AABBObj.mWorldMin , AABBObj.mWorldMax))
-				{
-					ExecuteAction(collider->GetOwner());
-				}
-			}
-			else if(collider->GetType() == EType::SPHERE)
-			{
-				CSphereColliderComponent& sphereObj = dynamic_cast<CSphereColliderComponent&>(*collider);
-				if(LCCollision::IsCollide(mWorldMin , mWorldMax , sphereObj.GetCenter() , sphereObj.GetWorldRadius()))
-				{
-					ExecuteAction(collider->GetOwner());
-				}
-			}
-		}
-	}
-}
-
 void CAABBColliderComponent::ConvertWorldCollider()
 {
 	XMFLOAT3 location = Transform.GetWorldLocation();

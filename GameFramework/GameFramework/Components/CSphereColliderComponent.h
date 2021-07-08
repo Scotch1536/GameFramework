@@ -33,6 +33,4 @@ public:
 		return mWorldRadius;
 	}
 
-	void Update()override;
-
 };

@@ -34,5 +34,4 @@ public:
 		return mWorldMax;
 	}
 
-	void Update()override;
 };

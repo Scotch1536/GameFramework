@@ -84,6 +84,12 @@ public:
 	//破壊
 	void Destroy();
 
+	//衝突開始時のイベント
+	virtual void EventAtBeginCollide(CActor& collideActor) {};
+
+	//衝突終了時のイベント
+	virtual void EventAtEndCollide(CActor& collideActor) {};
+
 	void AddTag(std::string tag)
 	{
 		mActorTags.emplace_back(tag);

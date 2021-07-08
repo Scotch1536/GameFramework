@@ -37,15 +37,14 @@ CFighter::CFighter(ILevel& owner):CActor(owner)
 	/*CSphereColliderComponent& sphereCllider = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
 	sphereCllider.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));*/
 	CSphereColliderComponent& aabb = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
-	aabb.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));
 
-	CInputManager::GetInstance().AddAction("Move" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CFighter::Move , std::ref(*this)));
-	CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_R } , std::bind(&CFighter::Rot , std::ref(*this) , 0));
-	CInputManager::GetInstance().AddAction("XM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_T } , std::bind(&CFighter::Rot , std::ref(*this) , 1));
-	CInputManager::GetInstance().AddAction("YP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_F } , std::bind(&CFighter::Rot , std::ref(*this) , 2));
-	CInputManager::GetInstance().AddAction("YM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_G } , std::bind(&CFighter::Rot , std::ref(*this) , 3));
-	CInputManager::GetInstance().AddAction("ZP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_V } , std::bind(&CFighter::Rot , std::ref(*this) , 4));
-	CInputManager::GetInstance().AddAction("ZM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_B } , std::bind(&CFighter::Rot , std::ref(*this) , 5));
+	CInputManager::GetInstance().AddEvent("Move" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CFighter::Move , std::ref(*this)));
+	CInputManager::GetInstance().AddEvent("XP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_R } , std::bind(&CFighter::Rot , std::ref(*this) , 0));
+	CInputManager::GetInstance().AddEvent("XM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_T } , std::bind(&CFighter::Rot , std::ref(*this) , 1));
+	CInputManager::GetInstance().AddEvent("YP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_F } , std::bind(&CFighter::Rot , std::ref(*this) , 2));
+	CInputManager::GetInstance().AddEvent("YM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_G } , std::bind(&CFighter::Rot , std::ref(*this) , 3));
+	CInputManager::GetInstance().AddEvent("ZP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_V } , std::bind(&CFighter::Rot , std::ref(*this) , 4));
+	CInputManager::GetInstance().AddEvent("ZM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_B } , std::bind(&CFighter::Rot , std::ref(*this) , 5));
 }
 
 void CFighter::Move()
@@ -82,7 +81,7 @@ void CFighter::Rot(int num)
 	}
 }
 
-void CFighter::CollisionAction(CActor& collideActor)
+void CFighter::EventAtBeginCollide(CActor& collideActor)
 {
 	if(collideActor.HasTag("Dice"))
 	{
@@ -90,7 +89,10 @@ void CFighter::CollisionAction(CActor& collideActor)
 	}
 }
 
-void CFighter::Tick()
+void CFighter::EventAtEndCollide(CActor& collideActor)
 {
-	isHit = false;
+	if(collideActor.HasTag("Dice"))
+	{
+		isHit = false;
+	}
 }
