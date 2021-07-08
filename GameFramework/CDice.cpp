@@ -32,7 +32,7 @@ CDice::CDice(CLevel& owner):CActor(owner , false)
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
 	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
 	*/
-	CInputManager::GetInstance().AddAction("Test" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CDice::GamePause , std::ref(*this)));
+	CInputManager::GetInstance().AddEvent("Test" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CDice::GamePause , std::ref(*this)));
 	//CInputManager::GetInstance().AddAction("XP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CDice::Rot , std::ref(*this) , 0));
 	//CInputManager::GetInstance().AddAction("XM" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_D } , std::bind(&CDice::Rot , std::ref(*this) , 1));
 	//CInputManager::GetInstance().AddAction("YP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_F } , std::bind(&CDice::Rot , std::ref(*this) , 2));

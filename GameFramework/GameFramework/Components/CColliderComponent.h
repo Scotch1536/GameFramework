@@ -20,40 +20,38 @@ class CColliderComponent :public CComponent
 public:
 	enum class EType
 	{
-		AABB,
-		SPHERE,
+		AABB ,
+		SPHERE ,
 	};
 
 private:
 	EType mType;
 
+	std::vector<CColliderComponent*> mColliders;		//自分以外のコライダー
+
+	std::unordered_map<CColliderComponent* , SCollideCacheData> mCollidedCache;			//衝突情報のキャッシュデータ
+
+	std::function<void(CActor&)> mEventAtBeginCollide;		//衝突開始時に呼び出されるイベント
+	std::function<void(CActor&)> mEventAtEndCollide;		//衝突終了時に呼び出されるイベント
+
+	bool mShouldCompared = true;		//比較すべきか
+
+	//キャッシュデータの更新
+	void UpdateCollidedCache(CColliderComponent* target , bool isCollided);
+
 protected:
-	std::vector<CColliderComponent*> mColliders;
-	std::unordered_map<CColliderComponent*, SCollideCacheData> mCollideCache;
-
-	std::function<void(CActor&)> mCollideExecuteFunction;		//衝突時に呼び出される関数
-
-	bool mShouldCompare = true;
-
-	void ExecuteAction(CActor& argument);
-
 	//頂点メッシュの最大最小を取り出す
-	static void CalcMinMaxOfMeshes(const std::vector<CModelMeshData>& meshes, XMFLOAT3& min, XMFLOAT3& max);
+	static void CalcMinMaxOfMeshes(const std::vector<CModelMeshData>& meshes , XMFLOAT3& min , XMFLOAT3& max);
 
 public:
 	CTransform Transform;
 
-	CColliderComponent(CActor& owner,CTransform& parentTrans, EType type, int priority = 40);
+	CColliderComponent(CActor& owner , CTransform& parentTrans , EType type , int priority = 40);
 	virtual ~CColliderComponent();
 
 	virtual void ConvertWorldCollider() = 0;
 
 	void Update() override;
-
-	void BindCollisionAction(std::function<void(CActor&)> action)
-	{
-		mCollideExecuteFunction = action;
-	}
 
 	const EType& GetType()const
 	{

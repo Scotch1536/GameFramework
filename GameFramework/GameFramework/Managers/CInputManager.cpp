@@ -18,48 +18,48 @@ CInputManager& CInputManager::GetInstance()
 	return instance;
 }
 
-void CInputManager::RequestBindAction(std::string actionName , CObject& instancePtr , std::function<void()>& func)
+void CInputManager::RequestBindEvent(std::string actionName , CObject& instancePtr , std::function<void()>& func)
 {
 	//指定のキーがなければエラー表示
-	if(mActionList.count(actionName) == 0)
+	if(mEventList.count(actionName) == 0)
 	{
 		MessageBox(NULL , "RequestBindAction error:Not Found Key" , "error" , MB_OK);
 		return;
 	}
-	mActionList[actionName].InstancePointer = &instancePtr;
-	mActionList[actionName].ActionInfo = func;
+	mEventList[actionName].InstancePointer = &instancePtr;
+	mEventList[actionName].EventInfo = func;
 }
 
-void CInputManager::AddAction(const std::string& actionName , const EButtonOption& buttonOption ,
+void CInputManager::AddEvent(const std::string& actionName , const EButtonOption& buttonOption ,
 	CObject& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& func)
 {
-	mActionList[actionName].ButtonOption = buttonOption;
-	mActionList[actionName].InstancePointer = &instancePtr;
-	mActionList[actionName].ButtonInfoList = buttonInfoList;
-	mActionList[actionName].ActionInfo = func;
+	mEventList[actionName].ButtonOption = buttonOption;
+	mEventList[actionName].InstancePointer = &instancePtr;
+	mEventList[actionName].ButtonInfoList = buttonInfoList;
+	mEventList[actionName].EventInfo = func;
 }
 
-void CInputManager::AddAction(const std::string& actionName , const EButtonOption& buttonOption ,
+void CInputManager::AddEvent(const std::string& actionName , const EButtonOption& buttonOption ,
 	CObject& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& func)
 {
-	mActionList[actionName].ButtonOption = buttonOption;
-	mActionList[actionName].InstancePointer = &instancePtr;
-	mActionList[actionName].ButtonInfoList.emplace_back(buttonInfo);
-	mActionList[actionName].ActionInfo = func;
+	mEventList[actionName].ButtonOption = buttonOption;
+	mEventList[actionName].InstancePointer = &instancePtr;
+	mEventList[actionName].ButtonInfoList.emplace_back(buttonInfo);
+	mEventList[actionName].EventInfo = func;
 }
 
 void CInputManager::ReleaseBindTarget(CObject& target)
 {
 	//アクションリストが空だった場合終了
-	if(!(mActionList.size() > 0))return;
+	if(!(mEventList.size() > 0))return;
 
-	for(auto& action : mActionList)
+	for(auto& action : mEventList)
 	{
 		if(action.second.InstancePointer == &target)
 		{
 			//バインドで実装することも鑑みて要素の削除(erase)ではなく値の代入で記述
 			action.second.InstancePointer = nullptr;
-			action.second.ActionInfo = nullptr;
+			action.second.EventInfo = nullptr;
 		}
 	}
 }
@@ -68,20 +68,20 @@ void CInputManager::CheckInput()
 {
 	CDirectInput::GetInstance().GetKeyBuffer();
 
-	bool shouldAction = false;
+	bool shouldEvent = false;
 
-	for(auto& action : mActionList)
+	for(auto& event : mEventList)
 	{
 		//ゲームがポーズ状態の場合そのアクターがポーズの影響を受けるなら入力処理をとばす
 		if(CGameManager::GetInstance().GetIsPause())
 		{
-			if(action.second.InstancePointer->GetID() == "Actor")
+			if(event.second.InstancePointer->GetID() == "Actor")
 			{
-				if(dynamic_cast<CActor*>(action.second.InstancePointer)->GetIsAffectToPause())continue;
+				if(dynamic_cast<CActor*>(event.second.InstancePointer)->GetIsAffectToPause())continue;
 			}
 		}
 
-		for(auto& buttonInfo : action.second.ButtonInfoList)
+		for(auto& buttonInfo : event.second.ButtonInfoList)
 		{
 			//ボタンタイプ別の処理を記述
 			if(buttonInfo.ButtonType == EButtonType::NONE)
@@ -90,39 +90,39 @@ void CInputManager::CheckInput()
 			}
 			else if(buttonInfo.ButtonType == EButtonType::KEYBOARD)
 			{
-				if(action.second.ButtonOption == EButtonOption::NONE)
+				if(event.second.ButtonOption == EButtonOption::NONE)
 				{
 					MessageBox(NULL , "ButtonType is NONE" , "error" , MB_OK);
 				}
-				else if(action.second.ButtonOption == EButtonOption::PRESS)
+				else if(event.second.ButtonOption == EButtonOption::PRESS)
 				{
 					if(CDirectInput::GetInstance().CheckKeyBuffer(buttonInfo.ButtonNum))
 					{
-						shouldAction = true;
+						shouldEvent = true;
 						break;
 					}
 				}
-				else if(action.second.ButtonOption == EButtonOption::TRIGGER)
+				else if(event.second.ButtonOption == EButtonOption::TRIGGER)
 				{
 					if(CDirectInput::GetInstance().CheckKeyBufferTrigger(buttonInfo.ButtonNum))
 					{
-						shouldAction = true;
+						shouldEvent = true;
 						break;
 					}
 				}
 			}
 		}
-		if(shouldAction)
+		if(shouldEvent)
 		{
-			if(action.second.ActionInfo != nullptr)
+			if(event.second.EventInfo != nullptr)
 			{
-				action.second.ActionInfo();
+				event.second.EventInfo();
 			}
 			else
 			{
 				MessageBox(NULL , "Not Found Function" , "error" , MB_OK);
 			}
-			shouldAction = false;
+			shouldEvent = false;
 		}
 	}
 }

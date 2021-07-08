@@ -10,7 +10,7 @@ public:
 
 	void Move();
 	void Rot(int dire);
-	void CollisionAction(CActor& collideActor)override;
-	void Tick()override;
+	void EventAtBeginCollide(CActor& collideActor)override;
+	void EventAtEndCollide(CActor& collideActor)override;
 };
 

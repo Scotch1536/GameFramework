@@ -49,14 +49,14 @@ struct SInputDefinition
 
 	std::vector<SButtonInfo> ButtonInfoList;				//ボタンの情報リスト
 
-	std::function<void()> ActionInfo;						//行いたいメソッド（関数）
+	std::function<void()> EventInfo;						//行いたいイベント（関数）
 };
 
 //インプットマネージャークラス：シングルトン
 class CInputManager
 {
 private:
-	std::unordered_map<std::string , SInputDefinition> mActionList;		//アクションリスト
+	std::unordered_map<std::string , SInputDefinition> mEventList;		//イベントリスト
 
 	//★超重要★　事前にアクションリストを作っておきたい場合はコンストラクタ内に書く
 	CInputManager();
@@ -70,13 +70,13 @@ public:
 	static CInputManager& GetInstance();
 
 	//アクションのバインドをリクエスト　※actionNameのキーがmActionListになければエラー表示
-	void RequestBindAction(std::string actionName , CObject& instancePtr , std::function<void()>& func);
+	void RequestBindEvent(std::string actionName , CObject& instancePtr , std::function<void()>& func);
 
 	//アクションの追加　※actionNameのキーがmActionListに既にあっても上書きする
-	void AddAction(const std::string& actionName , const EButtonOption& buttonOption ,
+	void AddEvent(const std::string& actionName , const EButtonOption& buttonOption ,
 		CObject& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& func);
 
-	void AddAction(const std::string& actionName , const EButtonOption& buttonOption ,
+	void AddEvent(const std::string& actionName , const EButtonOption& buttonOption ,
 		CObject& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& func);
 
 	//指定のターゲットのバインドを解除

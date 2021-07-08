@@ -43,34 +43,6 @@ CSphereColliderComponent::CSphereColliderComponent(CActor& owner , CTransform& p
 	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , Transform , mLocalRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
 }
 
-void CSphereColliderComponent::Update()
-{
-	CColliderComponent::Update();
-
-	if(mShouldCompare)
-	{
-		for(auto collider : mColliders)
-		{
-			if(collider->GetType() == EType::SPHERE)
-			{
-				CSphereColliderComponent& Sphereobj = dynamic_cast<CSphereColliderComponent&>(*collider);
-				if(LCCollision::IsCollide(this->mCenter , this->mWorldRadius , Sphereobj.mCenter , Sphereobj.mWorldRadius))
-				{
-					ExecuteAction(collider->GetOwner());
-				}
-			}
-			else if(collider->GetType() == EType::AABB)
-			{
-				CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);
-				if(LCCollision::IsCollide(AABBObj.GetWorldMin() , AABBObj.GetWorldMax() , mCenter , mWorldRadius))
-				{
-					ExecuteAction(collider->GetOwner());
-				}
-			}
-		}
-	}
-}
-
 void CSphereColliderComponent::ConvertWorldCollider()
 {
 	mCenter = Transform.GetWorldLocation();

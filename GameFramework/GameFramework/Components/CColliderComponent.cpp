@@ -1,13 +1,17 @@
 #include "../Actor/CActor.h"
 #include "../Managers/CColliderManager.h"
+#include "../Library/LCCollision.h"
 
 #include "CColliderComponent.h"
+#include "CSphereColliderComponent.h"
+#include "CAABBColliderComponent.h"
 
 CColliderComponent::CColliderComponent(CActor& owner , CTransform& parentTrans , EType type , int priority)
 	:CComponent(owner , priority) ,
-	mType(type) , Transform(parentTrans)
+	mType(type) , mEventAtBeginCollide(std::bind(&CActor::EventAtBeginCollide , std::ref(owner) , std::placeholders::_1)) ,
+	mEventAtEndCollide(std::bind(&CActor::EventAtEndCollide , std::ref(owner) , std::placeholders::_1)) ,
+	Transform(parentTrans)
 {
-	BindCollisionAction(std::bind(&CActor::CollisionAction , std::ref(owner) , std::placeholders::_1));
 	CColliderManager::GetInstance().AddCollider(*this);			//コリジョンマネージャーに追加
 }
 
@@ -16,18 +20,84 @@ CColliderComponent::~CColliderComponent()
 	CColliderManager::GetInstance().ReleaseCollider(*this);
 }
 
-void CColliderComponent::ExecuteAction(CActor& argument)
+void CColliderComponent::UpdateCollidedCache(CColliderComponent* target , bool isCollided)
 {
-	if(mCollideExecuteFunction != nullptr)
+	if(mCollidedCache.count(target) == 0)
 	{
-		mCollideExecuteFunction(argument);
+		mCollidedCache[target];
+	}
+
+	mCollidedCache[target].IsLastFrameCollide = mCollidedCache[target].IsCollide;
+	mCollidedCache[target].IsCollide = isCollided;
+
+	if(mCollidedCache[target].IsCollide == true && mCollidedCache[target].IsLastFrameCollide == false)
+	{
+		mEventAtBeginCollide(target->GetOwner());
+	}
+	else if(mCollidedCache[target].IsCollide == false && mCollidedCache[target].IsLastFrameCollide == true)
+	{
+		mEventAtEndCollide(target->GetOwner());
 	}
 }
 
 void CColliderComponent::Update()
 {
-	if(!CColliderManager::GetInstance().GetColliders(this , mColliders))mShouldCompare = false;
-	else mShouldCompare = true;
+	if(!CColliderManager::GetInstance().GetColliders(this , mColliders))mShouldCompared = false;
+	else mShouldCompared = true;
+
+	if(mShouldCompared)
+	{
+		if(mType == EType::AABB)
+		{
+			CAABBColliderComponent& thisObj = dynamic_cast<CAABBColliderComponent&>(*this);
+			for(auto collider : mColliders)
+			{
+				if(collider->GetType() == EType::AABB)
+				{
+					CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);
+					if(LCCollision::IsCollide(thisObj.GetWorldMin() , thisObj.GetWorldMax() , AABBObj.GetWorldMin() , AABBObj.GetWorldMax()))
+					{
+						UpdateCollidedCache(collider , true);
+					}
+					else UpdateCollidedCache(collider , false);
+				}
+				else if(collider->GetType() == EType::SPHERE)
+				{
+					CSphereColliderComponent& sphereObj = dynamic_cast<CSphereColliderComponent&>(*collider);
+					if(LCCollision::IsCollide(thisObj.GetWorldMin() , thisObj.GetWorldMax() , sphereObj.GetCenter() , sphereObj.GetWorldRadius()))
+					{
+						UpdateCollidedCache(collider , true);
+					}
+					else UpdateCollidedCache(collider , false);
+				}
+			}
+		}
+		else if(mType == EType::SPHERE)
+		{
+			CSphereColliderComponent& thisObj = dynamic_cast<CSphereColliderComponent&>(*this);
+			for(auto collider : mColliders)
+			{
+				if(collider->GetType() == EType::AABB)
+				{
+					CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);
+					if(LCCollision::IsCollide(AABBObj.GetWorldMin() , AABBObj.GetWorldMax() , thisObj.GetCenter() , thisObj.GetWorldRadius()))
+					{
+						UpdateCollidedCache(collider , true);
+					}
+					else UpdateCollidedCache(collider , false);
+				}
+				else if(collider->GetType() == EType::SPHERE)
+				{
+					CSphereColliderComponent& Sphereobj = dynamic_cast<CSphereColliderComponent&>(*collider);
+					if(LCCollision::IsCollide(thisObj.GetCenter() , thisObj.GetWorldRadius() , Sphereobj.GetCenter() , Sphereobj.GetWorldRadius()))
+					{
+						UpdateCollidedCache(collider , true);
+					}
+					else UpdateCollidedCache(collider , false);
+				}
+			}
+		}
+	}
 }
 
 void CColliderComponent::CalcMinMaxOfMeshes(const std::vector<CModelMeshData>& meshes , XMFLOAT3& min , XMFLOAT3& max)
