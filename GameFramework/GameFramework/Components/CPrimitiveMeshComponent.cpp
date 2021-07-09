@@ -10,10 +10,13 @@ CPrimitiveMeshComponent::CPrimitiveMeshComponent(CActor& owner , CTransform& par
 	mRenderComponent(*new CRenderComponent(owner)) ,
 	mColor(color) ,
 	Transform(parentTrans)
+{}
+
+void CPrimitiveMeshComponent::Init(std::string vertexShaderPath , std::string pixelShaderPath)
 {
 	if(mColor.w < 1.0f)
 	{
-		isTranslucent = true;
+		mIsTranslucent = true;
 	}
 	else
 	{
@@ -32,6 +35,11 @@ CPrimitiveMeshComponent::CPrimitiveMeshComponent(CActor& owner , CTransform& par
 
 	mRenderComponent.GenerateVertexShader(layout , numElements , vertexShaderPath);
 	mRenderComponent.GeneratePixelShader(pixelShaderPath);
+
+	CreateVertexData();
+	CreateIndexData();
+
+	GenerateVertexAndIndexBuffer();
 }
 
 void CPrimitiveMeshComponent::GenerateVertexAndIndexBuffer()
@@ -60,7 +68,7 @@ void CPrimitiveMeshComponent::GenerateVertexAndIndexBuffer()
 
 void CPrimitiveMeshComponent::Update()
 {
-	if(isTranslucent)mOwnerInterface.RequestAddAlphaRenderComponentToLevel(*this);
+	if(mIsTranslucent)mOwnerInterface.RequestAddAlphaRenderComponentToLevel(*this);
 }
 
 void CPrimitiveMeshComponent::Render()

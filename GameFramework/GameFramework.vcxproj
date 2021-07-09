@@ -19,6 +19,7 @@
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
     <ClCompile Include="GameFramework\Components\CAABBColliderComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CBillboardComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CBoxMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CColliderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
@@ -69,6 +70,7 @@
     <ClInclude Include="CTestPlane.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
     <ClInclude Include="GameFramework\Components\CAABBColliderComponent.h" />
+    <ClInclude Include="GameFramework\Components\CBillboardComponent.h" />
     <ClInclude Include="GameFramework\Components\CBoxMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CCameraComponent.h" />
     <ClInclude Include="GameFramework\Components\CColliderComponent.h" />

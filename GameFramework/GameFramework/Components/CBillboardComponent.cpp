@@ -4,7 +4,7 @@
 
 CBillboardComponent::CBillboardComponent(CActor& owner , CTransform& parentTrans ,
 	std::string vertexShaderPath , std::string pixelShaderPath)
-	:CPlaneMeshComponent<SVertexUV>(owner , parentTrans , { 1.0f,1.0f,1.0f,1.0f } , vertexShaderPath , pixelShaderPath , false)
+	:CPlaneMeshComponent(owner , parentTrans , { 1.0f,1.0f,1.0f,1.0f } , vertexShaderPath , pixelShaderPath , false)
 {
 	Init(vertexShaderPath , pixelShaderPath);
 }

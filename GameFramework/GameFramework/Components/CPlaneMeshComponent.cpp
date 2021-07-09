@@ -1,13 +1,10 @@
 #include "CPlaneMeshComponent.h"
 
 CPlaneMeshComponent::CPlaneMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color ,
-	std::string vertexShaderPath , std::string pixelShaderPath)
+	std::string vertexShaderPath , std::string pixelShaderPath , bool isInit)
 	:CPrimitiveMeshComponent(owner , parentTrans , color , vertexShaderPath , pixelShaderPath)
 {
-	CreateVertexData();
-	CreateIndexData();
-
-	GenerateVertexAndIndexBuffer();
+	if(isInit)Init(vertexShaderPath , pixelShaderPath);
 }
 
 void CPlaneMeshComponent::CreateVertexData()

@@ -1,7 +1,7 @@
 #pragma once
 #include "CPlaneMeshComponent.h"
 
-class CBillboardComponent :public CPlaneMeshComponent<SVertexUV>
+class CBillboardComponent :public CPlaneMeshComponent
 {
 private:
 	void Init(std::string vertexShaderPath , std::string pixelShaderPath)override;
