@@ -11,9 +11,13 @@
 #include "CDice.h"
 #include "CFighter.h"
 #include "CSkyDome.h"
+#include "CTestPlane.h"
 
 void CTestLevel::Init()
 {
+	CTestPlane& plane = *new CTestPlane(*this);
+	plane.Transform.Location.z = 100.0f;
+
 	CDice& dice = *new CDice(*this);
 	mDice = &dice;
 
@@ -122,5 +126,9 @@ void CTestLevel::Tick()
 
 void CTestLevel::ChangeFighterAngleToDirectionDice()
 {
-	mFighter->Transform.Rotation.ChangeAngleToLocation(mDice->Transform.Location);
+	XMFLOAT4 qua;
+	if(mFighter->Transform.Rotation.CalcQuaternionToLocation(mDice->Transform.Location , qua))
+	{
+		mFighter->Transform.Rotation.SetQuaternion(qua);
+	}
 }

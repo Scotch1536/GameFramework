@@ -71,7 +71,7 @@ void CRotator::AddAngle(const XMFLOAT3& angle)
 	LCMath::CalcQuaternionMultiply(mQuaternion , qua , mQuaternion);
 }
 
-void CRotator::ChangeAngleToLocation(XMFLOAT3 location)
+void CRotator::ChangeAngleAndQuaternionToLocation(XMFLOAT3 location)
 {
 	XMFLOAT4 mulQua;
 	XMFLOAT3 vec , axis , eulerAngles;
@@ -116,4 +116,47 @@ void CRotator::ChangeAngleToLocation(XMFLOAT3 location)
 
 	//角度をセット
 	mAngle = eulerAngles;
+}
+
+bool CRotator::CalcQuaternionToLocation(XMFLOAT3 location , XMFLOAT4& resultQua)
+{
+	XMFLOAT4 mulQua;
+	XMFLOAT3 vec , axis , eulerAngles;
+	float angle;
+
+	//向きたい位置へのベクトルを計算
+	LCMath::CalcFloat3FromStartToGoal(mPartner.Location , location , vec);
+
+	//向きベクトルにするために正規化
+	LCMath::CalcFloat3Normalize(vec , vec);
+
+	//クォータニオンに必要な角度を計算
+	LCMath::CalcFloat3Dot(mPartner.GetForwardVector() , vec , angle);
+
+	/*
+	結果が1(小数点がはみ出ることがあるので1以上)ならベクトル同士が平行なので終了
+	-1以下なら-1にする
+	*/
+	if(angle >= 1.0f)return false;
+	else if(angle < -1.0f)angle = -1.0f;
+
+	//角度を求める
+	angle = std::acosf(angle);
+
+	//クォータニオンに必要な軸を計算
+	LCMath::CalcFloat3Cross(mPartner.GetForwardVector() , vec , axis);
+
+	//軸が全て0なら軸を自分の上向きベクトルにする
+	if(axis.x == 0 && axis.y == 0 && axis.z == 0)
+	{
+		axis = mPartner.GetUpwardVector();
+	};
+
+	//クォータニオン作成
+	LCMath::CreateFromAxisAndAngleToQuaternion(axis , angle , mulQua);
+
+	//クォータニオンの合成
+	LCMath::CalcQuaternionMultiply(mQuaternion , mulQua , resultQua);
+
+	return true;
 }

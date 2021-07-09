@@ -33,7 +33,10 @@ public:
 	XMFLOAT4X4 GenerateMatrix();
 
 	//指定の位置に角度を変更する
-	void ChangeAngleToLocation(XMFLOAT3 location);
+	void ChangeAngleAndQuaternionToLocation(XMFLOAT3 location);
+
+	//指定の位置に向くクォータニオンをゲットする
+	bool CalcQuaternionToLocation(XMFLOAT3 location , XMFLOAT4& resultQua);
 
 	const XMFLOAT4& GetQuaternion()const
 	{
@@ -53,6 +56,11 @@ public:
 	void SetQuaternion(const XMFLOAT4& qua)
 	{
 		mQuaternion = qua;
+
+		XMFLOAT3 angle;
+
+		//クォータニオンをオイラー角に変換
+		mAngle = LCMath::TransformFromQuaternionToEulerAngles(mQuaternion , angle);
 	}
 
 	void SetAngle(const XMFLOAT3& angle);
