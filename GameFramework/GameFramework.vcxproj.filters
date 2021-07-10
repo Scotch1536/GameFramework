@@ -171,6 +171,18 @@
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="CTestPlane.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CBillboardComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CPlaneMeshComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CCameraComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameFramework\Transform\CRotator.h">
@@ -330,6 +342,15 @@
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CTestPlane.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CBillboardComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CPlaneMeshComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

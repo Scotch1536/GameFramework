@@ -38,9 +38,9 @@ void CActor::AddRenderComponent(IRender& component)
 	mRenderComponents.emplace_back(&component);
 }
 
-void CActor::RequestAddAlphaRenderComponentToLevel(IRender& renderTarget)
+void CActor::RequestAddAlphaRenderComponentToLevel(IRender& renderTarget , bool isFront)
 {
-	mOwnerInterface.AddAlphaRenderComponent(renderTarget);
+	mOwnerInterface.AddAlphaRenderComponent(renderTarget , isFront);
 }
 
 void CActor::Update()

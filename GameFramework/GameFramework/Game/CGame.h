@@ -68,5 +68,10 @@ public:
 
 	//•`‰æ
 	void Render();
+
+	const CLevel& GetLevel()
+	{
+		return *mLevel;
+	}
 };
 

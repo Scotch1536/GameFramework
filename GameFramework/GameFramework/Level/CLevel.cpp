@@ -29,10 +29,16 @@ void CLevel::RequestSetCamera(CCameraComponent& camera)
 
 void CLevel::Update()
 {
+	CActor* cameraActor = &mRenderingCamera->GetOwner();
+	cameraActor->Transform.Update();
+	cameraActor->Update();
+
 	CColliderManager::GetInstance().Update();
 
 	for(auto& actor : mActors)
 	{
+		if(actor.get() == cameraActor)continue;
+
 		if(CGameManager::GetInstance().GetIsPause())
 		{
 			if(actor->GetIsAffectToPause())continue;
@@ -43,6 +49,8 @@ void CLevel::Update()
 
 	for(auto& actor : mActors)
 	{
+		if(actor.get() == cameraActor)continue;
+
 		if(CGameManager::GetInstance().GetIsPause())
 		{
 			if(actor->GetIsAffectToPause())continue;
@@ -53,14 +61,16 @@ void CLevel::Update()
 	}
 
 	//更新後に行う関数を実行
-	for(auto& func : mDoAfterUpdateFunction)
+	if(mDoAfterUpdateFunction.size() != 0)
 	{
-		func();
+		for(auto& func : mDoAfterUpdateFunction)
+		{
+			func();
+		}
+		//中身を空にする
+		mDoAfterUpdateFunction.clear();
+		mDoAfterUpdateFunction.shrink_to_fit();
 	}
-
-	//中身を空にする
-	mDoAfterUpdateFunction.clear();
-	mDoAfterUpdateFunction.shrink_to_fit();
 }
 
 void CLevel::Render()
@@ -94,12 +104,15 @@ void CLevel::Render()
 		actor->Render();
 	}
 
-	for(auto& alphaRender : mAlphaRenderComponents)
+	if(mAlphaRenderComponents.size() != 0)
 	{
-		alphaRender->Render();
+		for(auto& alphaRender : mAlphaRenderComponents)
+		{
+			alphaRender->Render();
+		}
+		mAlphaRenderComponents.clear();
+		mAlphaRenderComponents.shrink_to_fit();
 	}
-	mAlphaRenderComponents.clear();
-	mAlphaRenderComponents.shrink_to_fit();
 
 	//ImGuiに渡す描画の関数オブジェクト一つの関数オブジェクトにまとめる
 	auto allGuiMethodExecute = [&]
@@ -147,4 +160,16 @@ void CLevel::DestroyActor(CActor& target)
 void CLevel::SetOwnerInterface(CGame& owner)
 {
 	mOwnerInterface = &owner;
+}
+
+const XMFLOAT4X4* CLevel::GetRenderingCameraViewMatrix()const
+{
+	if(mRenderingCamera == nullptr)
+	{
+		return nullptr;
+	}
+	else
+	{
+		return &mRenderingCamera->GetViewMatrix();
+	}
 }

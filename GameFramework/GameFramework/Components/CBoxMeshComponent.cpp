@@ -7,10 +7,7 @@ CBoxMeshComponent::CBoxMeshComponent(CActor& owner , CTransform& parentTrans , X
 	:CPrimitiveMeshComponent(owner , parentTrans , color , vertexShaderPath , pixelShaderPath) ,
 	mMin(min) , mMax(max)
 {
-	CreateVertexData();
-	CreateIndexData();
-
-	GenerateVertexAndIndexBuffer();
+	Init(vertexShaderPath , pixelShaderPath);
 }
 
 void CBoxMeshComponent::CreateVertexData()

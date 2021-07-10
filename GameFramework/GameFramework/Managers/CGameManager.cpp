@@ -44,3 +44,8 @@ void CGameManager::RequestExecute(HINSTANCE hInst , int winMode)
 		MessageBox(NULL , "Not Execute" , "error" , MB_OK);
 	}
 }
+
+const XMFLOAT4X4* CGameManager::GetCameraViewMatrix()
+{
+	return mGame.GetLevel().GetRenderingCameraViewMatrix();
+}

@@ -5,15 +5,20 @@
 #include "CPrimitiveMeshComponent.h"
 #include "CRenderComponent.h"
 
-CPrimitiveMeshComponent::CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color , std::string vertexShaderPath , std::string pixelShaderPath)
+template<class VertexType>
+CPrimitiveMeshComponent<VertexType>::CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color , std::string vertexShaderPath , std::string pixelShaderPath)
 	:CComponent(owner , 100) ,
 	mRenderComponent(*new CRenderComponent(owner)) ,
 	mColor(color) ,
 	Transform(parentTrans)
+{}
+
+template<class VertexType>
+void CPrimitiveMeshComponent<VertexType>::Init(std::string vertexShaderPath , std::string pixelShaderPath)
 {
 	if(mColor.w < 1.0f)
 	{
-		isTranslucent = true;
+		mIsTranslucent = true;
 	}
 	else
 	{
@@ -32,14 +37,20 @@ CPrimitiveMeshComponent::CPrimitiveMeshComponent(CActor& owner , CTransform& par
 
 	mRenderComponent.GenerateVertexShader(layout , numElements , vertexShaderPath);
 	mRenderComponent.GeneratePixelShader(pixelShaderPath);
+
+	CreateVertexData();
+	CreateIndexData();
+
+	GenerateVertexAndIndexBuffer();
 }
 
-void CPrimitiveMeshComponent::GenerateVertexAndIndexBuffer()
+template<class VertexType>
+void CPrimitiveMeshComponent<VertexType>::GenerateVertexAndIndexBuffer()
 {
 	ID3D11Device* buf = CDirectXGraphics::GetInstance()->GetDXDevice();
 
 	// 頂点バッファ生成
-	bool sts = CreateVertexBufferWrite(buf , static_cast<unsigned int>(sizeof(SVertexColor)) ,
+	bool sts = CreateVertexBufferWrite(buf , static_cast<unsigned int>(sizeof(VertexType)) ,
 		static_cast<unsigned int>(mVertices.size()) ,
 		mVertices.data() , &mVertexBuffer);
 	if(!sts)
@@ -58,14 +69,19 @@ void CPrimitiveMeshComponent::GenerateVertexAndIndexBuffer()
 	}
 }
 
-void CPrimitiveMeshComponent::Update()
+template<class VertexType>
+void CPrimitiveMeshComponent<VertexType>::Update()
 {
-	if(isTranslucent)mOwnerInterface.RequestAddAlphaRenderComponentToLevel(*this);
+	if(mIsTranslucent)mOwnerInterface.RequestAddAlphaRenderComponentToLevel(*this);
 }
 
-void CPrimitiveMeshComponent::Render()
+template<class VertexType>
+void CPrimitiveMeshComponent<VertexType>::Render()
 {
 	Transform.RequestSetMatrix();
 
-	mRenderComponent.Render(sizeof(SVertexColor) , mIndices.size() , nullptr , mVertexBuffer.Get() , mIndexBuffer.Get() , nullptr);
+	mRenderComponent.Render(sizeof(VertexType) , mIndices.size() , nullptr , mVertexBuffer.Get() , mIndexBuffer.Get() , nullptr);
 }
+
+template class CPrimitiveMeshComponent<SVertexColor>;
+template class CPrimitiveMeshComponent<SVertexUV>;

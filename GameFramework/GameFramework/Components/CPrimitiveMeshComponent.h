@@ -3,6 +3,7 @@
 #include <wrl/client.h>
 #include <DirectXMath.h>
 #include <vector>
+#include <memory>
 #include <string>
 
 #include "../Interfaces/IRender.h"
@@ -16,6 +17,7 @@ using Microsoft::WRL::ComPtr;
 
 class CRenderComponent;
 
+template<class VertexType = SVertexColor>
 class CPrimitiveMeshComponent :public CComponent , public IRender
 {
 protected:
@@ -24,13 +26,14 @@ protected:
 
 	CRenderComponent& mRenderComponent;
 
-	std::vector<SVertexColor> mVertices;		//頂点データ
-	std::vector<unsigned int> mIndices;			//インデックスデータ
+	std::vector<VertexType> mVertices;		//頂点データ
+	std::vector<unsigned int> mIndices;							//インデックスデータ
 
 	XMFLOAT4 mColor;		//カラー
 
-	bool isTranslucent = false;		//半透明かどうか
+	bool mIsTranslucent = false;		//半透明かどうか
 
+	virtual void Init(std::string vertexShaderPath , std::string pixelShaderPath);
 	virtual void CreateVertexData() = 0;
 	virtual void CreateIndexData() = 0;
 

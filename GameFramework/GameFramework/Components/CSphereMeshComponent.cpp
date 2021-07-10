@@ -12,10 +12,7 @@ CSphereMeshComponent::CSphereMeshComponent(CActor& owner , CTransform& parentTra
 	mRadius(radius) ,
 	mDivisionNumber(divNum)
 {
-	CreateVertexData();
-	CreateIndexData();
-
-	GenerateVertexAndIndexBuffer();
+	Init(vertexShaderPath , pixelShaderPath);
 }
 
 void CSphereMeshComponent::CreateVertexData()

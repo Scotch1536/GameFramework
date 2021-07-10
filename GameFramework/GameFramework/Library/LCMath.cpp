@@ -58,22 +58,37 @@ const XMFLOAT3& LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua
 
 const XMFLOAT4X4& LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , const XMFLOAT4X4& rotMTX , XMFLOAT4X4& resultMTX)
 {
-	resultMTX._11 = scale.x * rotMTX._11;
-	resultMTX._12 = scale.y * rotMTX._12;
-	resultMTX._13 = scale.z * rotMTX._13;
+	XMFLOAT4X4 trans;
+	DX11MtxScale(scale.x , scale.y , scale.z , resultMTX);
+	DX11MtxMultiply(resultMTX , resultMTX , rotMTX);
+	DX11MtxTranslation(location , trans);
+	DX11MtxMultiply(resultMTX , resultMTX , trans);
 
-	resultMTX._21 = scale.x * rotMTX._21;
-	resultMTX._22 = scale.y * rotMTX._22;
-	resultMTX._23 = scale.z * rotMTX._23;
+	//resultMTX._11 = scale.x * rotMTX._11;
+	//resultMTX._12 = scale.y * rotMTX._12;
+	//resultMTX._13 = scale.z * rotMTX._13;
 
-	resultMTX._31 = scale.x * rotMTX._31;
-	resultMTX._32 = scale.y * rotMTX._32;
-	resultMTX._33 = scale.z * rotMTX._33;
+	//resultMTX._21 = scale.x * rotMTX._21;
+	//resultMTX._22 = scale.y * rotMTX._22;
+	//resultMTX._23 = scale.z * rotMTX._23;
 
-	resultMTX._41 = location.x;
-	resultMTX._42 = location.y;
-	resultMTX._43 = location.z;
-	resultMTX._44 = 1;
+	//resultMTX._31 = scale.x * rotMTX._31;
+	//resultMTX._32 = scale.y * rotMTX._32;
+	//resultMTX._33 = scale.z * rotMTX._33;
+
+	//resultMTX._41 = location.x;
+	//resultMTX._42 = location.y;
+	//resultMTX._43 = location.z;
+	//resultMTX._44 = 1;
+
+	return resultMTX;
+}
+
+const XMFLOAT4X4& LCMath::InverseMatrix(const XMFLOAT4X4& target , XMFLOAT4X4& resultMTX)
+{
+	XMMATRIX mat = XMLoadFloat4x4(&target);
+	XMMATRIX inverseMTX = XMMatrixInverse(nullptr , mat);
+	XMStoreFloat4x4(&resultMTX , inverseMTX);
 
 	return resultMTX;
 }
