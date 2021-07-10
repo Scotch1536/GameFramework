@@ -17,6 +17,7 @@ using Microsoft::WRL::ComPtr;
 
 class CRenderComponent;
 
+template<class VertexType = SVertexColor>
 class CPrimitiveMeshComponent :public CComponent , public IRender
 {
 protected:
@@ -25,7 +26,7 @@ protected:
 
 	CRenderComponent& mRenderComponent;
 
-	std::vector<SVertexColor> mVertices;		//頂点データ
+	std::vector<VertexType> mVertices;		//頂点データ
 	std::vector<unsigned int> mIndices;							//インデックスデータ
 
 	XMFLOAT4 mColor;		//カラー

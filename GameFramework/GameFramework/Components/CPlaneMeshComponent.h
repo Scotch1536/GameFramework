@@ -1,7 +1,8 @@
 #pragma once
 #include "CPrimitiveMeshComponent.h"
 
-class CPlaneMeshComponent :public CPrimitiveMeshComponent
+template<class VertexType = SVertexColor>
+class CPlaneMeshComponent :public CPrimitiveMeshComponent<VertexType>
 {
 protected:
 	void CreateVertexData()override;

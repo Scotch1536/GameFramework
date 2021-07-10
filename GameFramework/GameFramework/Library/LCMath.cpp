@@ -78,6 +78,15 @@ const XMFLOAT4X4& LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3
 	return resultMTX;
 }
 
+const XMFLOAT4X4& LCMath::InverseMatrix(const XMFLOAT4X4& target , XMFLOAT4X4& resultMTX)
+{
+	XMMATRIX mat = XMLoadFloat4x4(&target);
+	XMMATRIX inverseMTX = XMMatrixInverse(nullptr , mat);
+	XMStoreFloat4x4(&resultMTX , inverseMTX);
+
+	return resultMTX;
+}
+
 bool LCMath::CompareFloat3(const XMFLOAT3& target1 , const XMFLOAT3& target2)
 {
 	if(target1.x != target2.x)return false;

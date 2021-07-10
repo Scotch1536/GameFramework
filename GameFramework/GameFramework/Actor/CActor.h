@@ -20,7 +20,7 @@ public:
 	virtual void AddRenderComponent(IRender& component) = 0;
 	virtual CActor& GetActor() = 0;
 	virtual CTransform& GetTransform() = 0;
-	virtual void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget) = 0;
+	virtual void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget , bool isFront = false) = 0;
 };
 
 //アクタークラス
@@ -48,7 +48,7 @@ private:
 	//レンダー機能を持つコンポーネントを登録
 	void AddRenderComponent(IRender& component)override;
 
-	void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget)override;
+	void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget , bool isFront)override;
 
 	//アクター情報取得
 	CActor& GetActor()override

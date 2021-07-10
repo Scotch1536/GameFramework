@@ -110,7 +110,7 @@ void CTestLevel::Tick()
 
 		ImGui::Text(u8"–Ú•W‚Æ‚Ì‹——£");
 		ImGui::Text(std::to_string(distance).c_str());
-		
+
 		ImGui::Text("\n");
 		ImGui::Text(u8"Šp“x");
 		ImGui::Text(angleStr.c_str());

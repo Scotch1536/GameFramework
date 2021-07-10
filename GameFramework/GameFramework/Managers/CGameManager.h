@@ -42,6 +42,9 @@ public:
 	//実行をリクエスト
 	void RequestExecute(HINSTANCE hInst , int winMode);
 
+	//カメラのビュー行列を取得
+	const XMFLOAT4X4* GetCameraViewMatrix();
+
 	//ゲームクラスの取得（アプリケーションクラスの参照が必要）
 	CGame& GetGame(const CApplication& partner)
 	{
@@ -77,4 +80,5 @@ public:
 	{
 		return static_cast<IGameToGameManager&>(mGame).GetApp().GetHWnd();
 	}
+
 };

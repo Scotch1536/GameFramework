@@ -1,3 +1,4 @@
+#pragma once
 #include <DirectXMath.h>
 
 #include "../ExternalCode/DX11Settransform.h"
@@ -24,69 +25,22 @@ private:
 	float mAspect;				//アスペクト比
 	float mFov;					//視野角
 
+	const CSpringArmComponent* mSpringArm = nullptr;		//スプリングアーム
+
 	bool mShouldUpdateProjectionMatrix = true;		//プロジェクション行列を更新すべきか
 	bool mShouldUpdateViewMatrix = true;			//ビュー行列を更新すべきか
-	bool mIsJoinSpringArm = false;					//スプリングアームが繋がっているか
 
 	//プロジェクション行列作成
-	void CreateProjectionMatrix()
-	{
-		ALIGN16 XMMATRIX projection;
-
-		projection = XMMatrixPerspectiveFovLH(mFov , mAspect , mNear , mFar);
-
-		XMStoreFloat4x4(&mProjection , projection);
-	}
+	void CreateProjectionMatrix();
 
 	//ビュー行列作成
-	void CreateViewMatrix()
-	{
-		if(mIsJoinSpringArm)
-		{
-			ALIGN16 XMVECTOR Eye = XMVectorSet(mEye.x , mEye.y , mEye.z , 0.0f);
-			ALIGN16 XMVECTOR At = XMVectorSet(mLookAt.x , mLookAt.y , mLookAt.z , 0.0f);
-			ALIGN16 XMVECTOR Up = XMVectorSet(mUp.x , mUp.y , mUp.z , 0.0f);
-
-			ALIGN16 XMMATRIX camera;
-			camera = XMMatrixLookAtLH(Eye , At , Up);
-
-			XMStoreFloat4x4(&mView , camera);
-		}
-		else
-		{
-			XMFLOAT3 pLoc = mOwnerInterface.GetTransform().Location;
-
-			ALIGN16 XMVECTOR Eye = XMVectorSet(pLoc.x + mEye.x , pLoc.y + mEye.y , pLoc.z + mEye.z , 0.0f);
-			ALIGN16 XMVECTOR At = XMVectorSet(mLookAt.x , mLookAt.y , mLookAt.z , 0.0f);
-			ALIGN16 XMVECTOR Up = XMVectorSet(mUp.x , mUp.y , mUp.z , 0.0f);
-
-			ALIGN16 XMMATRIX camera;
-			camera = XMMatrixLookAtLH(Eye , At , Up);
-
-			XMStoreFloat4x4(&mView , camera);
-		}
-	}
+	void CreateViewMatrix();
 
 public:
 	CCameraComponent(CActor& owner , int priority = 80):CComponent(owner , priority) {}
 
 	//更新
-	void Update()override
-	{
-		if(mShouldUpdateProjectionMatrix)
-		{
-			mShouldUpdateProjectionMatrix = false;
-
-			CreateProjectionMatrix();
-		}
-
-		if(mShouldUpdateViewMatrix)
-		{
-			mShouldUpdateViewMatrix = false;
-
-			CreateViewMatrix();
-		}
-	}
+	void Update()override;
 
 	void SetProjection(float nearclip , float farclip , float fov , float width , float height)
 	{
@@ -189,6 +143,6 @@ public:
 
 	void JoinSpringArm(const CSpringArmComponent& partner)
 	{
-		mIsJoinSpringArm = true;
+		mSpringArm = &partner;
 	}
 };

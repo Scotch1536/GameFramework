@@ -3,7 +3,7 @@
 
 #include "CPrimitiveMeshComponent.h"
 
-class CSphereMeshComponent :public CPrimitiveMeshComponent
+class CSphereMeshComponent :public CPrimitiveMeshComponent<>
 {
 private:
 	float mRadius;				//”¼Œa

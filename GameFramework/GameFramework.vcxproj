@@ -21,6 +21,7 @@
     <ClCompile Include="GameFramework\Components\CAABBColliderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CBillboardComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CBoxMeshComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CCameraComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CColliderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CPlaneMeshComponent.cpp" />

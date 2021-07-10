@@ -22,7 +22,7 @@ public:
 	virtual void AddActor(CActor& actor) = 0;
 	virtual void RequestSetCamera(CCameraComponent& camera) = 0;
 	virtual void AddImGuiDrawMethod(std::function<void()> method) = 0;
-	virtual void AddAlphaRenderComponent(IRender& renderTarget) = 0;
+	virtual void AddAlphaRenderComponent(IRender& renderTarget , bool isFront) = 0;
 };
 
 //レベルクラス
@@ -36,18 +36,8 @@ private:
 
 	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
 
-	void AddAlphaRenderComponent(IRender& renderTarget)override
-	{
-		mAlphaRenderComponents.emplace_back(&renderTarget);
-	}
-
 protected:
 	IGame* mOwnerInterface;			//ゲームインターフェース
-
-	void AddImGuiDrawMethod(std::function<void()> method)override
-	{
-		mImGuiDrawMethod.emplace_back(method);
-	}
 
 private:
 	//コピー禁止
@@ -64,9 +54,24 @@ private:
 	//アクターの破壊
 	void DestroyActor(CActor& target)override;
 
+	void AddAlphaRenderComponent(IRender& renderTarget , bool isFront)override
+	{
+		if(isFront)
+		{
+			auto itr = mAlphaRenderComponents.begin();
+			mAlphaRenderComponents.emplace(itr , &renderTarget);
+		}
+		else mAlphaRenderComponents.emplace_back(&renderTarget);
+	}
+
 protected:
 	//カメラのセットをリクエスト
 	void RequestSetCamera(CCameraComponent& camera)override;
+
+	void AddImGuiDrawMethod(std::function<void()> method)override
+	{
+		mImGuiDrawMethod.emplace_back(method);
+	}
 
 	template<class T>
 	bool GetActor(CActor*& result)
@@ -128,4 +133,7 @@ public:
 
 	//インターフェースのセット　ゲームマネージャーからしか呼び出す想定をしていない
 	void SetOwnerInterface(CGame& owner);
+
+	const XMFLOAT4X4* GetRenderingCameraViewMatrix()const;
+
 };

@@ -3,7 +3,7 @@
 
 #include "CPrimitiveMeshComponent.h"
 
-class CBoxMeshComponent :public CPrimitiveMeshComponent
+class CBoxMeshComponent :public CPrimitiveMeshComponent<>
 {
 private:
 	XMFLOAT3 mMin , mMax;		//Œ´“_‚Æ’¸“_‚Æ‚ÌŠÔ‚Ì’·‚³
