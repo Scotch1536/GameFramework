@@ -17,6 +17,7 @@ void CTestLevel::Init()
 {
 	CTestPlane& plane = *new CTestPlane(*this);
 	plane.Transform.Location.z = 100.0f;
+	//plane.Transform.Scale = { 50.0f,50.0f,0.0f };
 
 	CDice& dice = *new CDice(*this);
 	mDice = &dice;
@@ -24,6 +25,7 @@ void CTestLevel::Init()
 	dice.Transform.Location = { 50.f,0.f,100.f };
 
 	CFighter& fighter = *new CFighter(*this);
+	//fighter.Transform.Rotation.SetAngle({ 0.0f,30.0f,0.0f });
 	mFighter = &fighter;
 
 	CSkyDome& skyDome = *new CSkyDome(*this);

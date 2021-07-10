@@ -17,7 +17,7 @@ private:
 
 	CTransform* mParentTransform = nullptr;					//親トランスフォーム
 	std::vector<CTransform*> mChildTransform;				//子トランスフォーム
-	std::vector<XMFLOAT4X4> mMatricesToLastMultiply;		//追加して加算する行列
+	std::vector<XMFLOAT4X4> mMatricesToLastMultiply;		//最後に（GPUへのセット時に）加算する行列
 
 	XMFLOAT3 mLastFrameLocation = { 0.f,0.f,0.f };		//前フレームのロケーション
 	XMFLOAT3 mLastFrameScale = { 0.f,0.f,0.f };			//前フレームのスケール

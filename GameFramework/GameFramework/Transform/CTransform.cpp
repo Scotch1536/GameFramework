@@ -58,7 +58,6 @@ void CTransform::Update()
 	if(mIsBillboard)
 	{
 		mShouldUpdateMatrix = true;
-		if(mParentTransform != nullptr)mParentTransform->SetIsBillboard(true);
 	}
 
 	Rotation.Update();
@@ -73,7 +72,7 @@ void CTransform::Update()
 	{
 		mShouldUpdateMatrix = false;
 
-		if(mIsBillboard&&mParentTransform == nullptr)
+		if(mIsBillboard)
 		{
 			XMFLOAT4X4 rotMTX = Rotation.GenerateMatrix();
 
