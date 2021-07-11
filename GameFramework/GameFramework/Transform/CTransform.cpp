@@ -86,6 +86,7 @@ void CTransform::Update()
 				inverseCamera._42 = 0.0f;
 				inverseCamera._43 = 0.0f;
 
+				//SetMatrixToBillboard(inverseCamera);
 				DX11MtxMultiply(rotMTX , inverseCamera , rotMTX);
 			}
 			LCMath::UpdateMatrix(Location , Scale , rotMTX , mWorldMatrixSelf);
@@ -99,6 +100,31 @@ void CTransform::Update()
 	if(mParentTransform != nullptr)
 	{
 		DX11MtxMultiply(mWorldMatrixResult , mWorldMatrixSelf , mParentTransform->GetWorldMatrixResult());
+
+		//if(mIsBillboard)
+		//{
+		//	CTransform* bufTrans = mParentTransform;
+		//	std::vector<XMFLOAT4X4> inverseMTX;
+		//	while(bufTrans != nullptr)
+		//	{
+		//		XMFLOAT4X4 TransMTX , TransInvMTX;
+
+		//		DX11MtxTranslation(bufTrans->Location , TransMTX);
+		//		LCMath::InverseMatrix(TransMTX , TransInvMTX);
+
+		//		auto itr = inverseMTX.begin();
+		//		inverseMTX.emplace(itr,TransInvMTX);
+
+		//		AddMatricesToLastMultiply(TransMTX);
+
+		//		bufTrans = bufTrans->mParentTransform;
+		//	}
+
+		//	for(auto& invMTX : inverseMTX)
+		//	{
+		//		DX11MtxMultiply(mWorldMatrixResult , mWorldMatrixResult , invMTX);
+		//	}
+		//}
 	}
 	else
 	{
@@ -113,15 +139,20 @@ void CTransform::Update()
 
 void CTransform::RequestSetMatrix()
 {
-	if(mMatricesToLastMultiply.size() != 0)
-	{
-		for(auto& matrix : mMatricesToLastMultiply)
-		{
-			DX11MtxMultiply(mWorldMatrixResult , mWorldMatrixResult , matrix);
-		}
-		mMatricesToLastMultiply.clear();
-		mMatricesToLastMultiply.shrink_to_fit();
-	}
+	//if(mMatrixToBillboard != nullptr)
+	//{
+	//	DX11MtxMultiply(mWorldMatrixResult , *mMatrixToBillboard , mWorldMatrixResult);
+	//}
+
+	//if(mMatricesToLastMultiply.size() != 0)
+	//{
+	//	for(auto& matrix : mMatricesToLastMultiply)
+	//	{
+	//		DX11MtxMultiply(mWorldMatrixResult , mWorldMatrixResult , matrix);
+	//	}
+	//	mMatricesToLastMultiply.clear();
+	//	mMatricesToLastMultiply.shrink_to_fit();
+	//}
 
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD , mWorldMatrixResult);
 }

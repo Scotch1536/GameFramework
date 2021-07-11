@@ -5,6 +5,7 @@
 #include "../ExternalCode/DX11Settransform.h"
 #include "../ExternalCode/CDirectInput.h"
 #include "../Managers/CInputManager.h"
+#include "../Managers/CSoundManager.h"
 
 #include "CGame.h"
 #include "CApplication.h"
@@ -46,6 +47,9 @@ void CGame::Init()
 {
 	// DX11　初期化
 	bool sts;
+
+	//サウンドマネージャー初期化
+	CSoundManager::GetInstance();
 
 	sts = CDirectXGraphics::GetInstance()->Init(
 		mApp.GetHWnd() ,

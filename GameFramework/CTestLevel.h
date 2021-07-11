@@ -7,8 +7,9 @@ class CFighter;
 class CTestLevel :public CLevel
 {
 private:
-	CDice* mDice;
 	CFighter* mFighter;
+	CDice* mMainDice;
+
 	int mCnt = 0;
 	float mTime = 0;
 
@@ -45,6 +46,6 @@ public:
 
 	void Tick()override;
 
-	void ChangeFighterAngleToDirectionDice();
+	void MainDiceDestroy();
 };
 

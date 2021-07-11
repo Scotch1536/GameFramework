@@ -5,7 +5,8 @@
 
 CSkyDome::CSkyDome(ILevel& owner):CActor(owner)
 {
-	CStaticMeshComponent& staticMesh = *new CStaticMeshComponent(*this , Transform ,
-		CModelDataManager::GetInstance().GetModel("Assets/skydome/skydome.x" , "Assets/skydome/") ,
+	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , Transform ,
+		CModelDataManager::GetInstance().GetModel("Assets/Models/Skydome/Dome_BB601.x" , "Assets/Models/Skydome/") ,
 		"Shader/vs.hlsl" , "Shader/pstexcol.hlsl");
+	mesh.Transform.Scale = { 20.0f,20.0f,20.0f };
 }

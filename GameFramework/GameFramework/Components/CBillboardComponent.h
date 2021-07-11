@@ -10,7 +10,7 @@ private:
 
 public:
 	CBillboardComponent(CActor& owner , CTransform& parentTrans , std::string texturePath ,
-		std::string vertexShaderPath = "Shader/vs.hlsl" , std::string pixelShaderPath = "Shader/pstexcol.hlsl");
+		std::string vertexShaderPath = "Shader/vs.hlsl" , std::string pixelShaderPath = "Shader/basicps.hlsl");
 
 	void Update()override;
 	void Render()override;

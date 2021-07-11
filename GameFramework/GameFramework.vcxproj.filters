@@ -171,9 +171,6 @@
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CTestPlane.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\Components\CBillboardComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
@@ -181,6 +178,18 @@
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CCameraComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CPointer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Data\CWave.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Managers\CSoundManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -344,14 +353,23 @@
     <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CTestPlane.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Components\CBillboardComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CPlaneMeshComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CPointer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Data\CWave.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Managers\CSoundManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -376,5 +394,11 @@
     <ClInclude Include="GameFramework\ExternalCode\shaderhashmap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <FxCompile Include="Shader\basicps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\basicvs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

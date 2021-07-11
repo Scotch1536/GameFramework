@@ -11,11 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CDice.cpp" />
     <ClCompile Include="CFighter.cpp" />
+    <ClCompile Include="CPointer.cpp" />
     <ClCompile Include="CSkyDome.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
-    <ClCompile Include="CTestPlane.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
     <ClCompile Include="GameFramework\Components\CAABBColliderComponent.cpp" />
@@ -33,6 +34,7 @@
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Data\CModelMeshData.cpp" />
     <ClCompile Include="GameFramework\Data\CModelData.cpp" />
+    <ClCompile Include="GameFramework\Data\CWave.cpp" />
     <ClCompile Include="GameFramework\DebugTools\imgui\imgui.cpp" />
     <ClCompile Include="GameFramework\DebugTools\imgui\imgui_demo.cpp" />
     <ClCompile Include="GameFramework\DebugTools\imgui\imgui_draw.cpp" />
@@ -60,15 +62,17 @@
     <ClCompile Include="GameFramework\Managers\CGameManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CInputManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CSoundManager.cpp" />
     <ClCompile Include="GameFramework\Transform\CRotator.cpp" />
     <ClCompile Include="GameFramework\Transform\CTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CBullet.h" />
     <ClInclude Include="CDice.h" />
     <ClInclude Include="CFighter.h" />
+    <ClInclude Include="CPointer.h" />
     <ClInclude Include="CSkyDome.h" />
     <ClInclude Include="CTestLevel.h" />
-    <ClInclude Include="CTestPlane.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
     <ClInclude Include="GameFramework\Components\CAABBColliderComponent.h" />
     <ClInclude Include="GameFramework\Components\CBillboardComponent.h" />
@@ -86,6 +90,7 @@
     <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h" />
     <ClInclude Include="GameFramework\Data\CModelMeshData.h" />
     <ClInclude Include="GameFramework\Data\CModelData.h" />
+    <ClInclude Include="GameFramework\Data\CWave.h" />
     <ClInclude Include="GameFramework\Data\VertexProto.h" />
     <ClInclude Include="GameFramework\DebugTools\imgui\imconfig.h" />
     <ClInclude Include="GameFramework\DebugTools\imgui\imgui.h" />
@@ -118,11 +123,20 @@
     <ClInclude Include="GameFramework\Managers\CGameManager.h" />
     <ClInclude Include="GameFramework\Managers\CInputManager.h" />
     <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />
+    <ClInclude Include="GameFramework\Managers\CSoundManager.h" />
     <ClInclude Include="GameFramework\Object\CObject.h" />
     <ClInclude Include="GameFramework\Transform\CRotator.h" />
     <ClInclude Include="GameFramework\Transform\CTransform.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Shader\basicps.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\basicvs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="Shader\ps.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

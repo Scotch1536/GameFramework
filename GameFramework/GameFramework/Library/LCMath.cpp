@@ -198,3 +198,13 @@ const XMFLOAT3& LCMath::Lerp(const XMFLOAT3& start , const XMFLOAT3& end , const
 
 	return result;
 }
+
+const XMFLOAT4& LCMath::Lerp(const XMFLOAT4& start , const XMFLOAT4& end , const float& alpha , XMFLOAT4& result)
+{
+	Lerp(start.x , end.x , alpha , result.x);
+	Lerp(start.y , end.y , alpha , result.y);
+	Lerp(start.z , end.z , alpha , result.z);
+	Lerp(start.w , end.w , alpha , result.w);
+
+	return result;
+}

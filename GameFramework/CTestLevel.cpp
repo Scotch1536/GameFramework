@@ -11,22 +11,30 @@
 #include "CDice.h"
 #include "CFighter.h"
 #include "CSkyDome.h"
-#include "CTestPlane.h"
 
 void CTestLevel::Init()
 {
-	CTestPlane& plane = *new CTestPlane(*this);
-	plane.Transform.Location.z = 100.0f;
-	//plane.Transform.Scale = { 50.0f,50.0f,0.0f };
-
 	CDice& dice = *new CDice(*this);
-	mDice = &dice;
+	dice.Transform.Location = { 0.f,0.f,500.f };
+	mMainDice = &dice;
 
-	dice.Transform.Location = { 50.f,0.f,100.f };
+	CDice* subDice = nullptr;
+	subDice = new CDice(*this);
+	dice.Transform.AttachTransform(subDice->Transform);
+	subDice->Transform.Location.y = -100.0f;
+	subDice = new CDice(*this);
+	dice.Transform.AttachTransform(subDice->Transform);
+	subDice->Transform.Location.y = 100.0f;
+	subDice = new CDice(*this);
+	dice.Transform.AttachTransform(subDice->Transform);
+	subDice->Transform.Location.x = -100.0f;
+	subDice = new CDice(*this);
+	dice.Transform.AttachTransform(subDice->Transform);
+	subDice->Transform.Location.x = 100.0f;
 
 	CFighter& fighter = *new CFighter(*this);
-	//fighter.Transform.Rotation.SetAngle({ 0.0f,30.0f,0.0f });
 	mFighter = &fighter;
+	mFighter->Transform.Location.z = 30.0f;
 
 	CSkyDome& skyDome = *new CSkyDome(*this);
 
@@ -41,7 +49,7 @@ void CTestLevel::Init()
 	レベルから指定のアクターインスタンスのメソッドをインプットマネージャーにバインドすることは可能
 	アクターからでもレベルからでもどちらでも可能だ
 	*/
-	CInputManager::GetInstance().AddEvent("ChangeDire" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_Q } , std::bind(&CTestLevel::ChangeFighterAngleToDirectionDice , std::ref(*this)));
+	//CInputManager::GetInstance().AddEvent("DiceDestroy" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_Q } , std::bind(&CTestLevel::MainDiceDestroy , std::ref(*this)));
 }
 
 void CTestLevel::Tick()
@@ -55,23 +63,21 @@ void CTestLevel::Tick()
 		//mTime = std::floorf(mTime * 100.0f) / 100.0f;
 	}
 
-	CActor* buf;
-	float distance;
-	if(GetActor<CDice>(buf))
-	{
-		XMFLOAT3 vec;
-		LCMath::CalcFloat3FromStartToGoal(mFighter->Transform.Location , buf->Transform.Location , vec);
-		LCMath::CalcFloat3Length(vec , distance);
-	}
-
 	auto displayCount = [&]
 	{
 		ImGui::SetNextWindowPos(ImVec2(10 , 10) , ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
 
-		ImGui::Begin(u8"フレームカウント");
+		ImGui::Begin(u8"ゲーム情報");
 
+		ImGui::Text(u8"フレームカウント");
 		ImGui::Text(std::to_string(mCnt).c_str());
+
+		ImGui::Text("\n");
+		ImGui::Text(u8"時間");
+
+		std::string buf = std::to_string(mTime);
+		ImGui::Text(std::to_string(mTime).c_str());
 
 		ImGui::End();
 	};
@@ -81,10 +87,20 @@ void CTestLevel::Tick()
 		ImGui::SetNextWindowPos(ImVec2(10 , 220) , ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
 
-		ImGui::Begin(u8"時間");
+		ImGui::Begin(u8"マウス情報");
 
-		std::string buf = std::to_string(mTime);
-		ImGui::Text(std::to_string(mTime).c_str());
+		ImGui::Text(u8"マウス座標(クライアント)");
+
+		std::string directXPos = std::to_string(CInputManager::GetInstance().GetMousePosX()) + "," + std::to_string(CInputManager::GetInstance().GetMousePosY());
+		POINT mousePos;
+		GetCursorPos(&mousePos);
+		std::string winPos = std::to_string(mousePos.x) + "," + std::to_string(mousePos.y);
+
+		ImGui::Text(directXPos.c_str());
+
+		ImGui::Text("\n");
+		ImGui::Text(u8"マウス座標(ディスプレイ)");
+		ImGui::Text(winPos.c_str());
 
 		ImGui::End();
 	};
@@ -92,14 +108,19 @@ void CTestLevel::Tick()
 	auto displayHitStatus = [&]
 	{
 		ImGui::SetNextWindowPos(ImVec2(10 , 430) , ImGuiCond_Once);
-		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(150 , 100) , ImGuiCond_Once);
 
-		ImGui::Begin(u8"衝突判定");
+		ImGui::Begin(u8"戦闘機の衝突判定");
 
-		if(mFighter->isHit)ImGui::Text(u8"当たっている");
+		if(mFighter->GetIsHit())ImGui::Text(u8"当たっている");
 		else ImGui::Text(u8"当たっていない");
 		ImGui::End();
 	};
+
+	float distance;
+	XMFLOAT3 vec;
+	LCMath::CalcFloat3FromStartToGoal(mFighter->Transform.Location , mMainDice->Transform.Location , vec);
+	LCMath::CalcFloat3Length(vec , distance);
 
 	XMFLOAT3 angle = mFighter->Transform.Rotation.GetAngle();
 	std::string angleStr = std::to_string((int)angle.x) + ',' + std::to_string((int)angle.y) + ',' + std::to_string((int)angle.z);
@@ -118,19 +139,36 @@ void CTestLevel::Tick()
 		ImGui::Text(angleStr.c_str());
 
 		ImGui::End();
+	};	
+	
+	auto displayHowToPlay = [&]
+	{
+		ImGui::SetNextWindowPos(ImVec2(10 , 550) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(400 , 150) , ImGuiCond_Once);
+
+		ImGui::Begin(u8"操作方法");
+
+		ImGui::Text(u8"マウス操作:ポインターの移動\n");
+		ImGui::Text(u8"マウス左クリック:弾の発射\n");
+		ImGui::Text("\n");
+		ImGui::Text(u8"ゲーム概要：戦闘機はポインターに向かって移動します\n");
+		ImGui::Text(u8"これはゲームフレームワークのひな形です\n");
+
+		ImGui::End();
 	};
 
 	AddImGuiDrawMethod(displayCount);
 	AddImGuiDrawMethod(displayTime);
 	AddImGuiDrawMethod(displayHitStatus);
 	AddImGuiDrawMethod(displayDistance);
+	AddImGuiDrawMethod(displayHowToPlay);
 }
 
-void CTestLevel::ChangeFighterAngleToDirectionDice()
+void CTestLevel::MainDiceDestroy()
 {
-	XMFLOAT4 qua;
-	if(mFighter->Transform.Rotation.CalcQuaternionToLocation(mDice->Transform.Location , qua))
+	if(mMainDice != nullptr)
 	{
-		mFighter->Transform.Rotation.SetQuaternion(qua);
+		mMainDice->Destroy();
+		mMainDice = nullptr;
 	}
 }

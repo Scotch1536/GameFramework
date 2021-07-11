@@ -24,6 +24,7 @@ VS_OUTPUT main(float4 Pos : POSITION,
 	N = normalize(N);
 
 	output.Normal = N;
+    output.Color = 1.0f;
     
 	return output;
 }

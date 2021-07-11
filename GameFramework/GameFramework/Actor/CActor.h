@@ -31,10 +31,6 @@ private:
 	std::vector<IRender*> mRenderComponents;					//描画の属性をもつコンポーネント
 	std::vector<std::string> mActorTags;						//タグ
 
-	ILevel& mOwnerInterface;		//インターフェース
-
-	bool mIsAffectToPause;			//ポーズの影響を受けるかどうか
-
 	//コピー禁止
 	CActor(const CActor&) = delete;
 	CActor& operator=(const CActor&) = delete;
@@ -61,6 +57,11 @@ private:
 	{
 		return Transform;
 	}
+
+protected:
+	ILevel& mOwnerInterface;		//インターフェース
+
+	bool mIsAffectToPause;			//ポーズの影響を受けるかどうか
 
 public:
 	CTransform Transform;			//トランスフォーム
