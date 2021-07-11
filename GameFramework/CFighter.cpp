@@ -16,7 +16,7 @@
 CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner , *this))
 {
 	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , Transform ,
-		CModelDataManager::GetInstance().GetModel("Assets/Fighter01/Su-27.fbx" , "Assets/Fighter01/textures/") ,
+		CModelDataManager::GetInstance().GetModel("Assets/Fighter/F-15E.fbx" , "Assets/Fighter/Textures/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
 
 	mesh.Transform.Rotation.SetAngle({ -90.0f ,0.0f,180.0f });
@@ -39,9 +39,8 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	sphereCllider.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));*/
 	CSphereColliderComponent& aabb = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
 
-	CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
-	CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::KEYBOARD,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
-	CInputManager::GetInstance().AddEvent("Rot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::R_BUTTON } , std::bind(&CFighter::Rot , std::ref(*this)));
+	CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
+	CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
 }
 
 void CFighter::Shot()
