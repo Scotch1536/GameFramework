@@ -16,12 +16,19 @@
 
 CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner , *this))
 {
+	//タグ追加
+	AddTag("Fighter");
+
 	CSoundManager::GetInstance().CreateSoundInfo("Assets/Sounds/shot.wav" , 0.05f , false , "SHOT");
 
+	/*
+	★超重要★
+	コンポーネントはコンストラクタの引数ownerにいれたアクターに自動で追加される
+	その際原則ヒープ領域に(newで)作成すること
+	*/
 	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , Transform ,
 		CModelDataManager::GetInstance().GetModel("Assets/Models/Fighter/F-15E.fbx" , "Assets/Models/Fighter/Textures/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
-
 
 	mesh.Transform.Rotation.SetAngle({ -90.0f ,0.0f,180.0f });
 
@@ -39,10 +46,13 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	light.SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
 	light.SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
-	/*CSphereColliderComponent& sphereCllider = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
-	sphereCllider.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));*/
 	CSphereColliderComponent& aabb = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
 
+	/*
+	★超重要★
+	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
+	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
+	*/
 	CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
 	CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
 }
@@ -112,8 +122,10 @@ void CFighter::Tick()
 			mAlpha = 1.0f;
 			isEnd = true;
 		}
+
 		LCMath::Lerp(mStartRot , *mTargetRot , mAlpha , result);
 		Transform.Rotation.SetQuaternion(result);
+
 		if(isEnd)
 		{
 			mTargetRot.reset();

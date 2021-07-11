@@ -5,6 +5,7 @@
 #include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/DebugTools/imgui/myimgui.h"
 #include "GameFramework/Level/CLevel.h"
+#include "GameFramework/Game/CApplication.h"
 
 CPointer::CPointer(ILevel& partner , CFighter& owner):CActor(partner) , mOwner(owner)
 {
@@ -34,6 +35,7 @@ void CPointer::Tick()
 	XMFLOAT3 forwardVec = mOwner.Transform.GetForwardVector();
 	XMFLOAT3 RightVec = mOwner.Transform.GetRightVector();
 	XMFLOAT3 UpwardVec = mOwner.Transform.GetUpwardVector();
+
 	Transform.Location =
 	{
 		mOwner.Transform.Location.x + forwardVec.x*100.0f - RightVec.x*posX + UpwardVec.x*posY,
@@ -43,10 +45,10 @@ void CPointer::Tick()
 
 	auto displayPointer = [&]
 	{
-		ImGui::SetNextWindowPos(ImVec2(1000 , 10) , ImGuiCond_Once);
-		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
+		ImGui::SetNextWindowPos(ImVec2(CApplication::CLIENT_WIDTH - 210 , 10) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(200 , 100) , ImGuiCond_Once);
 
-		ImGui::Begin(u8"ポインター");
+		ImGui::Begin(u8"ポインター情報");
 		std::string diff = u8"差分\n" + std::to_string(mDiffPosX) + "," + std::to_string(mDiffPosY);
 		ImGui::Text(diff.c_str());
 		ImGui::End();

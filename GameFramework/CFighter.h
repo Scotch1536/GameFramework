@@ -13,10 +13,15 @@ private:
 
 	std::unique_ptr<XMFLOAT4> mTargetRot;
 	XMFLOAT4 mStartRot;
+
 	float mAlpha = 0.f;
 	float mIncrementAlpha = 0.f;
 
 public:
+	/*
+	★超重要★
+	コンポーネントの追加は基本的にコンストラクタ内で行う
+	*/
 	CFighter(ILevel& owner);
 
 	void Shot();
