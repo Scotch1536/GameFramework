@@ -35,6 +35,7 @@
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Data\CModelMeshData.cpp" />
     <ClCompile Include="GameFramework\Data\CModelData.cpp" />
+    <ClCompile Include="GameFramework\Data\CWave.cpp" />
     <ClCompile Include="GameFramework\DebugTools\imgui\imgui.cpp" />
     <ClCompile Include="GameFramework\DebugTools\imgui\imgui_demo.cpp" />
     <ClCompile Include="GameFramework\DebugTools\imgui\imgui_draw.cpp" />
@@ -62,6 +63,7 @@
     <ClCompile Include="GameFramework\Managers\CGameManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CInputManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CSoundManager.cpp" />
     <ClCompile Include="GameFramework\Transform\CRotator.cpp" />
     <ClCompile Include="GameFramework\Transform\CTransform.cpp" />
   </ItemGroup>
@@ -90,6 +92,7 @@
     <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h" />
     <ClInclude Include="GameFramework\Data\CModelMeshData.h" />
     <ClInclude Include="GameFramework\Data\CModelData.h" />
+    <ClInclude Include="GameFramework\Data\CWave.h" />
     <ClInclude Include="GameFramework\Data\VertexProto.h" />
     <ClInclude Include="GameFramework\DebugTools\imgui\imconfig.h" />
     <ClInclude Include="GameFramework\DebugTools\imgui\imgui.h" />
@@ -122,6 +125,7 @@
     <ClInclude Include="GameFramework\Managers\CGameManager.h" />
     <ClInclude Include="GameFramework\Managers\CInputManager.h" />
     <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />
+    <ClInclude Include="GameFramework\Managers\CSoundManager.h" />
     <ClInclude Include="GameFramework\Object\CObject.h" />
     <ClInclude Include="GameFramework\Transform\CRotator.h" />
     <ClInclude Include="GameFramework\Transform\CTransform.h" />

@@ -15,7 +15,7 @@ CPointer::CPointer(ILevel& partner , CFighter& owner):CActor(partner) , mOwner(o
 	mInitMousePosX = CApplication::CLIENT_WIDTH / 2;
 	mInitMousePosY = CApplication::CLIENT_HEIGHT / 2;
 
-	CBillboardComponent& billboard = *new CBillboardComponent(*this , Transform , "Assets/Pointer/Pointer.png");
+	CBillboardComponent& billboard = *new CBillboardComponent(*this , Transform , "Assets/Textures/Pointer/Pointer.png");
 	billboard.Transform.Scale = { 5.0f,5.0f,1.0f };
 }
 

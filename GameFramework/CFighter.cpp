@@ -9,15 +9,19 @@
 
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CInputManager.h"
+#include "GameFramework/Managers/CSoundManager.h"
 #include "GameFramework/Game/CApplication.h"
 
 #include "CBullet.h"
 
 CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner , *this))
 {
+	CSoundManager::GetInstance().CreateSoundInfo("Assets/Sounds/shot.wav" , 0.05f , false , "SHOT");
+
 	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , Transform ,
-		CModelDataManager::GetInstance().GetModel("Assets/Fighter/F-15E.fbx" , "Assets/Fighter/Textures/") ,
+		CModelDataManager::GetInstance().GetModel("Assets/Models/Fighter/F-15E.fbx" , "Assets/Models/Fighter/Textures/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
+
 
 	mesh.Transform.Rotation.SetAngle({ -90.0f ,0.0f,180.0f });
 
@@ -60,6 +64,8 @@ void CFighter::Shot()
 	loc.z += fv.z * 10.0f;
 
 	new CBullet(mOwnerInterface , loc , Transform.GetForwardVector() , 60 * 5);
+
+	CSoundManager::GetInstance().PlaySound("SHOT");
 }
 
 void CFighter::ShotReset()

@@ -18,7 +18,7 @@ CDice::CDice(CLevel& owner):CActor(owner , false)
 	その際原則ヒープ領域に(newで)作成すること
 	*/
 	CStaticMeshComponent& staticMesh = *new CStaticMeshComponent(*this , Transform ,
-		CModelDataManager::GetInstance().GetModel("./Assets/dice/PlayerBox.x" , "assets/dice/") ,
+		CModelDataManager::GetInstance().GetModel("./Assets/Models/dice/PlayerBox.x" , "Assets/Models/dice/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
 
 	//CAABBColliderComponent& aabb = *new CAABBColliderComponent(*this , staticMesh.GetModel() , Transform);

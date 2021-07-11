@@ -44,7 +44,7 @@ void CStaticMeshComponent::Render()
 		}
 		else
 		{
-			mRenderComponent.Render(sizeof(SVertexUV) , indexSize , CDirectXResourceManager::GetInstance().GetTextureSRV("Assets/White/white.bmp") ,
+			mRenderComponent.Render(sizeof(SVertexUV) , indexSize , CDirectXResourceManager::GetInstance().GetTextureSRV("Assets/Textures/White/white.bmp") ,
 				mesh.GetVertexBuffer() , mesh.GetIndexBuffer() , mesh.GetConstantBuffer());
 		}
 	}
