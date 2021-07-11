@@ -7,17 +7,25 @@ class CFighter :public CActor
 {
 private:
 	CPointer& mPointer;
-	std::unique_ptr<XMFLOAT4> mTargetRot;
+
+	int mShotCnt = 0;
 	bool mIsHit = false;
+
+	std::unique_ptr<XMFLOAT4> mTargetRot;
+	XMFLOAT4 mStartRot;
+	float mAlpha = 0.f;
+	float mIncrementAlpha = 0.f;
 
 public:
 	CFighter(ILevel& owner);
 
+	void Shot();
+	void ShotReset();
 	void Move();
 	void Rot();
 	void EventAtBeginCollide(CActor& collideActor)override;
 	void EventAtEndCollide(CActor& collideActor)override;
-	//void Tick()override;
+	void Tick()override;
 
 	bool GetIsHit()const
 	{

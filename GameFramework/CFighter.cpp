@@ -11,6 +11,8 @@
 #include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/Game/CApplication.h"
 
+#include "CBullet.h"
+
 CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner , *this))
 {
 	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , Transform ,
@@ -37,8 +39,33 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	sphereCllider.BindCollisionAction(std::bind(&CFighter::CollisionAction , std::ref(*this) , std::placeholders::_1));*/
 	CSphereColliderComponent& aabb = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
 
-	CInputManager::GetInstance().AddEvent("Move" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Move , std::ref(*this)));
+	CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
+	CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::KEYBOARD,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
 	CInputManager::GetInstance().AddEvent("Rot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::R_BUTTON } , std::bind(&CFighter::Rot , std::ref(*this)));
+}
+
+void CFighter::Shot()
+{
+	if(mShotCnt % 5 != 0)
+	{
+		mShotCnt++;
+		return;
+	}
+	mShotCnt++;
+
+	XMFLOAT3 loc = Transform.Location;
+	XMFLOAT3 fv = Transform.GetForwardVector();
+
+	loc.x += fv.x * 10.0f;
+	loc.y += fv.y * 10.0f;
+	loc.z += fv.z * 10.0f;
+
+	new CBullet(mOwnerInterface , loc , Transform.GetForwardVector() , 60 * 5);
+}
+
+void CFighter::ShotReset()
+{
+	mShotCnt = 0;
 }
 
 void CFighter::Move()
@@ -56,9 +83,36 @@ void CFighter::Rot()
 
 	if(mTargetRot == nullptr)
 	{
-		XMFLOAT4* qua = new XMFLOAT4;
+		XMFLOAT4& qua = *new XMFLOAT4;
 		Transform.Rotation.CalcQuaternionToLocation(mPointer.Transform.Location , qua);
-		mTargetRot.reset(qua);
+		mTargetRot.reset(&qua);
+		mStartRot = Transform.Rotation.GetQuaternion();
+		mAlpha = 0.0f;
+		mIncrementAlpha = 1.0f / (60.0f * 0.15f);
+	}
+}
+
+void CFighter::Tick()
+{
+	Move();
+
+	if(mTargetRot != nullptr)
+	{
+		bool isEnd = false;
+		XMFLOAT4 result;
+
+		mAlpha += mIncrementAlpha;
+		if(mAlpha > 1.0f)
+		{
+			mAlpha = 1.0f;
+			isEnd = true;
+		}
+		LCMath::Lerp(mStartRot , *mTargetRot , mAlpha , result);
+		Transform.Rotation.SetQuaternion(result);
+		if(isEnd)
+		{
+			mTargetRot.reset();
+		}
 	}
 }
 

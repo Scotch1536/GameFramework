@@ -114,6 +114,14 @@ void CInputManager::CheckInput()
 						break;
 					}
 				}
+				else if(event.second.ButtonOption == EButtonOption::RELEASE)
+				{
+					if(directInput.CheckKeyBufferRelease(buttonInfo.ButtonNum))
+					{
+						shouldEvent = true;
+						break;
+					}
+				}
 			}
 			else if(buttonInfo.ButtonType == EButtonType::MOUSE)
 			{
@@ -177,6 +185,37 @@ void CInputManager::CheckInput()
 					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::C_BUTTON))
 					{
 						if(directInput.GetMouseCButtonTrigger())
+						{
+							shouldEvent = true;
+							break;
+						}
+					}
+				}
+				else if(event.second.ButtonOption == EButtonOption::RELEASE)
+				{
+					if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::NONE))
+					{
+						MessageBox(NULL , "ButtonNum is NONE" , "error" , MB_OK);
+					}
+					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::L_BUTTON))
+					{
+						if(directInput.GetMouseLButtonRelease())
+						{
+							shouldEvent = true;
+							break;
+						}
+					}	
+					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::R_BUTTON))
+					{
+						if(directInput.GetMouseRButtonRelease())
+						{
+							shouldEvent = true;
+							break;
+						}
+					}
+					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::C_BUTTON))
+					{
+						if(directInput.GetMouseCButtonRelease())
 						{
 							shouldEvent = true;
 							break;

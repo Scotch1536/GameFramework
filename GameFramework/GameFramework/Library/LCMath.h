@@ -46,4 +46,5 @@ public:
 	//ê¸å`ï‚ä‘
 	static const float& Lerp(const float& start , const float& end , const float& alpha , float& result);
 	static const XMFLOAT3& Lerp(const XMFLOAT3& start , const XMFLOAT3& end , const float& alpha , XMFLOAT3& result);
+	static const XMFLOAT4& Lerp(const XMFLOAT4& start , const XMFLOAT4& end , const float& alpha , XMFLOAT4& result);
 };

@@ -87,7 +87,7 @@ void CTestLevel::Tick()
 		ImGui::Text(std::to_string(mTime).c_str());
 
 		ImGui::Text("\n");
-		ImGui::Text(u8"マウス座標");
+		ImGui::Text(u8"マウス座標(クライアント)");
 
 		std::string directXPos = std::to_string(CInputManager::GetInstance().GetMousePosX()) + "," + std::to_string(CInputManager::GetInstance().GetMousePosY());
 		POINT mousePos;
@@ -95,6 +95,8 @@ void CTestLevel::Tick()
 		std::string winPos = std::to_string(mousePos.x) + "," + std::to_string(mousePos.y);
 
 		ImGui::Text(directXPos.c_str());
+
+		ImGui::Text(u8"マウス座標(ディスプレイ)");
 		ImGui::Text("\n");
 		ImGui::Text(winPos.c_str());
 

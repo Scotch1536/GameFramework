@@ -64,6 +64,6 @@ public:
 	void SetLerpTime(float time)
 	{
 		mLerpTime = time;
-		mIncrementAlpha = 1.0f / (60 * mLerpTime);
+		mIncrementAlpha = 1.0f / (60.0f * mLerpTime);
 	}
 };

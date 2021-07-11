@@ -53,5 +53,5 @@ void CPointer::Tick()
 	};
 	mOwnerInterface.AddImGuiDrawMethod(displayPointer);
 
-	//mOwner.Rot();
+	mOwner.Rot();
 }
