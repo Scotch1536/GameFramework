@@ -183,6 +183,9 @@
     <ClCompile Include="GameFramework\Components\CCameraComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="CPointer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameFramework\Transform\CRotator.h">
@@ -353,6 +356,9 @@
     <ClInclude Include="GameFramework\Components\CPlaneMeshComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
+    <ClInclude Include="CPointer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\ps.hlsl">
@@ -376,5 +382,11 @@
     <ClInclude Include="GameFramework\ExternalCode\shaderhashmap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <FxCompile Include="Shader\basicps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\basicvs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

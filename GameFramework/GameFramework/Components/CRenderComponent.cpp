@@ -60,4 +60,5 @@ void CRenderComponent::Render(unsigned int stride ,
 
 	// インデックスバッファを利用して描画
 	devcontext->DrawIndexed(indexSize , 0 , 0);
+
 }

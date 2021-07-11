@@ -66,14 +66,18 @@ void CInputManager::ReleaseBindTarget(CObject& target)
 
 void CInputManager::CheckInput()
 {
-	CDirectInput::GetInstance().GetKeyBuffer();
+	CDirectInput& directInput = CDirectInput::GetInstance();
+	CGameManager& gameManager = CGameManager::GetInstance();
+
+	directInput.GetKeyBuffer();
+	directInput.GetMouseState();
 
 	bool shouldEvent = false;
 
 	for(auto& event : mEventList)
 	{
 		//ゲームがポーズ状態の場合そのアクターがポーズの影響を受けるなら入力処理をとばす
-		if(CGameManager::GetInstance().GetIsPause())
+		if(gameManager.GetIsPause())
 		{
 			if(event.second.InstancePointer->GetID() == "Actor")
 			{
@@ -96,7 +100,7 @@ void CInputManager::CheckInput()
 				}
 				else if(event.second.ButtonOption == EButtonOption::PRESS)
 				{
-					if(CDirectInput::GetInstance().CheckKeyBuffer(buttonInfo.ButtonNum))
+					if(directInput.CheckKeyBuffer(buttonInfo.ButtonNum))
 					{
 						shouldEvent = true;
 						break;
@@ -104,10 +108,79 @@ void CInputManager::CheckInput()
 				}
 				else if(event.second.ButtonOption == EButtonOption::TRIGGER)
 				{
-					if(CDirectInput::GetInstance().CheckKeyBufferTrigger(buttonInfo.ButtonNum))
+					if(directInput.CheckKeyBufferTrigger(buttonInfo.ButtonNum))
 					{
 						shouldEvent = true;
 						break;
+					}
+				}
+			}
+			else if(buttonInfo.ButtonType == EButtonType::MOUSE)
+			{
+				if(event.second.ButtonOption == EButtonOption::NONE)
+				{
+					MessageBox(NULL , "ButtonType is NONE" , "error" , MB_OK);
+				}
+				else if(event.second.ButtonOption == EButtonOption::PRESS)
+				{
+					if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::NONE))
+					{
+						MessageBox(NULL , "ButtonNum is NONE" , "error" , MB_OK);
+					}
+					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::L_BUTTON))
+					{
+						if(directInput.GetMouseLButtonCheck())
+						{
+							shouldEvent = true;
+							break;
+						}
+					}	
+					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::R_BUTTON))
+					{
+						if(directInput.GetMouseRButtonCheck())
+						{
+							shouldEvent = true;
+							break;
+						}
+					}
+					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::C_BUTTON))
+					{
+						if(directInput.GetMouseCButtonCheck())
+						{
+							shouldEvent = true;
+							break;
+						}
+					}
+				}			
+				else if(event.second.ButtonOption == EButtonOption::TRIGGER)
+				{
+					if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::NONE))
+					{
+						MessageBox(NULL , "ButtonNum is NONE" , "error" , MB_OK);
+					}
+					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::L_BUTTON))
+					{
+						if(directInput.GetMouseLButtonTrigger())
+						{
+							shouldEvent = true;
+							break;
+						}
+					}	
+					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::R_BUTTON))
+					{
+						if(directInput.GetMouseRButtonTrigger())
+						{
+							shouldEvent = true;
+							break;
+						}
+					}
+					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::C_BUTTON))
+					{
+						if(directInput.GetMouseCButtonTrigger())
+						{
+							shouldEvent = true;
+							break;
+						}
 					}
 				}
 			}
@@ -125,4 +198,14 @@ void CInputManager::CheckInput()
 			shouldEvent = false;
 		}
 	}
+}
+
+int CInputManager::GetMousePosX()
+{
+	return CDirectInput::GetInstance().GetMousePosX();
+}
+
+int CInputManager::GetMousePosY()
+{
+	return CDirectInput::GetInstance().GetMousePosY();
 }

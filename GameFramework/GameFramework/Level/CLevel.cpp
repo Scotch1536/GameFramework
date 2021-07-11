@@ -31,6 +31,7 @@ void CLevel::Update()
 {
 	CActor* cameraActor = &mRenderingCamera->GetOwner();
 	cameraActor->Transform.Update();
+	cameraActor->Tick();
 	cameraActor->Update();
 
 	CColliderManager::GetInstance().Update();

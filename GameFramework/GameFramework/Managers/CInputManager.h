@@ -27,6 +27,14 @@ enum class EButtonOption
 	RELEASE ,
 };
 
+enum class EMouseButtonType
+{
+	NONE ,
+	L_BUTTON ,
+	R_BUTTON ,
+	C_BUTTON ,
+};
+
 //ボタン情報構造体
 struct SButtonInfo
 {
@@ -37,6 +45,11 @@ struct SButtonInfo
 	{
 		ButtonType = type;
 		ButtonNum = buttonNum;
+	}
+	SButtonInfo(EButtonType type , EMouseButtonType mouseButtonNum)
+	{
+		ButtonType = type;
+		ButtonNum = static_cast<int>(mouseButtonNum);
 	}
 };
 
@@ -84,4 +97,8 @@ public:
 
 	//入力されているかのチェック
 	void CheckInput();
+
+	//マウスのポジションを取得(CheckInputの後に呼び出すことが前提)
+	int GetMousePosX();
+	int GetMousePosY();
 };

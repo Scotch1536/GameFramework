@@ -15,9 +15,8 @@
 
 void CTestLevel::Init()
 {
-	CTestPlane& plane = *new CTestPlane(*this);
-	plane.Transform.Location.z = 100.0f;
-	//plane.Transform.Scale = { 50.0f,50.0f,0.0f };
+	//CTestPlane& plane = *new CTestPlane(*this);
+	//plane.Transform.Location.z = 50.0f;
 
 	CDice& dice = *new CDice(*this);
 	mDice = &dice;
@@ -25,8 +24,9 @@ void CTestLevel::Init()
 	dice.Transform.Location = { 50.f,0.f,100.f };
 
 	CFighter& fighter = *new CFighter(*this);
-	//fighter.Transform.Rotation.SetAngle({ 0.0f,30.0f,0.0f });
 	mFighter = &fighter;
+	mFighter->Transform.Location.z = 30.0f;
+	//fighter.Transform.Rotation.SetAngle({ 0.0f,30.0f,0.0f });
 
 	CSkyDome& skyDome = *new CSkyDome(*this);
 
@@ -86,6 +86,18 @@ void CTestLevel::Tick()
 		std::string buf = std::to_string(mTime);
 		ImGui::Text(std::to_string(mTime).c_str());
 
+		ImGui::Text("\n");
+		ImGui::Text(u8"マウス座標");
+
+		std::string directXPos = std::to_string(CInputManager::GetInstance().GetMousePosX()) + "," + std::to_string(CInputManager::GetInstance().GetMousePosY());
+		POINT mousePos;
+		GetCursorPos(&mousePos);
+		std::string winPos = std::to_string(mousePos.x) + "," + std::to_string(mousePos.y);
+
+		ImGui::Text(directXPos.c_str());
+		ImGui::Text("\n");
+		ImGui::Text(winPos.c_str());
+
 		ImGui::End();
 	};
 
@@ -96,7 +108,7 @@ void CTestLevel::Tick()
 
 		ImGui::Begin(u8"衝突判定");
 
-		if(mFighter->isHit)ImGui::Text(u8"当たっている");
+		if(mFighter->GetIsHit())ImGui::Text(u8"当たっている");
 		else ImGui::Text(u8"当たっていない");
 		ImGui::End();
 	};

@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="CDice.cpp" />
     <ClCompile Include="CFighter.cpp" />
+    <ClCompile Include="CPointer.cpp" />
     <ClCompile Include="CSkyDome.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="CTestPlane.cpp" />
@@ -66,6 +67,7 @@
   <ItemGroup>
     <ClInclude Include="CDice.h" />
     <ClInclude Include="CFighter.h" />
+    <ClInclude Include="CPointer.h" />
     <ClInclude Include="CSkyDome.h" />
     <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="CTestPlane.h" />
@@ -123,6 +125,12 @@
     <ClInclude Include="GameFramework\Transform\CTransform.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Shader\basicps.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\basicvs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="Shader\ps.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
