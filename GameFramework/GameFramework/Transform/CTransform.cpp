@@ -58,6 +58,9 @@ void CTransform::Update()
 	if(mIsBillboard)
 	{
 		mShouldUpdateMatrix = true;
+
+		XMFLOAT3 angle = Rotation.GetAngle();
+		if(angle.x != 0.0f || angle.y != 0)Rotation.SetAngle({ 0.0f,0.0f,angle.z });
 	}
 
 	Rotation.Update();
