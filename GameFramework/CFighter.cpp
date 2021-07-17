@@ -1,5 +1,8 @@
 #include "CFighter.h"
 
+#include "GameFramework/Level/CLevel.h"
+#include "GameFramework/DebugTools/imgui/myimgui.h"
+
 #include "GameFramework/Components/CStaticMeshComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
 #include "GameFramework/Components/CAABBColliderComponent.h"
@@ -16,6 +19,10 @@
 
 CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner , *this))
 {
+	Transform.AttachTransform(mPointer.Transform);
+	mPointer.Transform.Location.y = 4.0f;
+	mPointer.Transform.Location.z = 100.0f;
+
 	//タグ追加
 	AddTag("Fighter");
 
@@ -46,7 +53,7 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	light.SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
 	light.SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
-	CSphereColliderComponent& aabb = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
+	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.GetModel() , mesh.Transform);
 
 	/*
 	★超重要★
@@ -54,6 +61,10 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
 	*/
 	CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
+	CInputManager::GetInstance().AddEvent("Rot-Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CFighter::Rot , std::ref(*this) , 0));
+	CInputManager::GetInstance().AddEvent("Rot+Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_D } , std::bind(&CFighter::Rot , std::ref(*this) , 1));
+	CInputManager::GetInstance().AddEvent("Rot-X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CFighter::Rot , std::ref(*this) , 2));
+	CInputManager::GetInstance().AddEvent("Rot+X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CFighter::Rot , std::ref(*this) , 3));
 	CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
 }
 
@@ -66,14 +77,18 @@ void CFighter::Shot()
 	}
 	mShotCnt++;
 
-	XMFLOAT3 loc = Transform.Location;
+	XMFLOAT3 loc = Transform.GetWorldLocation();
 	XMFLOAT3 fv = Transform.GetForwardVector();
+	XMFLOAT3 dire;
 
 	loc.x += fv.x * 10.0f;
-	loc.y += fv.y * 10.0f;
+	loc.y += fv.y * 10.0f + 2.0f;
 	loc.z += fv.z * 10.0f;
 
-	new CBullet(mOwnerInterface , loc , Transform.GetForwardVector() , 60 * 5);
+	LCMath::CalcFloat3FromStartToGoal(loc , mPointer.Transform.GetWorldLocation() , dire);
+	LCMath::CalcFloat3Normalize(dire , dire);
+
+	new CBullet(mOwnerInterface , loc , dire , 60 * 5);
 
 	CSoundManager::GetInstance().PlaySound("SHOT");
 }
@@ -92,19 +107,24 @@ void CFighter::Move()
 	Transform.Location.z += fv.z * 1;
 }
 
-void CFighter::Rot()
+void CFighter::Rot(int dire)
 {
-	//Transform.Rotation.ChangeAngleAndQuaternionToLocation(mPointer.Transform.Location);
+	if(dire == 0)Transform.Rotation.AddAngle({ 0.0f,-1.0f,0.0f });
+	else if(dire == 1)Transform.Rotation.AddAngle({ 0.0f,1.0f,0.0f });
+	else if(dire == 2)Transform.Rotation.AddAngle({ -1.0f,0.0f,0.0f });
+	else if(dire == 3)Transform.Rotation.AddAngle({ 1.0f,0.0f,0.0f });
 
-	if(mTargetRot == nullptr)
-	{
-		XMFLOAT4& qua = *new XMFLOAT4;
-		Transform.Rotation.CalcQuaternionToLocation(mPointer.Transform.Location , qua);
-		mTargetRot.reset(&qua);
-		mStartRot = Transform.Rotation.GetQuaternion();
-		mAlpha = 0.0f;
-		mIncrementAlpha = 1.0f / (60.0f * 0.15f);
-	}
+	//if(mTargetRot == nullptr)
+	//{
+	//	mTargetRot.reset(new XMFLOAT4);
+	//	if(Transform.Rotation.CalcQuaternionToLocation(mPointer.Transform.GetWorldLocation() , *mTargetRot))
+	//	{
+	//		mStartRot = Transform.Rotation.GetQuaternion();
+	//		mAlpha = 0.0f;
+	//		mIncrementAlpha = 1.0f / (60.0f * 0.15f);
+	//	}
+	//	else mTargetRot.reset();
+	//}
 }
 
 void CFighter::Tick()
@@ -131,6 +151,29 @@ void CFighter::Tick()
 			mTargetRot.reset();
 		}
 	}
+
+	XMFLOAT3 loc = Transform.GetWorldLocation();
+	XMFLOAT3 fv = Transform.GetForwardVector();
+	XMFLOAT3 dire;
+
+	LCMath::CalcFloat3FromStartToGoal(loc , mPointer.Transform.GetWorldLocation() , dire);
+	LCMath::CalcFloat3Normalize(dire , dire);
+
+	auto displayPointer = [& , fv , dire]
+	{
+		ImGui::SetNextWindowPos(ImVec2(CApplication::CLIENT_WIDTH - 210 , 220) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
+
+		ImGui::Begin(u8"戦闘機とポインターとのベクトル情報");
+
+		std::string forvec = u8"戦闘機の前方ベクトル\n" + std::to_string(fv.x) + "," + std::to_string(fv.y) + "," + std::to_string(fv.z);
+		std::string direvec = u8"戦闘機とポインターとの向きベクトル\n" + std::to_string(dire.x) + "," + std::to_string(dire.y) + "," + std::to_string(dire.z);
+		ImGui::Text(forvec.c_str());
+		ImGui::Text(direvec.c_str());
+
+		ImGui::End();
+	};
+	mOwnerInterface.AddImGuiDrawMethod(displayPointer);
 }
 
 void CFighter::EventAtBeginCollide(CActor& collideActor)

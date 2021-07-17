@@ -7,8 +7,9 @@ CBullet::CBullet(ILevel& partner , XMFLOAT3 initLocation , XMFLOAT3 direction , 
 	mDirection(direction) , mDestroyFrame(destroyFrame)
 {
 	CSphereMeshComponent& mesh = *new CSphereMeshComponent(*this , Transform , 1.0f , 50 , { 1.0f,1.0f,0.0f,1.0f });
-	mesh.Transform.Scale = { 2.0f,2.0f,2.0f };
+	//mesh.Transform.Scale = { 2.0f,2.0f,2.0f };
 	mesh.Transform.Location = initLocation;
+	//CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.Transform);
 }
 
 void CBullet::Tick()

@@ -125,7 +125,7 @@ bool CRotator::CalcQuaternionToLocation(XMFLOAT3 location , XMFLOAT4& resultQua)
 	float angle;
 
 	//向きたい位置へのベクトルを計算
-	LCMath::CalcFloat3FromStartToGoal(mPartner.Location , location , vec);
+	LCMath::CalcFloat3FromStartToGoal(mPartner.GetWorldLocation() , location , vec);
 
 	//向きベクトルにするために正規化
 	LCMath::CalcFloat3Normalize(vec , vec);

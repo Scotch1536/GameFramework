@@ -91,19 +91,22 @@ void CTransform::Update()
 		if(camera != nullptr)
 		{
 			XMFLOAT4X4 inverseCamera;
+			XMFLOAT4X4 resultMTX;
 			LCMath::InverseMatrix(*camera , inverseCamera);
 
-			mWorldMatrixResult._11 = inverseCamera._11;
-			mWorldMatrixResult._12 = inverseCamera._12;
-			mWorldMatrixResult._13 = inverseCamera._13;
+			DX11MtxMultiply(resultMTX , mWorldMatrixSelf , inverseCamera);
 
-			mWorldMatrixResult._21 = inverseCamera._21;
-			mWorldMatrixResult._22 = inverseCamera._22;
-			mWorldMatrixResult._23 = inverseCamera._23;
+			mWorldMatrixResult._11 = resultMTX._11;
+			mWorldMatrixResult._12 = resultMTX._12;
+			mWorldMatrixResult._13 = resultMTX._13;
 
-			mWorldMatrixResult._31 = inverseCamera._31;
-			mWorldMatrixResult._32 = inverseCamera._32;
-			mWorldMatrixResult._33 = inverseCamera._33;
+			mWorldMatrixResult._21 = resultMTX._21;
+			mWorldMatrixResult._22 = resultMTX._22;
+			mWorldMatrixResult._23 = resultMTX._23;
+
+			mWorldMatrixResult._31 = resultMTX._31;
+			mWorldMatrixResult._32 = resultMTX._32;
+			mWorldMatrixResult._33 = resultMTX._33;
 		}
 	}
 
@@ -171,17 +174,11 @@ XMFLOAT3 CTransform::GetWorldLocation()const
 {
 	XMFLOAT3 result;
 
-	if(mParentTransform != nullptr)
-	{
-		result = mParentTransform->GetWorldLocation();
+	result.x = mWorldMatrixResult._41;
+	result.y = mWorldMatrixResult._42;
+	result.z = mWorldMatrixResult._43;
 
-		result.x += Location.x;
-		result.y += Location.y;
-		result.z += Location.z;
-
-		return result;
-	}
-	else return Location;
+	return result;
 }
 
 XMFLOAT3 CTransform::GetWorldScale()const

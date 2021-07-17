@@ -27,7 +27,7 @@ public:
 	void Shot();
 	void ShotReset();
 	void Move();
-	void Rot();
+	void Rot(int dire);
 	void EventAtBeginCollide(CActor& collideActor)override;
 	void EventAtEndCollide(CActor& collideActor)override;
 	void Tick()override;
