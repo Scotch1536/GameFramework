@@ -85,6 +85,7 @@ void CTransform::Update()
 		mWorldMatrixResult = mWorldMatrixSelf;
 	}
 
+	//ビルボードなら結果の行列に上書き処理
 	if(mIsBillboard)
 	{
 		const XMFLOAT4X4* camera = CGameManager::GetInstance().GetCameraViewMatrix();
@@ -118,16 +119,6 @@ void CTransform::Update()
 
 void CTransform::RequestSetMatrix()
 {
-	if(mMatricesToLastMultiply.size() != 0)
-	{
-		for(auto& matrix : mMatricesToLastMultiply)
-		{
-			DX11MtxMultiply(mWorldMatrixResult , mWorldMatrixResult , matrix);
-		}
-		mMatricesToLastMultiply.clear();
-		mMatricesToLastMultiply.shrink_to_fit();
-	}
-
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD , mWorldMatrixResult);
 }
 
