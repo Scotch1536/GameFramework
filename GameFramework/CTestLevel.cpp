@@ -11,6 +11,7 @@
 #include "CDice.h"
 #include "CFighter.h"
 #include "CSkyDome.h"
+#include "CTest2D.h"
 
 void CTestLevel::Init()
 {
@@ -37,6 +38,8 @@ void CTestLevel::Init()
 	mFighter->Transform.Location.z = 30.0f;
 
 	CSkyDome& skyDome = *new CSkyDome(*this);
+
+	CTest2D& test2D = *new CTest2D(*this);
 
 	CComponent* buf = nullptr;
 	if(fighter.GetComponent<CCameraComponent>(buf))

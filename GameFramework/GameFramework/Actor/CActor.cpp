@@ -43,6 +43,11 @@ void CActor::RequestAddAlphaRenderComponentToLevel(IRender& renderTarget , bool 
 	mOwnerInterface.AddAlphaRenderComponent(renderTarget , isFront);
 }
 
+void CActor::RequestAdd2DRenderComponentToLevel(IRender& renderTarget)
+{
+	mOwnerInterface.Add2DRenderComponent(renderTarget);
+}
+
 void CActor::Update()
 {
 	for(auto& component : mComponents)

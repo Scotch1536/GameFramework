@@ -21,6 +21,7 @@ public:
 	virtual CActor& GetActor() = 0;
 	virtual CTransform& GetTransform() = 0;
 	virtual void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget , bool isFront = false) = 0;
+	virtual void RequestAdd2DRenderComponentToLevel(IRender& renderTarget) = 0;
 };
 
 //アクタークラス
@@ -45,6 +46,9 @@ private:
 	void AddRenderComponent(IRender& component)override;
 
 	void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget , bool isFront)override;
+	
+	void RequestAdd2DRenderComponentToLevel(IRender& renderTarget)override;
+
 
 	//アクター情報取得
 	CActor& GetActor()override

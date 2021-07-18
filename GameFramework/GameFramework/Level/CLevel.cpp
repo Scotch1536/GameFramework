@@ -29,10 +29,15 @@ void CLevel::RequestSetCamera(CCameraComponent& camera)
 
 void CLevel::Update()
 {
-	CActor* cameraActor = &mRenderingCamera->GetOwner();
-	cameraActor->Transform.Update();
-	cameraActor->Tick();
-	cameraActor->Update();
+	CActor* cameraActor = nullptr;
+
+	if(mRenderingCamera != nullptr)
+	{
+		cameraActor = &mRenderingCamera->GetOwner();
+		cameraActor->Transform.Update();
+		cameraActor->Tick();
+		cameraActor->Update();
+	}
 
 	CColliderManager::GetInstance().Update();
 
@@ -59,7 +64,7 @@ void CLevel::Update()
 
 		actor->Tick();
 	}
-		
+
 	//更新後に行う関数を実行
 	if(mDoAfterTickFunction.size() != 0)
 	{
@@ -111,6 +116,7 @@ void CLevel::Render()
 	bufMTX = mRenderingCamera->GetViewMatrix();
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::VIEW , bufMTX);
 
+
 	for(auto& actor : mActors)
 	{
 		actor->Render();
@@ -124,6 +130,26 @@ void CLevel::Render()
 		}
 		mAlphaRenderComponents.clear();
 		mAlphaRenderComponents.shrink_to_fit();
+	}
+
+	if(m2DRenderComponents.size() != 0)
+	{
+		// 2D描画用射影変換行列
+		XMFLOAT4X4 projectionMatrix2D = {
+				2.0f / static_cast<float>(CApplication::CLIENT_WIDTH) , 0.0f , 0.0f , 0.0f ,
+				0.0f , -2.0f / static_cast<float>(CApplication::CLIENT_HEIGHT), 0.0f , 0.0f ,
+				0.0f , 0.0f , 1.0f , 0.0f ,
+				-1.0f , 1.0f , 0.0f , 1.0f
+		};
+
+		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , projectionMatrix2D);
+
+		for(auto& render : m2DRenderComponents)
+		{
+			render->Render();
+		}
+		m2DRenderComponents.clear();
+		m2DRenderComponents.shrink_to_fit();
 	}
 
 	//ImGuiに渡す描画の関数オブジェクト一つの関数オブジェクトにまとめる

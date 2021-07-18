@@ -34,7 +34,7 @@ CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const CModelD
 
 CSphereColliderComponent::CSphereColliderComponent(CActor& owner , CTransform& parentTrans , bool isMesh , int priority)
 	:CColliderComponent(owner , parentTrans , CColliderComponent::EType::SPHERE , priority) ,
-	mLocalRadius(1.0f)
+	mLocalRadius(0.5f)
 {
 #ifndef _DEBUG
 	isMesh = false;

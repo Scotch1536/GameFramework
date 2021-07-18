@@ -85,3 +85,4 @@ void CPrimitiveMeshComponent<VertexType>::Render()
 
 template class CPrimitiveMeshComponent<SVertexColor>;
 template class CPrimitiveMeshComponent<SVertexUV>;
+template class CPrimitiveMeshComponent<SVertex2D>;
