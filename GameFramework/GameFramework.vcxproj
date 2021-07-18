@@ -16,6 +16,7 @@
     <ClCompile Include="CFighter.cpp" />
     <ClCompile Include="CPointer.cpp" />
     <ClCompile Include="CSkyDome.cpp" />
+    <ClCompile Include="CTest2D.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
@@ -25,6 +26,7 @@
     <ClCompile Include="GameFramework\Components\CCameraComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CColliderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CDisplay2DComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CPlaneMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CPrimitiveMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
@@ -72,6 +74,7 @@
     <ClInclude Include="CFighter.h" />
     <ClInclude Include="CPointer.h" />
     <ClInclude Include="CSkyDome.h" />
+    <ClInclude Include="CTest2D.h" />
     <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
     <ClInclude Include="GameFramework\Components\CAABBColliderComponent.h" />
@@ -80,6 +83,7 @@
     <ClInclude Include="GameFramework\Components\CCameraComponent.h" />
     <ClInclude Include="GameFramework\Components\CColliderComponent.h" />
     <ClInclude Include="GameFramework\Components\CComponent.h" />
+    <ClInclude Include="GameFramework\Components\CDisplay2DComponent.h" />
     <ClInclude Include="GameFramework\Components\CLightComponent.h" />
     <ClInclude Include="GameFramework\Components\CPlaneMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CPrimitiveMeshComponent.h" />

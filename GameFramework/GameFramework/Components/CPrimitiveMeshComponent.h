@@ -26,8 +26,8 @@ protected:
 
 	CRenderComponent& mRenderComponent;
 
-	std::vector<VertexType> mVertices;		//頂点データ
-	std::vector<unsigned int> mIndices;							//インデックスデータ
+	std::vector<VertexType> mVertices;			//頂点データ
+	std::vector<unsigned int> mIndices;			//インデックスデータ
 
 	XMFLOAT4 mColor;		//カラー
 

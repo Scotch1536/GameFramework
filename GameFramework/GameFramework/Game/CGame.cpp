@@ -51,7 +51,9 @@ void CGame::Init()
 	//サウンドマネージャー初期化
 	CSoundManager::GetInstance();
 
-	sts = CDirectXGraphics::GetInstance()->Init(
+	CDirectXGraphics* directGraph = CDirectXGraphics::GetInstance();
+
+	sts = directGraph->Init(
 		mApp.GetHWnd() ,
 		CApplication::CLIENT_WIDTH ,
 		CApplication::CLIENT_HEIGHT ,
@@ -70,7 +72,7 @@ void CGame::Init()
 	}
 
 	//半透明設定
-	CDirectXGraphics::GetInstance()->TurnOnAlphaBlending();
+	directGraph->TurnOnAlphaBlending();
 
 	//DIRECTINPUT初期化
 	CDirectInput::GetInstance().Init
@@ -80,6 +82,24 @@ void CGame::Init()
 		CApplication::CLIENT_WIDTH ,
 		CApplication::CLIENT_HEIGHT
 	);
+
+	//コンスタントバッファ作成
+	sts = CreateConstantBuffer(directGraph->GetDXDevice() , sizeof(ConstantBufferViewPort) , mConstantBufferViewPort.GetAddressOf());
+	if(!sts)
+	{
+		MessageBox(NULL , "CreateBuffer(constant buffer Light) error" , "Error" , MB_OK);
+	}
+
+	ID3D11DeviceContext* devCon = directGraph->GetImmediateContext();
+	ConstantBufferViewPort cb;
+
+	cb.ScreenWidth = CApplication::CLIENT_WIDTH;
+	cb.ScreenHeight = CApplication::CLIENT_HEIGHT;
+
+	devCon->UpdateSubresource(mConstantBufferViewPort.Get() , 0 , nullptr , &cb , 0 , 0);
+
+	devCon->VSSetConstantBuffers(5 , 1 , mConstantBufferViewPort.GetAddressOf());
+	devCon->PSSetConstantBuffers(5 , 1 , mConstantBufferViewPort.GetAddressOf());
 
 	imguiInit();
 

@@ -142,7 +142,7 @@ void CInputManager::CheckInput()
 							shouldEvent = true;
 							break;
 						}
-					}	
+					}
 					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::R_BUTTON))
 					{
 						if(directInput.GetMouseRButtonCheck())
@@ -159,7 +159,7 @@ void CInputManager::CheckInput()
 							break;
 						}
 					}
-				}			
+				}
 				else if(event.second.ButtonOption == EButtonOption::TRIGGER)
 				{
 					if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::NONE))
@@ -173,7 +173,7 @@ void CInputManager::CheckInput()
 							shouldEvent = true;
 							break;
 						}
-					}	
+					}
 					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::R_BUTTON))
 					{
 						if(directInput.GetMouseRButtonTrigger())
@@ -204,7 +204,7 @@ void CInputManager::CheckInput()
 							shouldEvent = true;
 							break;
 						}
-					}	
+					}
 					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::R_BUTTON))
 					{
 						if(directInput.GetMouseRButtonRelease())
@@ -232,7 +232,9 @@ void CInputManager::CheckInput()
 			}
 			else
 			{
+#ifdef _DEBUG
 				MessageBox(NULL , "Not Found Function" , "error" , MB_OK);
+#endif
 			}
 			shouldEvent = false;
 		}

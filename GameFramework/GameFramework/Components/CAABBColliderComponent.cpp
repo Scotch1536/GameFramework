@@ -21,7 +21,7 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner , const CModelData&
 
 CAABBColliderComponent::CAABBColliderComponent(CActor& owner , CTransform& parentTrans , bool isMesh , int priority)
 	:CColliderComponent(owner , parentTrans , CColliderComponent::EType::AABB , priority) ,
-	mLocalMin({ -1.0f,-1.0f,-1.0f }) , mLocalMax({ 1.0f,1.0f,1.0f })
+	mLocalMin({ -0.5f,-0.5f,-0.5f }) , mLocalMax({ 0.5f,0.5f,0.5f })
 {
 #ifndef _DEBUG
 	isMesh = false;

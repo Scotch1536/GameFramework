@@ -23,6 +23,7 @@ public:
 	virtual void RequestSetCamera(CCameraComponent& camera) = 0;
 	virtual void AddImGuiDrawMethod(std::function<void()> method) = 0;
 	virtual void AddAlphaRenderComponent(IRender& renderTarget , bool isFront) = 0;
+	virtual void Add2DRenderComponent(IRender& renderTarget) = 0;
 };
 
 //レベルクラス
@@ -33,6 +34,7 @@ private:
 	std::vector<std::function<void()>> mDoAfterTickFunction;		//更新後に行う関数オブジェクト
 	std::vector<std::function<void()>> mImGuiDrawMethod;			//ImGuiに行わせる描画の関数オブジェクト
 	std::vector<IRender*> mAlphaRenderComponents;
+	std::vector<IRender*> m2DRenderComponents;
 
 	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
 
@@ -62,6 +64,11 @@ private:
 			mAlphaRenderComponents.emplace(itr , &renderTarget);
 		}
 		else mAlphaRenderComponents.emplace_back(&renderTarget);
+	}
+
+	void Add2DRenderComponent(IRender& renderTarget)override
+	{
+		m2DRenderComponents.emplace_back(&renderTarget);
 	}
 
 protected:

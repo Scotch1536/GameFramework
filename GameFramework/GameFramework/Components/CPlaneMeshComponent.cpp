@@ -12,10 +12,10 @@ void CPlaneMeshComponent<SVertexColor>::CreateVertexData()
 {
 	mVertices.resize(4);
 
-	mVertices.at(0).Pos = { -1.0f,1.0f,0.0f };
-	mVertices.at(1).Pos = { 1.0f,1.0f,0.0f };
-	mVertices.at(2).Pos = { -1.0f,-1.0f,0.0f };
-	mVertices.at(3).Pos = { 1.0f,-1.0f,0.0f };
+	mVertices.at(0).Pos = { -0.5f,-0.5f,0.0f };
+	mVertices.at(1).Pos = { 0.5f,-0.5f,0.0f };
+	mVertices.at(2).Pos = { -0.5f,0.5f,0.0f };
+	mVertices.at(3).Pos = { 0.5f,0.5f,0.0f };
 
 	for(auto& vertex : mVertices)
 	{
@@ -32,10 +32,10 @@ void CPlaneMeshComponent<SVertexUV>::CreateVertexData()
 {
 	mVertices.resize(4);
 
-	mVertices.at(0).Pos = { -1.0f,1.0f,0.0f };
-	mVertices.at(1).Pos = { 1.0f,1.0f,0.0f };
-	mVertices.at(2).Pos = { -1.0f,-1.0f,0.0f };
-	mVertices.at(3).Pos = { 1.0f,-1.0f,0.0f };
+	mVertices.at(0).Pos = { -0.5f,-0.5f,0.0f };
+	mVertices.at(1).Pos = { 0.5f,-0.5f,0.0f };
+	mVertices.at(2).Pos = { -0.5f,0.5f,0.0f };
+	mVertices.at(3).Pos = { 0.5f,0.5f,0.0f };
 
 	mVertices.at(0).Tex = { 0.0f,0.0f };
 	mVertices.at(1).Tex = { 1.0f,0.0f };
@@ -52,6 +52,21 @@ void CPlaneMeshComponent<SVertexUV>::CreateVertexData()
 	}
 }
 
+void CPlaneMeshComponent<SVertex2D>::CreateVertexData()
+{
+	mVertices.resize(4);
+
+	mVertices.at(0).Pos = { -0.5f,-0.5f,0.0f };
+	mVertices.at(1).Pos = { 0.5f,-0.5f,0.0f };
+	mVertices.at(2).Pos = { -0.5f,0.5f,0.0f };
+	mVertices.at(3).Pos = { 0.5f,0.5f,0.0f };
+
+	mVertices.at(0).Tex = { 0.0f,0.0f };
+	mVertices.at(1).Tex = { 1.0f,0.0f };
+	mVertices.at(2).Tex = { 0.0f,1.0f };
+	mVertices.at(3).Tex = { 1.0f,1.0f };
+}
+
 template<class VertexType>
 void CPlaneMeshComponent<VertexType>::CreateIndexData()
 {
@@ -62,3 +77,4 @@ void CPlaneMeshComponent<VertexType>::CreateIndexData()
 
 template class CPlaneMeshComponent<SVertexColor>;
 template class CPlaneMeshComponent<SVertexUV>;
+template class CPlaneMeshComponent<SVertex2D>;

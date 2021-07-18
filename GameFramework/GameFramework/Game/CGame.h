@@ -2,6 +2,8 @@
 #include <Windows.h>
 #include <memory>
 
+#include "../ExternalCode/CDirectxGraphics.h"
+#include "../ExternalCode/Memory.h"
 #include "../Level/CLevel.h"
 #include "CApplication.h"
 
@@ -30,6 +32,14 @@ public:
 class CGame :public IGame , public IGameToGameManager
 {
 private:
+	ALIGN16 struct ConstantBufferViewPort
+	{
+		uint32_t ScreenWidth;
+		uint32_t ScreenHeight;
+	};
+
+	ComPtr<ID3D11Buffer> mConstantBufferViewPort = nullptr;		//定数バッファ
+
 	CApplication mApp;		//アプリケーション
 
 	std::unique_ptr<CLevel> mLevel;			//レベル

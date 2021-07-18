@@ -34,7 +34,7 @@ private:
 	bool Init()
 	{
 		//コンスタントバッファ作成
-		bool sts = CreateConstantBuffer(CDirectXGraphics::GetInstance()->GetDXDevice() , sizeof(ConstantBufferLight) , &mConstantBufferLight);
+		bool sts = CreateConstantBuffer(CDirectXGraphics::GetInstance()->GetDXDevice() , sizeof(ConstantBufferLight) , mConstantBufferLight.GetAddressOf());
 		if(!sts)
 		{
 			MessageBox(NULL , "CreateBuffer(constant buffer Light) error" , "Error" , MB_OK);
