@@ -1,4 +1,5 @@
 #include <string>
+#include <random>
 
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CLightComponent.h"
@@ -34,7 +35,7 @@ void CTestLevel::Init()
 	mFighter = &fighter;
 	mFighter->Transform.Location.z = 30.0f;
 
-	CDice& dice = *new CDice(*this,mFighter->Transform.Location);
+	CDice& dice = *new CDice(*this, mFighter->Transform.Location);
 	dice.Transform.Location = { 0.f,0.f,500.f };
 	mMainDice = &dice;
 
@@ -43,7 +44,7 @@ void CTestLevel::Init()
 	CTest2D& test2D = *new CTest2D(*this);
 
 	CComponent* buf = nullptr;
-	if(fighter.GetComponent<CCameraComponent>(buf))
+	if (fighter.GetComponent<CCameraComponent>(buf))
 	{
 		CCameraComponent& camera = dynamic_cast<CCameraComponent&>(*buf);
 		this->RequestSetCamera(camera);
@@ -58,10 +59,35 @@ void CTestLevel::Init()
 
 void CTestLevel::Tick()
 {
+	std::random_device rd;
+	std::mt19937 mt(rd());
 	mCnt++;
 
+	if (mCnt % 300 == 0)
+	{
+		int value = mt() % 3 + 1;
+		if (value == 1)
+		{
+			CDice* subDice = nullptr;
+			subDice = new CDice(*this, mFighter->Transform.Location);
+			subDice->Transform.Location.x = mFighter->Transform.Location.x + 100;
+		}
+		else if (value == 2)
+		{
+			CDice* subDice = nullptr;
+			subDice = new CDice(*this, mFighter->Transform.Location);
+			subDice->Transform.Location.y = mFighter->Transform.Location.y + 100;
+		}
+		else
+		{
+			CDice* subDice = nullptr;
+			subDice = new CDice(*this, mFighter->Transform.Location);
+			subDice->Transform.Location.z = mFighter->Transform.Location.z + 100;
+		}
+	}
+
 	int64_t dt = CGameManager::GetInstance().GetDeltaTime();
-	if(dt != 0)
+	if (dt != 0)
 	{
 		mTime += static_cast<float>(dt / 1000.0f);
 		//mTime = std::floorf(mTime * 100.0f) / 100.0f;
@@ -69,8 +95,8 @@ void CTestLevel::Tick()
 
 	auto displayCount = [&]
 	{
-		ImGui::SetNextWindowPos(ImVec2(10 , 10) , ImGuiCond_Once);
-		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
+		ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_Once);
 
 		ImGui::Begin(u8"ゲーム情報");
 
@@ -88,8 +114,8 @@ void CTestLevel::Tick()
 
 	auto displayTime = [&]
 	{
-		ImGui::SetNextWindowPos(ImVec2(10 , 220) , ImGuiCond_Once);
-		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
+		ImGui::SetNextWindowPos(ImVec2(10, 220), ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_Once);
 
 		ImGui::Begin(u8"マウス情報");
 
@@ -111,27 +137,27 @@ void CTestLevel::Tick()
 
 	auto displayHitStatus = [&]
 	{
-		ImGui::SetNextWindowPos(ImVec2(10 , 430) , ImGuiCond_Once);
-		ImGui::SetNextWindowSize(ImVec2(150 , 100) , ImGuiCond_Once);
+		ImGui::SetNextWindowPos(ImVec2(10, 430), ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(150, 100), ImGuiCond_Once);
 
 		ImGui::Begin(u8"戦闘機の衝突判定");
 
-		if(mFighter->GetIsHit())ImGui::Text(u8"当たっている");
+		if (mFighter->GetIsHit())ImGui::Text(u8"当たっている");
 		else ImGui::Text(u8"当たっていない");
 		ImGui::End();
 	};
 
 	float distance;
 	XMFLOAT3 vec;
-	LCMath::CalcFloat3FromStartToGoal(mFighter->Transform.Location , mMainDice->Transform.Location , vec);
-	LCMath::CalcFloat3Length(vec , distance);
+	LCMath::CalcFloat3FromStartToGoal(mFighter->Transform.Location, mMainDice->Transform.Location, vec);
+	LCMath::CalcFloat3Length(vec, distance);
 
 	XMFLOAT3 angle = mFighter->Transform.Rotation.GetAngle();
 	std::string angleStr = std::to_string((int)angle.x) + ',' + std::to_string((int)angle.y) + ',' + std::to_string((int)angle.z);
-	auto displayDistance = [& , distance , angleStr]
+	auto displayDistance = [&, distance, angleStr]
 	{
-		ImGui::SetNextWindowPos(ImVec2(220 , 10) , ImGuiCond_Once);
-		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
+		ImGui::SetNextWindowPos(ImVec2(220, 10), ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_Once);
 
 		ImGui::Begin(u8"戦闘機情報");
 
@@ -143,12 +169,12 @@ void CTestLevel::Tick()
 		ImGui::Text(angleStr.c_str());
 
 		ImGui::End();
-	};	
-	
+	};
+
 	auto displayHowToPlay = [&]
 	{
-		ImGui::SetNextWindowPos(ImVec2(10 , 550) , ImGuiCond_Once);
-		ImGui::SetNextWindowSize(ImVec2(400 , 150) , ImGuiCond_Once);
+		ImGui::SetNextWindowPos(ImVec2(10, 550), ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(400, 150), ImGuiCond_Once);
 
 		ImGui::Begin(u8"操作方法");
 
@@ -161,6 +187,11 @@ void CTestLevel::Tick()
 		ImGui::End();
 	};
 
+	if (mFighter->GetIsHit())
+	{
+		mOwnerInterface->LoadLevel(*new CTestLevel(*mOwnerInterface));
+	}
+
 	AddImGuiDrawMethod(displayCount);
 	AddImGuiDrawMethod(displayTime);
 	AddImGuiDrawMethod(displayHitStatus);
@@ -170,7 +201,7 @@ void CTestLevel::Tick()
 
 void CTestLevel::MainDiceDestroy()
 {
-	if(mMainDice != nullptr)
+	if (mMainDice != nullptr)
 	{
 		mMainDice->Destroy();
 		mMainDice = nullptr;

@@ -27,9 +27,9 @@ void CDice::Move()
 {
 	XMFLOAT3 fv = Transform.GetForwardVector();
 
-	Transform.Location.x += fv.x * 0.5;
-	Transform.Location.y += fv.y * 0.5;
-	Transform.Location.z += fv.z * 0.5;
+	Transform.Location.x += fv.x * 1.25;
+	Transform.Location.y += fv.y * 1.25;
+	Transform.Location.z += fv.z * 1.25;
 }
 
 void CDice::Tick()

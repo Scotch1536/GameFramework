@@ -13,8 +13,10 @@
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/Managers/CSoundManager.h"
+#include "GameFramework/Managers/CGameManager.h"
 #include "GameFramework/Game/CApplication.h"
 
+#include "CTestLevel.h"
 #include "CBullet.h"
 
 CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner , *this))
@@ -187,6 +189,7 @@ void CFighter::EventAtBeginCollide(CActor& collideActor)
 {
 	if(collideActor.HasTag("Dice"))
 	{
+		//mOwnerInterface.RequestLoadLevel(*new CTestLevel(CGameManager::GetInstance().GetGameInterface()));
 		mIsHit = true;
 	}
 }

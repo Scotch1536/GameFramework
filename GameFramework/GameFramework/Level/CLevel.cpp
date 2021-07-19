@@ -7,7 +7,7 @@
 
 #include "CLevel.h"
 
-CLevel::CLevel(CGame& owner):CObject("Level") , mOwnerInterface(&owner)
+CLevel::CLevel(IGame& owner):CObject("Level") , mOwnerInterface(&owner)
 {
 	mOwnerInterface->LoadLevel(*this);
 }
@@ -25,6 +25,11 @@ void CLevel::AddActor(CActor& actor)
 void CLevel::RequestSetCamera(CCameraComponent& camera)
 {
 	mRenderingCamera = &camera;
+}
+
+void CLevel::RequestLoadLevel(CLevel& level)
+{
+	mOwnerInterface->LoadLevel(level);
 }
 
 void CLevel::Update()
