@@ -6,15 +6,11 @@ class CDice :public CActor
 {
 private:
 	XMFLOAT3 &mPoint;
-	XMFLOAT4 mStartQua;
-	std::unique_ptr<XMFLOAT4> mGoalQua;
-
-	float mAlpha = 0.f;
-	float mIncrementAlpha = 0.f;
 public:
-	CDice(CLevel& owner,XMFLOAT3& pointLocation);
+	CDice(ILevel& owner,XMFLOAT3& pointLocation);
 
 	void Move();
 	void Tick()override;
+	void EventAtBeginCollide(CActor& collideActor)override;
 };
 

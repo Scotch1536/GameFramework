@@ -118,6 +118,12 @@ void CGame::Update()
 {
 	mLevel->Update();
 	mLevel->Tick();
+
+	if(mLoadLevelFunction != nullptr)
+	{
+		mLoadLevelFunction();
+		mLoadLevelFunction = nullptr;
+	}
 }
 
 void CGame::Render()
@@ -127,7 +133,11 @@ void CGame::Render()
 
 void CGame::LoadLevel(CLevel& level)
 {
-	mLevel.reset(&level);
+	auto loadLevel = [&]
+	{
+		mLevel.reset(&level);
 
-	mLevel->Init();
+		mLevel->Init();
+	};
+	mLoadLevelFunction = loadLevel;
 }

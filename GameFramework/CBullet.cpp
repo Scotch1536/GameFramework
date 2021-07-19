@@ -6,9 +6,11 @@ CBullet::CBullet(ILevel& partner , XMFLOAT3 initLocation , XMFLOAT3 direction , 
 	:CActor(partner) ,
 	mDirection(direction) , mDestroyFrame(destroyFrame)
 {
+	AddTag("Bullet");
+
 	CSphereMeshComponent& mesh = *new CSphereMeshComponent(*this , Transform , 1.0f , 50 , { 1.0f,1.0f,0.0f,1.0f });
-	//mesh.Transform.Scale = { 2.0f,2.0f,2.0f };
 	mesh.Transform.Location = initLocation;
+
 	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.Transform);
 	collider.SetObjectType("Bullet");
 }
@@ -23,15 +25,6 @@ void CBullet::Tick()
 
 	if(mFrame == mDestroyFrame)
 	{
-		Destroy();
-	}
-}
-
-void CBullet::EventAtBeginCollide(CActor& collideActor)
-{
-	if (collideActor.HasTag("Dice"))
-	{
-		collideActor.Destroy();
 		Destroy();
 	}
 }
