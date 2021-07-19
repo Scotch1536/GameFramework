@@ -15,11 +15,8 @@
 
 void CTestLevel::Init()
 {
-	CDice& dice = *new CDice(*this);
-	dice.Transform.Location = { 0.f,0.f,500.f };
-	mMainDice = &dice;
 
-	CDice* subDice = nullptr;
+	/*CDice* subDice = nullptr;
 	subDice = new CDice(*this);
 	dice.Transform.AttachTransform(subDice->Transform);
 	subDice->Transform.Location.y = -100.0f;
@@ -31,11 +28,15 @@ void CTestLevel::Init()
 	subDice->Transform.Location.x = -100.0f;
 	subDice = new CDice(*this);
 	dice.Transform.AttachTransform(subDice->Transform);
-	subDice->Transform.Location.x = 100.0f;
+	subDice->Transform.Location.x = 100.0f;*/
 
 	CFighter& fighter = *new CFighter(*this);
 	mFighter = &fighter;
 	mFighter->Transform.Location.z = 30.0f;
+
+	CDice& dice = *new CDice(*this,mFighter->Transform.Location);
+	dice.Transform.Location = { 0.f,0.f,500.f };
+	mMainDice = &dice;
 
 	CSkyDome& skyDome = *new CSkyDome(*this);
 
