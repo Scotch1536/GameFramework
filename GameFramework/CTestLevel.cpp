@@ -187,11 +187,6 @@ void CTestLevel::Tick()
 		ImGui::End();
 	};
 
-	if (mFighter->GetIsHit())
-	{
-		mOwnerInterface->LoadLevel(*new CTestLevel(*mOwnerInterface));
-	}
-
 	AddImGuiDrawMethod(displayCount);
 	AddImGuiDrawMethod(displayTime);
 	AddImGuiDrawMethod(displayHitStatus);
