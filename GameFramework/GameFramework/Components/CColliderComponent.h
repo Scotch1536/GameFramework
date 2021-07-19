@@ -26,6 +26,7 @@ public:
 
 private:
 	EType mType;
+	std::string mObjectType = "NONE";
 
 	std::vector<CColliderComponent*> mColliders;		//自分以外のコライダー
 
@@ -58,4 +59,8 @@ public:
 		return mType;
 	}
 
+	void SetObjectType(std::string objType)
+	{
+		mObjectType = objType;
+	}
 };
