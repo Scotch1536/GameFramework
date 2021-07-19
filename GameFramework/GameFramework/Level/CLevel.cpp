@@ -7,7 +7,7 @@
 
 #include "CLevel.h"
 
-CLevel::CLevel(CGame& owner):CObject("Level") , mOwnerInterface(&owner)
+CLevel::CLevel(IGame& owner):CObject("Level") , mOwnerInterface(&owner)
 {
 	mOwnerInterface->LoadLevel(*this);
 }
@@ -27,30 +27,32 @@ void CLevel::RequestSetCamera(CCameraComponent& camera)
 	mRenderingCamera = &camera;
 }
 
+void CLevel::RequestLoadLevel(CLevel& level)
+{
+	mOwnerInterface->LoadLevel(level);
+}
+
 void CLevel::Update()
 {
 	CActor* cameraActor = nullptr;
 
-	if(mRenderingCamera != nullptr)
-	{
-		cameraActor = &mRenderingCamera->GetOwner();
-		cameraActor->Transform.Update();
-		cameraActor->Tick();
-		cameraActor->Update();
-	}
-
-	CColliderManager::GetInstance().Update();
-
 	for(auto& actor : mActors)
 	{
-		if(actor.get() == cameraActor)continue;
-
 		if(CGameManager::GetInstance().GetIsPause())
 		{
 			if(actor->GetIsAffectToPause())continue;
 		}
 
 		if(!actor->Transform.GetIsChild())actor->Transform.Update();
+	}
+
+	CColliderManager::GetInstance().Update();
+
+	if(mRenderingCamera != nullptr)
+	{
+		cameraActor = &mRenderingCamera->GetOwner();
+		cameraActor->Tick();
+		cameraActor->Update();
 	}
 
 	for(auto& actor : mActors)

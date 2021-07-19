@@ -51,7 +51,7 @@ public:
 		return mGame;
 	}
 
-	const IGame& GetGameInterface()const
+	IGame& GetGameInterface()
 	{
 		return mGame;
 	}

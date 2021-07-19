@@ -26,3 +26,12 @@ void CBullet::Tick()
 		Destroy();
 	}
 }
+
+void CBullet::EventAtBeginCollide(CActor& collideActor)
+{
+	if (collideActor.HasTag("Dice"))
+	{
+		collideActor.Destroy();
+		Destroy();
+	}
+}
