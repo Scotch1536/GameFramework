@@ -5,5 +5,6 @@ class CDice :public CActor
 {
 public:
 	CDice(CLevel& owner);
+
 };
 

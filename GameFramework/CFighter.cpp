@@ -95,7 +95,7 @@ void CFighter::Shot()
 	LCMath::CalcFloat3FromStartToGoal(loc , mPointer.Transform.GetWorldLocation() , dire);
 	LCMath::CalcFloat3Normalize(dire , dire);
 
-	new CBullet(mOwnerInterface , loc , dire , 60 * 1);
+	new CBullet(mOwnerInterface , loc , dire , 60 * 3);
 
 	CSoundManager::GetInstance().PlaySound("SHOT");
 }
