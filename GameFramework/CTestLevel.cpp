@@ -16,20 +16,6 @@
 
 void CTestLevel::Init()
 {
-	/*CDice* subDice = nullptr;
-	subDice = new CDice(*this);
-	dice.Transform.AttachTransform(subDice->Transform);
-	subDice->Transform.Location.y = -100.0f;
-	subDice = new CDice(*this);
-	dice.Transform.AttachTransform(subDice->Transform);
-	subDice->Transform.Location.y = 100.0f;
-	subDice = new CDice(*this);
-	dice.Transform.AttachTransform(subDice->Transform);
-	subDice->Transform.Location.x = -100.0f;
-	subDice = new CDice(*this);
-	dice.Transform.AttachTransform(subDice->Transform);
-	subDice->Transform.Location.x = 100.0f;*/
-
 	CFighter& fighter = *new CFighter(*this);
 	mFighter = &fighter;
 	mFighter->Transform.Location.z = 30.0f;
