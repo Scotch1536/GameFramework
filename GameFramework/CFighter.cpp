@@ -43,11 +43,18 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 
 	CCameraComponent& camera = *new CCameraComponent(*this);
 
+	XMFLOAT3 fv = Transform.GetForwardVector();
+	XMFLOAT3 loc = Transform.Location;
+	XMFLOAT3 cameraLoc = Transform.Location;
+	cameraLoc.x += fv.x*-20.0f;
+	cameraLoc.y += fv.y*-20.0f+2.0f;
+	cameraLoc.z += fv.z*-20.0f;
+
 	camera.SetProjection(10.f , 10000.f , XM_PI / 4.f , CApplication::CLIENT_WIDTH , CApplication::CLIENT_HEIGHT);
-	camera.SetView({ 0.f,0.f,-50.f } , Transform.Location , { 0.f,1.f,0.f });
+	camera.SetView(cameraLoc , loc , { 0.f,1.f,0.f });
 
 	CSpringArmComponent& spr = *new CSpringArmComponent(*this , Transform , camera);
-	spr.SetLerpTime(1.0f);
+	spr.SetLerpTime(0.5f);
 
 	light.SetEyePos(camera.GetEye());
 	light.SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
@@ -88,7 +95,7 @@ void CFighter::Shot()
 	LCMath::CalcFloat3FromStartToGoal(loc , mPointer.Transform.GetWorldLocation() , dire);
 	LCMath::CalcFloat3Normalize(dire , dire);
 
-	new CBullet(mOwnerInterface , loc , dire , 60 * 5);
+	new CBullet(mOwnerInterface , loc , dire , 60 * 1);
 
 	CSoundManager::GetInstance().PlaySound("SHOT");
 }

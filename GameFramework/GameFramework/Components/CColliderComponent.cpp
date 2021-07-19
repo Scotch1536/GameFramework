@@ -50,8 +50,13 @@ void CColliderComponent::Update()
 		if(mType == EType::AABB)
 		{
 			CAABBColliderComponent& thisObj = dynamic_cast<CAABBColliderComponent&>(*this);
-			for(auto collider : mColliders)
+			for(auto& collider : mColliders)
 			{
+				if(mObjectType != "NONE"&&mObjectType == collider->mObjectType)
+				{
+					continue;
+				}
+
 				if(collider->GetType() == EType::AABB)
 				{
 					CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);
@@ -75,8 +80,13 @@ void CColliderComponent::Update()
 		else if(mType == EType::SPHERE)
 		{
 			CSphereColliderComponent& thisObj = dynamic_cast<CSphereColliderComponent&>(*this);
-			for(auto collider : mColliders)
+			for(auto& collider : mColliders)
 			{
+				if(mObjectType != "NONE"&&mObjectType == collider->mObjectType)
+				{
+					continue;
+				}
+
 				if(collider->GetType() == EType::AABB)
 				{
 					CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);
@@ -102,9 +112,9 @@ void CColliderComponent::Update()
 
 void CColliderComponent::CalcMinMaxOfMeshes(const std::vector<CModelMeshData>& meshes , XMFLOAT3& min , XMFLOAT3& max)
 {
-	for(auto m : meshes)
+	for(auto& m : meshes)
 	{
-		for(auto v : m.Vertices)
+		for(auto& v : m.Vertices)
 		{
 			if(min.x > v.Pos.x)	min.x = v.Pos.x;
 			else if(max.x < v.Pos.x) max.x = v.Pos.x;

@@ -27,13 +27,15 @@ bool CColliderManager::GetColliders(CColliderComponent* caller , std::vector<CCo
 
 	if(mIsBefore[caller] == true)return true;
 
+	std::vector<CColliderComponent*> buf;
 	for(auto& collider : mColliders)
 	{
 		if(collider != caller)
 		{
-			result.push_back(collider);
+			buf.push_back(collider);
 		}
 	}
+	result = buf;
 
 	mIsBefore[caller] = true;
 
@@ -52,15 +54,14 @@ void CColliderManager::ReleaseCollider(CColliderComponent& collider)
 			break;
 		}
 	}
+
+	if(mIsBefore.size() != 0 && mIsBefore.count(&collider) != 0)mIsBefore.erase(&collider);
+
 	if(mIsBefore.size() != 0)
 	{
-		for(auto isBefore : mIsBefore)
+		for(auto& isBefore : mIsBefore)
 		{
-			if(isBefore.first == &collider)
-			{
-				mIsBefore.erase(&collider);
-				break;
-			}
+			isBefore.second = false;
 		}
 	}
 }

@@ -161,7 +161,10 @@ void CLevel::Render()
 		}
 	};
 
+#ifdef _DEBUG
 	imguiDraw(allGuiMethodExecute);
+#endif
+
 	mImGuiDrawMethod.clear();
 	mImGuiDrawMethod.shrink_to_fit();
 
