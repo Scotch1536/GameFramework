@@ -118,17 +118,17 @@ void CGame::Update()
 {
 	mLevel->Update();
 	mLevel->Tick();
+}
+
+void CGame::Render()
+{
+	mLevel->Render();
 
 	if(mLoadLevelFunction != nullptr)
 	{
 		mLoadLevelFunction();
 		mLoadLevelFunction = nullptr;
 	}
-}
-
-void CGame::Render()
-{
-	mLevel->Render();
 }
 
 void CGame::LoadLevel(CLevel& level)

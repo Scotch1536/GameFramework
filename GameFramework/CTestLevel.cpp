@@ -76,7 +76,7 @@ void CTestLevel::Tick()
 
 		XMFLOAT3 diceRVec = dice->Transform.GetRightVector();
 
-		int value = mt() % 3;
+		int value = mt() % 2;
 		if(value == 0)
 		{
 			dice->Transform.Location.x += diceRVec.x * 200.0f;
