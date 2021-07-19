@@ -12,6 +12,5 @@ public:
 	CBullet(ILevel& partner , XMFLOAT3 initLocation , XMFLOAT3 direction , int destroyFrame);
 
 	void Tick()override;
-	void EventAtBeginCollide(CActor& collideActor)override;
 };
 

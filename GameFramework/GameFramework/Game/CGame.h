@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <memory>
+#include <functional>
 
 #include "../ExternalCode/CDirectxGraphics.h"
 #include "../ExternalCode/Memory.h"
@@ -43,6 +44,9 @@ private:
 	CApplication mApp;		//アプリケーション
 
 	std::unique_ptr<CLevel> mLevel;			//レベル
+	
+	std::function<void()> mLoadLevelFunction;			//ロードレベル関数オブジェクト
+
 
 	//コピー＆ムーブ禁止
 	CGame(const CGame&) = delete;

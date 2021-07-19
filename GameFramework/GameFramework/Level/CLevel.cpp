@@ -67,7 +67,7 @@ void CLevel::Update()
 		actor->Tick();
 	}
 
-	//更新後に行う関数を実行
+	//Tick後に行う関数を実行
 	if(mDoAfterTickFunction.size() != 0)
 	{
 		for(auto& func : mDoAfterTickFunction)

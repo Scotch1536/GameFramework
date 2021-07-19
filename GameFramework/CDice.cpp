@@ -1,26 +1,22 @@
 #include "GameFramework/Components/CStaticMeshComponent.h"
-#include "GameFramework/Level/CLevel.h"
-#include "GameFramework/Components/CCameraComponent.h"
-#include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
-#include "GameFramework/Components/CAABBColliderComponent.h"
-#include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/Managers/CModelDataManager.h"
-#include "GameFramework/Managers/CGameManager.h"
-#include "GameFramework/Transform/CRotator.h"
+#include "GameFramework/Managers/CSoundManager.h"
 
 #include "CDice.h"
 
-CDice::CDice(CLevel& owner, XMFLOAT3& pointLocation) :CActor(owner, false), mPoint(pointLocation)
+CDice::CDice(ILevel& owner , XMFLOAT3& pointLocation):CActor(owner , false) , mPoint(pointLocation)
 {
-	CStaticMeshComponent& staticMesh = *new CStaticMeshComponent(*this, Transform,
-		CModelDataManager::GetInstance().GetModel("./Assets/Models/dice/PlayerBox.x", "Assets/Models/dice/"),
-		"Shader/vs.hlsl", "Shader/ps.hlsl");
+	CSoundManager::GetInstance().CreateSoundInfo("Assets/Sounds/bomb.wav" , 0.1f , false , "BOMB");
 
-	CSphereColliderComponent* sphereCllider = new CSphereColliderComponent(*this, staticMesh.GetModel(), Transform);
+	CStaticMeshComponent& staticMesh = *new CStaticMeshComponent(*this , Transform ,
+		CModelDataManager::GetInstance().GetModel("./Assets/Models/dice/PlayerBox.x" , "Assets/Models/dice/") ,
+		"Shader/vs.hlsl" , "Shader/ps.hlsl");
+
+	CSphereColliderComponent* sphereCllider = new CSphereColliderComponent(*this , staticMesh.GetModel() , Transform);
+
 	//タグ追加
 	AddTag("Dice");
-	mStartQua = Transform.Rotation.GetQuaternion();
 }
 
 void CDice::Move()
@@ -34,34 +30,18 @@ void CDice::Move()
 
 void CDice::Tick()
 {
-	Move();
 	Transform.Rotation.ChangeAngleAndQuaternionToLocation(mPoint);
-	/*if (mGoalQua == nullptr)
+
+	Move();
+}
+
+void CDice::EventAtBeginCollide(CActor& collideActor)
+{
+	if(collideActor.HasTag("Bullet"))
 	{
-		mGoalQua.reset(new XMFLOAT4);
-		Transform.Rotation.CalcQuaternionToLocation(mPoint, *mGoalQua);
-		mAlpha = 0.0f;
+		Destroy();
+		collideActor.Destroy();
+
+		CSoundManager::GetInstance().PlaySound("BOMB");
 	}
-	if (mGoalQua != nullptr)
-	{
-		bool isEnd = false;
-		XMFLOAT4 result;
-
-		mAlpha += mIncrementAlpha;
-		if (mAlpha > 1.0f)
-		{
-			mAlpha = 1.0f;
-			isEnd = true;
-		}
-
-		LCMath::Lerp(mStartQua, *mGoalQua, mAlpha, result);
-		Transform.Rotation.SetQuaternion(result);
-
-		if (isEnd)
-		{
-			mGoalQua.reset();
-		}
-	}*/
-
-
 }

@@ -122,18 +122,6 @@ void CFighter::Rot(int dire)
 	else if(dire == 1)Transform.Rotation.AddAngle({ 0.0f,1.0f,0.0f });
 	else if(dire == 2)Transform.Rotation.AddAngle({ -1.0f,0.0f,0.0f });
 	else if(dire == 3)Transform.Rotation.AddAngle({ 1.0f,0.0f,0.0f });
-
-	//if(mTargetRot == nullptr)
-	//{
-	//	mTargetRot.reset(new XMFLOAT4);
-	//	if(Transform.Rotation.CalcQuaternionToLocation(mPointer.Transform.GetWorldLocation() , *mTargetRot))
-	//	{
-	//		mStartRot = Transform.Rotation.GetQuaternion();
-	//		mAlpha = 0.0f;
-	//		mIncrementAlpha = 1.0f / (60.0f * 0.15f);
-	//	}
-	//	else mTargetRot.reset();
-	//}
 }
 
 void CFighter::Tick()
@@ -189,7 +177,7 @@ void CFighter::EventAtBeginCollide(CActor& collideActor)
 {
 	if(collideActor.HasTag("Dice"))
 	{
-		//mOwnerInterface.RequestLoadLevel(*new CTestLevel(CGameManager::GetInstance().GetGameInterface()));
+		mOwnerInterface.RequestLoadLevel(*new CTestLevel(CGameManager::GetInstance().GetGameInterface()));
 		mIsHit = true;
 	}
 }
