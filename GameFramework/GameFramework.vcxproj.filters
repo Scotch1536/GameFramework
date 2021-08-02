@@ -198,6 +198,9 @@
     <ClCompile Include="GameFramework\Components\CDisplay2DComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="GameFramework\Components\CVisionComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameFramework\Transform\CRotator.h">
@@ -381,6 +384,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CDisplay2DComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CVisionComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
