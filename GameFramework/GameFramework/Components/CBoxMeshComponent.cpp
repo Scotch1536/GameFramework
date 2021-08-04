@@ -26,8 +26,8 @@ void CBoxMeshComponent::CreateVertexData()
 	for(auto& vertex : mVertices)
 	{
 		XMFLOAT3 vec , normal;
-		LCMath::CalcFloat3FromStartToGoal({ 0.0f,0.0f,0.0f } , vertex.Pos , vec);
-		LCMath::CalcFloat3Normalize(vec , normal);
+		LCMath::CalcFloat3FromStartToGoal({ 0.0f,0.0f,0.0f } , vertex.Pos , &vec);
+		LCMath::CalcFloat3Normalize(vec , &normal);
 
 		vertex.Normal = normal;
 		vertex.Color = mColor;

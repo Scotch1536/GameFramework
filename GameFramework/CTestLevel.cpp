@@ -140,8 +140,8 @@ void CTestLevel::Tick()
 
 	float distance;
 	XMFLOAT3 vec;
-	LCMath::CalcFloat3FromStartToGoal(mFighter->Transform.Location , mMainDice->Transform.Location , vec);
-	LCMath::CalcFloat3Length(vec , distance);
+	LCMath::CalcFloat3FromStartToGoal(mFighter->Transform.Location , mMainDice->Transform.Location , &vec);
+	LCMath::CalcFloat3Length(vec , &distance);
 
 	XMFLOAT3 angle = mFighter->Transform.Rotation.GetAngle();
 	std::string angleStr = std::to_string((int)angle.x) + ',' + std::to_string((int)angle.y) + ',' + std::to_string((int)angle.z);
