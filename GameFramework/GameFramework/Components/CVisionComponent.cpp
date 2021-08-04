@@ -10,10 +10,9 @@
 #include "..\Actor\CActor.h"
 #include "..\Managers\CColliderManager.h"
 
-CVisionComponent::CVisionComponent(CActor& owner, CTransform& parentTrans, float length, float angle, int priority)
-	:CComponent(owner, priority), Transform(parentTrans)
+CVisionComponent::CVisionComponent(CActor& owner, CTransform& parentTrans, float length, float angle, std::function<void(CActor&)> event, int priority)
+	:CComponent(owner, priority), Transform(parentTrans), mLength(length), mEvent(event)
 {
-	mLength = length;
 	mRadian = XMConvertToRadians(angle);
 }
 
@@ -103,6 +102,10 @@ void CVisionComponent::Update()
 			if (dot > mRadian)
 			{
 				//“ü‚ê‚½ŠÖ”‚ðŽÀs‚·‚é—p‚É‚·‚é‚©‚à
+				if (mEvent != nullptr)
+				{
+					mEvent(collider->GetOwner());
+				}
 			}
 		}
 	}

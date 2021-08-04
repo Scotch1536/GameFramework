@@ -10,6 +10,7 @@ public:
 	CDice(ILevel& owner,XMFLOAT3& pointLocation);
 
 	void Move();
+	void Look(CActor& collideActor);
 	void Tick()override;
 	void EventAtBeginCollide(CActor& collideActor)override;
 };
