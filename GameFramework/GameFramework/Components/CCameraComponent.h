@@ -4,6 +4,7 @@
 #include "../ExternalCode/DX11Settransform.h"
 #include "../ExternalCode/Memory.h"
 #include "../Actor/CActor.h"
+#include "../Library/LCMath.h"
 
 #include "CComponent.h"
 
@@ -37,7 +38,11 @@ private:
 	void CreateViewMatrix();
 
 public:
-	CCameraComponent(CActor& owner , int priority = 80):CComponent(owner , priority) {}
+	CCameraComponent(CActor& owner , int priority = 80):CComponent(owner , priority)
+	{
+		LCMath::IdentityMatrix(mProjection);
+		LCMath::IdentityMatrix(mView);
+	}
 
 	//çXêV
 	void Update()override;

@@ -8,8 +8,8 @@
 
 CTransform::CTransform():Rotation(*this)
 {
-	DX11MtxIdentity(mWorldMatrixSelf);
-	DX11MtxIdentity(mWorldMatrixResult);
+	LCMath::IdentityMatrix(mWorldMatrixSelf);
+	LCMath::IdentityMatrix(mWorldMatrixResult);
 }
 
 CTransform::CTransform(const CActor& partner):CTransform() {}
