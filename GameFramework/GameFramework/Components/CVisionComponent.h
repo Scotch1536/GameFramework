@@ -1,6 +1,9 @@
 #pragma once
 
 #include "CComponent.h"
+#include "../Transform/CTransform.h"
+
+class CTransform;
 
 class CVisionComponent :public CComponent
 {
@@ -10,5 +13,7 @@ private:
 
 	void Update() override;
 public:
-	CVisionComponent(CActor& owner,float length, float angle,int priority = 90);
+	CTransform Transform;
+
+	CVisionComponent(CActor& owner,CTransform& parentTrans,float length, float angle,int priority = 90);
 };
