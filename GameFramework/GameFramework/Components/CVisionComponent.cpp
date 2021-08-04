@@ -64,23 +64,27 @@ void CVisionComponent::Update()
 		}*/
 		if (collider->GetType() == CColliderComponent::EType::SPHERE)
 		{
+			float dot;
+			XMFLOAT3 addLoc;
+			XMFLOAT3 normal;
+
 			CSphereColliderComponent* sphere = dynamic_cast<CSphereColliderComponent*>(collider);
-			if (sphere == nullptr)
-			{
-				MessageBox(NULL, "Sphere Upcast failure", "error", MB_OK);
-			}
 			targetLoc = sphere->GetCenter();
+
 			//自分から相手への向きベクトルを求める
 			//相手への向きベクトルと自分の向いてる方向への内積を求める
-			float dot = LCMath::CalcFloat3Dot(LCMath::CalcFloat3FromStartToGoal(selfLoc, targetLoc), selfForwardVec);
+			LCMath::CalcFloat3Dot(LCMath::CalcFloat3FromStartToGoal(selfLoc, targetLoc), selfForwardVec, &dot);
+
 			//内積で求めた長さに向いてる方向をかけて向きベクトルを求める
 			//自分の座標に向きベクトルを足して垂直に交わる座標を求める
-			XMFLOAT3 addLoc = LCMath::CalcFloat3Addition(selfLoc, LCMath::CalcFloat3Scalar(selfForwardVec, dot));
+			LCMath::CalcFloat3Addition(selfLoc, LCMath::CalcFloat3Scalar(selfForwardVec, dot), &addLoc);
+
 			//相手から垂直に交わる座標への向きベクトルを求める
 			//相手から垂直に交わる座標への向きベクトルを正規化する
-			XMFLOAT3 normalize = LCMath::CalcFloat3Normalize(LCMath::CalcFloat3FromStartToGoal(targetLoc, addLoc));
+			LCMath::CalcFloat3Normalize(LCMath::CalcFloat3FromStartToGoal(targetLoc, addLoc), &normal);
+
 			//正規化した向きベクトルに相手のコリジョンの半径をかけて自分から一番近い距離を求める
-			targetLoc = LCMath::CalcFloat3Scalar(normalize, sphere->GetWorldRadius());
+			LCMath::CalcFloat3Scalar(normal, sphere->GetWorldRadius(), &targetLoc);
 
 		}
 
