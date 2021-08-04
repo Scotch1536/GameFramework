@@ -20,8 +20,8 @@ CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const CModelD
 	XMFLOAT3 vec;
 	float length;
 
-	LCMath::CalcFloat3FromStartToGoal(min , max , vec);
-	LCMath::CalcFloat3Length(vec , length);
+	LCMath::CalcFloat3FromStartToGoal(min , max , &vec);
+	LCMath::CalcFloat3Length(vec , &length);
 
 	mLocalRadius = length / 2.0f;
 

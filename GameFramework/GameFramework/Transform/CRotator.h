@@ -60,7 +60,7 @@ public:
 		XMFLOAT3 angle;
 
 		//クォータニオンをオイラー角に変換
-		mAngle = LCMath::TransformFromQuaternionToEulerAngles(mQuaternion , angle);
+		mAngle = LCMath::TransformFromQuaternionToEulerAngles(mQuaternion , &angle);
 	}
 
 	void SetAngle(const XMFLOAT3& angle);
