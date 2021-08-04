@@ -94,8 +94,8 @@ void CFighter::Shot()
 	loc.y += fv.y * 10.0f + 2.0f;
 	loc.z += fv.z * 10.0f;
 
-	LCMath::CalcFloat3FromStartToGoal(loc , mPointer.Transform.GetWorldLocation() , dire);
-	LCMath::CalcFloat3Normalize(dire , dire);
+	LCMath::CalcFloat3FromStartToGoal(loc , mPointer.Transform.GetWorldLocation() , &dire);
+	LCMath::CalcFloat3Normalize(dire , &dire);
 
 	new CBullet(mOwnerInterface , loc , dire , 60 * 3);
 
@@ -140,7 +140,7 @@ void CFighter::Tick()
 			isEnd = true;
 		}
 
-		LCMath::Lerp(mStartRot , *mTargetRot , mAlpha , result);
+		LCMath::Lerp(mStartRot , *mTargetRot , mAlpha , &result);
 		Transform.Rotation.SetQuaternion(result);
 
 		if(isEnd)
@@ -153,8 +153,8 @@ void CFighter::Tick()
 	XMFLOAT3 fv = Transform.GetForwardVector();
 	XMFLOAT3 dire;
 
-	LCMath::CalcFloat3FromStartToGoal(loc , mPointer.Transform.GetWorldLocation() , dire);
-	LCMath::CalcFloat3Normalize(dire , dire);
+	LCMath::CalcFloat3FromStartToGoal(loc , mPointer.Transform.GetWorldLocation() , &dire);
+	LCMath::CalcFloat3Normalize(dire , &dire);
 
 	auto displayPointer = [& , fv , dire]
 	{

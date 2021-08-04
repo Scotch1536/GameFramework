@@ -20,6 +20,13 @@ void CColliderManager::AddCollider(CColliderComponent& collider)
 
 bool CColliderManager::GetColliders(CColliderComponent* caller , std::vector<CColliderComponent*>& result)
 {
+
+	if (caller == nullptr)
+	{
+		result = mColliders;
+		return true;
+	}
+
 	if(mIsBefore.count(caller) == 0)
 	{
 		mIsBefore[caller] = false;
