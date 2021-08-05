@@ -106,9 +106,9 @@ void CSpringArmComponent::Update()
 
 		XMFLOAT3 eye , lookAt , up;
 
-		mUseCamera.SetEye(LCMath::Lerp(mUseCamera.GetEye() , *mGoalEye , mAlpha , &eye));
-		mUseCamera.SetLookat(LCMath::Lerp(mUseCamera.GetLookAt() , *mGoalLockAt , mAlpha , &lookAt));
-		mUseCamera.SetUp(LCMath::Lerp(mUseCamera.GetUp() , *mGoalUp , mAlpha , &up));
+		mUseCamera.SetEye(LCMath::Lerp(mUseCamera.GetEye() , *mGoalEye , mAlpha , eye));
+		mUseCamera.SetLookat(LCMath::Lerp(mUseCamera.GetLookAt() , *mGoalLockAt , mAlpha , lookAt));
+		mUseCamera.SetUp(LCMath::Lerp(mUseCamera.GetUp() , *mGoalUp , mAlpha , up));
 	}
 	else if(mSyncMode == ESyncMode::LOCATION_ONLY_SYNC)
 	{
@@ -138,7 +138,7 @@ void CSpringArmComponent::Update()
 
 		XMFLOAT3 eye;
 
-		mUseCamera.SetEye(LCMath::Lerp(mUseCamera.GetEye() , *mGoalEye , mAlpha , &eye));
+		mUseCamera.SetEye(LCMath::Lerp(mUseCamera.GetEye() , *mGoalEye , mAlpha , eye));
 		mUseCamera.SetLookat(mParentTransform.Location);
 	}
 }
