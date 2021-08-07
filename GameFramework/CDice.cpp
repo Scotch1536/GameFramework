@@ -1,5 +1,6 @@
 #include "GameFramework/Components/CStaticMeshComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
+#include "GameFramework/Components/CVisionComponent.h"
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CSoundManager.h"
 
@@ -15,6 +16,10 @@ CDice::CDice(ILevel& owner , XMFLOAT3& pointLocation):CActor(owner , false) , mP
 
 	CSphereColliderComponent* sphereCllider = new CSphereColliderComponent(*this , staticMesh.GetModel() , Transform);
 
+	CVisionComponent* vision = new CVisionComponent(*this, Transform, 500, 25,std::bind(&CDice::Look,std::ref(*this),std::placeholders::_1));
+
+	Transform.Rotation.SetAngle({ 0.f, 180.f, 0.f });
+
 	//タグ追加
 	AddTag("Dice");
 }
@@ -28,11 +33,20 @@ void CDice::Move()
 	Transform.Location.z += fv.z * 1.25;
 }
 
+void CDice::Look(CActor& collideActor)
+{
+	if (collideActor.HasTag("Fighter"))
+	{
+		Transform.Rotation.ChangeAngleAndQuaternionToLocation(collideActor.Transform.GetWorldLocation());
+		Move();
+	}
+}
+
 void CDice::Tick()
 {
-	Transform.Rotation.ChangeAngleAndQuaternionToLocation(mPoint);
+	//Transform.Rotation.ChangeAngleAndQuaternionToLocation(mPoint);
 
-	Move();
+	
 }
 
 void CDice::EventAtBeginCollide(CActor& collideActor)

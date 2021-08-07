@@ -73,7 +73,7 @@ void CTransform::Update()
 	{
 		mShouldUpdateMatrix = false;
 
-		LCMath::UpdateMatrix(Location , Scale , Rotation.GenerateMatrix() , &mWorldMatrixSelf);
+		LCMath::UpdateMatrix(Location , Scale , Rotation.GenerateMatrix() , mWorldMatrixSelf);
 	}
 
 	if(mParentTransform != nullptr)
@@ -93,7 +93,7 @@ void CTransform::Update()
 		{
 			XMFLOAT4X4 inverseCamera;
 			XMFLOAT4X4 resultMTX;
-			LCMath::InverseMatrix(*camera , &inverseCamera);
+			LCMath::InverseMatrix(*camera , inverseCamera);
 
 			DX11MtxMultiply(resultMTX , mWorldMatrixSelf , inverseCamera);
 
@@ -130,7 +130,7 @@ XMFLOAT3 CTransform::GetRightVector()const
 	result.y = mWorldMatrixResult._12;
 	result.z = mWorldMatrixResult._13;
 
-	LCMath::CalcFloat3Normalize(result , &result);
+	LCMath::CalcFloat3Normalize(result , result);
 
 	return result;
 }
@@ -143,7 +143,7 @@ XMFLOAT3 CTransform::GetUpwardVector()const
 	result.y = mWorldMatrixResult._22;
 	result.z = mWorldMatrixResult._23;
 
-	LCMath::CalcFloat3Normalize(result , &result);
+	LCMath::CalcFloat3Normalize(result , result);
 
 	return result;
 }
@@ -156,7 +156,7 @@ XMFLOAT3 CTransform::GetForwardVector()const
 	result.y = mWorldMatrixResult._32;
 	result.z = mWorldMatrixResult._33;
 
-	LCMath::CalcFloat3Normalize(result , &result);
+	LCMath::CalcFloat3Normalize(result , result);
 
 	return result;
 }

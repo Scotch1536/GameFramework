@@ -10,10 +10,9 @@
 #include "..\Actor\CActor.h"
 #include "..\Managers\CColliderManager.h"
 
-CVisionComponent::CVisionComponent(CActor& owner, CTransform& parentTrans, float length, float angle, int priority)
-	:CComponent(owner, priority), Transform(parentTrans)
+CVisionComponent::CVisionComponent(CActor& owner, CTransform& parentTrans, float length, float angle, std::function<void(CActor&)> event, int priority)
+	:CComponent(owner, priority), Transform(parentTrans), mLength(length), mEvent(event)
 {
-	mLength = length;
 	mRadian = XMConvertToRadians(angle);
 }
 
@@ -72,37 +71,37 @@ void CVisionComponent::Update()
 			targetLoc = sphere->GetCenter();
 
 			//自分から相手への向きベクトルを求める
+			LCMath::CalcFloat3FromStartToGoal(selfLoc, targetLoc, targetVec);
 			//相手への向きベクトルと自分の向いてる方向への内積を求める
-			LCMath::CalcFloat3Dot(LCMath::CalcFloat3FromStartToGoal(selfLoc, targetLoc), selfForwardVec, &dot);
+			LCMath::CalcFloat3Dot(targetVec, selfForwardVec, dot);
 
 			//内積で求めた長さに向いてる方向をかけて向きベクトルを求める
-			//自分の座標に向きベクトルを足して垂直に交わる座標を求める
-			LCMath::CalcFloat3Addition(selfLoc, LCMath::CalcFloat3Scalar(selfForwardVec, dot), &addLoc);
+			//相手への向きベクトルから上で求めたベクトルを引いて相手から垂直に交わる座標への向きベクトルを求める
+			LCMath::CalcFloat3FromStartToGoal(LCMath::CalcFloat3Scalar(selfForwardVec, dot), targetVec, addLoc);
 
-			//相手から垂直に交わる座標への向きベクトルを求める
 			//相手から垂直に交わる座標への向きベクトルを正規化する
-			LCMath::CalcFloat3Normalize(LCMath::CalcFloat3FromStartToGoal(targetLoc, addLoc), &normal);
+			LCMath::CalcFloat3Normalize(addLoc, normal);
 
 			//正規化した向きベクトルに相手のコリジョンの半径をかけて自分から一番近い距離を求める
-			LCMath::CalcFloat3Scalar(normal, sphere->GetWorldRadius(), &targetLoc);
+			LCMath::CalcFloat3Scalar(normal, sphere->GetWorldRadius(), targetLoc);
 
 		}
 
-		targetVec.x = selfLoc.x - targetLoc.x;
-		targetVec.y = selfLoc.y - targetLoc.y;
-		targetVec.z = selfLoc.z - targetLoc.z;
-
-		LCMath::CalcFloat3Length(targetVec, &length);
+		LCMath::CalcFloat3Length(targetVec, length);
 		if (length <= mLength)
 		{
 			float dot;
-			LCMath::CalcFloat3Normalize(targetVec, &targetVec);
-			LCMath::CalcFloat3Dot(selfForwardVec, targetVec, &dot);
+			LCMath::CalcFloat3Normalize(targetVec, targetVec);
+			LCMath::CalcFloat3Dot(selfForwardVec, targetVec, dot);
 
 			std::acos(dot);
 			if (dot > mRadian)
 			{
 				//入れた関数を実行する用にするかも
+				if (mEvent != nullptr)
+				{
+					mEvent(collider->GetOwner());
+				}
 			}
 		}
 	}
