@@ -97,7 +97,12 @@ XMFLOAT3 LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua)
 	return result;
 }
 
-const XMFLOAT4X4& LCMath::UpdateMatrix(const XMFLOAT3& location, const XMFLOAT3& scale, const XMFLOAT4X4& rotMTX, XMFLOAT4X4& resultMTX)
+void LCMath::IdentityMatrix(XMFLOAT4X4& target)
+{
+	XMStoreFloat4x4(&target , XMMatrixIdentity());
+}
+
+const XMFLOAT4X4& LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , const XMFLOAT4X4& rotMTX , XMFLOAT4X4& resultMTX)
 {
 	XMFLOAT4X4 trans;
 	DX11MtxScale(scale.x, scale.y, scale.z, resultMTX);
@@ -158,7 +163,7 @@ XMFLOAT4X4 LCMath::InverseMatrix(const XMFLOAT4X4& target)
 	return result;
 }
 
-bool LCMath::CompareFloat3(const XMFLOAT3& target1, const XMFLOAT3& target2)
+bool LCMath::CompareFloat3(const XMFLOAT3& target1 , const XMFLOAT3& target2)
 {
 	if (target1.x != target2.x)return false;
 	if (target1.y != target2.y)return false;

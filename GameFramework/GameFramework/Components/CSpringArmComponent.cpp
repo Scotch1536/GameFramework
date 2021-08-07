@@ -18,7 +18,7 @@ CSpringArmComponent::CSpringArmComponent(CActor& owner , const CTransform& paren
 	//カメラコンポーネントにスプリングアームを繋げたことを通知
 	mUseCamera.JoinSpringArm(*this);
 
-	DX11MtxIdentity(mLocalMatrix);
+	LCMath::IdentityMatrix(mLocalMatrix);
 }
 
 void CSpringArmComponent::UpdateLocalMatrix()

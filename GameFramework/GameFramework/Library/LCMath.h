@@ -15,6 +15,9 @@ public:
 	static const XMFLOAT3& TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua, XMFLOAT3& resultAngle);
 	static XMFLOAT3 TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua);
 
+	//単位行列化
+	static void IdentityMatrix(XMFLOAT4X4& target);
+
 	//ロケーション、スケール、回転行列から指定の行列を更新
 	static const XMFLOAT4X4& UpdateMatrix(const XMFLOAT3& location, const XMFLOAT3& scale, const XMFLOAT4X4& rotMTX, XMFLOAT4X4& resultMTX);
 	static XMFLOAT4X4 UpdateMatrix(const XMFLOAT3& location, const XMFLOAT3& scale, const XMFLOAT4X4& rotMTX);
@@ -22,6 +25,7 @@ public:
 	//逆行列を取得
 	static const XMFLOAT4X4& InverseMatrix(const XMFLOAT4X4& target, XMFLOAT4X4& resultMTX);
 	static XMFLOAT4X4 InverseMatrix(const XMFLOAT4X4& target);
+
 
 	//指定のFloat3同士が一致しているかの比較
 	static bool CompareFloat3(const XMFLOAT3& target1, const XMFLOAT3& target2);
