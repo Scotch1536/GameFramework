@@ -25,6 +25,7 @@ void CVisionComponent::Update()
 	mOwnerInterface.GetActor().GetAllComponents<CColliderComponent>(selfColliders);
 	for (auto collider : colliders)
 	{
+		bool shouldEvent = false;
 		if (selfColliders.size() != 0)
 		{
 			bool shouldJudge = true;
@@ -79,30 +80,42 @@ void CVisionComponent::Update()
 			//相手への向きベクトルから上で求めたベクトルを引いて相手から垂直に交わる座標への向きベクトルを求める
 			LCMath::CalcFloat3FromStartToGoal(LCMath::CalcFloat3Scalar(selfForwardVec, dot), targetVec, addLoc);
 
-			//相手から垂直に交わる座標への向きベクトルを正規化する
-			LCMath::CalcFloat3Normalize(addLoc, normal);
+			//向きベクトルが半径の中だったら視界に入ってる判定にする
+			if ((addLoc.x * addLoc.x) + (addLoc.y * addLoc.y) + (addLoc.z * addLoc.z) <= (sphere->GetWorldRadius() * sphere->GetWorldRadius()))
+			{
+				shouldEvent = true;
+			}
+			else
+			{
+				//相手から垂直に交わる座標への向きベクトルを正規化する
+				LCMath::CalcFloat3Normalize(addLoc, normal);
 
-			//正規化した向きベクトルに相手のコリジョンの半径をかけて自分から一番近い距離を求める
-			LCMath::CalcFloat3Scalar(normal, sphere->GetWorldRadius(), targetLoc);
-
+				//正規化した向きベクトルに相手のコリジョンの半径をかけて自分から一番近い距離を求める
+				LCMath::CalcFloat3Scalar(normal, sphere->GetWorldRadius(), targetLoc);
+			}
 		}
 
-		LCMath::CalcFloat3Length(targetVec, length);
-		if (length <= mLength)
+		if (!shouldEvent)
 		{
-			float dot;
-			LCMath::CalcFloat3Normalize(targetVec, targetVec);
-			LCMath::CalcFloat3Dot(selfForwardVec, targetVec, dot);
-
-			std::acos(dot);
-			if (dot > mRadian)
+			LCMath::CalcFloat3Length(targetVec, length);
+			if (length <= mLength)
 			{
-				//入れた関数を実行する用にするかも
-				if (mEvent != nullptr)
+				float dot;
+				LCMath::CalcFloat3Normalize(targetVec, targetVec);
+				LCMath::CalcFloat3Dot(selfForwardVec, targetVec, dot);
+
+				std::acos(dot);
+				if (dot > mRadian)
 				{
-					mEvent(collider->GetOwner());
+					shouldEvent = true;
 				}
 			}
+		}
+
+		//入れた関数を実行する用にするかも
+		if (shouldEvent && mEvent != nullptr)
+		{
+			mEvent(collider->GetOwner());
 		}
 	}
 }
