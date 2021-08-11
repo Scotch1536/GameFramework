@@ -74,6 +74,8 @@ void CTransform::Update()
 		mShouldUpdateMatrix = false;
 
 		LCMath::UpdateMatrix(Location , Scale , Rotation.GenerateMatrix() , &mWorldMatrixSelf);
+
+		if(mMatrixUpdateTimeFunction!=nullptr)mMatrixUpdateTimeFunction();
 	}
 
 	if(mParentTransform != nullptr)
