@@ -52,7 +52,7 @@ void CColliderComponent::Update()
 			CAABBColliderComponent& thisObj = dynamic_cast<CAABBColliderComponent&>(*this);
 			for(auto& collider : mColliders)
 			{
-				if(mObjectType != "NONE"&&mObjectType == collider->mObjectType)
+				if(mObjectType != "NONE" && mObjectType == collider->mObjectType)
 				{
 					continue;
 				}

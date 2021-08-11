@@ -363,6 +363,39 @@ XMFLOAT3 LCMath::CalcFloat3Scalar(const XMFLOAT3& target, const float& scalar)
 	return result;
 }
 
+const XMFLOAT3& LCMath::CalcFloat3MultplyMatrix(const XMFLOAT3& target, const XMFLOAT4X4& mtx, XMFLOAT3& result)
+{
+	DX11Vec3MulMatrix(result, target, mtx);
+
+	return result;
+}
+
+XMFLOAT3 LCMath::CalcFloat3MultplyMatrix(const XMFLOAT3& target, const XMFLOAT4X4& mtx)
+{
+	XMFLOAT3 result;
+	DX11Vec3MulMatrix(result, target, mtx);
+
+	return result;
+}
+
+const XMFLOAT3& LCMath::CalcFloat3MinMax(const std::vector<XMFLOAT3>& vertices, XMFLOAT3& resultMin, XMFLOAT3& resultMax)
+{
+	resultMin = {0,0,0};
+	resultMax = {0,0,0};
+
+	for (auto& v : vertices)
+	{
+		if (resultMin.x > v.x)	resultMin.x = v.x;
+		else if (resultMax.x < v.x) resultMax.x = v.x;
+
+		if (resultMin.y > v.y)	resultMin.y = v.y;
+		else if (resultMax.y < v.y) resultMax.y = v.y;
+
+		if (resultMin.z > v.z)	resultMin.z = v.z;
+		else if (resultMax.z < v.z) resultMax.z = v.z;
+	}
+}
+
 const float& LCMath::Lerp(const float& start, const float& end, const float& alpha, float& result)
 {
 	result = (1 - alpha)*start + alpha * end;

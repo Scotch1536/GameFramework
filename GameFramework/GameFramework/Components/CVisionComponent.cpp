@@ -49,19 +49,27 @@ void CVisionComponent::Update()
 		XMFLOAT3 selfLoc = Transform.GetWorldLocation();
 		XMFLOAT3 selfForwardVec = Transform.GetForwardVector();
 
-		/*if (collider->GetType() == CColliderComponent::EType::AABB)
+		if (collider->GetType() == CColliderComponent::EType::AABB)
 		{
-			CAABBColliderComponent* AABB = dynamic_cast<CAABBColliderComponent*>(collider);
-			if (AABB == nullptr)
-			{
-				MessageBox(NULL, "AABB Upcast failure", "error", MB_OK);
-			}
+			float dot;
 			XMFLOAT3 minLoc;
-		XMFLOAT3 maxLoc;
+			XMFLOAT3 maxLoc;
+			XMFLOAT3 addLoc;
+			
+			CAABBColliderComponent* AABB = dynamic_cast<CAABBColliderComponent*>(collider);
+			targetLoc = AABB->Transform.GetWorldLocation();
 			minLoc = AABB->GetWorldMin();
 			maxLoc = AABB->GetWorldMax();
 
-		}*/
+			//自分から相手への向きベクトルを求める
+			LCMath::CalcFloat3FromStartToGoal(selfLoc, targetLoc, targetVec);
+			//相手への向きベクトルと自分の向いてる方向への内積を求める
+			LCMath::CalcFloat3Dot(targetVec, selfForwardVec, dot);
+
+			//内積で求めた長さに向いてる方向をかけて向きベクトルを求める
+			//相手への向きベクトルから上で求めたベクトルを引いて相手から垂直に交わる座標への向きベクトルを求める
+			LCMath::CalcFloat3FromStartToGoal(LCMath::CalcFloat3Scalar(selfForwardVec, dot), targetVec, addLoc);
+		}
 		if (collider->GetType() == CColliderComponent::EType::SPHERE)
 		{
 			float dot;
