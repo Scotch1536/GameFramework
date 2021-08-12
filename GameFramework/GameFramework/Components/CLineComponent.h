@@ -5,7 +5,7 @@
 #include <DirectXMath.h>
 #include <wrl/client.h>
 #include <d3d11.h>
-#include <vector>
+#include <array>
 #include "../ExternalCode/Shader.h"
 #include "../Data/VertexProto.h"
 
@@ -14,18 +14,24 @@ using Microsoft::WRL::ComPtr;
 class CLineComponent :public CComponent, public IRender
 {
 private:
-	ComPtr<ID3D11Buffer>		mVertexBuffer;			// 頂点バッファ
-	ComPtr<ID3D11PixelShader>	mPixelShader;				// ピクセルシェーダー
-	ComPtr<ID3D11VertexShader>	mVertexShader;				// 頂点シェーダー
-	ComPtr<ID3D11InputLayout>   mLayout;			// 頂点フォーマット定義
-	size_t						mVertexSize;			// 頂点数
-	std::vector<SVertexLine>    mVertices;
-	XMFLOAT4		mColor = {1.0f,1.0f,1.0f,1.0f};
+	ComPtr<ID3D11Buffer> mVertexBuffer;				// 頂点バッファ
+	ComPtr<ID3D11PixelShader> mPixelShader;			// ピクセルシェーダー
+	ComPtr<ID3D11VertexShader> mVertexShader;		// 頂点シェーダー
+	ComPtr<ID3D11InputLayout> mLayout;				// 頂点フォーマット定義
+
+	std::array<SVertexLine, 2> mVertices;
+
+	XMFLOAT3 mStartPoint;
+	XMFLOAT3 mEndPoint;
+	XMFLOAT4 mColor;
+
 	CTransform* mOwnerTransform;
 
 	bool mShouldUpdate = true;
-
+	
 	void Init(std::string vertexShaderPath, std::string pixelShaderPath);
+
+	void UpdateVertex(void* source, int size);
 
 	void SetShouldUpdate(bool flg)
 	{
@@ -43,9 +49,26 @@ public:
 		std::string vertexShaderPath="Shader/vsline.hlsl", 
 		std::string pixelShaderPath = "Shader/psline.hlsl", int priority = 90);
 
+	//ポイント座標セット
+	void SetStartPoint(const XMFLOAT3& point)
+	{
+		mShouldUpdate = true;
+
+		mVertices.at(0).Pos = mStartPoint = point;
+	}
+
+	void SetEndPoint(const XMFLOAT3& point)
+	{
+		mShouldUpdate = true;
+
+		mVertices.at(1).Pos = mEndPoint = point;
+	}	
 
 	//カラーセット
-	void SetColor(XMFLOAT4 color) { mColor = color; }
+	void SetColor(XMFLOAT4 color) 
+	{ 
+		mColor = color; 
+	}
 
 	//描画
 	void Render()override;

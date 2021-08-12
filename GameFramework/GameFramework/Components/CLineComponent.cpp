@@ -7,15 +7,14 @@
 #include "../ExternalCode/dx11mathutil.h"
 #include"../Library/LCMath.h"
 
-CLineComponent::CLineComponent(CActor& owner, XMFLOAT3 vertex1, XMFLOAT3 vertex2, XMFLOAT4 color, CTransform* parentTrans,
-	std::string vertexShaderPath , 
-	std::string pixelShaderPath, int priority) :CComponent(owner, priority), mOwnerTransform(parentTrans),mColor(color)
+CLineComponent::CLineComponent(CActor& owner, XMFLOAT3 start, XMFLOAT3 end, XMFLOAT4 color, CTransform* parentTrans,
+	std::string vertexShaderPath,
+	std::string pixelShaderPath, int priority) :CComponent(owner, priority),
+	mStartPoint(start), mEndPoint(end), mColor(color), mOwnerTransform(parentTrans)
 {
-	mVertices.resize(2);
-	mVertices.at(0).Pos = vertex1;
-	mVertices.at(1).Pos = vertex2;
+	mVertices.at(0).Pos = start;
+	mVertices.at(1).Pos = end;
 	mVertices.at(0).Color = mVertices.at(1).Color = mColor;
-	mVertexSize = mVertices.size();
 
 	Init(vertexShaderPath, pixelShaderPath);
 }
@@ -23,14 +22,13 @@ CLineComponent::CLineComponent(CActor& owner, XMFLOAT3 vertex1, XMFLOAT3 vertex2
 CLineComponent::CLineComponent(CActor& owner, XMFLOAT3 start, XMFLOAT3 direction, float length,
 	XMFLOAT4 color, CTransform* parentTrans,
 	std::string vertexShaderPath,
-	std::string pixelShaderPath, int priority) :CComponent(owner, priority), mOwnerTransform(parentTrans), mColor(color)
+	std::string pixelShaderPath, int priority) :CComponent(owner, priority),
+	mStartPoint(start), mColor(color), mOwnerTransform(parentTrans)
 {
-	mVertices.resize(2);
 	LCMath::CalcFloat3Normalize(direction, direction);
 	mVertices.at(0).Pos = start;
-	mVertices.at(1).Pos = LCMath::CalcFloat3Scalar(direction,length);
+	mVertices.at(1).Pos = mEndPoint = LCMath::CalcFloat3Scalar(direction, length);
 	mVertices.at(0).Color = mVertices.at(1).Color = mColor;
-	mVertexSize = mVertices.size();
 
 	Init(vertexShaderPath, pixelShaderPath);
 }
@@ -57,7 +55,7 @@ void CLineComponent::Init(std::string vertexShaderPath, std::string pixelShaderP
 
 	if (mOwnerTransform != nullptr)
 	{
-		mOwnerTransform->SetMatrixUpdateTimeFunction(std::bind(&CLineComponent::SetShouldUpdate, std::ref(*this), true));
+		mOwnerTransform->AddMatrixUpdateTimeFunction(std::bind(&CLineComponent::SetShouldUpdate, std::ref(*this), true));
 	}
 }
 
@@ -78,15 +76,15 @@ void CLineComponent::Render()
 	devcontext->PSSetShader(mPixelShader.Get(), nullptr, 0);		// ピクセルシェーダーをセット
 
 	devcontext->Draw(
-		mVertexSize,							// 頂点数
+		2,							// 頂点数
 		0);									// 頂点バッファの最初から使う
 }
 
 void CLineComponent::Update()
 {
-	if (mOwnerTransform != nullptr)
+	if (mShouldUpdate)
 	{
-		if (mShouldUpdate)
+		if (mOwnerTransform != nullptr)
 		{
 			mShouldUpdate = false;
 			XMFLOAT3 scale = mOwnerTransform->GetWorldScale();
@@ -98,7 +96,7 @@ void CLineComponent::Update()
 
 			std::vector<SVertexLine> vertices;
 
-			for(auto& v: mVertices)
+			for (auto& v : mVertices)
 			{
 				SVertexLine vertex;
 				DX11Vec3MulMatrix(vertex.Pos, v.Pos, resultMTX);
@@ -106,15 +104,23 @@ void CLineComponent::Update()
 				vertices.emplace_back(vertex);
 			}
 
-			//頂点セット
-			D3D11_MAPPED_SUBRESOURCE pData;
-
-			HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
-			if (SUCCEEDED(hr)) {
-				memcpy_s(pData.pData, pData.RowPitch, (void*)(vertices.data()), sizeof(SVertexLine) * vertices.size());
-				CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get(), 0);
-			}
-
+			UpdateVertex(vertices.data(),vertices.size());
 		}
+		else
+		{
+			UpdateVertex(mVertices.data(),mVertices.size());
+		}
+	}
+}
+
+void CLineComponent::UpdateVertex(void* source,int size)
+{
+	//頂点セット
+	D3D11_MAPPED_SUBRESOURCE pData;
+
+	HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
+	if (SUCCEEDED(hr)) {
+		memcpy_s(pData.pData, pData.RowPitch, source, sizeof(SVertexLine) * size);
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get(), 0);
 	}
 }

@@ -22,7 +22,7 @@ private:
 	XMFLOAT3 mLastFrameLocation = { 0.f,0.f,0.f };		//前フレームのロケーション
 	XMFLOAT3 mLastFrameScale = { 0.f,0.f,0.f };			//前フレームのスケール
 
-	std::function<void()> mMatrixUpdateTimeFunction;     //マトリックス更新時実行関数
+	std::vector<std::function<void()>> mMatrixUpdateTimeFunction;     //マトリックス更新時実行関数
 
 	bool mShouldUpdateMatrix = true;		//行列を更新すべきか
 	bool mIsChild = false;					//自分が子トランスフォームか
@@ -83,9 +83,9 @@ public:
 		mIsBillboard = flg;
 	}
 
-	void SetMatrixUpdateTimeFunction(const std::function<void()>& func)
+	void AddMatrixUpdateTimeFunction(const std::function<void()>& func)
 	{
-		mMatrixUpdateTimeFunction = func;
+		mMatrixUpdateTimeFunction.emplace_back(func);
 	};
 
 };

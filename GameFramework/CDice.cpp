@@ -21,8 +21,6 @@ CDice::CDice(ILevel& owner , XMFLOAT3& pointLocation):CActor(owner , false) , mP
 
 	Transform.Rotation.SetAngle({ 0.f, 180.f, 0.f });
 
-	new CDrawAxis(mOwnerInterface, Transform);
-
 	//タグ追加
 	AddTag("Dice");
 }
@@ -48,8 +46,11 @@ void CDice::Look(CActor& collideActor)
 void CDice::Tick()
 {
 	//Transform.Rotation.ChangeAngleAndQuaternionToLocation(mPoint);
-
-	
+	if (!IsOnce)
+	{
+		IsOnce = true;
+		new CDrawAxis(mOwnerInterface, Transform);
+	}
 }
 
 void CDice::EventAtBeginCollide(CActor& collideActor)
