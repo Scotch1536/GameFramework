@@ -6,9 +6,9 @@ class CDrawAxis :public CActor
 private:
 
 public:
-	CTransform parentTransform;
+	CTransform Transform;
 
 	CDrawAxis(ILevel& partner, CTransform& parentTrans);
 	
-	void Tick()override;
+	//void Tick()override;
 };

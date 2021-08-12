@@ -39,7 +39,7 @@ void CSphereMeshComponent::CreateVertexData()
 			v.Pos.z = r * sinf(azimuth);
 
 			XMFLOAT3 normVec;
-			LCMath::CalcFloat3FromStartToGoal({ 0.0f,0.0f,0.0f } , v.Pos , &normVec);
+			LCMath::CalcFloat3FromStartToGoal({ 0.0f,0.0f,0.0f } , v.Pos , normVec);
 
 			DX11Vec3Normalize(Normal , normVec);		// 法線を計算
 			v.Normal = Normal;							// 法線をセット

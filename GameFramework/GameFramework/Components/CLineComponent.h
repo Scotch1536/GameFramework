@@ -37,8 +37,11 @@ public:
 		std::string vertexShaderPath="Shader/vsline.hlsl", 
 		std::string pixelShaderPath = "Shader/psline.hlsl", int priority = 90);
 
-	//頂点セット
-	//void SetVertex(std::vector<XMFLOAT3>& v);
+	CLineComponent(CActor& owner,XMFLOAT3 start, XMFLOAT3 direction,float length,
+		XMFLOAT4 color = { 1.0f,1.0f,1.0f,1.0f }, CTransform* parentTrans=nullptr,
+		std::string vertexShaderPath="Shader/vsline.hlsl", 
+		std::string pixelShaderPath = "Shader/psline.hlsl", int priority = 90);
+
 
 	//カラーセット
 	void SetColor(XMFLOAT4 color) { mColor = color; }

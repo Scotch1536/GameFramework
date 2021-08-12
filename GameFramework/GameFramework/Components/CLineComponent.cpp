@@ -19,6 +19,20 @@ CLineComponent::CLineComponent(CActor& owner, XMFLOAT3 vertex1, XMFLOAT3 vertex2
 	Init(vertexShaderPath, pixelShaderPath);
 }
 
+CLineComponent::CLineComponent(CActor& owner, XMFLOAT3 start, XMFLOAT3 direction, float length,
+	XMFLOAT4 color, CTransform* parentTrans,
+	std::string vertexShaderPath,
+	std::string pixelShaderPath, int priority) :CComponent(owner, priority), mOwnerTransform(parentTrans), mColor(color)
+{
+	mVertices.resize(2);
+	LCMath::CalcFloat3Normalize(direction, direction);
+	mVertices.at(0) = start;
+	mVertices.at(1) = LCMath::CalcFloat3Scalar(direction,length);
+	mVertexSize = mVertices.size();
+
+	Init(vertexShaderPath, pixelShaderPath);
+}
+
 void CLineComponent::Init(std::string vertexShaderPath, std::string pixelShaderPath)
 {
 	//アクター(owner)にレンダー担当のコンポーネントとして登録
@@ -45,19 +59,6 @@ void CLineComponent::Init(std::string vertexShaderPath, std::string pixelShaderP
 	}
 }
 
-//void CLineComponent::SetVertex(std::vector<XMFLOAT3>& v)
-//{
-//
-//	D3D11_MAPPED_SUBRESOURCE pData;
-//
-//	HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
-//	if (SUCCEEDED(hr)) {
-//		memcpy_s(pData.pData, pData.RowPitch, (void*)(v.data()), sizeof(XMFLOAT3) * v.size());
-//		CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get(), 0);
-//	}
-//
-//	mVertexSize = v.size();
-//}
 
 void CLineComponent::Render()
 {
@@ -80,7 +81,6 @@ void CLineComponent::Render()
 		0);									// 頂点バッファの最初から使う
 }
 
-
 void CLineComponent::Update()
 {
 	if (mOwnerTransform != nullptr)
@@ -93,7 +93,25 @@ void CLineComponent::Update()
 			XMFLOAT4X4 scaleMTX;
 			DX11MtxScale(scale.x, scale.y, scale.z, scaleMTX);
 			LCMath::InverseMatrix(scaleMTX, scaleMTX);
-			
+			DX11MtxMultiply(resultMTX, resultMTX, scaleMTX);
+
+			std::vector<XMFLOAT3> vertices;
+
+			for(auto& v: mVertices)
+			{
+				XMFLOAT3 vertex;
+				DX11Vec3MulMatrix(vertex, v, resultMTX);
+				vertices.emplace_back(vertex);
+			}
+
+			//頂点セット
+			D3D11_MAPPED_SUBRESOURCE pData;
+
+			HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
+			if (SUCCEEDED(hr)) {
+				memcpy_s(pData.pData, pData.RowPitch, (void*)(vertices.data()), sizeof(XMFLOAT3) * vertices.size());
+				CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get(), 0);
+			}
 
 		}
 	}

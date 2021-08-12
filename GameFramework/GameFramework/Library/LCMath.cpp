@@ -4,26 +4,39 @@
 #include "../ExternalCode/dx11mathutil.h"
 
 const XMFLOAT4& LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& axisX, const XMFLOAT3& axisY, const XMFLOAT3& axisZ,
-	const XMFLOAT3& eulerAngle, XMFLOAT4* resultQua)
+	const XMFLOAT3& eulerAngle, XMFLOAT4& resultQua)
+{
+	XMFLOAT4 qtx, qty, qtz;
+
+	CreateFromAxisAndAngleToQuaternion(axisX, XMConvertToRadians(eulerAngle.x), qtx);
+	CreateFromAxisAndAngleToQuaternion(axisY, XMConvertToRadians(eulerAngle.y), qty);
+	CreateFromAxisAndAngleToQuaternion(axisZ, XMConvertToRadians(eulerAngle.z), qtz);
+
+	DX11QtMul(resultQua, qtx, qty);
+	DX11QtMul(resultQua, resultQua, qtz);
+
+	return resultQua;
+}
+
+XMFLOAT4 LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& axisX, const XMFLOAT3& axisY, const XMFLOAT3& axisZ,
+	const XMFLOAT3& eulerAngle)
 {
 	XMFLOAT4 qtx, qty, qtz;
 	XMFLOAT4 result;
-	CreateFromAxisAndAngleToQuaternion(axisX, XMConvertToRadians(eulerAngle.x), &qtx);
-	CreateFromAxisAndAngleToQuaternion(axisY, XMConvertToRadians(eulerAngle.y), &qty);
-	CreateFromAxisAndAngleToQuaternion(axisZ, XMConvertToRadians(eulerAngle.z), &qtz);
+
+	CreateFromAxisAndAngleToQuaternion(axisX, XMConvertToRadians(eulerAngle.x), qtx);
+	CreateFromAxisAndAngleToQuaternion(axisY, XMConvertToRadians(eulerAngle.y), qty);
+	CreateFromAxisAndAngleToQuaternion(axisZ, XMConvertToRadians(eulerAngle.z), qtz);
 
 	DX11QtMul(result, qtx, qty);
 	DX11QtMul(result, result, qtz);
 
-	if (resultQua != nullptr) *resultQua = result;
-
 	return result;
 }
 
-const XMFLOAT3& LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua, XMFLOAT3* resultAngle)
+const XMFLOAT3& LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua, XMFLOAT3& resultAngle)
 {
 	double pitch, yaw, roll;
-	XMFLOAT3 result;
 
 	//double q0q0 = qua.x * qua.x;
 	//double q0q1 = qua.x * qua.y;
@@ -52,11 +65,34 @@ const XMFLOAT3& LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua
 	yaw = std::asin(r21);
 	roll = std::atan2(r11, r12);
 
+	resultAngle.x = XMConvertToDegrees(pitch);
+	resultAngle.y = XMConvertToDegrees(yaw);
+	resultAngle.z = XMConvertToDegrees(roll);
+
+	return resultAngle;
+}
+
+XMFLOAT3 LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua)
+{
+	XMFLOAT3 result;
+
+	double pitch, yaw, roll;
+
+	double r11, r12, r21, r31, r32;
+
+	r11 = -2 * (qua.y*qua.z - qua.w*qua.x);
+	r12 = qua.w*qua.w - qua.x*qua.x - qua.y*qua.y + qua.z*qua.z;
+	r21 = 2 * (qua.x*qua.z + qua.w*qua.y);
+	r31 = -2 * (qua.x*qua.y + qua.w*qua.z);
+	r32 = qua.w*qua.w + qua.x*qua.x - qua.y*qua.y - qua.z*qua.z;
+
+	pitch = std::atan2(r31, r32);
+	yaw = std::asin(r21);
+	roll = std::atan2(r11, r12);
+
 	result.x = XMConvertToDegrees(pitch);
 	result.y = XMConvertToDegrees(yaw);
 	result.z = XMConvertToDegrees(roll);
-
-	if (resultAngle != nullptr) *resultAngle = result;
 
 	return result;
 }
@@ -69,14 +105,10 @@ void LCMath::IdentityMatrix(XMFLOAT4X4& target)
 const XMFLOAT4X4& LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , const XMFLOAT4X4& rotMTX , XMFLOAT4X4& resultMTX)
 {
 	XMFLOAT4X4 trans;
-	XMFLOAT4X4 result;
-
-	DX11MtxScale(scale.x, scale.y, scale.z, result);
-	DX11MtxMultiply(result, result, rotMTX);
+	DX11MtxScale(scale.x, scale.y, scale.z, resultMTX);
+	DX11MtxMultiply(resultMTX, resultMTX, rotMTX);
 	DX11MtxTranslation(location, trans);
-	DX11MtxMultiply(result, result, trans);
-
-	if (resultMTX != nullptr) *resultMTX = result;
+	DX11MtxMultiply(resultMTX, resultMTX, trans);
 
 	//resultMTX._11 = scale.x * rotMTX._11;
 	//resultMTX._12 = scale.y * rotMTX._12;
@@ -95,17 +127,38 @@ const XMFLOAT4X4& LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3
 	//resultMTX._43 = location.z;
 	//resultMTX._44 = 1;
 
+	return resultMTX;
+}
+
+XMFLOAT4X4 LCMath::UpdateMatrix(const XMFLOAT3& location, const XMFLOAT3& scale, const XMFLOAT4X4& rotMTX)
+{
+	XMFLOAT4X4 result;
+
+	XMFLOAT4X4 trans;
+	DX11MtxScale(scale.x, scale.y, scale.z, result);
+	DX11MtxMultiply(result, result, rotMTX);
+	DX11MtxTranslation(location, trans);
+	DX11MtxMultiply(result, result, trans);
+
 	return result;
 }
 
-const XMFLOAT4X4& LCMath::InverseMatrix(const XMFLOAT4X4& target, XMFLOAT4X4* resultMTX)
+const XMFLOAT4X4& LCMath::InverseMatrix(const XMFLOAT4X4& target, XMFLOAT4X4& resultMTX)
+{
+	XMMATRIX mat = XMLoadFloat4x4(&target);
+	XMMATRIX inverseMTX = XMMatrixInverse(nullptr, mat);
+	XMStoreFloat4x4(&resultMTX, inverseMTX);
+
+	return resultMTX;
+}
+
+XMFLOAT4X4 LCMath::InverseMatrix(const XMFLOAT4X4& target)
 {
 	XMFLOAT4X4 result;
+
 	XMMATRIX mat = XMLoadFloat4x4(&target);
 	XMMATRIX inverseMTX = XMMatrixInverse(nullptr, mat);
 	XMStoreFloat4x4(&result, inverseMTX);
-
-	if (resultMTX != nullptr) *resultMTX = result;
 
 	return result;
 }
@@ -144,149 +197,226 @@ bool LCMath::CompareMatrix(const XMFLOAT4X4& target1, const XMFLOAT4X4& target2)
 	return true;
 }
 
-const XMFLOAT4& LCMath::CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis, const float& angle, XMFLOAT4* result)
+const XMFLOAT4& LCMath::CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis, const float& angle, XMFLOAT4& result)
 {
-	XMFLOAT4 resultBuf;
+	XMVECTOR axisVec = XMLoadFloat3(&axis);
+
+	XMVECTOR resultVec = XMQuaternionRotationAxis(axisVec, angle);
+
+	XMStoreFloat4(&result, resultVec);
+
+	return result;
+}
+
+XMFLOAT4 LCMath::CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis, const float& angle)
+{
+	XMFLOAT4 result;
 
 	XMVECTOR axisVec = XMLoadFloat3(&axis);
 
 	XMVECTOR resultVec = XMQuaternionRotationAxis(axisVec, angle);
 
-	XMStoreFloat4(&resultBuf, resultVec);
+	XMStoreFloat4(&result, resultVec);
 
-	if (result != nullptr) *result = resultBuf;
-
-	return resultBuf;
+	return result;
 }
 
-const XMFLOAT4& LCMath::CalcQuaternionMultiply(const XMFLOAT4& qua1, const XMFLOAT4& qua2, XMFLOAT4* result)
+const XMFLOAT4& LCMath::CalcQuaternionMultiply(const XMFLOAT4& qua1, const XMFLOAT4& qua2, XMFLOAT4& result)
 {
-	XMFLOAT4 resultBuf;
+	DX11QtMul(result, qua1, qua2);
 
-	DX11QtMul(resultBuf, qua1, qua2);
-
-	if (result != nullptr) *result = resultBuf;
-	return resultBuf;
+	return result;
 }
 
-const XMFLOAT3& LCMath::CalcFloat3FromStartToGoal(const XMFLOAT3& start, const XMFLOAT3& goal, XMFLOAT3* result)
+XMFLOAT4 LCMath::CalcQuaternionMultiply(const XMFLOAT4& qua1, const XMFLOAT4& qua2)
 {
-	XMFLOAT3 resultBuf;
+	XMFLOAT4 result;
+
+	DX11QtMul(result, qua1, qua2);
+
+	return result;
+}
+
+const XMFLOAT3& LCMath::CalcFloat3FromStartToGoal(const XMFLOAT3& start, const XMFLOAT3& goal, XMFLOAT3& result)
+{
+	XMVECTOR startVec = XMLoadFloat3(&start);
+	XMVECTOR goalVec = XMLoadFloat3(&goal);
+
+	XMStoreFloat3(&result, XMVectorSubtract(goalVec, startVec));
+
+	return result;
+}
+
+XMFLOAT3 LCMath::CalcFloat3FromStartToGoal(const XMFLOAT3& start, const XMFLOAT3& goal)
+{
+	XMFLOAT3 result;
 
 	XMVECTOR startVec = XMLoadFloat3(&start);
 	XMVECTOR goalVec = XMLoadFloat3(&goal);
 
-	XMStoreFloat3(&resultBuf, XMVectorSubtract(goalVec, startVec));
+	XMStoreFloat3(&result, XMVectorSubtract(goalVec, startVec));
 
-	if (result != nullptr) *result = resultBuf;
-
-	return resultBuf;
+	return result;
 }
 
-const XMFLOAT3& LCMath::CalcFloat3Addition(const XMFLOAT3& target, const XMFLOAT3& vector, XMFLOAT3* resultVec)
+const XMFLOAT3& LCMath::CalcFloat3Addition(const XMFLOAT3& target, const XMFLOAT3& vector, XMFLOAT3& resultVec)
 {
-	XMFLOAT3 resultBuf;
+	resultVec.x = target.x + vector.x;
+	resultVec.y = target.y + vector.y;
+	resultVec.z = target.z + vector.z;
 
-	resultBuf.x = target.x + vector.x;
-	resultBuf.y = target.y + vector.y;
-	resultBuf.z = target.z + vector.z;
-
-	if (resultVec != nullptr) *resultVec = resultBuf;
-
-	return resultBuf;
+	return resultVec;
 }
 
-const float& LCMath::CalcFloat3Length(const XMFLOAT3& target, float* result)
+XMFLOAT3 LCMath::CalcFloat3Addition(const XMFLOAT3& target, const XMFLOAT3& vector)
 {
-	float resultBuf;
+	XMFLOAT3 resultVec;
 
-	DX11Vec3Length(target, resultBuf);
+	resultVec.x = target.x + vector.x;
+	resultVec.y = target.y + vector.y;
+	resultVec.z = target.z + vector.z;
 
-	if (result != nullptr)*result = resultBuf;
-
-	return resultBuf;
+	return resultVec;
 }
 
-const XMFLOAT3& LCMath::CalcFloat3Normalize(const XMFLOAT3& target, XMFLOAT3* result)
+const float& LCMath::CalcFloat3Length(const XMFLOAT3& target, float& result)
 {
-	XMFLOAT3 resultBuf;
+	DX11Vec3Length(target, result);
 
-	DX11Vec3Normalize(resultBuf, target);
-
-	if (result != nullptr) *result = resultBuf;
-
-	return resultBuf;
+	return result;
 }
 
-const float& LCMath::CalcFloat3Dot(const XMFLOAT3& target1, const XMFLOAT3& target2, float* result)
+float LCMath::CalcFloat3Length(const XMFLOAT3& target)
 {
-	float resultBuf;
+	float result;
 
-	DX11Vec3Dot(resultBuf, target1, target2);
+	DX11Vec3Length(target, result);
 
-	if (result != nullptr) *result = resultBuf;
-
-	return resultBuf;
+	return result;
 }
 
-const XMFLOAT3& LCMath::CalcFloat3Cross(const XMFLOAT3& target1, const XMFLOAT3& target2, XMFLOAT3* result)
+const XMFLOAT3& LCMath::CalcFloat3Normalize(const XMFLOAT3& target, XMFLOAT3& result)
 {
-	XMFLOAT3 resultBuf;
+	DX11Vec3Normalize(result, target);
 
-	DX11Vec3Cross(resultBuf, target1, target2);
-
-	if (result != nullptr) *result = resultBuf;
-
-	return resultBuf;
+	return result;
 }
 
-const XMFLOAT3& LCMath::CalcFloat3Scalar(const XMFLOAT3& target, const float& scalar, XMFLOAT3* result)
+XMFLOAT3 LCMath::CalcFloat3Normalize(const XMFLOAT3& target)
 {
-	XMFLOAT3 resultBuf;
+	XMFLOAT3 result;
 
-	resultBuf.x = target.x * scalar;
-	resultBuf.y = target.y * scalar;
-	resultBuf.z = target.z * scalar;
+	DX11Vec3Normalize(result, target);
 
-	if (result != nullptr) *result = resultBuf;
-
-	return resultBuf;
+	return result;
 }
 
-const float& LCMath::Lerp(const float& start, const float& end, const float& alpha, float* result)
+const float& LCMath::CalcFloat3Dot(const XMFLOAT3& target1, const XMFLOAT3& target2, float& result)
 {
-	float resultBuf;
+	DX11Vec3Dot(result, target1, target2);
 
-	resultBuf = (1 - alpha)*start + alpha * end;
-
-	if (result != nullptr) *result = resultBuf;
-
-	return resultBuf;
+	return result;
 }
 
-const XMFLOAT3& LCMath::Lerp(const XMFLOAT3& start, const XMFLOAT3& end, const float& alpha, XMFLOAT3* result)
+float LCMath::CalcFloat3Dot(const XMFLOAT3& target1, const XMFLOAT3& target2)
 {
-	XMFLOAT3 resultBuf;
+	float result;
 
-	Lerp(start.x, end.x, alpha, &resultBuf.x);
-	Lerp(start.y, end.y, alpha, &resultBuf.y);
-	Lerp(start.z, end.z, alpha, &resultBuf.z);
+	DX11Vec3Dot(result, target1, target2);
 
-	if (result != nullptr) *result = resultBuf;
-
-	return resultBuf;
+	return result;
 }
 
-const XMFLOAT4& LCMath::Lerp(const XMFLOAT4& start, const XMFLOAT4& end, const float& alpha, XMFLOAT4* result)
+const XMFLOAT3& LCMath::CalcFloat3Cross(const XMFLOAT3& target1, const XMFLOAT3& target2, XMFLOAT3& result)
 {
-	XMFLOAT4 resultBuf;
+	DX11Vec3Cross(result, target1, target2);
 
-	Lerp(start.x, end.x, alpha, &resultBuf.x);
-	Lerp(start.y, end.y, alpha, &resultBuf.y);
-	Lerp(start.z, end.z, alpha, &resultBuf.z);
-	Lerp(start.w, end.w, alpha, &resultBuf.w);
+	return result;
+}
 
-	if (result != nullptr) *result = resultBuf;
+XMFLOAT3 LCMath::CalcFloat3Cross(const XMFLOAT3& target1, const XMFLOAT3& target2)
+{
+	XMFLOAT3 result;
 
-	return resultBuf;
+	DX11Vec3Cross(result, target1, target2);
+
+	return result;
+}
+
+const XMFLOAT3& LCMath::CalcFloat3Scalar(const XMFLOAT3& target, const float& scalar, XMFLOAT3& result)
+{
+	result.x = target.x * scalar;
+	result.y = target.y * scalar;
+	result.z = target.z * scalar;
+
+	return result;
+}
+
+XMFLOAT3 LCMath::CalcFloat3Scalar(const XMFLOAT3& target, const float& scalar)
+{
+	XMFLOAT3 result;
+
+	result.x = target.x * scalar;
+	result.y = target.y * scalar;
+	result.z = target.z * scalar;
+
+	return result;
+}
+
+const float& LCMath::Lerp(const float& start, const float& end, const float& alpha, float& result)
+{
+	result = (1 - alpha)*start + alpha * end;
+
+	return result;
+}
+
+float LCMath::Lerp(const float& start, const float& end, const float& alpha)
+{
+	float result;
+
+	result = (1 - alpha)*start + alpha * end;
+
+	return result;
+}
+
+const XMFLOAT3& LCMath::Lerp(const XMFLOAT3& start, const XMFLOAT3& end, const float& alpha, XMFLOAT3& result)
+{
+	Lerp(start.x, end.x, alpha, result.x);
+	Lerp(start.y, end.y, alpha, result.y);
+	Lerp(start.z, end.z, alpha, result.z);
+
+	return result;
+}
+
+XMFLOAT3 LCMath::Lerp(const XMFLOAT3& start, const XMFLOAT3& end, const float& alpha)
+{
+	XMFLOAT3 result;
+
+	Lerp(start.x, end.x, alpha, result.x);
+	Lerp(start.y, end.y, alpha, result.y);
+	Lerp(start.z, end.z, alpha, result.z);
+
+	return result;
+}
+
+const XMFLOAT4& LCMath::Lerp(const XMFLOAT4& start, const XMFLOAT4& end, const float& alpha, XMFLOAT4& result)
+{
+	Lerp(start.x, end.x, alpha, result.x);
+	Lerp(start.y, end.y, alpha, result.y);
+	Lerp(start.z, end.z, alpha, result.z);
+	Lerp(start.w, end.w, alpha, result.w);
+
+	return result;
+}
+
+XMFLOAT4 LCMath::Lerp(const XMFLOAT4& start, const XMFLOAT4& end, const float& alpha)
+{
+	XMFLOAT4 result;
+
+	Lerp(start.x, end.x, alpha, result.x);
+	Lerp(start.y, end.y, alpha, result.y);
+	Lerp(start.z, end.z, alpha, result.z);
+	Lerp(start.w, end.w, alpha, result.w);
+
+	return result;
 }
