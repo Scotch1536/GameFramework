@@ -13,7 +13,7 @@ VS_OUTPUT main(
 	VS_OUTPUT output = (VS_OUTPUT)0;
 
 	Pos.w = 1.0f;
-	output.Pos = mul(Pos, World);
+	
 	output.Pos = mul(Pos, View);
 	output.Pos = mul(output.Pos, Projection);
 

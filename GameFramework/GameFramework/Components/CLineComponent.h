@@ -7,6 +7,7 @@
 #include <d3d11.h>
 #include <vector>
 #include "../ExternalCode/Shader.h"
+#include "../Data/VertexProto.h"
 
 using Microsoft::WRL::ComPtr;
 
@@ -18,7 +19,7 @@ private:
 	ComPtr<ID3D11VertexShader>	mVertexShader;				// 頂点シェーダー
 	ComPtr<ID3D11InputLayout>   mLayout;			// 頂点フォーマット定義
 	size_t						mVertexSize;			// 頂点数
-	std::vector<XMFLOAT3>       mVertices;
+	std::vector<SVertexLine>    mVertices;
 	XMFLOAT4		mColor = {1.0f,1.0f,1.0f,1.0f};
 	CTransform* mOwnerTransform;
 

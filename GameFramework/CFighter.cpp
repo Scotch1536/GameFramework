@@ -18,6 +18,7 @@
 
 #include "CTestLevel.h"
 #include "CBullet.h"
+#include "CDrawAxis.h"
 
 CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner , *this))
 {
@@ -63,6 +64,8 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	light.SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
 	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.GetModel() , mesh.Transform);
+
+	//new CDrawAxis(mOwnerInterface, Transform);
 
 	/*
 	Åöí¥èdóvÅö
@@ -175,11 +178,11 @@ void CFighter::Tick()
 
 void CFighter::EventAtBeginCollide(CActor& collideActor)
 {
-	if(collideActor.HasTag("Dice"))
+	/*if(collideActor.HasTag("Dice"))
 	{
 		mOwnerInterface.RequestLoadLevel(*new CTestLevel(CGameManager::GetInstance().GetGameInterface()));
 		mIsHit = true;
-	}
+	}*/
 }
 
 void CFighter::EventAtEndCollide(CActor& collideActor)

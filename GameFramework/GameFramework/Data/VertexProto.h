@@ -20,6 +20,12 @@ struct SVertexColor
 	XMFLOAT4 Color;		//カラー
 };
 
+struct SVertexLine
+{
+	XMFLOAT3 Pos;       //位置
+	XMFLOAT4 Color;		//カラー
+};
+
 struct SVertex2D
 {
 	XMFLOAT3 Pos;		//位置

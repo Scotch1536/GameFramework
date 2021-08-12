@@ -12,8 +12,9 @@ CLineComponent::CLineComponent(CActor& owner, XMFLOAT3 vertex1, XMFLOAT3 vertex2
 	std::string pixelShaderPath, int priority) :CComponent(owner, priority), mOwnerTransform(parentTrans),mColor(color)
 {
 	mVertices.resize(2);
-	mVertices.at(0) = vertex1;
-	mVertices.at(1) = vertex2;
+	mVertices.at(0).Pos = vertex1;
+	mVertices.at(1).Pos = vertex2;
+	mVertices.at(0).Color = mVertices.at(1).Color = mColor;
 	mVertexSize = mVertices.size();
 
 	Init(vertexShaderPath, pixelShaderPath);
@@ -26,8 +27,9 @@ CLineComponent::CLineComponent(CActor& owner, XMFLOAT3 start, XMFLOAT3 direction
 {
 	mVertices.resize(2);
 	LCMath::CalcFloat3Normalize(direction, direction);
-	mVertices.at(0) = start;
-	mVertices.at(1) = LCMath::CalcFloat3Scalar(direction,length);
+	mVertices.at(0).Pos = start;
+	mVertices.at(1).Pos = LCMath::CalcFloat3Scalar(direction,length);
+	mVertices.at(0).Color = mVertices.at(1).Color = mColor;
 	mVertexSize = mVertices.size();
 
 	Init(vertexShaderPath, pixelShaderPath);
@@ -51,7 +53,7 @@ void CLineComponent::Init(std::string vertexShaderPath, std::string pixelShaderP
 	mVertexShader = buf.GetVertexShader(vertexShaderPath);
 	mPixelShader = buf.GetPixelShader(pixelShaderPath);
 	CreateVertexBufferWrite(CDirectXGraphics::GetInstance()->GetDXDevice(),
-		sizeof(XMFLOAT3), mVertices.size(), (void*)mVertices.data(), &mVertexBuffer);
+		sizeof(SVertexLine), mVertices.size(), (void*)mVertices.data(), &mVertexBuffer);
 
 	if (mOwnerTransform != nullptr)
 	{
@@ -62,11 +64,10 @@ void CLineComponent::Init(std::string vertexShaderPath, std::string pixelShaderP
 
 void CLineComponent::Render()
 {
-	mOwnerTransform->RequestSetMatrix();
 	ID3D11DeviceContext* devcontext = CDirectXGraphics::GetInstance()->GetImmediateContext();
 
 	// 頂点バッファをセットする
-	unsigned int stride = sizeof(XMFLOAT3);
+	unsigned int stride = sizeof(SVertexLine);
 	unsigned  offset = 0;
 	devcontext->IASetVertexBuffers(0, 1, mVertexBuffer.GetAddressOf(), &stride, &offset);
 
@@ -95,12 +96,13 @@ void CLineComponent::Update()
 			LCMath::InverseMatrix(scaleMTX, scaleMTX);
 			DX11MtxMultiply(resultMTX, resultMTX, scaleMTX);
 
-			std::vector<XMFLOAT3> vertices;
+			std::vector<SVertexLine> vertices;
 
 			for(auto& v: mVertices)
 			{
-				XMFLOAT3 vertex;
-				DX11Vec3MulMatrix(vertex, v, resultMTX);
+				SVertexLine vertex;
+				DX11Vec3MulMatrix(vertex.Pos, v.Pos, resultMTX);
+				vertex.Color = mColor;
 				vertices.emplace_back(vertex);
 			}
 
@@ -109,7 +111,7 @@ void CLineComponent::Update()
 
 			HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
 			if (SUCCEEDED(hr)) {
-				memcpy_s(pData.pData, pData.RowPitch, (void*)(vertices.data()), sizeof(XMFLOAT3) * vertices.size());
+				memcpy_s(pData.pData, pData.RowPitch, (void*)(vertices.data()), sizeof(SVertexLine) * vertices.size());
 				CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get(), 0);
 			}
 
