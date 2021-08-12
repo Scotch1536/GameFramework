@@ -5,6 +5,7 @@
 #include "GameFramework/Managers/CSoundManager.h"
 
 #include "CDice.h"
+#include "CDrawAxis.h"
 
 CDice::CDice(ILevel& owner , XMFLOAT3& pointLocation):CActor(owner , false) , mPoint(pointLocation)
 {
@@ -45,8 +46,11 @@ void CDice::Look(CActor& collideActor)
 void CDice::Tick()
 {
 	//Transform.Rotation.ChangeAngleAndQuaternionToLocation(mPoint);
-
-	
+	if (!IsOnce)
+	{
+		IsOnce = true;
+		new CDrawAxis(mOwnerInterface, Transform);
+	}
 }
 
 void CDice::EventAtBeginCollide(CActor& collideActor)

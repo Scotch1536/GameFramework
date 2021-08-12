@@ -74,6 +74,14 @@ void CTransform::Update()
 		mShouldUpdateMatrix = false;
 
 		LCMath::UpdateMatrix(Location , Scale , Rotation.GenerateMatrix() , mWorldMatrixSelf);
+
+		if (mMatrixUpdateTimeFunction.size() > 0)
+		{
+			for (auto& func : mMatrixUpdateTimeFunction)
+			{
+				func();
+			}
+		}
 	}
 
 	if(mParentTransform != nullptr)

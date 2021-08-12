@@ -116,8 +116,8 @@ void CGame::Input()
 
 void CGame::Update()
 {
-	mLevel->Update();
 	mLevel->Tick();
+	mLevel->Update();
 }
 
 void CGame::Render()

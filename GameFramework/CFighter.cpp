@@ -50,7 +50,7 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	XMFLOAT3 cameraLoc = Transform.Location;
 	cameraLoc.x += fv.x*-20.0f;
 	cameraLoc.y += fv.y*-20.0f+2.0f;
-	cameraLoc.z += fv.z*-20.0f;
+	cameraLoc.z += fv.z*-40.0f;
 
 	camera.SetProjection(10.f , 10000.f , XM_PI / 4.f , CApplication::CLIENT_WIDTH , CApplication::CLIENT_HEIGHT);
 	camera.SetView(cameraLoc , loc , { 0.f,1.f,0.f });
@@ -126,6 +126,7 @@ void CFighter::Rot(int dire)
 
 void CFighter::Tick()
 {
+	
 	Move();
 
 	if(mTargetRot != nullptr)
@@ -175,11 +176,11 @@ void CFighter::Tick()
 
 void CFighter::EventAtBeginCollide(CActor& collideActor)
 {
-	if(collideActor.HasTag("Dice"))
+	/*if(collideActor.HasTag("Dice"))
 	{
 		mOwnerInterface.RequestLoadLevel(*new CTestLevel(CGameManager::GetInstance().GetGameInterface()));
 		mIsHit = true;
-	}
+	}*/
 }
 
 void CFighter::EventAtEndCollide(CActor& collideActor)

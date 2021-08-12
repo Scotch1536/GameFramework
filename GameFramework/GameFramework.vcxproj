@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CDice.cpp" />
+    <ClCompile Include="CDrawAxis.cpp" />
     <ClCompile Include="CFighter.cpp" />
     <ClCompile Include="CPointer.cpp" />
     <ClCompile Include="CSkyDome.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="GameFramework\Components\CColliderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CDisplay2DComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CLineComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CPlaneMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CPrimitiveMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
@@ -72,6 +74,7 @@
   <ItemGroup>
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CDice.h" />
+    <ClInclude Include="CDrawAxis.h" />
     <ClInclude Include="CFighter.h" />
     <ClInclude Include="CPointer.h" />
     <ClInclude Include="CSkyDome.h" />
@@ -86,6 +89,7 @@
     <ClInclude Include="GameFramework\Components\CComponent.h" />
     <ClInclude Include="GameFramework\Components\CDisplay2DComponent.h" />
     <ClInclude Include="GameFramework\Components\CLightComponent.h" />
+    <ClInclude Include="GameFramework\Components\CLineComponent.h" />
     <ClInclude Include="GameFramework\Components\CPlaneMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CPrimitiveMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CRenderComponent.h" />

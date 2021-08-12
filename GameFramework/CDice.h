@@ -6,6 +6,7 @@ class CDice :public CActor
 {
 private:
 	XMFLOAT3 &mPoint;
+	bool IsOnce = false;
 public:
 	CDice(ILevel& owner,XMFLOAT3& pointLocation);
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <functional>
 #include <DirectXMath.h>
 
 #include "CRotator.h"
@@ -20,6 +21,8 @@ private:
 
 	XMFLOAT3 mLastFrameLocation = { 0.f,0.f,0.f };		//前フレームのロケーション
 	XMFLOAT3 mLastFrameScale = { 0.f,0.f,0.f };			//前フレームのスケール
+
+	std::vector<std::function<void()>> mMatrixUpdateTimeFunction;     //マトリックス更新時実行関数
 
 	bool mShouldUpdateMatrix = true;		//行列を更新すべきか
 	bool mIsChild = false;					//自分が子トランスフォームか
@@ -79,5 +82,10 @@ public:
 	{
 		mIsBillboard = flg;
 	}
+
+	void AddMatrixUpdateTimeFunction(const std::function<void()>& func)
+	{
+		mMatrixUpdateTimeFunction.emplace_back(func);
+	};
 
 };
