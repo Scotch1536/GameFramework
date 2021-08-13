@@ -28,6 +28,7 @@
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CDisplay2DComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CParticleSystemComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CLineComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CPlaneMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CPrimitiveMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="GameFramework\Components\CDisplay2DComponent.h" />
     <ClInclude Include="GameFramework\Components\CLightComponent.h" />
     <ClInclude Include="GameFramework\Components\CParticleSystemComponent.h" />
+    <ClInclude Include="GameFramework\Components\CLineComponent.h" />
     <ClInclude Include="GameFramework\Components\CPlaneMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CPrimitiveMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CRenderComponent.h" />
@@ -149,6 +151,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="Shader\psline.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="Shader\psnotex.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -164,6 +170,10 @@
     <FxCompile Include="Shader\vs.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader\vsline.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Shader\vsnotex.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

@@ -9,6 +9,7 @@
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CSpringArmComponent.h"
+#include "GameFramework/Components/CLineComponent.h"
 
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CInputManager.h"
@@ -63,6 +64,8 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	light.SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
 	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.GetModel() , mesh.Transform);
+
+	Transform.RequestDebugLine();
 
 	/*
 	Åöí¥èdóvÅö
@@ -126,6 +129,7 @@ void CFighter::Rot(int dire)
 
 void CFighter::Tick()
 {
+	
 	Move();
 
 	if(mTargetRot != nullptr)
@@ -175,11 +179,11 @@ void CFighter::Tick()
 
 void CFighter::EventAtBeginCollide(CActor& collideActor)
 {
-	if(collideActor.HasTag("Dice"))
+	/*if(collideActor.HasTag("Dice"))
 	{
 		mOwnerInterface.RequestLoadLevel(*new CTestLevel(CGameManager::GetInstance().GetGameInterface()));
 		mIsHit = true;
-	}
+	}*/
 }
 
 void CFighter::EventAtEndCollide(CActor& collideActor)

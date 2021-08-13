@@ -9,7 +9,7 @@
 
 CStaticMeshComponent::CStaticMeshComponent(CActor& owner , CTransform& parentTrans , CModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority)
 	:CComponent(owner , priority) ,
-	Transform(parentTrans) ,
+	Transform(owner,parentTrans) ,
 	mModel(model) ,
 	mRenderComponent(*new CRenderComponent(owner))
 {

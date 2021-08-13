@@ -50,6 +50,8 @@ void CActor::RequestAdd2DRenderComponentToLevel(IRender& renderTarget)
 
 void CActor::Update()
 {
+	Transform.Update();
+
 	for(auto& component : mComponents)
 	{
 		component->Update();

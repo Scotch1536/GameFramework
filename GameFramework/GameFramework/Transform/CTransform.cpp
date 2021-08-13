@@ -3,20 +3,19 @@
 #include "../Managers/CGameManager.h"
 #include "../Library/LCMath.h"
 #include "../Actor/CActor.h"
+#include "../Components/CLineComponent.h"
 
 #include "CTransform.h"
 
-CTransform::CTransform():Rotation(*this)
+CTransform::CTransform(IActor& partner):Rotation(*this) , mOwnerInterface(partner) /*, mIsDebugMode(isDebug)*/
 {
 	LCMath::IdentityMatrix(mWorldMatrixSelf);
 	LCMath::IdentityMatrix(mWorldMatrixResult);
 }
 
-CTransform::CTransform(const CActor& partner):CTransform() {}
-
-CTransform::CTransform(CTransform& partner) : CTransform()
+CTransform::CTransform(IActor& partner , CTransform& parentTrans): CTransform(partner)
 {
-	partner.AttachTransform(*this);
+	parentTrans.AttachTransform(*this);
 }
 
 CTransform::~CTransform()
@@ -26,6 +25,19 @@ CTransform::~CTransform()
 	{
 		child->DetachTransform(*this);
 	}
+}
+
+void CTransform::RequestDebugLine()
+{
+#ifdef _DEBUG
+	if(!mDoDrawDebugLine)
+	{
+		mDoDrawDebugLine = true;
+		new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 1.0f , 0.0f , 0.0f } , 50.0f , { 1.0f,0.0f,0.0f,1.0f } , this);
+		new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 0.0f , 1.0f , 0.0f } , 50.0f , { 0.0f,1.0f,0.0f,1.0f } , this);
+		new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 0.0f , 0.0f , 1.0f } , 50.0f , { 0.0f,0.0f,1.0f,1.0f } , this);
+	}
+#endif
 }
 
 void CTransform::AttachTransform(CTransform& attachTarget)
@@ -69,11 +81,20 @@ void CTransform::Update()
 		mLastFrameLocation = Location;
 		mLastFrameScale = Scale;
 	}
+
 	if(mShouldUpdateMatrix)
 	{
 		mShouldUpdateMatrix = false;
 
 		LCMath::UpdateMatrix(Location , Scale , Rotation.GenerateMatrix() , mWorldMatrixSelf);
+
+		if(mMatrixUpdateTimeFunction.size() > 0)
+		{
+			for(auto& func : mMatrixUpdateTimeFunction)
+			{
+				func();
+			}
+		}
 	}
 
 	if(mParentTransform != nullptr)
