@@ -81,6 +81,7 @@ void CTransform::Update()
 		mLastFrameLocation = Location;
 		mLastFrameScale = Scale;
 	}
+
 	if(mShouldUpdateMatrix)
 	{
 		mShouldUpdateMatrix = false;
