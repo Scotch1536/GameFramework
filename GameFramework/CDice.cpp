@@ -1,5 +1,6 @@
 #include "GameFramework/Components/CStaticMeshComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
+#include "GameFramework/Components/CAABBColliderComponent.h"
 #include "GameFramework/Components/CVisionComponent.h"
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CSoundManager.h"
@@ -14,7 +15,8 @@ CDice::CDice(ILevel& owner , XMFLOAT3& pointLocation):CActor(owner , false)
 		CModelDataManager::GetInstance().GetModel("./Assets/Models/dice/PlayerBox.x" , "Assets/Models/dice/") ,
 		"Shader/vs.hlsl" , "Shader/ps.hlsl");
 
-	CSphereColliderComponent* sphereCllider = new CSphereColliderComponent(*this , staticMesh.GetModel() , Transform);
+	//CSphereColliderComponent* sphereCllider = new CSphereColliderComponent(*this , staticMesh.GetModel() , Transform);
+	CAABBColliderComponent* AABBCllider = new CAABBColliderComponent(*this , staticMesh.GetModel() , Transform);
 
 	CVisionComponent* vision = new CVisionComponent(*this , Transform , 500 , 25 , std::bind(&CDice::Look , std::ref(*this) , std::placeholders::_1));
 
