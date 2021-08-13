@@ -64,9 +64,8 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	light.SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
 	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.GetModel() , mesh.Transform);
-	CLineComponent& line = *new CLineComponent(*this , { 0.0f,0.0f,0.0f } , { 100.0f,0.0f,1000.0f } , {1.0f,1.0f,0.0f,1.0f});
 
-	//Transform.RequestDebugLine();
+	Transform.RequestDebugLine();
 
 	/*
 	Åöí¥èdóvÅö

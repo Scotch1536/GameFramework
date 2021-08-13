@@ -30,7 +30,7 @@ private:
 	bool mShouldUpdateMatrix = true;		//行列を更新すべきか
 	bool mIsChild = false;					//自分が子トランスフォームか
 	bool mIsBillboard = false;				//ビルボードかどうか
-	//bool mIsDebugMode;						//デバッグモードかどうか
+	bool mDoDrawDebugLine = false;			//デバッグラインを描画するか
 
 public:
 	XMFLOAT3 Location = { 0.f,0.f,0.f };		//ロケーション
@@ -39,10 +39,10 @@ public:
 	CRotator Rotation;			//ローテーション
 
 	//アクターを作るとき限定のコンストラクタ
-	CTransform(IActor& partner , bool isDebug = true);
+	CTransform(IActor& partner);
 
 	//作るときから従属するトランスフォームが決まっている時のコンストラクタ
-	CTransform(IActor& partner , CTransform& parentTrans , bool isDebug = true);
+	CTransform(IActor& partner , CTransform& parentTrans);
 
 	~CTransform();
 

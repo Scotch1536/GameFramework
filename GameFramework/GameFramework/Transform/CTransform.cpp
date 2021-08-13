@@ -7,22 +7,13 @@
 
 #include "CTransform.h"
 
-CTransform::CTransform(IActor& partner , bool isDebug):Rotation(*this) , mOwnerInterface(partner) /*, mIsDebugMode(isDebug)*/
+CTransform::CTransform(IActor& partner):Rotation(*this) , mOwnerInterface(partner) /*, mIsDebugMode(isDebug)*/
 {
 	LCMath::IdentityMatrix(mWorldMatrixSelf);
 	LCMath::IdentityMatrix(mWorldMatrixResult);
-
-#ifdef _DEBUG
-	//if(isDebug)
-	//{
-	//	mDebugLine.at(0).reset(new CLineComponent(mOwnerInterface.GetActor() , Location , { 1.0f , 0.0f , 0.0f } , 100.0f , { 1.0f,0.0f,0.0f,1.0f } , this));
-	//	mDebugLine.at(1).reset(new CLineComponent(mOwnerInterface.GetActor() , Location , { 0.0f , 1.0f , 0.0f } , 100.0f , { 0.0f,1.0f,0.0f,1.0f } , this));
-	//	mDebugLine.at(2).reset(new CLineComponent(mOwnerInterface.GetActor() , Location , { 0.0f , 0.0f , 1.0f } , 100.0f , { 0.0f,0.0f,1.0f,1.0f } , this));
-	//}
-#endif
 }
 
-CTransform::CTransform(IActor& partner , CTransform& parentTrans , bool isDebug): CTransform(partner , isDebug)
+CTransform::CTransform(IActor& partner , CTransform& parentTrans): CTransform(partner)
 {
 	parentTrans.AttachTransform(*this);
 }
@@ -38,9 +29,15 @@ CTransform::~CTransform()
 
 void CTransform::RequestDebugLine()
 {
-	new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 1.0f , 0.0f , 0.0f } , 400.0f , { 1.0f,0.0f,0.0f,1.0f } , this);
-	new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 0.0f , 1.0f , 0.0f } , 400.0f , { 0.0f,1.0f,0.0f,1.0f } , this);
-	new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 0.0f , 0.0f , 1.0f } , 400.0f , { 0.0f,0.0f,1.0f,1.0f } , this);
+#ifdef _DEBUG
+	if(!mDoDrawDebugLine)
+	{
+		mDoDrawDebugLine = true;
+		new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 1.0f , 0.0f , 0.0f } , 50.0f , { 1.0f,0.0f,0.0f,1.0f } , this);
+		new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 0.0f , 1.0f , 0.0f } , 50.0f , { 0.0f,1.0f,0.0f,1.0f } , this);
+		new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 0.0f , 0.0f , 1.0f } , 50.0f , { 0.0f,0.0f,1.0f,1.0f } , this);
+	}
+#endif
 }
 
 void CTransform::AttachTransform(CTransform& attachTarget)

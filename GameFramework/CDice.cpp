@@ -20,6 +20,8 @@ CDice::CDice(ILevel& owner , XMFLOAT3& pointLocation):CActor(owner , false)
 
 	Transform.Rotation.SetAngle({ 0.f, 180.f, 0.f });
 
+	Transform.RequestDebugLine();
+
 	//タグ追加
 	AddTag("Dice");
 }

@@ -18,7 +18,7 @@ private:
 	ComPtr<ID3D11Buffer> mVertexBuffer;				// 頂点バッファ
 	ComPtr<ID3D11PixelShader> mPixelShader;			// ピクセルシェーダー
 	ComPtr<ID3D11VertexShader> mVertexShader;		// 頂点シェーダー
-	ComPtr<ID3D11InputLayout> mLayout;				// 頂点フォーマット定義
+	ComPtr<ID3D11InputLayout> mVertexLayout;		// 頂点フォーマット定義
 
 	std::array<SVertexLine , 2> mVertices;		//頂点
 
@@ -26,7 +26,13 @@ private:
 	XMFLOAT3 mEndPoint;			//終点
 	XMFLOAT4 mColor;			//色
 
-	CTransform* mOwnerTransform;		//所有者のトランスフォーム
+	/*
+	従属するトランスフォーム
+	適用したトランスフォームの
+	ワールド変換行列にスケーリングのみ除外した
+	変換が施されるので扱いに注意が必要
+	*/
+	CTransform* mOwnerTransform;
 
 	bool mShouldUpdate = false;			//更新すべきか
 

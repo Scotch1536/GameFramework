@@ -48,6 +48,7 @@ void CLineComponent::Init(std::string vertexShaderPath , std::string pixelShader
 	CDirectXResourceManager& buf = CDirectXResourceManager::GetInstance();
 
 	mVertexShader = buf.GetVertexShader(vertexShaderPath);
+	mVertexLayout = buf.GetVertexLayout(layout , numElements , vertexShaderPath);
 	mPixelShader = buf.GetPixelShader(pixelShaderPath);
 	CreateVertexBufferWrite(CDirectXGraphics::GetInstance()->GetDXDevice() ,
 		sizeof(SVertexLine) , mVertices.size() , mVertices.data() , mVertexBuffer.GetAddressOf());
@@ -68,7 +69,7 @@ void CLineComponent::Render()
 	devcontext->IASetVertexBuffers(0 , 1 , mVertexBuffer.GetAddressOf() , &stride , &offset);
 
 	devcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);		//トポロジーをセット（旧プリミティブタイプ）
-	devcontext->IASetInputLayout(mLayout.Get());								//頂点レイアウトセット
+	devcontext->IASetInputLayout(mVertexLayout.Get());								//頂点レイアウトセット
 
 	devcontext->VSSetShader(mVertexShader.Get() , nullptr , 0);		//頂点シェーダーをセット
 	devcontext->PSSetShader(mPixelShader.Get() , nullptr , 0);		//ピクセルシェーダーをセット
