@@ -28,7 +28,7 @@ private:
 
 	CTransform* mOwnerTransform;		//所有者のトランスフォーム
 
-	bool mShouldUpdate = true;			//更新すべきか
+	bool mShouldUpdate = false;			//更新すべきか
 
 	//初期化
 	void Init(std::string vertexShaderPath , std::string pixelShaderPath);
@@ -44,13 +44,11 @@ private:
 public:
 	CLineComponent(CActor& owner , XMFLOAT3 start , XMFLOAT3 end ,
 		XMFLOAT4 color = { 1.0f,1.0f,1.0f,1.0f } , CTransform* parentTrans = nullptr ,
-		std::string vertexShaderPath = "Shader/vsline.hlsl" ,
-		std::string pixelShaderPath = "Shader/psline.hlsl" , int priority = 90);
+		std::string vertexShaderPath = "Shader/vsline.hlsl" , std::string pixelShaderPath = "Shader/psline.hlsl" , int priority = 90);
 
 	CLineComponent(CActor& owner , XMFLOAT3 start , XMFLOAT3 direction , float length ,
 		XMFLOAT4 color = { 1.0f,1.0f,1.0f,1.0f } , CTransform* parentTrans = nullptr ,
-		std::string vertexShaderPath = "Shader/vsline.hlsl" ,
-		std::string pixelShaderPath = "Shader/psline.hlsl" , int priority = 90);
+		std::string vertexShaderPath = "Shader/vsline.hlsl" , std::string pixelShaderPath = "Shader/psline.hlsl" , int priority = 90);
 
 	//描画
 	void Render()override;
@@ -74,6 +72,6 @@ public:
 
 	void SetColor(XMFLOAT4 color)
 	{
-		mColor = color;
+		mVertices.at(0).Color = mVertices.at(1).Color = mColor = color;
 	}
 };

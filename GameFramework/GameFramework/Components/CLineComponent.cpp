@@ -12,8 +12,8 @@ CLineComponent::CLineComponent(CActor& owner , XMFLOAT3 start , XMFLOAT3 end ,
 	std::string pixelShaderPath , int priority):CComponent(owner , priority) ,
 	mStartPoint(start) , mEndPoint(end) , mColor(color) , mOwnerTransform(parentTrans)
 {
-	mVertices.at(0).Pos = start;
-	mVertices.at(1).Pos = end;
+	mVertices.at(0).Pos = mStartPoint;
+	mVertices.at(1).Pos = mEndPoint;
 	mVertices.at(0).Color = mVertices.at(1).Color = mColor;
 
 	Init(vertexShaderPath , pixelShaderPath);
@@ -25,7 +25,7 @@ CLineComponent::CLineComponent(CActor& owner , XMFLOAT3 start , XMFLOAT3 directi
 	mStartPoint(start) , mColor(color) , mOwnerTransform(parentTrans)
 {
 	LCMath::CalcFloat3Normalize(direction , direction);
-	mVertices.at(0).Pos = start;
+	mVertices.at(0).Pos = mStartPoint;
 	mVertices.at(1).Pos = mEndPoint = LCMath::CalcFloat3Scalar(direction , length);
 	mVertices.at(0).Color = mVertices.at(1).Color = mColor;
 
@@ -50,7 +50,7 @@ void CLineComponent::Init(std::string vertexShaderPath , std::string pixelShader
 	mVertexShader = buf.GetVertexShader(vertexShaderPath);
 	mPixelShader = buf.GetPixelShader(pixelShaderPath);
 	CreateVertexBufferWrite(CDirectXGraphics::GetInstance()->GetDXDevice() ,
-		sizeof(SVertexLine) , mVertices.size() , (void*)mVertices.data() , &mVertexBuffer);
+		sizeof(SVertexLine) , mVertices.size() , mVertices.data() , mVertexBuffer.GetAddressOf());
 
 	if(mOwnerTransform != nullptr)
 	{
@@ -64,7 +64,7 @@ void CLineComponent::Render()
 
 	// 頂点バッファをセットする
 	unsigned int stride = sizeof(SVertexLine);
-	unsigned  offset = 0;
+	unsigned offset = 0;
 	devcontext->IASetVertexBuffers(0 , 1 , mVertexBuffer.GetAddressOf() , &stride , &offset);
 
 	devcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);		//トポロジーをセット（旧プリミティブタイプ）
@@ -85,9 +85,11 @@ void CLineComponent::Update()
 		if(mOwnerTransform != nullptr)
 		{
 			mShouldUpdate = false;
+
 			XMFLOAT3 scale = mOwnerTransform->GetWorldScale();
 			XMFLOAT4X4 resultMTX = mOwnerTransform->GetWorldMatrixResult();
 			XMFLOAT4X4 scaleMTX;
+
 			DX11MtxScale(scale.x , scale.y , scale.z , scaleMTX);
 			LCMath::InverseMatrix(scaleMTX , scaleMTX);
 			DX11MtxMultiply(resultMTX , resultMTX , scaleMTX);
