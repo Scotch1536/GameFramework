@@ -1,12 +1,16 @@
 #pragma once
 #include <vector>
+#include <memory>
 #include <functional>
 
 #include "CComponent.h"
 #include "../Transform/CTransform.h"
 #include "..\Library\LCMath.h"
 
-class CParticleSystemComponent :public CComponent  
+class CTransform;
+
+
+class CParticleSystemComponent :public CComponent
 {
 public:
 	enum class EType
@@ -14,23 +18,26 @@ public:
 		SPHERE,
 		RADIATION,
 	};
-	
-	struct Particle 
+
+	struct Particle
 	{
-		CTransform& Transform;
+		CTransform Transform;
 		XMFLOAT3 Direction;
 		int Life;
+
+		Particle(CTransform& parentTrans, const XMFLOAT3& direction, const int& life);
 	};
+
 private:
-	std::function<void(CParticleSystemComponent::Particle&)> mFunction;
+	std::function<void(const CParticleSystemComponent&,CTransform&)> mFunction;
 	EType mType;
-	float mLifeValue;
+	int mLifeFlame;
 	float mQuantity;
-	std::vector<Particle> mParticle;
+	std::vector<std::unique_ptr<Particle>> mParticle;
 public:
 	CTransform Transform;
 
-	CParticleSystemComponent(CActor& owner, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle&)> func,
+	CParticleSystemComponent(CActor& owner, CTransform& parentTrans, std::function<void(const CParticleSystemComponent&, CTransform&)> func,
 		EType type, int life, float qty, bool frameChoice, int priority = 100);
 
 	void Update() override;

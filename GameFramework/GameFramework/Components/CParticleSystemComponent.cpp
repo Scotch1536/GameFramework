@@ -3,9 +3,14 @@
 #include "CParticleSystemComponent.h"
 #include "CSphereMeshComponent.h"
 
-CParticleSystemComponent::CParticleSystemComponent(CActor& owner, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle &) > func
+#include "../Transform/CTransform.h"
+
+
+CParticleSystemComponent::Particle::Particle(CTransform& parentTrans, const XMFLOAT3& direction, const int& life) :Transform(parentTrans), Direction(direction), Life(life) {}
+
+CParticleSystemComponent::CParticleSystemComponent(CActor& owner, CTransform& parentTrans, std::function<void(const CParticleSystemComponent&, CTransform&) > func
 	, EType type, int life, float qty, bool frameChoice, int priority)
-	:CComponent(owner, priority), Transform(parentTrans), mType(type), mLifeValue(life),mFunction(func)
+	:CComponent(owner, priority), Transform(parentTrans), mType(type), mLifeFlame(life),mFunction(func)
 {
 	//trueÇ»ÇÁÇPÉtÉåÅ[ÉÄÇ≤Ç∆Ç…ê∂ê¨ falseÇ»ÇÁÇPïb
 	if (frameChoice)
@@ -25,22 +30,41 @@ void CParticleSystemComponent::Update()
 	bool shouldJudge = false;
 	for (float q = 0; q < mQuantity; q++)
 	{
-		mParticle.emplace_back();
-		mParticle.back().Direction.x = mt() % 50;
-		mParticle.back().Direction.y = mt() % 50;
-		mParticle.back().Direction.z = mt() % 50;
-		mParticle.back().Life = mLifeValue;
-		mFunction(mParticle.back());
+		XMFLOAT3 direction;
+		direction.x = float(mt() % 50);
+		direction.y = float(mt() % 50);
+		direction.z = float(mt() % 50);
+		if (mt() % 2 == 0)
+		{
+			direction.x *= -1;
+		}
+		if (mt() % 2 == 0)
+		{
+			direction.y *= -1;
+		}
+		if (mt() % 2 == 0)
+		{
+			direction.z *= -1;
+		}
+
+		mParticle.emplace_back(new Particle(Transform, direction, mLifeFlame));
+
+		mFunction(*this,mParticle.back()->Transform);
 	}
 
 	Move();
 
-	for (auto itr = mParticle.begin(); itr != mParticle.end(); itr++)
+	for (auto itr = mParticle.begin(); itr != mParticle.end();)
 	{
-		if ((*itr).Life <= 0)
+		if ((*itr)->Life <= 0)
 		{
-			mParticle.erase(itr);
+			itr = mParticle.erase(itr);
 			shouldJudge = true;
+			break;
+		}
+		else
+		{
+			itr++;
 		}
 	}
 	if (shouldJudge)
@@ -53,9 +77,9 @@ void CParticleSystemComponent::Move()
 {
 	for (auto& p : mParticle)
 	{
-		p.Transform.Location.x = p.Transform.Location.x + p.Direction.x;
-		p.Transform.Location.y = p.Transform.Location.y + p.Direction.y;
-		p.Transform.Location.z = p.Transform.Location.z + p.Direction.z;
-		p.Life--;
+		p->Transform.Location.x = p->Transform.Location.x + p->Direction.x;
+		p->Transform.Location.y = p->Transform.Location.y + p->Direction.y;
+		p->Transform.Location.z = p->Transform.Location.z + p->Direction.z;
+		p->Life--;
 	}
 }

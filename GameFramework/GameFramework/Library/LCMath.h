@@ -67,7 +67,7 @@ public:
 	static XMFLOAT3 CalcFloat3MultplyMatrix(const XMFLOAT3& target, const XMFLOAT4X4& mtx);
 
 	//’¸“_”z—ñ‚©‚çMin Max‚ğ‹‚ß‚é
-	static const XMFLOAT3& CalcFloat3MinMax(const std::vector<XMFLOAT3>& vertices, XMFLOAT3& resultMin,XMFLOAT3& resultMax);
+	static const void CalcFloat3MinMax(const std::vector<XMFLOAT3>& vertices, XMFLOAT3& resultMin,XMFLOAT3& resultMax);
 
 	//üŒ`•âŠÔ
 	static const float& Lerp(const float& start, const float& end, const float& alpha, float& result);

@@ -55,7 +55,7 @@ void CVisionComponent::Update()
 			XMFLOAT3 minLoc;
 			XMFLOAT3 maxLoc;
 			XMFLOAT3 addLoc;
-			
+
 			CAABBColliderComponent* AABB = dynamic_cast<CAABBColliderComponent*>(collider);
 			targetLoc = AABB->Transform.GetWorldLocation();
 			minLoc = AABB->GetWorldMin();
@@ -69,6 +69,25 @@ void CVisionComponent::Update()
 			//内積で求めた長さに向いてる方向をかけて向きベクトルを求める
 			//相手への向きベクトルから上で求めたベクトルを引いて相手から垂直に交わる座標への向きベクトルを求める
 			LCMath::CalcFloat3FromStartToGoal(LCMath::CalcFloat3Scalar(selfForwardVec, dot), targetVec, addLoc);
+
+			if ((minLoc.x < addLoc.x && addLoc.x < maxLoc.x) && (minLoc.y < addLoc.y && addLoc.y < maxLoc.y) && (minLoc.z < addLoc.z && addLoc.z < maxLoc.z))
+			{
+				shouldEvent = true;
+			}
+			else
+			{
+				if (addLoc.x < minLoc.x) targetLoc.x = minLoc.x;
+				else if (addLoc.x > maxLoc.x) targetLoc.x = maxLoc.x;			
+				else targetLoc.x = addLoc.x;
+
+				if (addLoc.y < minLoc.y) targetLoc.y = minLoc.y;
+				else if (addLoc.y > maxLoc.y) targetLoc.y = maxLoc.y;
+				else targetLoc.y = addLoc.y;
+				
+				if (addLoc.z < minLoc.z) targetLoc.z = minLoc.z;
+				else if (addLoc.z > maxLoc.z) targetLoc.z = maxLoc.z;
+				else targetLoc.z = addLoc.z;
+			}
 		}
 		if (collider->GetType() == CColliderComponent::EType::SPHERE)
 		{

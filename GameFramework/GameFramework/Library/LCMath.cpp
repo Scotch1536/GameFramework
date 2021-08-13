@@ -378,7 +378,7 @@ XMFLOAT3 LCMath::CalcFloat3MultplyMatrix(const XMFLOAT3& target, const XMFLOAT4X
 	return result;
 }
 
-const XMFLOAT3& LCMath::CalcFloat3MinMax(const std::vector<XMFLOAT3>& vertices, XMFLOAT3& resultMin, XMFLOAT3& resultMax)
+const void LCMath::CalcFloat3MinMax(const std::vector<XMFLOAT3>& vertices, XMFLOAT3& resultMin, XMFLOAT3& resultMax)
 {
 	resultMin = {0,0,0};
 	resultMax = {0,0,0};
