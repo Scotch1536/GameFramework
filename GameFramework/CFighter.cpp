@@ -9,6 +9,7 @@
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CSpringArmComponent.h"
+#include "GameFramework/Components/CLineComponent.h"
 
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CInputManager.h"
@@ -50,7 +51,7 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	XMFLOAT3 cameraLoc = Transform.Location;
 	cameraLoc.x += fv.x*-20.0f;
 	cameraLoc.y += fv.y*-20.0f+2.0f;
-	cameraLoc.z += fv.z*-40.0f;
+	cameraLoc.z += fv.z*-20.0f;
 
 	camera.SetProjection(10.f , 10000.f , XM_PI / 4.f , CApplication::CLIENT_WIDTH , CApplication::CLIENT_HEIGHT);
 	camera.SetView(cameraLoc , loc , { 0.f,1.f,0.f });
@@ -63,6 +64,8 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	light.SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
 	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.GetModel() , mesh.Transform);
+
+	Transform.RequestDebugLine();
 
 	/*
 	Åöí¥èdóvÅö

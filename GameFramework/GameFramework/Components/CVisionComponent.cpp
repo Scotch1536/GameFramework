@@ -11,7 +11,7 @@
 #include "..\Managers\CColliderManager.h"
 
 CVisionComponent::CVisionComponent(CActor& owner, CTransform& parentTrans, float length, float angle, std::function<void(CActor&)> event, int priority)
-	:CComponent(owner, priority), Transform(parentTrans), mLength(length), mEvent(event)
+	:CComponent(owner, priority), Transform(owner,parentTrans), mLength(length), mEvent(event)
 {
 	mRadian = XMConvertToRadians(angle);
 }

@@ -36,6 +36,7 @@ void CLevel::Update()
 {
 	CActor* cameraActor = nullptr;
 
+	//Tick前トランスフォーム更新処理
 	for(auto& actor : mActors)
 	{
 		if(CGameManager::GetInstance().GetIsPause())
@@ -48,6 +49,7 @@ void CLevel::Update()
 
 	CColliderManager::GetInstance().Update();
 
+	//カメラ所持のアクターのみ先に処理する
 	if(mRenderingCamera != nullptr)
 	{
 		cameraActor = &mRenderingCamera->GetOwner();
@@ -55,6 +57,7 @@ void CLevel::Update()
 		cameraActor->Update();
 	}
 
+	//Tick処理
 	for(auto& actor : mActors)
 	{
 		if(actor.get() == cameraActor)continue;

@@ -10,7 +10,7 @@ CPrimitiveMeshComponent<VertexType>::CPrimitiveMeshComponent(CActor& owner , CTr
 	:CComponent(owner , 100) ,
 	mRenderComponent(*new CRenderComponent(owner)) ,
 	mColor(color) ,
-	Transform(parentTrans)
+	Transform(owner,parentTrans)
 {}
 
 template<class VertexType>

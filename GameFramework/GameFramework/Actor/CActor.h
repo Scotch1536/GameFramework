@@ -15,17 +15,23 @@ class CTransform;
 class IActor
 {
 public:
+	virtual CActor& GetActor() = 0;
 	virtual ~IActor() {};
+};
+
+class IActorToComponent :public IActor
+{
+public:
+	virtual ~IActorToComponent() {};
 	virtual void AddComponent(CComponent& component) = 0;
 	virtual void AddRenderComponent(IRender& component) = 0;
-	virtual CActor& GetActor() = 0;
 	virtual CTransform& GetTransform() = 0;
 	virtual void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget , bool isFront = false) = 0;
 	virtual void RequestAdd2DRenderComponentToLevel(IRender& renderTarget) = 0;
 };
 
 //アクタークラス
-class CActor :public CObject , public IActor
+class CActor :public CObject , public IActorToComponent
 {
 private:
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
@@ -46,7 +52,7 @@ private:
 	void AddRenderComponent(IRender& component)override;
 
 	void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget , bool isFront)override;
-	
+
 	void RequestAdd2DRenderComponentToLevel(IRender& renderTarget)override;
 
 
