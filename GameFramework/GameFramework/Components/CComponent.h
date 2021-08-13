@@ -1,6 +1,6 @@
 #pragma once
 
-class IActor;
+class IActorToComponent;
 class CActor;
 
 //コンポーネントクラス
@@ -10,7 +10,7 @@ private:
 	int mPriority = 0;		//優先度 0～100を想定
 
 protected:
-	IActor& mOwnerInterface;		//インターフェース
+	IActorToComponent& mOwnerInterface;		//インターフェース
 
 	//コピー禁止
 	CComponent(const CComponent&) = delete;

@@ -10,7 +10,7 @@ CColliderComponent::CColliderComponent(CActor& owner , CTransform& parentTrans ,
 	:CComponent(owner , priority) ,
 	mType(type) , mEventAtBeginningCollided(std::bind(&CActor::EventAtBeginCollide , std::ref(owner) , std::placeholders::_1)) ,
 	mEventAtEndCollided(std::bind(&CActor::EventAtEndCollide , std::ref(owner) , std::placeholders::_1)) ,
-	Transform(parentTrans)
+	Transform(owner,parentTrans)
 {
 	CColliderManager::GetInstance().AddCollider(*this);			//コリジョンマネージャーに追加
 }

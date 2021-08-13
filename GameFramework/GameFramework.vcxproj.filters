@@ -204,9 +204,6 @@
     <ClCompile Include="GameFramework\Components\CLineComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CDrawAxis.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameFramework\Transform\CRotator.h">
@@ -398,9 +395,6 @@
     <ClInclude Include="GameFramework\Components\CLineComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CDrawAxis.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\ps.hlsl">
@@ -428,6 +422,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\basicvs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\psline.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\vsline.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

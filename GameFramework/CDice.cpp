@@ -5,9 +5,8 @@
 #include "GameFramework/Managers/CSoundManager.h"
 
 #include "CDice.h"
-#include "CDrawAxis.h"
 
-CDice::CDice(ILevel& owner , XMFLOAT3& pointLocation):CActor(owner , false) , mPoint(pointLocation)
+CDice::CDice(ILevel& owner , XMFLOAT3& pointLocation):CActor(owner , false)
 {
 	CSoundManager::GetInstance().CreateSoundInfo("Assets/Sounds/bomb.wav" , 0.1f , false , "BOMB");
 
@@ -17,9 +16,11 @@ CDice::CDice(ILevel& owner , XMFLOAT3& pointLocation):CActor(owner , false) , mP
 
 	CSphereColliderComponent* sphereCllider = new CSphereColliderComponent(*this , staticMesh.GetModel() , Transform);
 
-	CVisionComponent* vision = new CVisionComponent(*this, Transform, 500, 25,std::bind(&CDice::Look,std::ref(*this),std::placeholders::_1));
+	CVisionComponent* vision = new CVisionComponent(*this , Transform , 500 , 25 , std::bind(&CDice::Look , std::ref(*this) , std::placeholders::_1));
 
 	Transform.Rotation.SetAngle({ 0.f, 180.f, 0.f });
+
+	Transform.RequestDebugLine();
 
 	//タグ追加
 	AddTag("Dice");
@@ -36,20 +37,10 @@ void CDice::Move()
 
 void CDice::Look(CActor& collideActor)
 {
-	if (collideActor.HasTag("Fighter"))
+	if(collideActor.HasTag("Fighter"))
 	{
 		Transform.Rotation.ChangeAngleAndQuaternionToLocation(collideActor.Transform.GetWorldLocation());
 		Move();
-	}
-}
-
-void CDice::Tick()
-{
-	//Transform.Rotation.ChangeAngleAndQuaternionToLocation(mPoint);
-	if (!IsOnce)
-	{
-		IsOnce = true;
-		new CDrawAxis(mOwnerInterface, Transform);
 	}
 }
 

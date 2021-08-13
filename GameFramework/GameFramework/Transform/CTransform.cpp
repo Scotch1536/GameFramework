@@ -3,20 +3,28 @@
 #include "../Managers/CGameManager.h"
 #include "../Library/LCMath.h"
 #include "../Actor/CActor.h"
+#include "../Components/CLineComponent.h"
 
 #include "CTransform.h"
 
-CTransform::CTransform():Rotation(*this)
+CTransform::CTransform(IActor& partner , bool isDebug):Rotation(*this) , mOwnerInterface(partner) /*, mIsDebugMode(isDebug)*/
 {
 	LCMath::IdentityMatrix(mWorldMatrixSelf);
 	LCMath::IdentityMatrix(mWorldMatrixResult);
+
+#ifdef _DEBUG
+	//if(isDebug)
+	//{
+	//	mDebugLine.at(0).reset(new CLineComponent(mOwnerInterface.GetActor() , Location , { 1.0f , 0.0f , 0.0f } , 100.0f , { 1.0f,0.0f,0.0f,1.0f } , this));
+	//	mDebugLine.at(1).reset(new CLineComponent(mOwnerInterface.GetActor() , Location , { 0.0f , 1.0f , 0.0f } , 100.0f , { 0.0f,1.0f,0.0f,1.0f } , this));
+	//	mDebugLine.at(2).reset(new CLineComponent(mOwnerInterface.GetActor() , Location , { 0.0f , 0.0f , 1.0f } , 100.0f , { 0.0f,0.0f,1.0f,1.0f } , this));
+	//}
+#endif
 }
 
-CTransform::CTransform(const CActor& partner):CTransform() {}
-
-CTransform::CTransform(CTransform& partner) : CTransform()
+CTransform::CTransform(IActor& partner , CTransform& parentTrans , bool isDebug): CTransform(partner , isDebug)
 {
-	partner.AttachTransform(*this);
+	parentTrans.AttachTransform(*this);
 }
 
 CTransform::~CTransform()
@@ -26,6 +34,13 @@ CTransform::~CTransform()
 	{
 		child->DetachTransform(*this);
 	}
+}
+
+void CTransform::RequestDebugLine()
+{
+	new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 1.0f , 0.0f , 0.0f } , 400.0f , { 1.0f,0.0f,0.0f,1.0f } , this);
+	new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 0.0f , 1.0f , 0.0f } , 400.0f , { 0.0f,1.0f,0.0f,1.0f } , this);
+	new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 0.0f , 0.0f , 1.0f } , 400.0f , { 0.0f,0.0f,1.0f,1.0f } , this);
 }
 
 void CTransform::AttachTransform(CTransform& attachTarget)
@@ -75,9 +90,9 @@ void CTransform::Update()
 
 		LCMath::UpdateMatrix(Location , Scale , Rotation.GenerateMatrix() , mWorldMatrixSelf);
 
-		if (mMatrixUpdateTimeFunction.size() > 0)
+		if(mMatrixUpdateTimeFunction.size() > 0)
 		{
-			for (auto& func : mMatrixUpdateTimeFunction)
+			for(auto& func : mMatrixUpdateTimeFunction)
 			{
 				func();
 			}
