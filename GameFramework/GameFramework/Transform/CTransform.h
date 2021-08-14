@@ -38,6 +38,8 @@ public:
 
 	CRotator Rotation;			//ローテーション
 
+	bool mShouldUpdateMtx = false;		//行列を更新
+
 	//アクターを作るとき限定のコンストラクタ
 	CTransform(IActor& partner);
 

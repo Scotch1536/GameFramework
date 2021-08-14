@@ -78,6 +78,7 @@ void CTransform::Update()
 	if(!LCMath::CompareFloat3(Location , mLastFrameLocation) || !LCMath::CompareFloat3(Scale , mLastFrameScale) || !Rotation.GetIsSameAngle())
 	{
 		mShouldUpdateMatrix = true;
+		mShouldUpdateMtx = true;
 		mLastFrameLocation = Location;
 		mLastFrameScale = Scale;
 	}
