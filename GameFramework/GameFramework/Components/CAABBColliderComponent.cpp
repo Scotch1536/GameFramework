@@ -38,25 +38,36 @@ void CAABBColliderComponent::ConvertWorldCollider()
 {
 	if (mShouldUpdate)
 	{
-			mShouldUpdate = false;
-			//座標更新
-			XMFLOAT4X4 worldMtx = Transform.GetWorldMatrixResult();
-			std::vector<XMFLOAT3> vertices;
-			vertices.resize(8);
-			vertices.at(0) = { mLocalMin.x,mLocalMax.y,mLocalMin.z };
-			vertices.at(1) = { mLocalMax.x,mLocalMax.y,mLocalMin.z };
-			vertices.at(2) = { mLocalMax.x,mLocalMax.y,mLocalMax.z };
-			vertices.at(3) = { mLocalMin.x,mLocalMax.y,mLocalMax.z };
-			vertices.at(4) = { mLocalMin.x,mLocalMin.y,mLocalMax.z };
-			vertices.at(5) = { mLocalMax.x,mLocalMin.y,mLocalMax.z };
-			vertices.at(6) = { mLocalMax.x,mLocalMin.y,mLocalMin.z };
-			vertices.at(7) = { mLocalMin.x,mLocalMin.y,mLocalMin.z };
+		mShouldUpdate = false;
+		//座標更新
+		XMFLOAT4X4 worldMtx = Transform.GetWorldMatrixResult();
+		XMFLOAT3 worldLoc = Transform.GetWorldLocation();
 
-			for (auto& v : vertices)
-			{
-				LCMath::CalcFloat3MultplyMatrix(v, worldMtx, v);
-			}
+		worldMtx._41 = worldMtx._42 = worldMtx._43 = 0;
 
-			LCMath::CalcFloat3MinMax(vertices, mWorldMin, mWorldMax);
+		std::vector<XMFLOAT3> vertices;
+		vertices.resize(8);
+		vertices.at(0) = { mLocalMin.x,mLocalMax.y,mLocalMin.z };
+		vertices.at(1) = { mLocalMax.x,mLocalMax.y,mLocalMin.z };
+		vertices.at(2) = { mLocalMax.x,mLocalMax.y,mLocalMax.z };
+		vertices.at(3) = { mLocalMin.x,mLocalMax.y,mLocalMax.z };
+		vertices.at(4) = { mLocalMin.x,mLocalMin.y,mLocalMax.z };
+		vertices.at(5) = { mLocalMax.x,mLocalMin.y,mLocalMax.z };
+		vertices.at(6) = { mLocalMax.x,mLocalMin.y,mLocalMin.z };
+		vertices.at(7) = { mLocalMin.x,mLocalMin.y,mLocalMin.z };
+
+		for (auto& v : vertices)
+		{
+			LCMath::CalcFloat3MultplyMatrix(v, worldMtx, v);
+		}
+
+		LCMath::CalcFloat3MinMax(vertices, mWorldMin, mWorldMax);
+
+		mWorldMin.x += worldLoc.x;
+		mWorldMin.y += worldLoc.y;
+		mWorldMin.z += worldLoc.z;
+		mWorldMax.x += worldLoc.x;
+		mWorldMax.y += worldLoc.y;
+		mWorldMax.z += worldLoc.z;
 	}
 }

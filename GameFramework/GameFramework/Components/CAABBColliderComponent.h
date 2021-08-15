@@ -18,7 +18,7 @@ private:
 
 	CBoxMeshComponent* mBoxMesh = nullptr;
 
-	bool mShouldUpdate = false;			//更新すべきか
+	bool mShouldUpdate = true;			//更新すべきか
 
 	void ConvertWorldCollider()override;
 
