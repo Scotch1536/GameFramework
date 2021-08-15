@@ -39,13 +39,11 @@ void CAABBColliderComponent::ConvertWorldCollider()
 	if (mShouldUpdate)
 	{
 		mShouldUpdate = false;
+
 		//ç¿ïWçXêV
 		XMFLOAT4X4 worldMtx = Transform.GetWorldMatrixResult();
-		XMFLOAT3 worldLoc = Transform.GetWorldLocation();
-
-		worldMtx._41 = worldMtx._42 = worldMtx._43 = 0;
-
 		std::vector<XMFLOAT3> vertices;
+
 		vertices.resize(8);
 		vertices.at(0) = { mLocalMin.x,mLocalMax.y,mLocalMin.z };
 		vertices.at(1) = { mLocalMax.x,mLocalMax.y,mLocalMin.z };
@@ -62,12 +60,5 @@ void CAABBColliderComponent::ConvertWorldCollider()
 		}
 
 		LCMath::CalcFloat3MinMax(vertices, mWorldMin, mWorldMax);
-
-		mWorldMin.x += worldLoc.x;
-		mWorldMin.y += worldLoc.y;
-		mWorldMin.z += worldLoc.z;
-		mWorldMax.x += worldLoc.x;
-		mWorldMax.y += worldLoc.y;
-		mWorldMax.z += worldLoc.z;
 	}
 }
