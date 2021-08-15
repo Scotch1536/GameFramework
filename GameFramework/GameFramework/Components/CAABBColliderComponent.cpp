@@ -32,9 +32,9 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner, CTransform& parent
 
 void CAABBColliderComponent::ConvertWorldCollider()
 {
-	if (Transform.mShouldUpdateMtx)
+	if(Transform.mDidUpdateMatrix)
 	{
-		Transform.mShouldUpdateMtx = false;
+		Transform.mDidUpdateMatrix = false;
 		//ç¿ïWçXêV
 		XMFLOAT4X4 worldMtx = Transform.GetWorldMatrixResult();
 		std::vector<XMFLOAT3> vertices;
