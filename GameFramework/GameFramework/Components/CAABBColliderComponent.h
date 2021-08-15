@@ -18,7 +18,14 @@ private:
 
 	CBoxMeshComponent* mBoxMesh = nullptr;
 
+	bool mShouldUpdate = true;			//XV‚·‚×‚«‚©
+
 	void ConvertWorldCollider()override;
+
+	void SetShouldUpdate(bool flg)
+	{
+		mShouldUpdate = flg;
+	}
 
 public:
 	CAABBColliderComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , bool isMesh = true , int priority = 40);

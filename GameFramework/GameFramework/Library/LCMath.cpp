@@ -380,8 +380,8 @@ XMFLOAT3 LCMath::CalcFloat3MultplyMatrix(const XMFLOAT3& target, const XMFLOAT4X
 
 const void LCMath::CalcFloat3MinMax(const std::vector<XMFLOAT3>& vertices, XMFLOAT3& resultMin, XMFLOAT3& resultMax)
 {
-	resultMin = {0,0,0};
-	resultMax = {0,0,0};
+	resultMin = vertices.at(0);
+	resultMax = vertices.at(0);
 
 	for (auto& v : vertices)
 	{
