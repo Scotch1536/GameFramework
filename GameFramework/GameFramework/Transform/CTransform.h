@@ -27,7 +27,7 @@ private:
 
 	std::vector<std::function<void()>> mMatrixUpdateTimeFunction;		//マトリックス更新時実行関数
 
-	bool mShouldUpdateMatrix = true;		//マトリックスを更新したかどうか
+	bool mShouldUpdateMatrix = true;		//マトリックスを更新すべきか
 	bool mIsChild = false;					//自分が子トランスフォームか
 	bool mIsBillboard = false;				//ビルボードかどうか
 	bool mDoDrawDebugLine = false;			//デバッグラインを描画するか
