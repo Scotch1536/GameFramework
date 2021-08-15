@@ -17,6 +17,8 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner, const CModelData& 
 #endif
 
 	if (isMesh)mBoxMesh = new CBoxMeshComponent(owner, Transform, mLocalMin, mLocalMax, { 1.0f,1.0f,1.0f,0.3f });
+
+	parentTrans.AddMatrixUpdateTimeFunction(std::bind(&CAABBColliderComponent::SetShouldUpdate, std::ref(*this), true));
 }
 
 CAABBColliderComponent::CAABBColliderComponent(CActor& owner, CTransform& parentTrans, bool isMesh, int priority)
@@ -28,31 +30,33 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner, CTransform& parent
 #endif
 
 	if (isMesh)mBoxMesh = new CBoxMeshComponent(owner, Transform, mLocalMin, mLocalMax, { 1.0f,1.0f,1.0f,0.3f });
+
+	parentTrans.AddMatrixUpdateTimeFunction(std::bind(&CAABBColliderComponent::SetShouldUpdate, std::ref(*this), true));
 }
 
 void CAABBColliderComponent::ConvertWorldCollider()
 {
-	if(Transform.mDidUpdateMatrix)
+	if (mShouldUpdate)
 	{
-		Transform.mDidUpdateMatrix = false;
-		//座標更新
-		XMFLOAT4X4 worldMtx = Transform.GetWorldMatrixResult();
-		std::vector<XMFLOAT3> vertices;
-		vertices.resize(8);
-		vertices.at(0) = { mLocalMin.x,mLocalMax.y,mLocalMin.z };
-		vertices.at(1) = { mLocalMax.x,mLocalMax.y,mLocalMin.z };
-		vertices.at(2) = { mLocalMax.x,mLocalMax.y,mLocalMax.z };
-		vertices.at(3) = { mLocalMin.x,mLocalMax.y,mLocalMax.z };
-		vertices.at(4) = { mLocalMin.x,mLocalMin.y,mLocalMax.z };
-		vertices.at(5) = { mLocalMax.x,mLocalMin.y,mLocalMax.z };
-		vertices.at(6) = { mLocalMax.x,mLocalMin.y,mLocalMin.z };
-		vertices.at(7) = { mLocalMin.x,mLocalMin.y,mLocalMin.z };
+			mShouldUpdate = false;
+			//座標更新
+			XMFLOAT4X4 worldMtx = Transform.GetWorldMatrixResult();
+			std::vector<XMFLOAT3> vertices;
+			vertices.resize(8);
+			vertices.at(0) = { mLocalMin.x,mLocalMax.y,mLocalMin.z };
+			vertices.at(1) = { mLocalMax.x,mLocalMax.y,mLocalMin.z };
+			vertices.at(2) = { mLocalMax.x,mLocalMax.y,mLocalMax.z };
+			vertices.at(3) = { mLocalMin.x,mLocalMax.y,mLocalMax.z };
+			vertices.at(4) = { mLocalMin.x,mLocalMin.y,mLocalMax.z };
+			vertices.at(5) = { mLocalMax.x,mLocalMin.y,mLocalMax.z };
+			vertices.at(6) = { mLocalMax.x,mLocalMin.y,mLocalMin.z };
+			vertices.at(7) = { mLocalMin.x,mLocalMin.y,mLocalMin.z };
 
-		for (auto& v : vertices)
-		{
-			LCMath::CalcFloat3MultplyMatrix(v, worldMtx, v);
-		}
+			for (auto& v : vertices)
+			{
+				LCMath::CalcFloat3MultplyMatrix(v, worldMtx, v);
+			}
 
-		LCMath::CalcFloat3MinMax(vertices, mWorldMin, mWorldMax);
+			LCMath::CalcFloat3MinMax(vertices, mWorldMin, mWorldMax);
 	}
 }

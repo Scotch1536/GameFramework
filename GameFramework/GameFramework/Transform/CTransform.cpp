@@ -67,7 +67,6 @@ void CTransform::DetachTransform(CTransform& detachTarget)
 
 void CTransform::Update()
 {
-	bool shouldJudge = false;
 
 	if (mIsBillboard)
 	{
@@ -79,16 +78,14 @@ void CTransform::Update()
 
 	if (!LCMath::CompareFloat3(Location, mLastFrameLocation) || !LCMath::CompareFloat3(Scale, mLastFrameScale) || !Rotation.GetIsSameAngle())
 	{
-		shouldJudge = true;
-		mDidUpdateMatrix = true;
+		mShouldUpdateMatrix = true;
 		mLastFrameLocation = Location;
 		mLastFrameScale = Scale;
 	}
-	else mDidUpdateMatrix = false;
 
-	if (shouldJudge)
+	if (mShouldUpdateMatrix)
 	{
-		shouldJudge = false;
+		mShouldUpdateMatrix = false;
 
 		LCMath::UpdateMatrix(Location, Scale, Rotation.GenerateMatrix(), mWorldMatrixSelf);
 

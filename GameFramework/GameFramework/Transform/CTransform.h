@@ -27,6 +27,7 @@ private:
 
 	std::vector<std::function<void()>> mMatrixUpdateTimeFunction;		//マトリックス更新時実行関数
 
+	bool mShouldUpdateMatrix = true;		//マトリックスを更新したかどうか
 	bool mIsChild = false;					//自分が子トランスフォームか
 	bool mIsBillboard = false;				//ビルボードかどうか
 	bool mDoDrawDebugLine = false;			//デバッグラインを描画するか
@@ -36,8 +37,6 @@ public:
 	XMFLOAT3 Scale = { 1.f,1.f,1.f };			//スケール
 
 	CRotator Rotation;			//ローテーション
-
-	bool mDidUpdateMatrix = true;			//行列を更新したか
 
 	//アクターを作るとき限定のコンストラクタ
 	CTransform(IActor& partner);
