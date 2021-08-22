@@ -4,12 +4,14 @@
 #include "GameFramework/DebugTools/imgui/myimgui.h"
 
 #include "GameFramework/Components/CStaticMeshComponent.h"
+#include "GameFramework/Components/CSphereMeshComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
 #include "GameFramework/Components/CAABBColliderComponent.h"
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CSpringArmComponent.h"
 #include "GameFramework/Components/CLineComponent.h"
+#include "GameFramework/Components/CParticleSystemComponent.h"
 
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CInputManager.h"
@@ -67,6 +69,8 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 
 	Transform.RequestDebugLine();
 
+	CParticleSystemComponent& particle = *new CParticleSystemComponent(*this,owner, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1, std::placeholders::_2),
+		CParticleSystemComponent::EType::SPHERE,60,5,0.5,true);
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
@@ -117,6 +121,11 @@ void CFighter::Move()
 	Transform.Location.x += fv.x * 1;
 	Transform.Location.y += fv.y * 1;
 	Transform.Location.z += fv.z * 1;
+}
+
+void CFighter::Particle(CParticleSystemComponent::Particle& key, CTransform& trans)
+{
+	new CSphereMeshComponent(key, trans, 0.05, 30, { 1,1,1,1 });
 }
 
 void CFighter::Rot(int dire)

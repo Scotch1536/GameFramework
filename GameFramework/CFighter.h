@@ -1,7 +1,11 @@
 #pragma once
 #include <memory>
 #include "GameFramework/Actor/CActor.h"
+#include "GameFramework/Components/CParticleSystemComponent.h"
 #include "CPointer.h"
+
+class CParticleSystemComponent;
+class CTransform;
 
 class CFighter :public CActor
 {
@@ -27,6 +31,7 @@ public:
 	void Shot();
 	void ShotReset();
 	void Move();
+	void Particle(CParticleSystemComponent::Particle& key,CTransform& trans);
 	void Rot(int dire);
 	void EventAtBeginCollide(CActor& collideActor)override;
 	void EventAtEndCollide(CActor& collideActor)override;

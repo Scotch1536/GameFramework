@@ -4,8 +4,10 @@
 #include <functional>
 
 #include "CComponent.h"
+#include "../Components/CRenderComponent.h"
+#include "../Actor/CActor.h"
 #include "../Transform/CTransform.h"
-#include "..\Library\LCMath.h"
+#include "../Library\LCMath.h"
 
 class CTransform;
 
@@ -19,26 +21,33 @@ public:
 		RADIATION,
 	};
 
-	struct Particle
+	class Particle:public CActor
 	{
+	public:
+		IRender* MeshComponent;
 		CTransform Transform;
 		XMFLOAT3 Direction;
+
 		int Life;
 
-		Particle(CTransform& parentTrans, const XMFLOAT3& direction, const int& life);
+		Particle(ILevel& owner, CTransform& parentTrans, const XMFLOAT3& direction, const int& life);
 	};
 
 private:
-	std::function<void(const CParticleSystemComponent&,CTransform&)> mFunction;
+	std::vector<Particle*> mParticle;
+	std::function<void(CParticleSystemComponent::Particle&,CTransform&)> mFunction;
+
+	ILevel& mLevel;
 	EType mType;
+
 	int mLifeFlame;
 	float mQuantity;
-	std::vector<std::unique_ptr<Particle>> mParticle;
+	float mSpeed;
 public:
 	CTransform Transform;
 
-	CParticleSystemComponent(CActor& owner, CTransform& parentTrans, std::function<void(const CParticleSystemComponent&, CTransform&)> func,
-		EType type, int life, float qty, bool frameChoice, int priority = 100);
+	CParticleSystemComponent(CActor& owner, ILevel& ownerLevel, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func,
+		EType type, int life, float qty,float speed, bool frameChoice, int priority = 1);
 
 	void Update() override;
 	void Move();
