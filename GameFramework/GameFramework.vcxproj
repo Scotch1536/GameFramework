@@ -26,6 +26,7 @@
     <ClCompile Include="GameFramework\Components\CCameraComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CColliderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CConeParticleComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CDisplay2DComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CParticleSystemComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CLineComponent.cpp" />
@@ -86,6 +87,7 @@
     <ClInclude Include="GameFramework\Components\CCameraComponent.h" />
     <ClInclude Include="GameFramework\Components\CColliderComponent.h" />
     <ClInclude Include="GameFramework\Components\CComponent.h" />
+    <ClInclude Include="GameFramework\Components\CConeParticleComponent.h" />
     <ClInclude Include="GameFramework\Components\CDisplay2DComponent.h" />
     <ClInclude Include="GameFramework\Components\CLightComponent.h" />
     <ClInclude Include="GameFramework\Components\CParticleSystemComponent.h" />

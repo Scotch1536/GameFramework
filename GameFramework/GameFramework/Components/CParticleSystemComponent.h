@@ -11,17 +11,11 @@
 
 class CTransform;
 
-
 class CParticleSystemComponent :public CComponent
 {
 public:
-	enum class EType
-	{
-		SPHERE,
-		RADIATION,
-	};
 
-	class Particle:public CActor
+	class Particle :public CActor
 	{
 	public:
 		IRender* MeshComponent;
@@ -29,26 +23,29 @@ public:
 		XMFLOAT3 Direction;
 
 		int Life;
+		float Speed;
 
-		Particle(ILevel& owner, CTransform& parentTrans, const XMFLOAT3& direction, const int& life);
+		Particle(ILevel& owner, CTransform& parentTrans, const XMFLOAT3& direction, const int& life, const float& speed);
+		void Update() override;
 	};
 
 private:
 	std::vector<Particle*> mParticle;
-	std::function<void(CParticleSystemComponent::Particle&,CTransform&)> mFunction;
 
+protected:
+	std::function<void(CParticleSystemComponent::Particle&, CTransform&)> mFunction;
 	ILevel& mLevel;
-	EType mType;
+	CTransform Transform;
 
 	int mLifeFlame;
 	float mQuantity;
 	float mSpeed;
-public:
-	CTransform Transform;
+	int mFrameCount;
 
 	CParticleSystemComponent(CActor& owner, ILevel& ownerLevel, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func,
-		EType type, int life, float qty,float speed, bool frameChoice, int priority = 1);
+		int life, float qty, float speed, float second, int priority = 1);
+public:
 
-	void Update() override;
-	void Move();
+	static void Create(CActor& owner, ILevel& ownerLevel, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func,
+		int life, float speed, XMFLOAT3 direction, float qty, float second = 1);
 };

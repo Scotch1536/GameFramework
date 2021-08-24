@@ -207,6 +207,9 @@
     <ClCompile Include="GameFramework\Components\CLineComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="GameFramework\Components\CConeParticleComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameFramework\Transform\CRotator.h">
@@ -399,6 +402,9 @@
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CLineComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CConeParticleComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

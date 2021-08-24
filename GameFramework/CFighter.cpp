@@ -69,8 +69,8 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 
 	Transform.RequestDebugLine();
 
-	CParticleSystemComponent& particle = *new CParticleSystemComponent(*this,owner, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1, std::placeholders::_2),
-		CParticleSystemComponent::EType::SPHERE,60,5,0.5,true);
+	/*CParticleSystemComponent& particle = *new CParticleSystemComponent(*this,owner, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1, std::placeholders::_2),
+		CParticleSystemComponent::EType::SPHERE,60,5,0.5,true);*/
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
