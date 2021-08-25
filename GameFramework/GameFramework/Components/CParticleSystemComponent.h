@@ -25,7 +25,7 @@ public:
 		int Life;
 		float Speed;
 
-		Particle(ILevel& owner, CTransform& parentTrans, const XMFLOAT3& direction, const int& life, const float& speed);
+		Particle(ILevel& owner, CTransform& parentTrans, const XMFLOAT3& direction, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func, const int& life, const float& speed);
 		void Update() override;
 	};
 

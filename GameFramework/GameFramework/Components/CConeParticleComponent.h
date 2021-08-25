@@ -5,7 +5,7 @@
 class CConeParticleComponent:public CParticleSystemComponent
 {
 private:
-	XMFLOAT3 mDirection;
+	XMFLOAT3& mDirection;
 
 	void Update() override;
 public:

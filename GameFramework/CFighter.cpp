@@ -69,8 +69,8 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 
 	Transform.RequestDebugLine();
 
-	/*CParticleSystemComponent& particle = *new CParticleSystemComponent(*this,owner, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1, std::placeholders::_2),
-		CParticleSystemComponent::EType::SPHERE,60,5,0.5,true);*/
+	CParticleSystemComponent::Create(*this, owner, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1, std::placeholders::_2),
+		 60, 5, Transform.GetForwardVector(),300 );
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
@@ -125,7 +125,7 @@ void CFighter::Move()
 
 void CFighter::Particle(CParticleSystemComponent::Particle& key, CTransform& trans)
 {
-	new CSphereMeshComponent(key, trans, 0.05, 30, { 1,1,1,1 });
+	new CSphereMeshComponent(key, trans, 0.3, 30, { 1,1,1,1 });
 }
 
 void CFighter::Rot(int dire)

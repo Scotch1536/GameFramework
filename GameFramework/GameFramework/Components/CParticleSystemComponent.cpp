@@ -6,8 +6,13 @@
 
 #include "../Transform/CTransform.h"
 
-CParticleSystemComponent::Particle::Particle(ILevel& owner, CTransform& parentTrans, const XMFLOAT3& direction, const int& life, const float& speed) :CActor(owner),
-Transform(*this, parentTrans), Direction(direction), Life(life), Speed(speed) {}
+CParticleSystemComponent::Particle::Particle(ILevel& owner, CTransform& parentTrans, const XMFLOAT3& direction, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> function, const int& life, const float& speed) :CActor(owner),
+Transform(*this, parentTrans), Direction(direction), Life(life), Speed(speed) 
+{
+	function(*this, Transform);
+	//auto func = [&] { function(*this, Transform); };
+	//IActorToComponent::RequestAddDoAfterUpdateFunction(func);
+}
 
 void CParticleSystemComponent::Particle::Update()
 {

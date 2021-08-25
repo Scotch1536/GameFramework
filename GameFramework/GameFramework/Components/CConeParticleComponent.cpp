@@ -12,30 +12,34 @@ void CConeParticleComponent::Update()
 	std::random_device rd;
 	std::mt19937 mt(rd());
 
-	if (fmodf(mQuantity, mFrameCount) == 0)
+	if (mQuantity >= 1)
 	{
-		XMFLOAT3 direction;
-		direction.x = float(mt() % 10);
-		direction.y = float(mt() % 10);
-		direction.z = float(mt() % 10);
-		if (mt() % 2 == 0)
+		for (int q = 0; q < mQuantity; q++)
 		{
-			direction.x *= -1;
-		}
-		if (mt() % 2 == 0)
-		{
-			direction.y *= -1;
-		}
-		if (mt() % 2 == 0)
-		{
-			direction.z *= -1;
-		}
+			XMFLOAT3 direction;
+			direction.x = float(mt() % 5) + mDirection.x;
+			direction.y = float(mt() % 5) + mDirection.y;
+			direction.z = float(mt() % 5) + mDirection.z;
 
-		direction = LCMath::CalcFloat3Normalize(direction);
+			direction = LCMath::CalcFloat3Normalize(direction);
 
-		Particle* particle = new Particle(mLevel, Transform, direction, mLifeFlame, mSpeed);
-
-		auto func = [&] { mFunction(*particle, particle->Transform); };
-		mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
+			new Particle(mLevel, Transform, direction, mFunction, mLifeFlame, mSpeed);
+		}
 	}
+	else
+	{
+		if (fmodf(mFrameCount, mQuantity) == 0)
+		{
+			XMFLOAT3 direction;
+			direction.x = float(mt() % 10) + mDirection.x;
+			direction.y = float(mt() % 10) + mDirection.y;
+			direction.z = float(mt() % 10) + mDirection.z;
+
+			direction = LCMath::CalcFloat3Normalize(direction);
+
+			new Particle(mLevel, Transform, direction, mFunction, mLifeFlame, mSpeed);
+		}
+	}
+	++mFrameCount;
+	if (mFrameCount >= 36000) mFrameCount = 0;
 }
