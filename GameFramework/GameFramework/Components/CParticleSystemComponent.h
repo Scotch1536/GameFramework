@@ -47,5 +47,5 @@ protected:
 public:
 
 	static void Create(CActor& owner, ILevel& ownerLevel, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func,
-		int life, float speed, XMFLOAT3 direction, float qty, float second = 1);
+		int life, float speed, float qty,float degree, XMFLOAT3 direction = {0,1,0}, float second = 1);
 };

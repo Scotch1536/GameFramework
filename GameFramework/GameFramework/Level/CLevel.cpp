@@ -32,6 +32,11 @@ void CLevel::RequestLoadLevel(CLevel& level)
 	mOwnerInterface->LoadLevel(level);
 }
 
+void CLevel::RequestAddDoAfterUpdateFunction(const std::function<void()>& func)
+{
+	mDoAfterUpdateFunction.emplace_back(func);
+}
+
 void CLevel::Update()
 {
 	CActor* cameraActor = nullptr;
@@ -92,6 +97,18 @@ void CLevel::Update()
 		}
 
 		actor->Update();
+	}
+
+	//更新後に行う関数を実行
+	if (mDoAfterUpdateFunction.size() != 0)
+	{
+		for (auto& func : mDoAfterUpdateFunction)
+		{
+			func();
+		}
+		//中身を空にする
+		mDoAfterUpdateFunction.clear();
+		mDoAfterUpdateFunction.shrink_to_fit();
 	}
 }
 

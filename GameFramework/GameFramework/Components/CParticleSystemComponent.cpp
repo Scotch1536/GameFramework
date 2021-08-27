@@ -10,8 +10,7 @@ CParticleSystemComponent::Particle::Particle(ILevel& owner, CTransform& parentTr
 Transform(*this, parentTrans), Direction(direction), Life(life), Speed(speed) 
 {
 	function(*this, Transform);
-	//auto func = [&] { function(*this, Transform); };
-	//IActorToComponent::RequestAddDoAfterUpdateFunction(func);
+	
 }
 
 void CParticleSystemComponent::Particle::Update()
@@ -36,8 +35,8 @@ CParticleSystemComponent::CParticleSystemComponent(CActor& owner, ILevel& ownerL
 }
 
 void CParticleSystemComponent::Create(CActor& owner, ILevel& ownerLevel, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func,
-	int life, float speed, XMFLOAT3 direction, float qty, float second)
+	int life, float speed, float qty, float degree, XMFLOAT3 direction, float second)
 {
-	new CConeParticleComponent(owner, ownerLevel, parentTrans, func, life, speed, direction, qty, second);
+	new CConeParticleComponent(owner, ownerLevel, parentTrans, func, life, speed, direction, qty, second, degree);
 
 }

@@ -36,7 +36,6 @@ class CActor :public CObject , public IActorToComponent
 {
 private:
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
-	std::vector<std::function<void()>> mDoAfterUpdateFunction;		//更新後に行う関数オブジェクト
 	std::vector<IRender*> mRenderComponents;					//描画の属性をもつコンポーネント
 	std::vector<std::string> mActorTags;						//タグ
 
@@ -50,10 +49,7 @@ private:
 	*/
 	void AddComponent(CComponent& component)override;
 
-	void AddDoAfterUpdateFunction(const std::function<void()>& func)
-	{
-		mDoAfterUpdateFunction.emplace_back(func);
-	}
+	
 
 	//レンダー機能を持つコンポーネントを登録
 	void AddRenderComponent(IRender& component)override;

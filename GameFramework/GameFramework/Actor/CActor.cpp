@@ -50,7 +50,7 @@ void CActor::RequestAdd2DRenderComponentToLevel(IRender& renderTarget)
 
 void CActor::RequestAddDoAfterUpdateFunction(const std::function<void()>& func)
 {
-	AddDoAfterUpdateFunction(func);
+	mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
 }
 
 void CActor::Update()
@@ -61,18 +61,7 @@ void CActor::Update()
 	{
 		component->Update();
 	}
-
-	//UpdateŒã‚És‚¤ŠÖ”‚ğÀs
-	if (mDoAfterUpdateFunction.size() != 0)
-	{
-		for (auto& func : mDoAfterUpdateFunction)
-		{
-			func();
-		}
-		//’†g‚ğ‹ó‚É‚·‚é
-		mDoAfterUpdateFunction.clear();
-		mDoAfterUpdateFunction.shrink_to_fit();
-	}
+	
 }
 
 void CActor::Render()

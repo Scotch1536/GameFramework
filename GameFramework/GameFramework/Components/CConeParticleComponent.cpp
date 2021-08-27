@@ -3,8 +3,8 @@
 #include "CConeParticleComponent.h"
 
 CConeParticleComponent::CConeParticleComponent(CActor& owner, ILevel& ownerLevel, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func,
-	int life, float speed, XMFLOAT3 direction, float qty, float second)
-	:CParticleSystemComponent(owner, ownerLevel, parentTrans, func, life, qty, speed, second), mDirection(direction)
+	int life, float speed, XMFLOAT3 direction, float qty, float second, float degree)
+	:CParticleSystemComponent(owner, ownerLevel, parentTrans, func, life, qty, speed, second), mDirection(direction),mDegree(degree)
 {}
 
 void CConeParticleComponent::Update()
@@ -22,8 +22,9 @@ void CConeParticleComponent::Update()
 			direction.z = float(mt() % 5) + mDirection.z;
 
 			direction = LCMath::CalcFloat3Normalize(direction);
-
-			new Particle(mLevel, Transform, direction, mFunction, mLifeFlame, mSpeed);
+						
+			auto func = [&] {new Particle(mLevel, Transform, direction, mFunction, mLifeFlame, mSpeed); };
+			mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
 		}
 	}
 	else
@@ -42,4 +43,9 @@ void CConeParticleComponent::Update()
 	}
 	++mFrameCount;
 	if (mFrameCount >= 36000) mFrameCount = 0;
+}
+
+bool CConeParticleComponent::ConvertDirection(XMFLOAT3 direction)
+{
+
 }

@@ -26,6 +26,7 @@ public:
 	virtual void AddAlphaRenderComponent(IRender& renderTarget, bool isFront) = 0;
 	virtual void Add2DRenderComponent(IRender& renderTarget) = 0;
 	virtual void RequestLoadLevel(CLevel& level) = 0;
+	virtual void RequestAddDoAfterUpdateFunction(const std::function<void()>& func) = 0;
 };
 
 //レベルクラス
@@ -33,6 +34,7 @@ class CLevel :public CObject, public ILevel
 {
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;					//アクター
+	std::vector<std::function<void()>> mDoAfterUpdateFunction;		//更新後に行う関数オブジェクト
 	std::vector<std::function<void()>> mDoAfterTickFunction;		//Tick後に行う関数オブジェクト
 	std::vector<std::function<void()>> mImGuiDrawMethod;			//ImGuiに行わせる描画の関数オブジェクト
 	std::vector<IRender*> mAlphaRenderComponents;
@@ -73,7 +75,13 @@ private:
 		m2DRenderComponents.emplace_back(&renderTarget);
 	}
 
+	void AddDoAfterUpdateFunction(const std::function<void()>& func)
+	{
+		mDoAfterUpdateFunction.emplace_back(func);
+	}
+
 	void RequestLoadLevel(CLevel& level)override;
+	void RequestAddDoAfterUpdateFunction(const std::function<void()>& func);
 
 protected:
 	//カメラのセットをリクエスト
