@@ -38,5 +38,4 @@ void CParticleSystemComponent::Create(CActor& owner, ILevel& ownerLevel, CTransf
 	int life, float speed, float qty, float degree, XMFLOAT3 direction, float second)
 {
 	new CConeParticleComponent(owner, ownerLevel, parentTrans, func, life, speed, direction, qty, second, degree);
-
 }
