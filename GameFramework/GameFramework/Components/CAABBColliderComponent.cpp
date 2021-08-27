@@ -16,7 +16,7 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner , const CModelData&
 	isMesh = false;
 #endif
 
-	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , mLocalMin , mLocalMax , { 1.0f,1.0f,1.0f,0.3f });
+	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , { 1.0f,1.0f,1.0f,0.3f } , mLocalMin , mLocalMax);
 }
 
 CAABBColliderComponent::CAABBColliderComponent(CActor& owner , CTransform& parentTrans , bool isMesh , int priority)
@@ -27,7 +27,7 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner , CTransform& paren
 	isMesh = false;
 #endif
 
-	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , mLocalMin , mLocalMax , { 1.0f,1.0f,1.0f,0.3f });
+	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , { 1.0f,1.0f,1.0f,0.3f } , mLocalMin , mLocalMax);
 }
 
 void CAABBColliderComponent::ConvertWorldCollider()

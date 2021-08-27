@@ -6,7 +6,7 @@
 #include "CSphereMeshComponent.h"
 #include "CRenderComponent.h"
 
-CSphereMeshComponent::CSphereMeshComponent(CActor& owner , CTransform& parentTrans , float radius , int divNum , XMFLOAT4 color ,
+CSphereMeshComponent::CSphereMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color , int divNum , float radius ,
 	std::string vertexShaderPath , std::string pixelShaderPath)
 	:CPrimitiveMeshComponent(owner , parentTrans , color , vertexShaderPath , pixelShaderPath) ,
 	mRadius(radius) ,

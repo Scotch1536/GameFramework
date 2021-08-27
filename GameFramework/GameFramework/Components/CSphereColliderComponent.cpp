@@ -29,7 +29,7 @@ CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const CModelD
 	isMesh = false;
 #endif
 
-	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , Transform , mLocalRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
+	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , Transform , { 1.0f,1.0f,1.0f,0.3f } , 50 , mLocalRadius);
 }
 
 CSphereColliderComponent::CSphereColliderComponent(CActor& owner , CTransform& parentTrans , bool isMesh , int priority)
@@ -40,7 +40,7 @@ CSphereColliderComponent::CSphereColliderComponent(CActor& owner , CTransform& p
 	isMesh = false;
 #endif
 
-	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , Transform , mLocalRadius , 50 , { 1.0f,1.0f,1.0f,0.3f });
+	if(isMesh)mSphereMesh = new CSphereMeshComponent(owner , Transform , { 1.0f,1.0f,1.0f,0.3f } , 50 , mLocalRadius);
 }
 
 void CSphereColliderComponent::ConvertWorldCollider()
