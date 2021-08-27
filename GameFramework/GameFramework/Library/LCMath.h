@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <DirectXMath.h>
 
 using namespace DirectX;
@@ -68,6 +69,12 @@ public:
 	//スカラー積
 	static const XMFLOAT3& CalcFloat3Scalar(const XMFLOAT3& target, const float& scalar, XMFLOAT3& resultVec);
 	static XMFLOAT3 CalcFloat3Scalar(const XMFLOAT3& target, const float& scalar);
+
+	static const XMFLOAT3& CalcFloat3MultplyMatrix(const XMFLOAT3& target,const XMFLOAT4X4& mtx, XMFLOAT3& result);
+	static XMFLOAT3 CalcFloat3MultplyMatrix(const XMFLOAT3& target, const XMFLOAT4X4& mtx);
+
+	//頂点配列からMin Maxを求める
+	static const void CalcFloat3MinMax(const std::vector<XMFLOAT3>& vertices, XMFLOAT3& resultMin,XMFLOAT3& resultMax);
 
 	//線形補間
 	static const float& Lerp(const float& start, const float& end, const float& alpha, float& result);
