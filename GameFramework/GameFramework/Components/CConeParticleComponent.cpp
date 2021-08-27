@@ -56,7 +56,7 @@ void CConeParticleComponent::Update()
 bool CConeParticleComponent::ConvertDirection(XMFLOAT3 direction)
 {
 	XMFLOAT4 mulQua;
-	XMFLOAT3 vec, axis, eulerAngles;
+	XMFLOAT3 axis;
 	float angle;
 
 	//クォータニオンに必要な角度を計算
@@ -66,8 +66,8 @@ bool CConeParticleComponent::ConvertDirection(XMFLOAT3 direction)
 	結果が1(小数点がはみ出ることがあるので1以上)ならベクトル同士が平行なので終了
 	-1以下なら-1にする
 	*/
-	if (angle >= 1.0f)return;
-	else if (angle < -1.0f)
+	if (angle >= 1.0f)return false;
+	else if (angle <= -1.0f)
 	{
 		direction.x *= -1;
 		direction.y *= -1;
@@ -79,10 +79,14 @@ bool CConeParticleComponent::ConvertDirection(XMFLOAT3 direction)
 	//角度を求める
 	angle = std::acosf(angle);
 
-	DX11MtxRotationAxis();
+	//外積で法線求める
 	//クォータニオンに必要な軸を計算
-	LCMath::CalcFloat3Cross(mPartner.GetForwardVector(), vec, axis);
+	LCMath::CalcFloat3Cross(direction, mDirection, axis);
 
 	//クォータニオン作成
 	LCMath::CreateFromAxisAndAngleToQuaternion(axis, angle, mulQua);
+	//クォータニオンを回転行列に変換
+	//回転行列とdirectionをかけてdirectionに代入
+
+	return true;
 }
