@@ -44,6 +44,8 @@ public:
 
 	CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color , std::string vertexShaderPath , std::string pixelShaderPath);
 
+	void SetColor(const XMFLOAT4& color);
+
 	void Update()override;
 	void Render()override;
 
