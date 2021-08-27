@@ -4,7 +4,7 @@
 
 CTest2D::CTest2D(ILevel& partner):CActor(partner)
 {
-	CDisplay2DComponent& mesh = *new CDisplay2DComponent(*this , Transform , "Assets/Textures/Decal/‹ó’†í.png");
+	CDisplay2DComponent<SVertex2DUV>& mesh = *new CDisplay2DComponent<SVertex2DUV>(*this , Transform , "Assets/Textures/Decal/‹ó’†í.png");
 	mesh.Transform.Scale = { 200.0f,100.0f,0.0f };
 
 	Transform.Location.x = CApplication::CLIENT_WIDTH / 2;

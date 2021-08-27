@@ -83,6 +83,53 @@ void CPrimitiveMeshComponent<VertexType>::Render()
 	mRenderComponent.Render(sizeof(VertexType) , mIndices.size() , nullptr , mVertexBuffer.Get() , mIndexBuffer.Get() , nullptr);
 }
 
+template<class VertexType>
+void CPrimitiveMeshComponent<VertexType>::SetColor(const XMFLOAT4& color)
+{
+	mColor = color;
+}
+
+void CPrimitiveMeshComponent<SVertexColor>::SetColor(const XMFLOAT4& color)
+{
+	mColor = color;
+
+	for(auto& vertex : mVertices)
+	{
+		vertex.Color = color;
+	}
+	
+	//頂点セット
+	D3D11_MAPPED_SUBRESOURCE pData;
+
+	HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get() , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &pData);
+	if(SUCCEEDED(hr))
+	{
+		memcpy_s(pData.pData , pData.RowPitch , mVertices.data() , sizeof(SVertexColor) * mVertices.size());
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get() , 0);
+	}
+}
+
+void CPrimitiveMeshComponent<SVertex2DColor>::SetColor(const XMFLOAT4& color)
+{
+	mColor = color;
+
+	for(auto& vertex : mVertices)
+	{
+		vertex.Color = color;
+	}
+
+	//頂点セット
+	D3D11_MAPPED_SUBRESOURCE pData;
+
+	HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get() , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &pData);
+	if(SUCCEEDED(hr))
+	{
+		memcpy_s(pData.pData , pData.RowPitch , mVertices.data() , sizeof(SVertex2DColor) * mVertices.size());
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get() , 0);
+	}
+}
+
 template class CPrimitiveMeshComponent<SVertexColor>;
 template class CPrimitiveMeshComponent<SVertexUV>;
-template class CPrimitiveMeshComponent<SVertex2D>;
+template class CPrimitiveMeshComponent<SVertex2DUV>;
+template class CPrimitiveMeshComponent<SVertex2DColor>;

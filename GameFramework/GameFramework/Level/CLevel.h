@@ -23,13 +23,12 @@ public:
 	virtual void AddActor(CActor& actor) = 0;
 	virtual void RequestSetCamera(CCameraComponent& camera) = 0;
 	virtual void AddImGuiDrawMethod(std::function<void()> method) = 0;
-	virtual void AddAlphaRenderComponent(IRender& renderTarget, bool isFront) = 0;
+	virtual void AddAlphaRenderComponent(IRender& renderTarget , bool isFront) = 0;
 	virtual void Add2DRenderComponent(IRender& renderTarget) = 0;
-	virtual void RequestLoadLevel(CLevel& level) = 0;
 };
 
 //レベルクラス
-class CLevel :public CObject, public ILevel
+class CLevel :public CObject , public ILevel
 {
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;					//アクター
@@ -58,12 +57,12 @@ private:
 	//アクターの破壊
 	void DestroyActor(CActor& target)override;
 
-	void AddAlphaRenderComponent(IRender& renderTarget, bool isFront)override
+	void AddAlphaRenderComponent(IRender& renderTarget , bool isFront)override
 	{
-		if (isFront)
+		if(isFront)
 		{
 			auto itr = mAlphaRenderComponents.begin();
-			mAlphaRenderComponents.emplace(itr, &renderTarget);
+			mAlphaRenderComponents.emplace(itr , &renderTarget);
 		}
 		else mAlphaRenderComponents.emplace_back(&renderTarget);
 	}
@@ -72,8 +71,6 @@ private:
 	{
 		m2DRenderComponents.emplace_back(&renderTarget);
 	}
-
-	void RequestLoadLevel(CLevel& level)override;
 
 protected:
 	//カメラのセットをリクエスト
@@ -87,9 +84,9 @@ protected:
 	template<class T>
 	bool GetActor(CActor*& result)
 	{
-		for (auto& actor : mActors)
+		for(auto& actor : mActors)
 		{
-			if (typeid(T) == typeid(*actor))
+			if(typeid(T) == typeid(*actor))
 			{
 				result = actor.get();
 				return true;
@@ -101,20 +98,20 @@ protected:
 	template<class T>
 	bool GetAllActor(std::vector<CActor*>& result)
 	{
-		for (auto& actor : mActors)
+		for(auto& actor : mActors)
 		{
-			if (typeid(T) == typeid(*actor))
+			if(typeid(T) == typeid(*actor))
 			{
 				result.emplace_back(actor.get());
 			}
 		}
-		if (result.size() != 0)return true;
+		if(result.size() != 0)return true;
 		else return false;
 	}
 
 public:
 	//★超重要★　コンストラクタを呼ぶことはレベルの遷移を意味する
-	CLevel(IGame& owner);
+	CLevel(IGame& owner , bool isFeed = false , XMFLOAT3 feedColor = { 1.0f,1.0f,1.0f } , float oneFrameAlpha = 0.01f);
 
 	/*
 	★超重要★

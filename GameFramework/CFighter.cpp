@@ -179,11 +179,11 @@ void CFighter::Tick()
 
 void CFighter::EventAtBeginCollide(CActor& collideActor)
 {
-	/*if(collideActor.HasTag("Dice"))
+	if(collideActor.HasTag("Dice"))
 	{
-		mOwnerInterface.RequestLoadLevel(*new CTestLevel(CGameManager::GetInstance().GetGameInterface()));
+		new CTestLevel(CGameManager::GetInstance().GetGameInterface(),true);
 		mIsHit = true;
-	}*/
+	}
 }
 
 void CFighter::EventAtEndCollide(CActor& collideActor)

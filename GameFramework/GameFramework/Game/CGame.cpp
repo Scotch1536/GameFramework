@@ -6,6 +6,7 @@
 #include "../ExternalCode/CDirectInput.h"
 #include "../Managers/CInputManager.h"
 #include "../Managers/CSoundManager.h"
+#include "../Actor/Display2DActor.h"
 
 #include "CGame.h"
 #include "CApplication.h"
@@ -131,13 +132,41 @@ void CGame::Render()
 	}
 }
 
-void CGame::LoadLevel(CLevel& level)
+void CGame::LoadLevel(CLevel& level , bool isFeed , XMFLOAT3 feedColor , float oneFrameAlpha)
 {
-	auto loadLevel = [&]
+	auto loadLevel = [& , isFeed , feedColor , oneFrameAlpha]
 	{
+		if(isFeed)
+		{
+			float alpha = 0.0f;
+			CDisplay2DActor& feedScreen = *new CDisplay2DActor(*mLevel , XMFLOAT4(feedColor.x , feedColor.y , feedColor.z , alpha));
+			feedScreen.Transform.Location.x = static_cast<float>(CApplication::CLIENT_WIDTH) / 2;
+			feedScreen.Transform.Location.y = static_cast<float>(CApplication::CLIENT_HEIGHT) / 2;
+			feedScreen.Transform.Scale.x = CApplication::CLIENT_WIDTH;
+			feedScreen.Transform.Scale.y = CApplication::CLIENT_HEIGHT;
+
+			while(alpha <= 1.0f)
+			{
+				alpha += oneFrameAlpha;
+
+				feedScreen.SetColor(XMFLOAT4(feedColor.x , feedColor.y , feedColor.z , alpha));
+
+				feedScreen.Update();
+
+				mLevel->Render();
+			}
+			alpha = 1.0f;
+
+			feedScreen.SetColor(XMFLOAT4(feedColor.x , feedColor.y , feedColor.z , alpha));
+
+			feedScreen.Update();
+
+			mLevel->Render();
+		}
 		mLevel.reset(&level);
 
 		mLevel->Init();
 	};
+
 	mLoadLevelFunction = loadLevel;
 }
