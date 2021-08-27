@@ -121,7 +121,7 @@ void CRotator::ChangeAngleAndQuaternionToLocation(XMFLOAT3 location)
 bool CRotator::CalcQuaternionToLocation(XMFLOAT3 location , XMFLOAT4& resultQua)
 {
 	XMFLOAT4 mulQua;
-	XMFLOAT3 vec , axis , eulerAngles;
+	XMFLOAT3 vec , axis;
 	float angle;
 
 	//向きたい位置へのベクトルを計算
