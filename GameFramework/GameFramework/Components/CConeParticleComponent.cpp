@@ -29,24 +29,47 @@ void CConeParticleComponent::Update()
 			DX11MtxMultiply(rotMTX, rotX, rotZ);
 			DX11Vec3MulMatrix(direction, defaultDirection, rotMTX);
 
-			direction = LCMath::CalcFloat3Normalize(direction);
+			if (ConvertDirection(direction))
+			{
+				direction = LCMath::CalcFloat3Normalize(direction);
+				auto func = [&] {new Particle(mLevel, Transform, direction, mFunction, mLifeFlame, mSpeed); };
+				mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
+			}
+			else
+			{
+				auto func = [&] {new Particle(mLevel, Transform, mDirection, mFunction, mLifeFlame, mSpeed); };
+				mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
+			}
 
-			auto func = [&] {new Particle(mLevel, Transform, direction, mFunction, mLifeFlame, mSpeed); };
-			mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
 		}
 	}
 	else
 	{
 		if (fmodf(mFrameCount, mQuantity) == 0)
 		{
+			XMFLOAT3 defaultDirection = { 0,1,0 };
 			XMFLOAT3 direction;
-			direction.x = float(mt() % 10) + mDirection.x;
-			direction.y = float(mt() % 10) + mDirection.y;
-			direction.z = float(mt() % 10) + mDirection.z;
+			XMFLOAT4X4 rotX;
+			XMFLOAT4X4 rotZ;
+			XMFLOAT4X4 rotMTX;
+			std::uniform_real_distribution urd(-mDegree / 2, mDegree / 2);
 
-			direction = LCMath::CalcFloat3Normalize(direction);
+			DX11MtxRotationAxis({ 1,0,0 }, urd(mt), rotX);
+			DX11MtxRotationAxis({ 0,0,1 }, urd(mt), rotZ);
+			DX11MtxMultiply(rotMTX, rotX, rotZ);
+			DX11Vec3MulMatrix(direction, defaultDirection, rotMTX);
 
-			new Particle(mLevel, Transform, direction, mFunction, mLifeFlame, mSpeed);
+			if (ConvertDirection(direction))
+			{
+				direction = LCMath::CalcFloat3Normalize(direction);
+				auto func = [&] {new Particle(mLevel, Transform, direction, mFunction, mLifeFlame, mSpeed); };
+				mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
+			}
+			else
+			{
+				auto func = [&] {new Particle(mLevel, Transform, mDirection, mFunction, mLifeFlame, mSpeed); };
+				mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
+			}
 		}
 	}
 	++mFrameCount;
@@ -56,6 +79,7 @@ void CConeParticleComponent::Update()
 bool CConeParticleComponent::ConvertDirection(XMFLOAT3 direction)
 {
 	XMFLOAT4 mulQua;
+	XMFLOAT4X4 MTX;
 	XMFLOAT3 axis;
 	float angle;
 
@@ -86,7 +110,9 @@ bool CConeParticleComponent::ConvertDirection(XMFLOAT3 direction)
 	//クォータニオン作成
 	LCMath::CreateFromAxisAndAngleToQuaternion(axis, angle, mulQua);
 	//クォータニオンを回転行列に変換
+	DX11MtxFromQt(MTX, mulQua);
 	//回転行列とdirectionをかけてdirectionに代入
+	DX11Vec3MulMatrix(direction, direction, MTX);
 
 	return true;
 }
