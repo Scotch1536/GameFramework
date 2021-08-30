@@ -15,22 +15,6 @@ CGameManager& CGameManager::GetInstance()
 	return instance;
 }
 
-void CGameManager::SetStartLevel(CLevel& startLevel)
-{
-	if(mCanSetStartLevel)
-	{
-		mCanSetStartLevel = false;
-
-		static_cast<IGameToGameManager&>(mGame).SetLevel(startLevel);
-		startLevel.SetOwnerInterface(mGame);
-	}
-	else
-	{
-		MessageBox(NULL , "Already SetStartLevel" , "error" , MB_OK);
-		exit(1);
-	}
-}
-
 void CGameManager::RequestExecute(HINSTANCE hInst , int winMode)
 {
 	if(mCanExecute)

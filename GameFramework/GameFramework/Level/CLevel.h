@@ -119,13 +119,6 @@ public:
 	//★超重要★　コンストラクタを呼ぶことはレベルの遷移を意味する
 	CLevel(IGame& owner , bool isFeed = false , XMFLOAT3 feedColor = { 1.0f,1.0f,1.0f } , float oneFrameAlpha = 0.01f);
 
-	/*
-	★超重要★
-	ゲームマネージャーにレベルを送る場合のみゲームの参照なしでコンストラクタを呼び出し可能
-	開始レベルの設定のためなので一度のみ可能二度目からはエラーで終了する
-	*/
-	CLevel(IGameManagerToLevel& receiver);
-
 	virtual ~CLevel() {};
 
 	/*

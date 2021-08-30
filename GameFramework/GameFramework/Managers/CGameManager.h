@@ -6,15 +6,8 @@ class CGame;
 class IGame;
 class CApplication;
 
-class IGameManagerToLevel
-{
-public:
-	virtual ~IGameManagerToLevel() {};
-	virtual void SetStartLevel(CLevel& startLevel) = 0;
-};
-
 //ゲームマネージャークラス：シングルトン
-class CGameManager :public IGameManagerToLevel
+class CGameManager
 {
 private:
 	CGame mGame;			//ゲームクラス
@@ -32,9 +25,6 @@ private:
 	CGameManager& operator=(const CGameManager&) = delete;
 	CGameManager(CGameManager&&) = delete;
 	CGameManager& operator=(CGameManager&&) = delete;
-
-	//スタートレベルのセット
-	void SetStartLevel(CLevel& startLevel)override;
 
 public:
 	static CGameManager& GetInstance();

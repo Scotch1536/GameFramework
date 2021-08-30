@@ -12,11 +12,6 @@ CLevel::CLevel(IGame& owner , bool isFeed , XMFLOAT3 feedColor , float oneFrameA
 	mOwnerInterface->LoadLevel(*this , isFeed , feedColor , oneFrameAlpha);
 }
 
-CLevel::CLevel(IGameManagerToLevel& receiver) : CObject("Level")
-{
-	receiver.SetStartLevel(*this);
-}
-
 void CLevel::AddActor(CActor& actor)
 {
 	mActors.emplace_back(&actor);

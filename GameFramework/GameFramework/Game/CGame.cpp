@@ -103,11 +103,6 @@ void CGame::Init()
 	devCon->PSSetConstantBuffers(5 , 1 , mConstantBufferViewPort.GetAddressOf());
 
 	imguiInit();
-
-	if(mLevel != nullptr)
-	{
-		mLevel->Init();
-	}
 }
 
 void CGame::Input()
@@ -117,13 +112,19 @@ void CGame::Input()
 
 void CGame::Update()
 {
-	mLevel->Tick();
-	mLevel->Update();
+	if(mLevel != nullptr)
+	{
+		mLevel->Tick();
+		mLevel->Update();
+	}
 }
 
 void CGame::Render()
 {
-	mLevel->Render();
+	if(mLevel != nullptr)
+	{
+		mLevel->Render();
+	}
 
 	if(mLoadLevelFunction != nullptr)
 	{
@@ -136,7 +137,7 @@ void CGame::LoadLevel(CLevel& level , bool isFeed , XMFLOAT3 feedColor , float o
 {
 	auto loadLevel = [& , isFeed , feedColor , oneFrameAlpha]
 	{
-		if(isFeed)
+		if(isFeed&&mLevel != nullptr)
 		{
 			float alpha = 0.0f;
 			CDisplay2DColorActor& feedScreen = *new CDisplay2DColorActor(*mLevel , XMFLOAT4(feedColor.x , feedColor.y , feedColor.z , alpha));
