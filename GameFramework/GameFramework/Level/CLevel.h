@@ -25,7 +25,7 @@ public:
 	virtual void AddImGuiDrawFunction(std::function<void()> func) = 0;
 	virtual void AddAlphaRenderComponent(IRender& renderTarget , bool isFront) = 0;
 	virtual void Add2DRenderComponent(IRender& renderTarget) = 0;
-	virtual void AddDoAfterTickFunction(std::function<void()> func) = 0;
+	virtual void AddDoBeforeUpdateFunction(std::function<void()> func) = 0;
 };
 
 //レベルクラス
@@ -33,7 +33,7 @@ class CLevel :public CObject , public ILevel
 {
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;					//アクター
-	std::vector<std::function<void()>> mDoAfterTickFunction;		//更新後に行う関数オブジェクト
+	std::vector<std::function<void()>> mDoBeforeUpdateFunction;		//更新後に行う関数オブジェクト
 	std::vector<std::function<void()>> mImGuiDrawFunction;			//ImGuiに行わせる描画の関数オブジェクト
 	std::vector<IRender*> mAlphaRenderComponents;
 	std::vector<IRender*> m2DRenderComponents;
@@ -73,9 +73,9 @@ private:
 		m2DRenderComponents.emplace_back(&renderTarget);
 	}
 
-	void AddDoAfterTickFunction(std::function<void()> func)override
+	void AddDoBeforeUpdateFunction(std::function<void()> func)override
 	{
-		mDoAfterTickFunction.emplace_back(func);
+		mDoBeforeUpdateFunction.emplace_back(func);
 	}
 
 protected:
@@ -128,7 +128,12 @@ public:
 
 	virtual ~CLevel() {};
 
-	//初期化
+	/*
+	★超重要★
+	アクターの追加は基本ここで行う
+	コンポーネント追加することができるが非推奨
+	コンポーネントはアクターのコンストラクタで追加することを推奨
+	*/
 	virtual void Init() = 0;
 
 	//更新

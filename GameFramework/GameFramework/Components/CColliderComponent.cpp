@@ -33,15 +33,19 @@ void CColliderComponent::UpdateCollidedCache(CColliderComponent* target , bool i
 	if(mCollidedCache[target].IsCollide == true && mCollidedCache[target].IsLastFrameCollide == false)
 	{
 		mEventAtBeginningCollided(target->GetOwner());
+		target->mEventAtBeginningCollided(this->GetOwner());
 	}
 	else if(mCollidedCache[target].IsCollide == false && mCollidedCache[target].IsLastFrameCollide == true)
 	{
 		mEventAtEndCollided(target->GetOwner());
+		target->mEventAtEndCollided(this->GetOwner());
 	}
 }
 
 void CColliderComponent::Update()
 {
+	if(!mIsUpdate)return;
+
 	if(!CColliderManager::GetInstance().GetColliders(this , mColliders))mShouldCompared = false;
 	else mShouldCompared = true;
 
@@ -52,11 +56,6 @@ void CColliderComponent::Update()
 			CAABBColliderComponent& thisObj = dynamic_cast<CAABBColliderComponent&>(*this);
 			for(auto& collider : mColliders)
 			{
-				if(mObjectType != "NONE" && mObjectType == collider->mObjectType)
-				{
-					continue;
-				}
-
 				if(collider->GetType() == EType::AABB)
 				{
 					CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);
@@ -82,11 +81,6 @@ void CColliderComponent::Update()
 			CSphereColliderComponent& thisObj = dynamic_cast<CSphereColliderComponent&>(*this);
 			for(auto& collider : mColliders)
 			{
-				if(mObjectType != "NONE"&&mObjectType == collider->mObjectType)
-				{
-					continue;
-				}
-
 				if(collider->GetType() == EType::AABB)
 				{
 					CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);

@@ -19,7 +19,6 @@
     <ClCompile Include="CPointer.cpp" />
     <ClCompile Include="CSkyDome.cpp" />
     <ClCompile Include="CTest2D.cpp" />
-    <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
     <ClCompile Include="GameFramework\Components\CAABBColliderComponent.cpp" />
@@ -82,7 +81,6 @@
     <ClInclude Include="CPointer.h" />
     <ClInclude Include="CSkyDome.h" />
     <ClInclude Include="CTest2D.h" />
-    <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
     <ClInclude Include="GameFramework\Actor\CActorGenerator.h" />
     <ClInclude Include="GameFramework\Actor\CDisplay2DColorActor.h" />

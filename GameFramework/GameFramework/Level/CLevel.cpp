@@ -31,7 +31,19 @@ void CLevel::Update()
 {
 	CActor* cameraActor = nullptr;
 
-	//Tick前トランスフォーム更新処理
+	//更新前に行う関数を実行
+	if(mDoBeforeUpdateFunction.size() != 0)
+	{
+		for(auto& func : mDoBeforeUpdateFunction)
+		{
+			func();
+		}
+		//中身を空にする
+		mDoBeforeUpdateFunction.clear();
+		mDoBeforeUpdateFunction.shrink_to_fit();
+	}
+
+	//トランスフォーム更新処理
 	for(auto& actor : mActors)
 	{
 		if(CGameManager::GetInstance().GetIsPause())
@@ -63,18 +75,6 @@ void CLevel::Update()
 		}
 
 		actor->Tick();
-	}
-
-	//Tick後に行う関数を実行
-	if(mDoAfterTickFunction.size() != 0)
-	{
-		for(auto& func : mDoAfterTickFunction)
-		{
-			func();
-		}
-		//中身を空にする
-		mDoAfterTickFunction.clear();
-		mDoAfterTickFunction.shrink_to_fit();
 	}
 
 	for(auto& actor : mActors)
@@ -160,10 +160,7 @@ void CLevel::Render()
 			guiMethod();
 		}
 	};
-
-#ifdef _DEBUG
 	imguiDraw(allGuiMethodExecute);
-#endif
 
 	mImGuiDrawFunction.clear();
 	mImGuiDrawFunction.shrink_to_fit();
@@ -195,7 +192,7 @@ void CLevel::DestroyActor(CActor& target)
 	};
 
 	//作成したラムダ式を格納
-	mDoAfterTickFunction.emplace_back(destroyLambda);
+	mDoBeforeUpdateFunction.emplace_back(destroyLambda);
 }
 
 void CLevel::SetOwnerInterface(CGame& owner)

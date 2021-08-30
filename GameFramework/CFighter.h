@@ -9,13 +9,9 @@ private:
 	CPointer& mPointer;
 
 	int mShotCnt = 0;
-	bool mIsHit = false;
 
-	std::unique_ptr<XMFLOAT4> mTargetRot;
-	XMFLOAT4 mStartRot;
-
-	float mAlpha = 0.f;
-	float mIncrementAlpha = 0.f;
+	float mSpeed = 50.0f;
+	float mSpeedLimitMin , mSpeedLimitMax;
 
 public:
 	/*
@@ -28,13 +24,10 @@ public:
 	void ShotReset();
 	void Move();
 	void Rot(int dire);
-	void EventAtBeginCollide(CActor& collideActor)override;
-	void EventAtEndCollide(CActor& collideActor)override;
+	void SpeedChange(int type);
+
 	void Tick()override;
+	//void EventAtBeginCollide(CActor& collideActor)override;
+	//void EventAtEndCollide(CActor& collideActor)override;
 
-	bool GetIsHit()const
-	{
-		return mIsHit;
-	}
 };
-

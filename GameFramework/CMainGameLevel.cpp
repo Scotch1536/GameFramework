@@ -13,14 +13,18 @@ void CMainGameLevel::Init()
 {
 	CComponent* buf;
 
-	CFighter& fighter= *new CFighter(*this);
+	CFighter& fighter = *new CFighter(*this);
+	fighter.Transform.Location.z = -500.0f;
 
-	CSkyDome& skyDome= *new CSkyDome(*this);
+	CSkyDome& skyDome = *new CSkyDome(*this);
+	fighter.Transform.AttachTransform(skyDome.Transform);
+	skyDome.Transform.AddOption(CTransform::EOption::LOCATION_ONLY);
 	skyDome.GetComponent<CStaticMeshComponent>(buf);
 	XMFLOAT3 min , max;
 	min = max = { 0.0f,0.0f,0.0f };
+	CStaticMeshComponent& skyDomeMesh = dynamic_cast<CStaticMeshComponent&>(*buf);
 
-	for(auto& mesh : dynamic_cast<CStaticMeshComponent*>(buf)->GetModel().GetMeshes())
+	for(auto& mesh : skyDomeMesh.GetModel().GetMeshes())
 	{
 		for(auto& vertex : mesh.Vertices)
 		{
@@ -35,7 +39,14 @@ void CMainGameLevel::Init()
 		}
 	}
 
-	new CActorGenerator(*this , [&] { return new CAttachObject(*this); } , min , max , 1.0f);
+	min.x *= (skyDomeMesh.Transform.Scale.x / 2.0f);
+	min.y *= (skyDomeMesh.Transform.Scale.y / 2.0f);
+	min.z *= (skyDomeMesh.Transform.Scale.z / 2.0f);
+	max.x *= (skyDomeMesh.Transform.Scale.x / 2.0f);
+	max.y *= (skyDomeMesh.Transform.Scale.y / 2.0f);
+	max.z *= (skyDomeMesh.Transform.Scale.z / 2.0f);
+
+	new CActorGenerator(*this , [&] { return new CAttachObject(*this); } , min , max , 15.0f);
 
 	fighter.GetComponent<CCameraComponent>(buf);
 	RequestSetCamera(*dynamic_cast<CCameraComponent*>(buf));

@@ -1,15 +1,11 @@
-#include "CFighter.h"
-
 #include "GameFramework/Level/CLevel.h"
 #include "GameFramework/DebugTools/imgui/myimgui.h"
 
 #include "GameFramework/Components/CStaticMeshComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
-#include "GameFramework/Components/CAABBColliderComponent.h"
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CSpringArmComponent.h"
-#include "GameFramework/Components/CLineComponent.h"
 
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CInputManager.h"
@@ -17,10 +13,11 @@
 #include "GameFramework/Managers/CGameManager.h"
 #include "GameFramework/Game/CApplication.h"
 
-#include "CTestLevel.h"
 #include "CBullet.h"
+#include "CFighter.h"
 
-CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner , *this))
+CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner , *this)) ,
+mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 {
 	Transform.AttachTransform(mPointer.Transform);
 	mPointer.Transform.Location.y = 4.0f;
@@ -50,7 +47,7 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	XMFLOAT3 loc = Transform.Location;
 	XMFLOAT3 cameraLoc = Transform.Location;
 	cameraLoc.x += fv.x*-20.0f;
-	cameraLoc.y += fv.y*-20.0f+2.0f;
+	cameraLoc.y += fv.y*-20.0f + 2.0f;
 	cameraLoc.z += fv.z*-20.0f;
 
 	camera.SetProjection(10.f , 10000.f , XM_PI / 4.f , CApplication::CLIENT_WIDTH , CApplication::CLIENT_HEIGHT);
@@ -64,7 +61,7 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	light.SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
 	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
-	collider.Transform.Scale = { 0.5f,0.5f,0.5f };
+	collider.Transform.Scale = { 0.8f,0.8f,0.8f };
 	collider.Transform.Location.y += 2.0f;
 	collider.Transform.Location.z -= 2.0f;
 
@@ -80,6 +77,8 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	CInputManager::GetInstance().AddEvent("Rot+Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_D } , std::bind(&CFighter::Rot , std::ref(*this) , 1));
 	CInputManager::GetInstance().AddEvent("Rot-X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CFighter::Rot , std::ref(*this) , 2));
 	CInputManager::GetInstance().AddEvent("Rot+X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CFighter::Rot , std::ref(*this) , 3));
+	CInputManager::GetInstance().AddEvent("SpeedUP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_Q } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 0));
+	CInputManager::GetInstance().AddEvent("SpeedDPWN" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_E } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 1));
 	CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
 }
 
@@ -116,10 +115,11 @@ void CFighter::ShotReset()
 void CFighter::Move()
 {
 	XMFLOAT3 fv = Transform.GetForwardVector();
+	float dt = CGameManager::GetInstance().GetDeltaTime();
 
-	Transform.Location.x += fv.x * 1;
-	Transform.Location.y += fv.y * 1;
-	Transform.Location.z += fv.z * 1;
+	Transform.Location.x += fv.x * (mSpeed*dt);
+	Transform.Location.y += fv.y * (mSpeed*dt);
+	Transform.Location.z += fv.z * (mSpeed*dt);
 }
 
 void CFighter::Rot(int dire)
@@ -130,69 +130,33 @@ void CFighter::Rot(int dire)
 	else if(dire == 3)Transform.Rotation.AddAngle({ 1.0f,0.0f,0.0f });
 }
 
+void CFighter::SpeedChange(int type)
+{
+	if(type == 0)
+	{
+		if(mSpeed < mSpeedLimitMax)mSpeed += 0.5f;
+	}
+	else if(type == 1)
+	{
+		if(mSpeed > mSpeedLimitMin)mSpeed -= 0.5f;
+	}
+}
+
 void CFighter::Tick()
 {
-	
 	Move();
 
-	if(mTargetRot != nullptr)
-	{
-		bool isEnd = false;
-		XMFLOAT4 result;
-
-		mAlpha += mIncrementAlpha;
-		if(mAlpha > 1.0f)
-		{
-			mAlpha = 1.0f;
-			isEnd = true;
-		}
-
-		LCMath::Lerp(mStartRot , *mTargetRot , mAlpha , result);
-		Transform.Rotation.SetQuaternion(result);
-
-		if(isEnd)
-		{
-			mTargetRot.reset();
-		}
-	}
-
-	XMFLOAT3 loc = Transform.GetWorldLocation();
-	XMFLOAT3 fv = Transform.GetForwardVector();
-	XMFLOAT3 dire;
-
-	LCMath::CalcFloat3FromStartToGoal(loc , mPointer.Transform.GetWorldLocation() , dire);
-	LCMath::CalcFloat3Normalize(dire , dire);
-
-	auto displayPointer = [& , fv , dire]
+	auto displayFighterInfo = [&]
 	{
 		ImGui::SetNextWindowPos(ImVec2(CApplication::CLIENT_WIDTH - 210 , 220) , ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
 
-		ImGui::Begin(u8"戦闘機とポインターとのベクトル情報");
+		ImGui::Begin(u8"戦闘機情報");
 
-		std::string forvec = u8"戦闘機の前方ベクトル\n" + std::to_string(fv.x) + "," + std::to_string(fv.y) + "," + std::to_string(fv.z);
-		std::string direvec = u8"戦闘機とポインターとの向きベクトル\n" + std::to_string(dire.x) + "," + std::to_string(dire.y) + "," + std::to_string(dire.z);
-		ImGui::Text(forvec.c_str());
-		ImGui::Text(direvec.c_str());
+		std::string speedStr = u8"スピード:" + std::to_string(mSpeed);
+		ImGui::Text(speedStr.c_str());
 
 		ImGui::End();
 	};
-	mOwnerInterface.AddImGuiDrawFunction(displayPointer);
-}
-
-void CFighter::EventAtBeginCollide(CActor& collideActor)
-{
-	if(collideActor.HasTag("Dice"))
-	{
-		new CTestLevel(CGameManager::GetInstance().GetGameInterface(),true);
-		mIsHit = true;
-	}
-}
-
-void CFighter::EventAtEndCollide(CActor& collideActor)
-{
-	if(collideActor.HasTag("Dice"))
-	{
-		mIsHit = false;
-	}
+	mOwnerInterface.AddImGuiDrawFunction(displayFighterInfo);
 }

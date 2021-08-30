@@ -13,6 +13,13 @@ class IActor;
 //トランスフォームクラス
 class CTransform
 {
+public:
+	enum class EOption
+	{
+		NONE = 0b00 ,
+		LOCATION_ONLY = 0b01 ,
+	};
+
 private:
 	XMFLOAT4X4 mWorldMatrixSelf;			//自身のワールド行列
 	XMFLOAT4X4 mWorldMatrixResult;			//最終的な結果のワールド行列
@@ -24,6 +31,8 @@ private:
 	XMFLOAT3 mLastFrameScale = { 0.f,0.f,0.f };			//前フレームのスケール
 
 	IActor& mOwnerInterface;
+
+	int mOption = 0;
 
 	std::vector<std::function<void()>> mMatrixUpdateTimeFunction;		//マトリックス更新時実行関数
 
@@ -91,5 +100,10 @@ public:
 	{
 		mMatrixUpdateTimeFunction.emplace_back(func);
 	};
+
+	void AddOption(EOption option)
+	{
+		mOption ^= static_cast<int>(option);
+	}
 
 };
