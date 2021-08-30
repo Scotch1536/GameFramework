@@ -31,10 +31,10 @@ public:
 
 	/*
 	★超重要★
-	ゲーム実行時に始めたいレベル以外はCGame&を引数にとる
+	ゲーム実行時に始めたいレベル以外はIGame&を引数にとる
 	コンストラクタをオーバーライドする
 	*/
-	//CTestLevel(CGame& owner):CLevel(owner) {};
+	//CTestLevel(IGame& owner):CLevel(owner) {};
 
 	/*
 	★超重要★

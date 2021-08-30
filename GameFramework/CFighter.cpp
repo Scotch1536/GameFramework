@@ -63,7 +63,10 @@ CFighter::CFighter(ILevel& owner):CActor(owner) , mPointer(*new CPointer(owner ,
 	light.SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
 	light.SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
 
-	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.GetModel() , mesh.Transform);
+	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
+	collider.Transform.Scale = { 0.5f,0.5f,0.5f };
+	collider.Transform.Location.y += 2.0f;
+	collider.Transform.Location.z -= 2.0f;
 
 	Transform.RequestDebugLine();
 
@@ -174,7 +177,7 @@ void CFighter::Tick()
 
 		ImGui::End();
 	};
-	mOwnerInterface.AddImGuiDrawMethod(displayPointer);
+	mOwnerInterface.AddImGuiDrawFunction(displayPointer);
 }
 
 void CFighter::EventAtBeginCollide(CActor& collideActor)

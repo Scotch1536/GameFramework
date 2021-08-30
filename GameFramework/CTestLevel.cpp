@@ -178,11 +178,11 @@ void CTestLevel::Tick()
 		ImGui::End();
 	};
 
-	AddImGuiDrawMethod(displayCount);
-	AddImGuiDrawMethod(displayTime);
-	AddImGuiDrawMethod(displayHitStatus);
-	AddImGuiDrawMethod(displayDistance);
-	AddImGuiDrawMethod(displayHowToPlay);
+	AddImGuiDrawFunction(displayCount);
+	AddImGuiDrawFunction(displayTime);
+	AddImGuiDrawFunction(displayHitStatus);
+	AddImGuiDrawFunction(displayDistance);
+	AddImGuiDrawFunction(displayHowToPlay);
 }
 
 void CTestLevel::MainDiceDestroy()

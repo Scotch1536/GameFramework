@@ -58,5 +58,5 @@ void CPointer::Tick()
 
 		ImGui::End();
 	};
-	mOwnerInterface.AddImGuiDrawMethod(displayPointer);
+	mOwnerInterface.AddImGuiDrawFunction(displayPointer);
 }

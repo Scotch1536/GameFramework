@@ -155,7 +155,7 @@ void CLevel::Render()
 	//ImGuiに渡す描画の関数オブジェクト一つの関数オブジェクトにまとめる
 	auto allGuiMethodExecute = [&]
 	{
-		for(auto& guiMethod : mImGuiDrawMethod)
+		for(auto& guiMethod : mImGuiDrawFunction)
 		{
 			guiMethod();
 		}
@@ -165,8 +165,8 @@ void CLevel::Render()
 	imguiDraw(allGuiMethodExecute);
 #endif
 
-	mImGuiDrawMethod.clear();
-	mImGuiDrawMethod.shrink_to_fit();
+	mImGuiDrawFunction.clear();
+	mImGuiDrawFunction.shrink_to_fit();
 
 	CDirectXGraphics::GetInstance()->GetSwapChain()->Present(0 , 0);
 }

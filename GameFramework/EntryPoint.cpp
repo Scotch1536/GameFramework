@@ -27,6 +27,7 @@
 #include "GameFramework/Managers/CGameManager.h"
 
 #include "CTestLevel.h"
+#include "CMainGameLevel.h"
 
 //==============================================================================
 //!	@fn		WinMain
@@ -53,7 +54,7 @@ INT APIENTRY WinMain(HINSTANCE  h_hInst ,
 	メモリ解放はゲームマネージャーが行うので考えなくてよい
 	new StartLevelType(CGameManager&);
 	*/
-	*new CTestLevel(gameManager);
+	*new CMainGameLevel(gameManager);
 
 	//ゲームの実行をリクエスト
 	gameManager.RequestExecute(h_hInst , h_nWinMode);

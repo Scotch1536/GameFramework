@@ -19,7 +19,7 @@ class CGameManager :public IGameManagerToLevel
 private:
 	CGame mGame;			//ゲームクラス
 
-	int64_t mDeltaTime;		//デルタタイム
+	float mDeltaTime;		//デルタタイム(1秒単位)
 
 	bool mCanExecute = true;				//実行できるか
 	bool mCanSetStartLevel = true;			//スタートレベルをセットできるか
@@ -61,7 +61,7 @@ public:
 		return mIsPause;
 	}
 
-	const int64_t& GetDeltaTime()const
+	const float& GetDeltaTime()const
 	{
 		return mDeltaTime;
 	}
@@ -73,7 +73,7 @@ public:
 
 	void SetDeltaTime(const CApplication& partner , int64_t dt)
 	{
-		mDeltaTime = dt;
+		mDeltaTime = dt / 1000.0f;
 	}
 
 	HWND GetHWnd()

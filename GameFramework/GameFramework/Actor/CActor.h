@@ -39,8 +39,8 @@ private:
 	std::vector<std::string> mActorTags;						//タグ
 
 	//コピー禁止
-	CActor(const CActor&) = delete;
-	CActor& operator=(const CActor&) = delete;
+	//CActor(const CActor&) = delete;
+	//CActor& operator=(const CActor&) = delete;
 
 	/*コンポーネント追加
 	★超重要★子クラスは呼ぶことはできない

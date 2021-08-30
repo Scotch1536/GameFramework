@@ -22,9 +22,10 @@ public:
 	virtual void DestroyActor(CActor& target) = 0;
 	virtual void AddActor(CActor& actor) = 0;
 	virtual void RequestSetCamera(CCameraComponent& camera) = 0;
-	virtual void AddImGuiDrawMethod(std::function<void()> method) = 0;
+	virtual void AddImGuiDrawFunction(std::function<void()> func) = 0;
 	virtual void AddAlphaRenderComponent(IRender& renderTarget , bool isFront) = 0;
 	virtual void Add2DRenderComponent(IRender& renderTarget) = 0;
+	virtual void AddDoAfterTickFunction(std::function<void()> func) = 0;
 };
 
 //レベルクラス
@@ -33,7 +34,7 @@ class CLevel :public CObject , public ILevel
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;					//アクター
 	std::vector<std::function<void()>> mDoAfterTickFunction;		//更新後に行う関数オブジェクト
-	std::vector<std::function<void()>> mImGuiDrawMethod;			//ImGuiに行わせる描画の関数オブジェクト
+	std::vector<std::function<void()>> mImGuiDrawFunction;			//ImGuiに行わせる描画の関数オブジェクト
 	std::vector<IRender*> mAlphaRenderComponents;
 	std::vector<IRender*> m2DRenderComponents;
 
@@ -72,13 +73,18 @@ private:
 		m2DRenderComponents.emplace_back(&renderTarget);
 	}
 
+	void AddDoAfterTickFunction(std::function<void()> func)override
+	{
+		mDoAfterTickFunction.emplace_back(func);
+	}
+
 protected:
 	//カメラのセットをリクエスト
 	void RequestSetCamera(CCameraComponent& camera)override;
 
-	void AddImGuiDrawMethod(std::function<void()> method)override
+	void AddImGuiDrawFunction(std::function<void()> func)override
 	{
-		mImGuiDrawMethod.emplace_back(method);
+		mImGuiDrawFunction.emplace_back(func);
 	}
 
 	template<class T>
