@@ -149,11 +149,11 @@ void CFighter::Tick()
 	auto displayFighterInfo = [&]
 	{
 		ImGui::SetNextWindowPos(ImVec2(10 , CApplication::CLIENT_HEIGHT - 60) , ImGuiCond_Once);
-		ImGui::SetNextWindowSize(ImVec2(200 , 50) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(100 , 50) , ImGuiCond_Once);
 
 		ImGui::Begin(u8"戦闘機情報");
 
-		std::string speedStr = u8"スピード:" + std::to_string(mSpeed);
+		std::string speedStr = u8"スピード:" + std::to_string(static_cast<int>(mSpeed));
 		ImGui::Text(speedStr.c_str());
 
 		ImGui::End();

@@ -108,8 +108,8 @@ void CLevel::RequestRenderOrders(std::vector<SRenderInfo>& renderOrders)
 	for(auto& renderOrder : renderOrders)
 	{
 		if(renderOrder.RenderOption == ERenderOption::OPACITY3D)Add3DOpacityRenderComponent(renderOrder.RenderComponentReference);
-		else if(renderOrder.RenderOption == ERenderOption::TRANSLUCENT3D)Add3DTranslucentRenderComponent(renderOrder.RenderComponentReference);
-		else if(renderOrder.RenderOption == ERenderOption::BILLBOARD)Add3DTranslucentRenderComponent(renderOrder.RenderComponentReference , true);
+		else if(renderOrder.RenderOption == ERenderOption::TRANSLUCENT3D)Add3DTranslucentRenderComponent(renderOrder.RenderComponentReference , renderOrder.DistanceToCamera);
+		else if(renderOrder.RenderOption == ERenderOption::BILLBOARD)Add3DTranslucentRenderComponent(renderOrder.RenderComponentReference , renderOrder.DistanceToCamera);
 		else if(renderOrder.RenderOption == ERenderOption::OPACITY2D)Add2DOpacityRenderComponent(renderOrder.RenderComponentReference);
 		else if(renderOrder.RenderOption == ERenderOption::TRANSLUCENT2D)Add2DTranslucentRenderComponent(renderOrder.RenderComponentReference);
 	}
@@ -157,9 +157,16 @@ void CLevel::Render()
 
 	if(m3DTranslucentRenderComponents.size() != 0)
 	{
+		//カメラから遠い順にソート
+		std::sort(m3DTranslucentRenderComponents.begin() , m3DTranslucentRenderComponents.end() ,
+			[](std::pair<IRender* , float>& lhs , std::pair<IRender* , float>& rhs)
+			{
+				return lhs.second > rhs.second;
+			});
+
 		for(auto& alphaRender : m3DTranslucentRenderComponents)
 		{
-			alphaRender->Render();
+			alphaRender.first->Render();
 		}
 		m3DTranslucentRenderComponents.clear();
 		m3DTranslucentRenderComponents.shrink_to_fit();
@@ -255,4 +262,13 @@ const XMFLOAT4X4* CLevel::GetRenderingCameraViewMatrix()const
 	{
 		return &mRenderingCamera->GetViewMatrix();
 	}
+}
+
+const XMFLOAT3* CLevel::GetRenderingCameraLocation()const
+{
+	if(mRenderingCamera == nullptr)
+	{
+		return nullptr;
+	}
+	else return &mRenderingCamera->GetEye();
 }

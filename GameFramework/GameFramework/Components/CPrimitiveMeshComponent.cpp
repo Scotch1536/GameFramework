@@ -1,6 +1,7 @@
 #include "../Actor/CActor.h"
 #include "../ExternalCode/Shader.h"
 #include "../ExternalCode/CDirectxGraphics.h"
+#include "../Managers/CGameManager.h"
 
 #include "CPrimitiveMeshComponent.h"
 #include "CRenderComponent.h"
@@ -65,7 +66,7 @@ template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::Update()
 {
 	if(!mIsTranslucent)mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY3D });
-	else mOwnerInterface.AddRenderOrder({ *this,ERenderOption::TRANSLUCENT3D });
+	else mOwnerInterface.AddRenderOrder({ *this,ERenderOption::TRANSLUCENT3D,CGameManager::GetInstance().CalcDistanceToCamera(Transform.GetWorldLocation()) });
 }
 
 template<class VertexType>
