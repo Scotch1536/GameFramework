@@ -14,11 +14,11 @@ class CTransform;
 //レンダーオプション
 enum class ERenderOption
 {
-	OPACITY3D,
-	TRANSLUCENT3D,
-	BILLBOARD,
-	OPACITY2D,
-	TRANSLUCENT2D,
+	OPACITY3D ,
+	TRANSLUCENT3D ,
+	BILLBOARD ,
+	OPACITY2D ,
+	TRANSLUCENT2D ,
 };
 
 //レンダー情報構造体
@@ -26,6 +26,7 @@ struct SRenderInfo
 {
 	IRender& RenderComponentReference;
 	ERenderOption RenderOption;
+	float DistanceToCamera = 0.0f;
 };
 
 //インターフェース

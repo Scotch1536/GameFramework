@@ -37,7 +37,7 @@ void CBillboardComponent::Init(std::string vertexShaderPath , std::string pixelS
 
 void CBillboardComponent::Update()
 {
-	mOwnerInterface.AddRenderOrder({ *this,ERenderOption::BILLBOARD });
+	mOwnerInterface.AddRenderOrder({ *this,ERenderOption::BILLBOARD,CGameManager::GetInstance().CalcDistanceToCamera(Transform.GetWorldLocation()) });
 }
 
 void CBillboardComponent::Render()

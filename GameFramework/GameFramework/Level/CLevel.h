@@ -39,7 +39,7 @@ private:
 
 	//レンダーコンポーネント
 	std::vector<IRender*> m3DOpacityRenderComponents;
-	std::vector<IRender*> m3DTranslucentRenderComponents;
+	std::vector<std::pair<IRender* , float>> m3DTranslucentRenderComponents;
 	std::vector<IRender*> m2DOpacityRenderComponents;
 	std::vector<IRender*> m2DTranslucentRenderComponents;
 
@@ -68,14 +68,9 @@ private:
 		m3DOpacityRenderComponents.emplace_back(&renderTarget);
 	}
 
-	void Add3DTranslucentRenderComponent(IRender& renderTarget , bool isFront = false)
+	void Add3DTranslucentRenderComponent(IRender& renderTarget , float distanceToCamera)
 	{
-		if(isFront)
-		{
-			auto itr = m3DTranslucentRenderComponents.begin();
-			m3DTranslucentRenderComponents.emplace(itr , &renderTarget);
-		}
-		else m3DTranslucentRenderComponents.emplace_back(&renderTarget);
+		m3DTranslucentRenderComponents.emplace_back(&renderTarget , distanceToCamera);
 	}
 
 	void Add2DOpacityRenderComponent(IRender& renderTarget)
@@ -164,4 +159,5 @@ public:
 
 	const XMFLOAT4X4* GetRenderingCameraViewMatrix()const;
 
+	const XMFLOAT3* GetRenderingCameraLocation()const;
 };

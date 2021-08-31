@@ -32,8 +32,11 @@ public:
 	//実行をリクエスト
 	void RequestExecute(HINSTANCE hInst , int winMode);
 
-	//カメラのビュー行列を取得
+	//カメラのビュー行列（ポインタ）を取得（カメラがない場合nullptr)
 	const XMFLOAT4X4* GetCameraViewMatrix();
+
+	//使用中のカメラとの距離を計算（カメラがない場合0.0f）
+	float CalcDistanceToCamera(const XMFLOAT3& compareLocation);
 
 	//ゲームクラスの取得（アプリケーションクラスの参照が必要）
 	CGame& GetGame(const CApplication& partner)
