@@ -2,6 +2,7 @@
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Actor/CActorGenerator.h"
 #include "GameFramework/Actor/CActor.h"
+#include "GameFramework/Actor/CFeedActor.h"
 #include "GameFramework/ExternalTools/imgui/myimgui.h"
 #include "GameFramework/Game/CApplication.h"
 #include "GameFramework/Managers/CGameManager.h"
@@ -15,6 +16,8 @@
 
 void CMainGameLevel::Init()
 {
+	new CFeedActor(*this , nullptr , CFeedActor::EOption::FEEDIN);
+
 	CComponent* buf;
 
 	CFighter& fighter = *new CFighter(*this);
@@ -60,7 +63,7 @@ void CMainGameLevel::Tick()
 {
 	mTime -= CGameManager::GetInstance().GetDeltaTime();
 
-	if(mTime <= 0.0f&&!mIsEnd)
+	if(mTime <= 0.0f && !mIsEnd)
 	{
 		mIsEnd = true;
 
