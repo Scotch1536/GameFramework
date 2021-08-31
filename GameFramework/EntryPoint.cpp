@@ -26,7 +26,7 @@
 #include <Windows.h>
 #include "GameFramework/Managers/CGameManager.h"
 
-#include "CMainGameLevel.h"
+#include "CTitle.h"
 
 //==============================================================================
 //!	@fn		WinMain
@@ -52,7 +52,7 @@ INT APIENTRY WinMain(HINSTANCE  h_hInst ,
 	引数をIGame&で呼び出す
 	メモリ解放はゲームマネージャーが行うので考えなくてよい
 	*/
-	new CMainGameLevel(gameManager.GetGameInterface());
+	new CTitle(gameManager.GetGameInterface());
 
 	//ゲームの実行をリクエスト
 	gameManager.RequestExecute(h_hInst , h_nWinMode);

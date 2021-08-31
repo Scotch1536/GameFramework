@@ -1,15 +1,21 @@
-#include "../DebugTools/imgui/myimgui.h"
+#include "../ExternalTools/imgui/myimgui.h"
 #include "../ExternalCode/DX11Settransform.h"
 #include "../Game/CGame.h"
 #include "../Managers/CGameManager.h"
 #include "../Managers/CColliderManager.h"
+#include "../Managers/CInputManager.h"
 #include "../Components/CCameraComponent.h"
 
 #include "CLevel.h"
 
-CLevel::CLevel(IGame& owner , bool isFeed , XMFLOAT3 feedColor , float oneFrameAlpha):CObject("Level") , mOwnerInterface(&owner)
+CLevel::CLevel(IGame& owner , bool isFeed , XMFLOAT3 feedColor , float oneFrameAlpha):CObject("Level") , mOwnerInterface(owner)
 {
-	mOwnerInterface->LoadLevel(*this , isFeed , feedColor , oneFrameAlpha);
+	mOwnerInterface.LoadLevel(*this , isFeed , feedColor , oneFrameAlpha);
+}
+
+CLevel::~CLevel()
+{
+	CInputManager::GetInstance().ReleaseBindTarget(*this);
 }
 
 void CLevel::AddActor(CActor& actor)
@@ -38,7 +44,7 @@ void CLevel::Update()
 		mDoBeforeUpdateFunction.shrink_to_fit();
 	}
 
-	//トランスフォーム更新処理
+	//Tick前トランスフォーム更新処理
 	for(auto& actor : mActors)
 	{
 		if(CGameManager::GetInstance().GetIsPause())
@@ -85,15 +91,23 @@ void CLevel::Update()
 	}
 }
 
+void CLevel::RequestRenderOrders(std::vector<SRenderInfo>& renderOrders)
+{
+	for(auto& renderOrder : renderOrders)
+	{
+		if(renderOrder.RenderOption == ERenderOption::OPACITY3D)Add3DOpacityRenderComponent(renderOrder.RenderComponentReference);
+		else if(renderOrder.RenderOption == ERenderOption::TRANSLUCENT3D)Add3DTranslucentRenderComponent(renderOrder.RenderComponentReference);
+		else if(renderOrder.RenderOption == ERenderOption::BILLBOARD)Add3DTranslucentRenderComponent(renderOrder.RenderComponentReference , true);
+		else if(renderOrder.RenderOption == ERenderOption::OPACITY2D)Add2DOpacityRenderComponent(renderOrder.RenderComponentReference);
+		else if(renderOrder.RenderOption == ERenderOption::TRANSLUCENT2D)Add2DTranslucentRenderComponent(renderOrder.RenderComponentReference);
+	}
+	renderOrders.clear();
+	renderOrders.shrink_to_fit();
+}
+
 void CLevel::Render()
 {
 	XMFLOAT4X4 bufMTX;
-
-	if(mRenderingCamera == nullptr)
-	{
-		MessageBox(NULL , "Not Found RenderingCamera" , "error" , MB_OK);
-		exit(1);
-	}
 
 	float col[4] = { 0.f,0.f,1.f,1.f };
 
@@ -105,29 +119,41 @@ void CLevel::Render()
 		CDirectXGraphics::GetInstance()->GetDepthStencilView() ,
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f , 0);
 
-	bufMTX = mRenderingCamera->GetProjectionMatrix();
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , bufMTX);
+	if(mRenderingCamera != nullptr)
+	{
+		bufMTX = mRenderingCamera->GetProjectionMatrix();
+		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , bufMTX);
 
-	bufMTX = mRenderingCamera->GetViewMatrix();
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::VIEW , bufMTX);
-
+		bufMTX = mRenderingCamera->GetViewMatrix();
+		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::VIEW , bufMTX);
+	}
 
 	for(auto& actor : mActors)
 	{
 		actor->Render();
 	}
 
-	if(mAlphaRenderComponents.size() != 0)
+	if(m3DOpacityRenderComponents.size() != 0)
 	{
-		for(auto& alphaRender : mAlphaRenderComponents)
+		for(auto& alphaRender : m3DOpacityRenderComponents)
 		{
 			alphaRender->Render();
 		}
-		mAlphaRenderComponents.clear();
-		mAlphaRenderComponents.shrink_to_fit();
+		m3DOpacityRenderComponents.clear();
+		m3DOpacityRenderComponents.shrink_to_fit();
 	}
 
-	if(m2DRenderComponents.size() != 0)
+	if(m3DTranslucentRenderComponents.size() != 0)
+	{
+		for(auto& alphaRender : m3DTranslucentRenderComponents)
+		{
+			alphaRender->Render();
+		}
+		m3DTranslucentRenderComponents.clear();
+		m3DTranslucentRenderComponents.shrink_to_fit();
+	}
+
+	if(m2DOpacityRenderComponents.size() != 0 || m2DTranslucentRenderComponents.size() != 0)
 	{
 		// 2D描画用射影変換行列
 		XMFLOAT4X4 projectionMatrix2D = {
@@ -139,12 +165,25 @@ void CLevel::Render()
 
 		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , projectionMatrix2D);
 
-		for(auto& render : m2DRenderComponents)
+		if(m2DTranslucentRenderComponents.size() != 0)
 		{
-			render->Render();
+			for(auto& alphaRender : m2DTranslucentRenderComponents)
+			{
+				alphaRender->Render();
+			}
+			m2DTranslucentRenderComponents.clear();
+			m2DTranslucentRenderComponents.shrink_to_fit();
 		}
-		m2DRenderComponents.clear();
-		m2DRenderComponents.shrink_to_fit();
+
+		if(m2DOpacityRenderComponents.size() != 0)
+		{
+			for(auto& render : m2DOpacityRenderComponents)
+			{
+				render->Render();
+			}
+			m2DOpacityRenderComponents.clear();
+			m2DOpacityRenderComponents.shrink_to_fit();
+		}
 	}
 
 	//ImGuiに渡す描画の関数オブジェクト一つの関数オブジェクトにまとめる
@@ -188,11 +227,6 @@ void CLevel::DestroyActor(CActor& target)
 
 	//作成したラムダ式を格納
 	mDoBeforeUpdateFunction.emplace_back(destroyLambda);
-}
-
-void CLevel::SetOwnerInterface(CGame& owner)
-{
-	mOwnerInterface = &owner;
 }
 
 const XMFLOAT4X4* CLevel::GetRenderingCameraViewMatrix()const

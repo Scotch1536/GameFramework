@@ -3,6 +3,10 @@
 
 class CMainGameLevel :public CLevel
 {
+private:
+	int mScore = 0;
+	float mTime = 60.0f;
+
 public:
 	using CLevel::CLevel;
 

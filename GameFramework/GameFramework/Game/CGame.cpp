@@ -1,12 +1,12 @@
 #include <Windows.h>
 
-#include "../DebugTools/imgui/myimgui.h"
+#include "../ExternalTools/imgui/myimgui.h"
 #include "../ExternalCode/CDirectxGraphics.h"
 #include "../ExternalCode/DX11Settransform.h"
 #include "../ExternalCode/CDirectInput.h"
 #include "../Managers/CInputManager.h"
 #include "../Managers/CSoundManager.h"
-#include "../Actor/CDisplay2DColorActor.h"
+#include "../Actor/CDisplay2DActor.h"
 
 #include "CGame.h"
 #include "CApplication.h"
@@ -140,7 +140,7 @@ void CGame::LoadLevel(CLevel& level , bool isFeed , XMFLOAT3 feedColor , float o
 		if(isFeed&&mLevel != nullptr)
 		{
 			float alpha = 0.0f;
-			CDisplay2DColorActor& feedScreen = *new CDisplay2DColorActor(*mLevel , XMFLOAT4(feedColor.x , feedColor.y , feedColor.z , alpha));
+			CDisplay2DActor& feedScreen = *new CDisplay2DActor(*mLevel , XMFLOAT4(feedColor.x , feedColor.y , feedColor.z , alpha));
 			feedScreen.Transform.Location.x = static_cast<float>(CApplication::CLIENT_WIDTH) / 2;
 			feedScreen.Transform.Location.y = static_cast<float>(CApplication::CLIENT_HEIGHT) / 2;
 			feedScreen.Transform.Scale.x = CApplication::CLIENT_WIDTH;
@@ -152,16 +152,14 @@ void CGame::LoadLevel(CLevel& level , bool isFeed , XMFLOAT3 feedColor , float o
 
 				feedScreen.SetColor(XMFLOAT4(feedColor.x , feedColor.y , feedColor.z , alpha));
 
-				feedScreen.Update();
-
+				mLevel->Update();
 				mLevel->Render();
 			}
 			alpha = 1.0f;
 
 			feedScreen.SetColor(XMFLOAT4(feedColor.x , feedColor.y , feedColor.z , alpha));
 
-			feedScreen.Update();
-
+			mLevel->Update();
 			mLevel->Render();
 		}
 		mLevel.reset(&level);

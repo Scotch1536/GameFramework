@@ -164,7 +164,10 @@ unsigned long CApplication::MainLoop()
 
 		last_time = current_time;
 
-		if(delta_time != current_time)CGameManager::GetInstance().SetDeltaTime(*this , delta_time);
+		if(delta_time != current_time && delta_time < 1000)
+		{
+			CGameManager::GetInstance().SetDeltaTime(*this , delta_time);
+		}
 
 		//ƒQ[ƒ€ƒtƒ[
 		game.Input();

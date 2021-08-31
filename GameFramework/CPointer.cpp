@@ -3,7 +3,7 @@
 #include "GameFramework/Components/CBillboardComponent.h"
 #include "GameFramework/Game/CApplication.h"
 #include "GameFramework/Managers/CInputManager.h"
-#include "GameFramework/DebugTools/imgui/myimgui.h"
+#include "GameFramework/ExternalTools/imgui/myimgui.h"
 #include "GameFramework/Level/CLevel.h"
 #include "GameFramework/Game/CApplication.h"
 

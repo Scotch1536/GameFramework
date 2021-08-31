@@ -12,7 +12,7 @@
 #include "CWindow.h"
 
 #include "CWindowCallback.h"
-#include "../DebugTools/imgui/imgui_impl_win32.h"
+#include "../ExternalTools/imgui/imgui_impl_win32.h"
 
 IMGUI_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd , UINT msg , WPARAM wParam , LPARAM lParam);
 

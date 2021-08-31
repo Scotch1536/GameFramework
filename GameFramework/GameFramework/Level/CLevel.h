@@ -23,8 +23,7 @@ public:
 	virtual void AddActor(CActor& actor) = 0;
 	virtual void RequestSetCamera(CCameraComponent& camera) = 0;
 	virtual void AddImGuiDrawFunction(std::function<void()> func) = 0;
-	virtual void AddAlphaRenderComponent(IRender& renderTarget , bool isFront) = 0;
-	virtual void Add2DRenderComponent(IRender& renderTarget) = 0;
+	virtual void RequestRenderOrders(std::vector<SRenderInfo>& renderOrders) = 0;
 	virtual void AddDoBeforeUpdateFunction(std::function<void()> func) = 0;
 };
 
@@ -33,15 +32,20 @@ class CLevel :public CObject , public ILevel
 {
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;					//アクター
+
 	std::vector<std::function<void()>> mDoBeforeUpdateFunction;		//更新後に行う関数オブジェクト
 	std::vector<std::function<void()>> mImGuiDrawFunction;			//ImGuiに行わせる描画の関数オブジェクト
-	std::vector<IRender*> mAlphaRenderComponents;
-	std::vector<IRender*> m2DRenderComponents;
+
+	//レンダーコンポーネント
+	std::vector<IRender*> m3DOpacityRenderComponents;
+	std::vector<IRender*> m3DTranslucentRenderComponents;
+	std::vector<IRender*> m2DOpacityRenderComponents;
+	std::vector<IRender*> m2DTranslucentRenderComponents;
 
 	CCameraComponent* mRenderingCamera = nullptr;		//レンダーを担当するカメラ
 
 protected:
-	IGame* mOwnerInterface;			//ゲームインターフェース
+	IGame& mOwnerInterface;			//ゲームインターフェース
 
 private:
 	//コピー禁止
@@ -58,25 +62,37 @@ private:
 	//アクターの破壊
 	void DestroyActor(CActor& target)override;
 
-	void AddAlphaRenderComponent(IRender& renderTarget , bool isFront)override
+	void Add3DOpacityRenderComponent(IRender& renderTarget)
+	{
+		m3DOpacityRenderComponents.emplace_back(&renderTarget);
+	}
+
+	void Add3DTranslucentRenderComponent(IRender& renderTarget , bool isFront = false)
 	{
 		if(isFront)
 		{
-			auto itr = mAlphaRenderComponents.begin();
-			mAlphaRenderComponents.emplace(itr , &renderTarget);
+			auto itr = m3DTranslucentRenderComponents.begin();
+			m3DTranslucentRenderComponents.emplace(itr , &renderTarget);
 		}
-		else mAlphaRenderComponents.emplace_back(&renderTarget);
+		else m3DTranslucentRenderComponents.emplace_back(&renderTarget);
 	}
 
-	void Add2DRenderComponent(IRender& renderTarget)override
+	void Add2DOpacityRenderComponent(IRender& renderTarget)
 	{
-		m2DRenderComponents.emplace_back(&renderTarget);
+		m2DOpacityRenderComponents.emplace_back(&renderTarget);
+	}
+
+	void Add2DTranslucentRenderComponent(IRender& renderTarget)
+	{
+		m2DTranslucentRenderComponents.emplace_back(&renderTarget);
 	}
 
 	void AddDoBeforeUpdateFunction(std::function<void()> func)override
 	{
 		mDoBeforeUpdateFunction.emplace_back(func);
 	}
+
+	void RequestRenderOrders(std::vector<SRenderInfo>& renderOrders)override;
 
 protected:
 	//カメラのセットをリクエスト
@@ -119,7 +135,7 @@ public:
 	//★超重要★　コンストラクタを呼ぶことはレベルの遷移を意味する
 	CLevel(IGame& owner , bool isFeed = false , XMFLOAT3 feedColor = { 1.0f,1.0f,1.0f } , float oneFrameAlpha = 0.01f);
 
-	virtual ~CLevel() {};
+	virtual ~CLevel();
 
 	/*
 	★超重要★
@@ -142,9 +158,6 @@ public:
 
 	//描画
 	void Render()override;
-
-	//インターフェースのセット　ゲームマネージャーからしか呼び出す想定をしていない
-	void SetOwnerInterface(CGame& owner);
 
 	const XMFLOAT4X4* GetRenderingCameraViewMatrix()const;
 

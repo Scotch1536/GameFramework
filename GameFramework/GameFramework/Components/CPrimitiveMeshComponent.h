@@ -39,6 +39,14 @@ protected:
 
 	void GenerateVertexAndIndexBuffer();
 
+	void CheckTranslucent()
+	{
+		if(mColor.w < 1.0f)
+		{
+			mIsTranslucent = true;
+		}
+	}
+
 public:
 	CTransform Transform;			//トランスフォーム
 

@@ -11,6 +11,23 @@
 class ILevel;
 class CTransform;
 
+//レンダーオプション
+enum class ERenderOption
+{
+	OPACITY3D,
+	TRANSLUCENT3D,
+	BILLBOARD,
+	OPACITY2D,
+	TRANSLUCENT2D,
+};
+
+//レンダー情報構造体
+struct SRenderInfo
+{
+	IRender& RenderComponentReference;
+	ERenderOption RenderOption;
+};
+
 //インターフェース
 class IActor
 {
@@ -24,10 +41,8 @@ class IActorToComponent :public IActor
 public:
 	virtual ~IActorToComponent() {};
 	virtual void AddComponent(CComponent& component) = 0;
-	virtual void AddRenderComponent(IRender& component) = 0;
+	virtual void AddRenderOrder(const SRenderInfo& order) = 0;
 	virtual CTransform& GetTransform() = 0;
-	virtual void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget , bool isFront = false) = 0;
-	virtual void RequestAdd2DRenderComponentToLevel(IRender& renderTarget) = 0;
 };
 
 //アクタークラス
@@ -35,7 +50,7 @@ class CActor :public CObject , public IActorToComponent
 {
 private:
 	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
-	std::vector<IRender*> mRenderComponents;					//描画の属性をもつコンポーネント
+	std::vector<SRenderInfo> mRenderOrders;						//描画の属性をもつコンポーネント
 	std::vector<std::string> mActorTags;						//タグ
 
 	//コピー禁止
@@ -48,13 +63,8 @@ private:
 	*/
 	void AddComponent(CComponent& component)override;
 
-	//レンダー機能を持つコンポーネントを登録
-	void AddRenderComponent(IRender& component)override;
-
-	void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget , bool isFront)override;
-
-	void RequestAdd2DRenderComponentToLevel(IRender& renderTarget)override;
-
+	//レンダー命令を追加する（毎フレーム必要）
+	void AddRenderOrder(const SRenderInfo& order)override;
 
 	//アクター情報取得
 	CActor& GetActor()override
