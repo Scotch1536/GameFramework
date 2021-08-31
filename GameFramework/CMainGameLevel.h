@@ -7,5 +7,7 @@ public:
 	using CLevel::CLevel;
 
 	void Init()override;
+
+	void Tick()override;
 };
 

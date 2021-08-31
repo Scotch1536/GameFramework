@@ -51,3 +51,8 @@ void CMainGameLevel::Init()
 	fighter.GetComponent<CCameraComponent>(buf);
 	RequestSetCamera(*dynamic_cast<CCameraComponent*>(buf));
 }
+
+void CMainGameLevel::Tick()
+{
+
+}

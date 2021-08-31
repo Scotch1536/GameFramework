@@ -148,8 +148,8 @@ void CFighter::Tick()
 
 	auto displayFighterInfo = [&]
 	{
-		ImGui::SetNextWindowPos(ImVec2(CApplication::CLIENT_WIDTH - 210 , 220) , ImGuiCond_Once);
-		ImGui::SetNextWindowSize(ImVec2(200 , 200) , ImGuiCond_Once);
+		ImGui::SetNextWindowPos(ImVec2(10 , CApplication::CLIENT_HEIGHT - 110) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(200 , 100) , ImGuiCond_Once);
 
 		ImGui::Begin(u8"êÌì¨ã@èÓïÒ");
 
