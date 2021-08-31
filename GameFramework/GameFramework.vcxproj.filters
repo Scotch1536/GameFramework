@@ -81,9 +81,6 @@
     <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CDice.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\Library\LCCollision.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -272,9 +269,6 @@
     <ClInclude Include="GameFramework\Actor\CActor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CDice.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Library\LCCollision.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -411,6 +405,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Actor\CDisplay2DActor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Actor\CFeedActor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

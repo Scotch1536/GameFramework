@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "../ExternalTools/imgui/myimgui.h"
 #include "../ExternalCode/DX11Settransform.h"
 #include "../Game/CGame.h"
@@ -8,9 +10,9 @@
 
 #include "CLevel.h"
 
-CLevel::CLevel(IGame& owner , bool isFeed , XMFLOAT3 feedColor , float oneFrameAlpha):CObject("Level") , mOwnerInterface(owner)
+CLevel::CLevel(IGame& owner , bool isFeed , XMFLOAT3 feedColor , float FeedTime):CObject("Level") , mOwnerInterface(owner)
 {
-	mOwnerInterface.LoadLevel(*this , isFeed , feedColor , oneFrameAlpha);
+	mOwnerInterface.LoadLevel(*this , isFeed , feedColor , FeedTime);
 }
 
 CLevel::~CLevel()
@@ -30,8 +32,6 @@ void CLevel::RequestSetCamera(CCameraComponent& camera)
 
 void CLevel::Update()
 {
-	CActor* cameraActor = nullptr;
-
 	//更新前に行う関数を実行
 	if(mDoBeforeUpdateFunction.size() != 0)
 	{
@@ -44,49 +44,61 @@ void CLevel::Update()
 		mDoBeforeUpdateFunction.shrink_to_fit();
 	}
 
-	//Tick前トランスフォーム更新処理
-	for(auto& actor : mActors)
-	{
-		if(CGameManager::GetInstance().GetIsPause())
-		{
-			if(actor->GetIsAffectToPause())continue;
-		}
+	std::vector<CActor*> actors;
+	CActor* cameraActor = nullptr;
 
+	if(CGameManager::GetInstance().GetIsPause())
+	{
+		for(auto& actor : mActors)
+		{
+			if(!actor->GetIsAffectToPause())
+			{
+				actors.emplace_back(actor.get());
+			}
+		}
+	}
+	else
+	{
+		for(auto& actor : mActors)
+		{
+			actors.emplace_back(actor.get());
+		}
+	}
+
+	//Tick前トランスフォーム更新処理
+	for(auto& actor : actors)
+	{
 		if(!actor->Transform.GetIsChild())actor->Transform.Update();
 	}
 
+	//コリジョンマネージャーの更新
 	CColliderManager::GetInstance().Update();
 
 	//カメラ所持のアクターのみ先に処理する
 	if(mRenderingCamera != nullptr)
 	{
 		cameraActor = &mRenderingCamera->GetOwner();
-		cameraActor->Tick();
-		cameraActor->Update();
+
+		auto cameraActorItr = std::find(actors.begin() , actors.end() , cameraActor);
+		if(cameraActorItr != actors.end())
+		{
+			cameraActor->Tick();
+			cameraActor->Update();
+
+			actors.erase(cameraActorItr);
+			actors.shrink_to_fit();
+		}
 	}
 
 	//Tick処理
-	for(auto& actor : mActors)
+	for(auto& actor : actors)
 	{
-		if(actor.get() == cameraActor)continue;
-
-		if(CGameManager::GetInstance().GetIsPause())
-		{
-			if(actor->GetIsAffectToPause())continue;
-		}
-
 		actor->Tick();
 	}
 
-	for(auto& actor : mActors)
+	//更新処理
+	for(auto& actor : actors)
 	{
-		if(actor.get() == cameraActor)continue;
-
-		if(CGameManager::GetInstance().GetIsPause())
-		{
-			if(actor->GetIsAffectToPause())continue;
-		}
-
 		actor->Update();
 	}
 }
@@ -165,15 +177,7 @@ void CLevel::Render()
 
 		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , projectionMatrix2D);
 
-		if(m2DTranslucentRenderComponents.size() != 0)
-		{
-			for(auto& alphaRender : m2DTranslucentRenderComponents)
-			{
-				alphaRender->Render();
-			}
-			m2DTranslucentRenderComponents.clear();
-			m2DTranslucentRenderComponents.shrink_to_fit();
-		}
+		CDirectXGraphics::GetInstance()->TurnOffZbuffer();
 
 		if(m2DOpacityRenderComponents.size() != 0)
 		{
@@ -184,6 +188,18 @@ void CLevel::Render()
 			m2DOpacityRenderComponents.clear();
 			m2DOpacityRenderComponents.shrink_to_fit();
 		}
+
+		if(m2DTranslucentRenderComponents.size() != 0)
+		{
+			for(auto& alphaRender : m2DTranslucentRenderComponents)
+			{
+				alphaRender->Render();
+			}
+			m2DTranslucentRenderComponents.clear();
+			m2DTranslucentRenderComponents.shrink_to_fit();
+		}
+
+		CDirectXGraphics::GetInstance()->TurnOnZBuffer();
 	}
 
 	//ImGuiに渡す描画の関数オブジェクト一つの関数オブジェクトにまとめる

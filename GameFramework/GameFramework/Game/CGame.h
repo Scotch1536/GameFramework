@@ -17,7 +17,7 @@ class IGame
 {
 public:
 	virtual ~IGame() {};
-	virtual void LoadLevel(CLevel& level, bool isFeed = false , XMFLOAT3 feedColor = { 1.0f,1.0f,1.0f } , float oneFrameAlpha = 0.01f) = 0;
+	virtual void LoadLevel(CLevel& level , bool isFeed = false , XMFLOAT3 feedColor = { 1.0f,1.0f,1.0f } , float feedTime = 1.0f) = 0;
 };
 
 class IGameToGameManager
@@ -60,7 +60,7 @@ private:
 	void SetLevel(CLevel& level)override;
 
 	//レベルのロード（遷移）
-	void LoadLevel(CLevel& level , bool isFeed = false , XMFLOAT3 feedColor = { 1.0f,1.0f,1.0f } , float oneFrameAlpha = 0.01f)override;
+	void LoadLevel(CLevel& level , bool isFeed = false , XMFLOAT3 feedColor = { 1.0f,1.0f,1.0f } , float feedTime = 1.0f)override;
 
 	CApplication& GetApp()override
 	{

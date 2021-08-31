@@ -15,7 +15,7 @@ CDisplay2DComponent<VertexType>::CDisplay2DComponent(CActor& owner , CTransform&
 }
 
 template<class VertexType>
-CDisplay2DComponent<VertexType>::CDisplay2DComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color ,
+CDisplay2DComponent<VertexType>::CDisplay2DComponent(CActor& owner , CTransform& parentTrans , const XMFLOAT4& color ,
 	std::string vertexShaderPath , std::string pixelShaderPath)
 	:CPlaneMeshComponent<VertexType>(owner , parentTrans , color , vertexShaderPath , pixelShaderPath , false)
 {

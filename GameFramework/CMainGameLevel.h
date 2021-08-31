@@ -4,8 +4,10 @@
 class CMainGameLevel :public CLevel
 {
 private:
-	int mScore = 0;
 	float mTime = 60.0f;
+	int mScore = 0;
+
+	bool mIsEnd = false;
 
 public:
 	using CLevel::CLevel;
@@ -13,5 +15,7 @@ public:
 	void Init()override;
 
 	void Tick()override;
+
+	void Notice(CActor& actor)override;
 };
 

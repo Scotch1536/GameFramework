@@ -13,7 +13,6 @@
   <ItemGroup>
     <ClCompile Include="CAttachObject.cpp" />
     <ClCompile Include="CBullet.cpp" />
-    <ClCompile Include="CDice.cpp" />
     <ClCompile Include="CFighter.cpp" />
     <ClCompile Include="CMainGameLevel.cpp" />
     <ClCompile Include="CPointer.cpp" />
@@ -75,7 +74,6 @@
   <ItemGroup>
     <ClInclude Include="CAttachObject.h" />
     <ClInclude Include="CBullet.h" />
-    <ClInclude Include="CDice.h" />
     <ClInclude Include="CFighter.h" />
     <ClInclude Include="CMainGameLevel.h" />
     <ClInclude Include="CPointer.h" />
@@ -84,6 +82,7 @@
     <ClInclude Include="GameFramework\Actor\CActor.h" />
     <ClInclude Include="GameFramework\Actor\CActorGenerator.h" />
     <ClInclude Include="GameFramework\Actor\CDisplay2DActor.h" />
+    <ClInclude Include="GameFramework\Actor\CFeedActor.h" />
     <ClInclude Include="GameFramework\Components\CAABBColliderComponent.h" />
     <ClInclude Include="GameFramework\Components\CBillboardComponent.h" />
     <ClInclude Include="GameFramework\Components\CBoxMeshComponent.h" />

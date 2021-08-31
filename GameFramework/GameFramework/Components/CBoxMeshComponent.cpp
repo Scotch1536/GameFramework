@@ -2,7 +2,7 @@
 
 #include "CBoxMeshComponent.h"
 
-CBoxMeshComponent::CBoxMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color ,
+CBoxMeshComponent::CBoxMeshComponent(CActor& owner , CTransform& parentTrans ,const XMFLOAT4& color ,
 	XMFLOAT3 min , XMFLOAT3 max ,
 	std::string vertexShaderPath , std::string pixelShaderPath)
 	:CPrimitiveMeshComponent(owner , parentTrans , color , vertexShaderPath , pixelShaderPath) ,
