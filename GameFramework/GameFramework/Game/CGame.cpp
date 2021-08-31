@@ -141,7 +141,7 @@ void CGame::LoadLevel(CLevel& level , bool isFeed , XMFLOAT3 feedColor , float f
 		{
 			LoadLevel(level);
 		};
-		new CFeedActor(*mLevel , feedColor , feedTime , loadLevelCall , CFeedActor::EOption::FEEDOUT);
+		new CFeedActor(*mLevel , loadLevelCall , CFeedActor::EOption::FEEDOUT , feedColor , feedTime);
 	}
 	else
 	{

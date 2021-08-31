@@ -2,6 +2,7 @@
 #include <functional>
 
 #include "../Game/CApplication.h"
+#include "../Level/CLevel.h"
 
 #include "CActor.h"
 #include "CDisplay2DActor.h"
@@ -26,7 +27,7 @@ private:
 	float mIncreaseAlpha;
 
 public:
-	CFeedActor(ILevel& partner , XMFLOAT3 color , float feedTime , std::function<void()> func , EOption option):CActor(partner) ,
+	CFeedActor(ILevel& partner , std::function<void()> func , EOption option , XMFLOAT3 color = { 1.0f,1.0f,1.0f } , float feedTime = 1.0f):CActor(partner) ,
 		mDoAfterFeedFunction(func) , mOption(option) , mIncreaseAlpha(1.0f / (feedTime*60.0f))
 	{
 		float a = 1.0f / (feedTime*60.0f);
@@ -71,6 +72,7 @@ public:
 		if(isFeedEnd)
 		{
 			if(mDoAfterFeedFunction != nullptr)mDoAfterFeedFunction();
+			mOwnerInterface.DestroyActor(*this);
 		}
 	}
 };
