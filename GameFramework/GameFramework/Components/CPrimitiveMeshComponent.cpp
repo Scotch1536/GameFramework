@@ -6,11 +6,11 @@
 #include "CRenderComponent.h"
 
 template<class VertexType>
-CPrimitiveMeshComponent<VertexType>::CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color , std::string vertexShaderPath , std::string pixelShaderPath)
+CPrimitiveMeshComponent<VertexType>::CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , const XMFLOAT4& color , std::string vertexShaderPath , std::string pixelShaderPath)
 	:CComponent(owner , 100) ,
 	mRenderComponent(*new CRenderComponent(owner)) ,
 	mColor(color) ,
-	Transform(owner,parentTrans)
+	Transform(owner , parentTrans)
 {}
 
 template<class VertexType>
@@ -64,8 +64,8 @@ void CPrimitiveMeshComponent<VertexType>::GenerateVertexAndIndexBuffer()
 template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::Update()
 {
-	if(!mIsTranslucent)mOwnerInterface.AddRenderOrder({*this,ERenderOption::OPACITY3D});
-	else mOwnerInterface.AddRenderOrder({*this,ERenderOption::TRANSLUCENT3D});
+	if(!mIsTranslucent)mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY3D });
+	else mOwnerInterface.AddRenderOrder({ *this,ERenderOption::TRANSLUCENT3D });
 }
 
 template<class VertexType>
@@ -94,7 +94,7 @@ void CPrimitiveMeshComponent<SVertexColor>::SetColor(const XMFLOAT4& color)
 	{
 		vertex.Color = color;
 	}
-	
+
 	//頂点セット
 	D3D11_MAPPED_SUBRESOURCE pData;
 

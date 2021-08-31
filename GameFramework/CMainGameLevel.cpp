@@ -60,8 +60,10 @@ void CMainGameLevel::Tick()
 {
 	mTime -= CGameManager::GetInstance().GetDeltaTime();
 
-	if(mTime <= 0.0f)
+	if(mTime <= 0.0f&&!mIsEnd)
 	{
+		mIsEnd = true;
+
 		std::string scoreStr = "Score:" + std::to_string(mScore);
 		MessageBox(nullptr , scoreStr.c_str() , "GameOver!" , MB_OK);
 		new CTitle(mOwnerInterface , true);
@@ -102,4 +104,12 @@ void CMainGameLevel::Tick()
 	AddImGuiDrawFunction(displayHowTo);
 	AddImGuiDrawFunction(displayScore);
 	AddImGuiDrawFunction(displayTime);
+}
+
+void CMainGameLevel::Notice(CActor& actor)
+{
+	if(actor.HasTag("AttachObject"))
+	{
+		mScore += 1;
+	}
 }

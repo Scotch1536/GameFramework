@@ -25,6 +25,7 @@ public:
 	virtual void AddImGuiDrawFunction(std::function<void()> func) = 0;
 	virtual void RequestRenderOrders(std::vector<SRenderInfo>& renderOrders) = 0;
 	virtual void AddDoBeforeUpdateFunction(std::function<void()> func) = 0;
+	virtual void Notice(CActor& actor) = 0;
 };
 
 //レベルクラス
@@ -94,6 +95,8 @@ private:
 
 	void RequestRenderOrders(std::vector<SRenderInfo>& renderOrders)override;
 
+	virtual void Notice(CActor& actor)override {};
+
 protected:
 	//カメラのセットをリクエスト
 	void RequestSetCamera(CCameraComponent& camera)override;
@@ -133,7 +136,7 @@ protected:
 
 public:
 	//★超重要★　コンストラクタを呼ぶことはレベルの遷移を意味する
-	CLevel(IGame& owner , bool isFeed = false , XMFLOAT3 feedColor = { 1.0f,1.0f,1.0f } , float oneFrameAlpha = 0.01f);
+	CLevel(IGame& owner , bool isFeed = false , XMFLOAT3 feedColor = { 1.0f,1.0f,1.0f } , float feedTime = 1.0f);
 
 	virtual ~CLevel();
 

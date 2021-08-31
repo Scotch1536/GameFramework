@@ -7,8 +7,8 @@
 
 #include "CLineComponent.h"
 
-CLineComponent::CLineComponent(CActor& owner , XMFLOAT3 start , XMFLOAT3 end ,
-	XMFLOAT4 color , CTransform* parentTrans , std::string vertexShaderPath ,
+CLineComponent::CLineComponent(CActor& owner , const XMFLOAT3& start , const XMFLOAT3& end ,
+	const XMFLOAT4& color , CTransform* parentTrans , std::string vertexShaderPath ,
 	std::string pixelShaderPath , int priority):CComponent(owner , priority) ,
 	mStartPoint(start) , mEndPoint(end) , mColor(color) , mOwnerTransform(parentTrans)
 {
@@ -19,14 +19,17 @@ CLineComponent::CLineComponent(CActor& owner , XMFLOAT3 start , XMFLOAT3 end ,
 	Init(vertexShaderPath , pixelShaderPath);
 }
 
-CLineComponent::CLineComponent(CActor& owner , XMFLOAT3 start , XMFLOAT3 direction , float length ,
-	XMFLOAT4 color , CTransform* parentTrans , std::string vertexShaderPath ,
+CLineComponent::CLineComponent(CActor& owner , const XMFLOAT3& start , const XMFLOAT3& direction , float length ,
+	const XMFLOAT4& color , CTransform* parentTrans , std::string vertexShaderPath ,
 	std::string pixelShaderPath , int priority):CComponent(owner , priority) ,
 	mStartPoint(start) , mColor(color) , mOwnerTransform(parentTrans)
 {
-	LCMath::CalcFloat3Normalize(direction , direction);
+	XMFLOAT3 dire = direction;
+
+	LCMath::CalcFloat3Normalize(dire , dire);
+
 	mVertices.at(0).Pos = mStartPoint;
-	mVertices.at(1).Pos = mEndPoint = LCMath::CalcFloat3Scalar(direction , length);
+	mVertices.at(1).Pos = mEndPoint = LCMath::CalcFloat3Scalar(dire , length);
 	mVertices.at(0).Color = mVertices.at(1).Color = mColor;
 
 	Init(vertexShaderPath , pixelShaderPath);

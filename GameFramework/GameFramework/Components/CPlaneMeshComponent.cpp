@@ -1,7 +1,7 @@
 #include "CPlaneMeshComponent.h"
 
 template<class VertexType>
-CPlaneMeshComponent<VertexType>::CPlaneMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color ,
+CPlaneMeshComponent<VertexType>::CPlaneMeshComponent(CActor& owner , CTransform& parentTrans , const XMFLOAT4& color ,
 	std::string vertexShaderPath , std::string pixelShaderPath , bool isInit)
 	:CPrimitiveMeshComponent<VertexType>(owner , parentTrans , color , vertexShaderPath , pixelShaderPath)
 {

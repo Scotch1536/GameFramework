@@ -13,7 +13,7 @@ public:
 	CDisplay2DComponent(CActor& owner , CTransform& parentTrans , std::string texturePath ,
 		std::string vertexShaderPath = "Shader/basicvs.hlsl" , std::string pixelShaderPath = "Shader/basicps.hlsl");
 
-	CDisplay2DComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color ,
+	CDisplay2DComponent(CActor& owner , CTransform& parentTrans , const XMFLOAT4& color ,
 		std::string vertexShaderPath = "Shader/basicnotexvs.hlsl" , std::string pixelShaderPath = "Shader/psnotex.hlsl");
 
 	void Update()override;

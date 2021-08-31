@@ -4,6 +4,8 @@
 #include "GameFramework/Components/CAABBColliderComponent.h"
 #include "GameFramework/Components/CSphereMeshComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
+#include "GameFramework/Level/CLevel.h"
+#include "GameFramework/Managers/CSoundManager.h"
 
 #include "CAttachObject.h"
 
@@ -13,6 +15,9 @@ CAttachObject::CAttachObject(ILevel& partner):CActor(partner)
 	std::mt19937 mt(rd());
 	std::uniform_real_distribution<float> colorGenerator(0.0f , 1.0f);
 	std::uniform_real_distribution<float> scaleGenerator(2.0f , 20.0f);
+
+	AddTag("AttachObject");
+
 	CColliderComponent* collider = nullptr;
 
 	int randomNum = mt() % 2;
@@ -37,6 +42,7 @@ CAttachObject::CAttachObject(ILevel& partner):CActor(partner)
 	collider->SetIsUpdate(false);
 	collider->SetObjectType("AttachObject");
 
+	CSoundManager::GetInstance().CreateSoundInfo("Assets/Sounds/attach.wav" , 0.1f , false , "Attach");
 }
 
 void CAttachObject::EventAtBeginCollide(CActor& collideActor)
@@ -60,5 +66,8 @@ void CAttachObject::EventAtBeginCollide(CActor& collideActor)
 		XMFLOAT4 color = mMesh->GetColor();
 		color.w = 0.5f;
 		mMesh->SetColor(color);
+
+		CSoundManager::GetInstance().PlaySound("Attach");
+		mOwnerInterface.Notice(*this);
 	}
 }

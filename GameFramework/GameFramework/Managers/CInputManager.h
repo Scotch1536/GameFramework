@@ -92,6 +92,9 @@ public:
 	void AddEvent(const std::string& actionName , const EButtonOption& buttonOption ,
 		CObject& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& func);
 
+	//アクションの削除
+	void DeleteEvent(const std::string& actionName);
+
 	//指定のターゲットのバインドを解除
 	void ReleaseBindTarget(CObject& target);
 
