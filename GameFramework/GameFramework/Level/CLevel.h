@@ -22,9 +22,10 @@ public:
 	virtual void DestroyActor(CActor& target) = 0;
 	virtual void AddActor(CActor& actor) = 0;
 	virtual void RequestSetCamera(CCameraComponent& camera) = 0;
-	virtual void AddImGuiDrawMethod(std::function<void()> method) = 0;
+	virtual void AddImGuiDrawFunction(std::function<void()> func) = 0;
 	virtual void AddAlphaRenderComponent(IRender& renderTarget , bool isFront) = 0;
 	virtual void Add2DRenderComponent(IRender& renderTarget) = 0;
+	virtual void AddDoBeforeUpdateFunction(std::function<void()> func) = 0;
 };
 
 //レベルクラス
@@ -32,8 +33,8 @@ class CLevel :public CObject , public ILevel
 {
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;					//アクター
-	std::vector<std::function<void()>> mDoAfterTickFunction;		//更新後に行う関数オブジェクト
-	std::vector<std::function<void()>> mImGuiDrawMethod;			//ImGuiに行わせる描画の関数オブジェクト
+	std::vector<std::function<void()>> mDoBeforeUpdateFunction;		//更新後に行う関数オブジェクト
+	std::vector<std::function<void()>> mImGuiDrawFunction;			//ImGuiに行わせる描画の関数オブジェクト
 	std::vector<IRender*> mAlphaRenderComponents;
 	std::vector<IRender*> m2DRenderComponents;
 
@@ -72,13 +73,18 @@ private:
 		m2DRenderComponents.emplace_back(&renderTarget);
 	}
 
+	void AddDoBeforeUpdateFunction(std::function<void()> func)override
+	{
+		mDoBeforeUpdateFunction.emplace_back(func);
+	}
+
 protected:
 	//カメラのセットをリクエスト
 	void RequestSetCamera(CCameraComponent& camera)override;
 
-	void AddImGuiDrawMethod(std::function<void()> method)override
+	void AddImGuiDrawFunction(std::function<void()> func)override
 	{
-		mImGuiDrawMethod.emplace_back(method);
+		mImGuiDrawFunction.emplace_back(func);
 	}
 
 	template<class T>
@@ -113,16 +119,14 @@ public:
 	//★超重要★　コンストラクタを呼ぶことはレベルの遷移を意味する
 	CLevel(IGame& owner , bool isFeed = false , XMFLOAT3 feedColor = { 1.0f,1.0f,1.0f } , float oneFrameAlpha = 0.01f);
 
-	/*
-	★超重要★
-	ゲームマネージャーにレベルを送る場合のみゲームの参照なしでコンストラクタを呼び出し可能
-	開始レベルの設定のためなので一度のみ可能二度目からはエラーで終了する
-	*/
-	CLevel(IGameManagerToLevel& receiver);
-
 	virtual ~CLevel() {};
 
-	//初期化
+	/*
+	★超重要★
+	アクターの追加は基本ここで行う
+	コンポーネント追加することができるが非推奨
+	コンポーネントはアクターのコンストラクタで追加することを推奨
+	*/
 	virtual void Init() = 0;
 
 	//更新

@@ -11,13 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CAttachObject.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CDice.cpp" />
     <ClCompile Include="CFighter.cpp" />
+    <ClCompile Include="CMainGameLevel.cpp" />
     <ClCompile Include="CPointer.cpp" />
     <ClCompile Include="CSkyDome.cpp" />
     <ClCompile Include="CTest2D.cpp" />
-    <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
     <ClCompile Include="GameFramework\Components\CAABBColliderComponent.cpp" />
@@ -72,15 +73,17 @@
     <ClCompile Include="GameFramework\Transform\CTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CAttachObject.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CDice.h" />
     <ClInclude Include="CFighter.h" />
+    <ClInclude Include="CMainGameLevel.h" />
     <ClInclude Include="CPointer.h" />
     <ClInclude Include="CSkyDome.h" />
     <ClInclude Include="CTest2D.h" />
-    <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
-    <ClInclude Include="GameFramework\Actor\Display2DActor.h" />
+    <ClInclude Include="GameFramework\Actor\CActorGenerator.h" />
+    <ClInclude Include="GameFramework\Actor\CDisplay2DColorActor.h" />
     <ClInclude Include="GameFramework\Components\CAABBColliderComponent.h" />
     <ClInclude Include="GameFramework\Components\CBillboardComponent.h" />
     <ClInclude Include="GameFramework\Components\CBoxMeshComponent.h" />

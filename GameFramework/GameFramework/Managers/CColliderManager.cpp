@@ -20,31 +20,35 @@ void CColliderManager::AddCollider(CColliderComponent& collider)
 
 bool CColliderManager::GetColliders(CColliderComponent* caller , std::vector<CColliderComponent*>& result)
 {
-
-	if (caller == nullptr)
+	//呼び出し元がなければ全てのコライダーを返す
+	if(caller == nullptr)
 	{
 		result = mColliders;
 		return true;
 	}
 
+	//前回の情報がなければ作る
 	if(mIsBefore.count(caller) == 0)
 	{
 		mIsBefore[caller] = false;
 	}
 
+	//前回の情報があった上でtrueなら前回と変更なし
 	if(mIsBefore[caller] == true)return true;
 
+	std::string callerObjType = caller->GetObjectType();
 	std::vector<CColliderComponent*> buf;
 	for(auto& collider : mColliders)
 	{
-		if(collider != caller)
+		//呼び出し元とポインタが一致しないかつオブジェクトタイプがNONEか呼び出し元と一致しないないなら比較対象とする
+		if(collider != caller && collider->GetObjectType() == "NONE"||collider->GetObjectType() != callerObjType)
 		{
 			buf.push_back(collider);
 		}
 	}
 	result = buf;
 
-	mIsBefore[caller] = true;
+	mIsBefore[caller] = true;		//前回の情報が最新に更新された
 
 	if(result.size() != 0)return true;		//返す配列がある場合はtrue返す
 	else return false;						//ない場合はfalseを返す

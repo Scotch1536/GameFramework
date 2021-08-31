@@ -6,7 +6,7 @@
 #include "../ExternalCode/CDirectInput.h"
 #include "../Managers/CInputManager.h"
 #include "../Managers/CSoundManager.h"
-#include "../Actor/Display2DActor.h"
+#include "../Actor/CDisplay2DColorActor.h"
 
 #include "CGame.h"
 #include "CApplication.h"
@@ -103,11 +103,6 @@ void CGame::Init()
 	devCon->PSSetConstantBuffers(5 , 1 , mConstantBufferViewPort.GetAddressOf());
 
 	imguiInit();
-
-	if(mLevel != nullptr)
-	{
-		mLevel->Init();
-	}
 }
 
 void CGame::Input()
@@ -117,13 +112,19 @@ void CGame::Input()
 
 void CGame::Update()
 {
-	mLevel->Tick();
-	mLevel->Update();
+	if(mLevel != nullptr)
+	{
+		mLevel->Tick();
+		mLevel->Update();
+	}
 }
 
 void CGame::Render()
 {
-	mLevel->Render();
+	if(mLevel != nullptr)
+	{
+		mLevel->Render();
+	}
 
 	if(mLoadLevelFunction != nullptr)
 	{
@@ -136,10 +137,10 @@ void CGame::LoadLevel(CLevel& level , bool isFeed , XMFLOAT3 feedColor , float o
 {
 	auto loadLevel = [& , isFeed , feedColor , oneFrameAlpha]
 	{
-		if(isFeed)
+		if(isFeed&&mLevel != nullptr)
 		{
 			float alpha = 0.0f;
-			CDisplay2DActor& feedScreen = *new CDisplay2DActor(*mLevel , XMFLOAT4(feedColor.x , feedColor.y , feedColor.z , alpha));
+			CDisplay2DColorActor& feedScreen = *new CDisplay2DColorActor(*mLevel , XMFLOAT4(feedColor.x , feedColor.y , feedColor.z , alpha));
 			feedScreen.Transform.Location.x = static_cast<float>(CApplication::CLIENT_WIDTH) / 2;
 			feedScreen.Transform.Location.y = static_cast<float>(CApplication::CLIENT_HEIGHT) / 2;
 			feedScreen.Transform.Scale.x = CApplication::CLIENT_WIDTH;

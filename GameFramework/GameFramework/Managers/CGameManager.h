@@ -6,20 +6,13 @@ class CGame;
 class IGame;
 class CApplication;
 
-class IGameManagerToLevel
-{
-public:
-	virtual ~IGameManagerToLevel() {};
-	virtual void SetStartLevel(CLevel& startLevel) = 0;
-};
-
 //ゲームマネージャークラス：シングルトン
-class CGameManager :public IGameManagerToLevel
+class CGameManager
 {
 private:
 	CGame mGame;			//ゲームクラス
 
-	int64_t mDeltaTime;		//デルタタイム
+	float mDeltaTime;		//デルタタイム(1秒単位)
 
 	bool mCanExecute = true;				//実行できるか
 	bool mCanSetStartLevel = true;			//スタートレベルをセットできるか
@@ -32,9 +25,6 @@ private:
 	CGameManager& operator=(const CGameManager&) = delete;
 	CGameManager(CGameManager&&) = delete;
 	CGameManager& operator=(CGameManager&&) = delete;
-
-	//スタートレベルのセット
-	void SetStartLevel(CLevel& startLevel)override;
 
 public:
 	static CGameManager& GetInstance();
@@ -61,7 +51,7 @@ public:
 		return mIsPause;
 	}
 
-	const int64_t& GetDeltaTime()const
+	const float& GetDeltaTime()const
 	{
 		return mDeltaTime;
 	}
@@ -73,7 +63,7 @@ public:
 
 	void SetDeltaTime(const CApplication& partner , int64_t dt)
 	{
-		mDeltaTime = dt;
+		mDeltaTime = dt / 1000.0f;
 	}
 
 	HWND GetHWnd()

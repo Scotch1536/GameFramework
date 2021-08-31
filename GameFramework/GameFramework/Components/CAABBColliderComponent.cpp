@@ -40,7 +40,6 @@ void CAABBColliderComponent::ConvertWorldCollider()
 	{
 		mShouldUpdate = false;
 
-		//À•WXV
 		XMFLOAT4X4 worldMtx = Transform.GetWorldMatrixResult();
 		std::vector<XMFLOAT3> vertices;
 
