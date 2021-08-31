@@ -63,7 +63,8 @@ void CDisplay2DComponent<SVertex2DColor>::Init(std::string vertexShaderPath , st
 template<class VertexType>
 void CDisplay2DComponent<VertexType>::Update()
 {
-	this->mOwnerInterface.RequestAdd2DRenderComponentToLevel(*this);
+	if(!this->mIsTranslucent)this->mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY2D });
+	else this->mOwnerInterface.AddRenderOrder({ *this,ERenderOption::TRANSLUCENT2D });
 }
 
 template<class VertexType>

@@ -230,12 +230,6 @@ void CInputManager::CheckInput()
 			{
 				event.second.EventInfo();
 			}
-			else
-			{
-#ifdef _DEBUG
-				MessageBox(NULL , "Not Found Function" , "error" , MB_OK);
-#endif
-			}
 			shouldEvent = false;
 		}
 	}

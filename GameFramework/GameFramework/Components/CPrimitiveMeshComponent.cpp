@@ -16,15 +16,7 @@ CPrimitiveMeshComponent<VertexType>::CPrimitiveMeshComponent(CActor& owner , CTr
 template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::Init(std::string vertexShaderPath , std::string pixelShaderPath)
 {
-	if(mColor.w < 1.0f)
-	{
-		mIsTranslucent = true;
-	}
-	else
-	{
-		//アクター(owner)にレンダー担当のコンポーネントとして登録
-		mOwnerInterface.AddRenderComponent(*this);
-	}
+	CheckTranslucent();
 
 	// 頂点データの定義
 	D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -72,7 +64,8 @@ void CPrimitiveMeshComponent<VertexType>::GenerateVertexAndIndexBuffer()
 template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::Update()
 {
-	if(mIsTranslucent)mOwnerInterface.RequestAddAlphaRenderComponentToLevel(*this);
+	if(!mIsTranslucent)mOwnerInterface.AddRenderOrder({*this,ERenderOption::OPACITY3D});
+	else mOwnerInterface.AddRenderOrder({*this,ERenderOption::TRANSLUCENT3D});
 }
 
 template<class VertexType>
@@ -87,11 +80,15 @@ template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::SetColor(const XMFLOAT4& color)
 {
 	mColor = color;
+
+	CheckTranslucent();
 }
 
 void CPrimitiveMeshComponent<SVertexColor>::SetColor(const XMFLOAT4& color)
 {
 	mColor = color;
+
+	CheckTranslucent();
 
 	for(auto& vertex : mVertices)
 	{
@@ -112,6 +109,8 @@ void CPrimitiveMeshComponent<SVertexColor>::SetColor(const XMFLOAT4& color)
 void CPrimitiveMeshComponent<SVertex2DColor>::SetColor(const XMFLOAT4& color)
 {
 	mColor = color;
+
+	CheckTranslucent();
 
 	for(auto& vertex : mVertices)
 	{

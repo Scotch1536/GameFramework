@@ -1,5 +1,5 @@
 #include "GameFramework/Level/CLevel.h"
-#include "GameFramework/DebugTools/imgui/myimgui.h"
+#include "GameFramework/ExternalTools/imgui/myimgui.h"
 
 #include "GameFramework/Components/CStaticMeshComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
@@ -72,14 +72,14 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
 	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
 	*/
-	CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
+	//CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
 	CInputManager::GetInstance().AddEvent("Rot-Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CFighter::Rot , std::ref(*this) , 0));
 	CInputManager::GetInstance().AddEvent("Rot+Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_D } , std::bind(&CFighter::Rot , std::ref(*this) , 1));
 	CInputManager::GetInstance().AddEvent("Rot-X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CFighter::Rot , std::ref(*this) , 2));
 	CInputManager::GetInstance().AddEvent("Rot+X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CFighter::Rot , std::ref(*this) , 3));
-	CInputManager::GetInstance().AddEvent("SpeedUP" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_Q } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 0));
-	CInputManager::GetInstance().AddEvent("SpeedDPWN" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_E } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 1));
-	CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
+	CInputManager::GetInstance().AddEvent("SpeedUP" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 0));
+	CInputManager::GetInstance().AddEvent("SpeedDPWN" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::R_BUTTON } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 1));
+	//CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
 }
 
 void CFighter::Shot()

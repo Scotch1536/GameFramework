@@ -2,11 +2,15 @@
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Actor/CActorGenerator.h"
 #include "GameFramework/Actor/CActor.h"
+#include "GameFramework/ExternalTools/imgui/myimgui.h"
+#include "GameFramework/Game/CApplication.h"
+#include "GameFramework/Managers/CGameManager.h"
 
 #include "CFighter.h"
 #include "CSkyDome.h"
 #include "CAttachObject.h"
 
+#include "CTitle.h"
 #include "CMainGameLevel.h"
 
 void CMainGameLevel::Init()
@@ -54,5 +58,48 @@ void CMainGameLevel::Init()
 
 void CMainGameLevel::Tick()
 {
+	mTime -= CGameManager::GetInstance().GetDeltaTime();
 
+	if(mTime <= 0.0f)
+	{
+		std::string scoreStr = "Score:" + std::to_string(mScore);
+		MessageBox(nullptr , scoreStr.c_str() , "GameOver!" , MB_OK);
+		new CTitle(mOwnerInterface , true);
+	}
+
+	auto displayHowTo = [&]
+	{
+		ImGui::SetNextWindowPos(ImVec2(10 , 10) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(450 , 150) , ImGuiCond_Once);
+
+		ImGui::Begin(u8"遊び方");
+		ImGui::Text(u8"操作方法\nWASD:戦闘機の方向変更\n左クリック（長押し）:スピードアップ\n右クリック（長押し）:スピードダウン\n");
+		ImGui::Text("\n");
+		ImGui::Text(u8"遊び方:できるだけ多くのオブジェクトを当たってくっつけよう！");
+
+		ImGui::End();
+	};
+	auto displayScore = [&]
+	{
+		ImGui::SetNextWindowPos(ImVec2(CApplication::CLIENT_WIDTH - 110 , 10) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(100 , 50) , ImGuiCond_Once);
+
+		ImGui::Begin(u8"スコア");
+		ImGui::Text(std::to_string(mScore).c_str());
+
+		ImGui::End();
+	};
+	auto displayTime = [&]
+	{
+		ImGui::SetNextWindowPos(ImVec2(CApplication::CLIENT_WIDTH - 110 , 70) , ImGuiCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(100 , 50) , ImGuiCond_Once);
+
+		ImGui::Begin(u8"制限時間");
+		ImGui::Text(std::to_string(static_cast<int>(mTime)).c_str());
+
+		ImGui::End();
+	};
+	AddImGuiDrawFunction(displayHowTo);
+	AddImGuiDrawFunction(displayScore);
+	AddImGuiDrawFunction(displayTime);
 }

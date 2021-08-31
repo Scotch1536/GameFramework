@@ -32,6 +32,7 @@ public:
 		return mModel;
 	}
 
-	//•`‰æ
+	void Update()override;
+
 	void Render()override;
 };

@@ -34,9 +34,6 @@ CLineComponent::CLineComponent(CActor& owner , XMFLOAT3 start , XMFLOAT3 directi
 
 void CLineComponent::Init(std::string vertexShaderPath , std::string pixelShaderPath)
 {
-	//アクター(owner)にレンダー担当のコンポーネントとして登録
-	mOwnerInterface.AddRenderComponent(*this);
-
 	// 頂点データの定義
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
@@ -112,6 +109,8 @@ void CLineComponent::Update()
 			UpdateVertex(mVertices.data() , mVertices.size());
 		}
 	}
+
+	mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY3D });
 }
 
 void CLineComponent::UpdateVertex(void* source , int size)
