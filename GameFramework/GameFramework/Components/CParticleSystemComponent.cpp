@@ -9,8 +9,7 @@
 CParticleSystemComponent::Particle::Particle(ILevel& owner, CTransform& parentTrans, const XMFLOAT3& direction, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> function, const int& life, const float& speed) :CActor(owner),
 Transform(*this, parentTrans), Direction(direction), Life(life), Speed(speed) 
 {
-	function(*this, Transform);
-	
+	function(*this, Transform);	
 }
 
 void CParticleSystemComponent::Particle::Update()

@@ -13,6 +13,8 @@ void CConeParticleComponent::Update()
 	std::random_device rd;
 	std::mt19937 mt(rd());
 
+	mTemporaryDirection.clear();
+
 	if (mQuantity >= 1)
 	{
 		for (int q = 0; q < mQuantity; q++)
@@ -32,7 +34,8 @@ void CConeParticleComponent::Update()
 			if (ConvertDirection(direction))
 			{
 				direction = LCMath::CalcFloat3Normalize(direction);
-				auto func = [&] {new Particle(mLevel, Transform, direction, mFunction, mLifeFlame, mSpeed); };
+				mTemporaryDirection.emplace_back(direction);
+				auto func = [&] {new Particle(mLevel, Transform, mTemporaryDirection.back(), mFunction, mLifeFlame, mSpeed); };
 				mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
 			}
 			else
@@ -40,7 +43,6 @@ void CConeParticleComponent::Update()
 				auto func = [&] {new Particle(mLevel, Transform, mDirection, mFunction, mLifeFlame, mSpeed); };
 				mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
 			}
-
 		}
 	}
 	else
@@ -81,10 +83,12 @@ bool CConeParticleComponent::ConvertDirection(XMFLOAT3 direction)
 	XMFLOAT4 mulQua;
 	XMFLOAT4X4 MTX;
 	XMFLOAT3 axis;
+	XMFLOAT3 dire;
 	float angle;
 
+	LCMath::CalcFloat3Normalize(mDirection, dire);
 	//クォータニオンに必要な角度を計算
-	LCMath::CalcFloat3Dot(direction, mDirection, angle);
+	LCMath::CalcFloat3Dot(direction, dire, angle);
 
 	/*
 	結果が1(小数点がはみ出ることがあるので1以上)ならベクトル同士が平行なので終了
@@ -105,7 +109,7 @@ bool CConeParticleComponent::ConvertDirection(XMFLOAT3 direction)
 
 	//外積で法線求める
 	//クォータニオンに必要な軸を計算
-	LCMath::CalcFloat3Cross(direction, mDirection, axis);
+	LCMath::CalcFloat3Cross(direction, dire, axis);
 
 	//クォータニオン作成
 	LCMath::CreateFromAxisAndAngleToQuaternion(axis, angle, mulQua);
