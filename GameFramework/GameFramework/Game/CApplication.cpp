@@ -25,7 +25,7 @@
 //-----------------------------------------------------------------------------
 // スタティック　メンバー
 //-----------------------------------------------------------------------------
-const char*			CApplication::WINDOW_TITLE = "GameFramework";
+const char*			CApplication::WINDOW_TITLE = "Attach!";
 const char*			CApplication::WINDOW_CLASS_NAME = "win32app";
 
 const uint32_t		CApplication::WINDOW_STYLE_WINDOWED = (WS_VISIBLE | WS_CAPTION | WS_SYSMENU);

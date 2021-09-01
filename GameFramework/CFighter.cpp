@@ -26,7 +26,7 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 	//タグ追加
 	AddTag("Fighter");
 
-	CSoundManager::GetInstance().CreateSoundInfo("Assets/Sounds/shot.wav" , 0.05f , false , "SHOT");
+	//CSoundManager::GetInstance().CreateSoundInfo("Assets/Sounds/shot.wav" , 0.05f , false , "SHOT");
 
 	/*
 	★超重要★
@@ -104,7 +104,7 @@ void CFighter::Shot()
 
 	new CBullet(mOwnerInterface , loc , dire , 60 * 3);
 
-	CSoundManager::GetInstance().PlaySound("SHOT");
+	//CSoundManager::GetInstance().PlaySound("SHOT");
 }
 
 void CFighter::ShotReset()
