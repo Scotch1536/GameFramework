@@ -1,5 +1,4 @@
 #include "../ExternalCode/DX11Settransform.h"
-#include "../ExternalCode/dx11mathutil.h"
 #include "../Managers/CGameManager.h"
 #include "../Library/LCMath.h"
 #include "../Actor/CActor.h"
@@ -67,7 +66,6 @@ void CTransform::DetachTransform(CTransform& detachTarget)
 
 void CTransform::Update()
 {
-
 	if(mIsBillboard)
 	{
 		XMFLOAT3 angle = Rotation.GetAngle();
@@ -100,7 +98,7 @@ void CTransform::Update()
 
 	if(mParentTransform != nullptr)
 	{
-		DX11MtxMultiply(mWorldMatrixResult , mWorldMatrixSelf , mParentTransform->GetWorldMatrixResult());
+		LCMath::CalcMatrixMultply(mWorldMatrixSelf , mParentTransform->GetWorldMatrixResult() , mWorldMatrixResult);
 
 		if(mOption&static_cast<int>(EOption::LOCATION_ONLY))
 		{
@@ -130,7 +128,7 @@ void CTransform::Update()
 			XMFLOAT4X4 resultMTX;
 			LCMath::InverseMatrix(*camera , inverseCamera);
 
-			DX11MtxMultiply(resultMTX , mWorldMatrixSelf , inverseCamera);
+			LCMath::CalcMatrixMultply(mWorldMatrixSelf , inverseCamera, resultMTX);
 
 			mWorldMatrixResult._11 = resultMTX._11;
 			mWorldMatrixResult._12 = resultMTX._12;

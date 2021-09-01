@@ -20,6 +20,9 @@ public:
 	//単位行列化
 	static void IdentityMatrix(XMFLOAT4X4& target);
 
+	//単位クオータニオン化
+	static void IdentityQuaternion(XMFLOAT4& target);
+
 	//ロケーション、スケール、回転行列から指定の行列を更新
 	static const XMFLOAT4X4& UpdateMatrix(const XMFLOAT3& location, const XMFLOAT3& scale, const XMFLOAT4X4& rotMTX, XMFLOAT4X4& resultMTX);
 	static XMFLOAT4X4 UpdateMatrix(const XMFLOAT3& location, const XMFLOAT3& scale, const XMFLOAT4X4& rotMTX);
@@ -27,6 +30,10 @@ public:
 	//逆行列を取得
 	static const XMFLOAT4X4& InverseMatrix(const XMFLOAT4X4& target, XMFLOAT4X4& resultMTX);
 	static XMFLOAT4X4 InverseMatrix(const XMFLOAT4X4& target);
+	
+	//転置行列を取得
+	static const XMFLOAT4X4& TransposeMatrix(const XMFLOAT4X4& target, XMFLOAT4X4& resultMTX);
+	static XMFLOAT4X4 TransposeMatrix(const XMFLOAT4X4& target);
 
 	//指定のFloat3同士が一致しているかの比較
 	static bool CompareFloat3(const XMFLOAT3& target1, const XMFLOAT3& target2);
@@ -39,8 +46,16 @@ public:
 	static XMFLOAT4 CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis, const float& angle);
 
 	//クォータニオン同士の乗算
-	static const XMFLOAT4& CalcQuaternionMultiply(const XMFLOAT4& qua1, const XMFLOAT4& qua2, XMFLOAT4& result);
+	static const XMFLOAT4& CalcQuaternionMultiply(const XMFLOAT4& qua1, const XMFLOAT4& qua2, XMFLOAT4& resultQua);
 	static XMFLOAT4 CalcQuaternionMultiply(const XMFLOAT4& qua1, const XMFLOAT4& qua2);
+
+	//クオータニオンから行列を計算
+	static const XMFLOAT4X4& CalcMatrixFromQuaternion(const XMFLOAT4& target ,XMFLOAT4X4& resultMTX);
+	static XMFLOAT4X4 CalcMatrixFromQuaternion(const XMFLOAT4& target);
+
+	//行列同士の乗算
+	static const XMFLOAT4X4& CalcMatrixMultply(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2 , XMFLOAT4X4& resultMTX);
+	static XMFLOAT4X4 CalcMatrixMultply(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2);
 
 	//スタートからゴールへのベクトルをゲット
 	static const XMFLOAT3& CalcFloat3FromStartToGoal(const XMFLOAT3& start, const XMFLOAT3& goal, XMFLOAT3& resultVec);
@@ -70,6 +85,7 @@ public:
 	static const XMFLOAT3& CalcFloat3Scalar(const XMFLOAT3& target, const float& scalar, XMFLOAT3& resultVec);
 	static XMFLOAT3 CalcFloat3Scalar(const XMFLOAT3& target, const float& scalar);
 
+	//3次元ベクトルを行列と乗算
 	static const XMFLOAT3& CalcFloat3MultplyMatrix(const XMFLOAT3& target,const XMFLOAT4X4& mtx, XMFLOAT3& result);
 	static XMFLOAT3 CalcFloat3MultplyMatrix(const XMFLOAT3& target, const XMFLOAT4X4& mtx);
 

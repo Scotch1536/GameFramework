@@ -1,6 +1,5 @@
 #include "../Actor/CActor.h"
 #include "../Transform/CTransform.h"
-#include "../ExternalCode/dx11mathutil.h"
 #include "../Library/LCMath.h"
 
 #include "CCameraComponent.h"
@@ -76,7 +75,7 @@ void CSpringArmComponent::Update()
 	{
 		XMFLOAT4X4 cameraWorld;
 
-		DX11MtxMultiply(cameraWorld , mLocalMatrix , mParentTransform.GetWorldMatrixResult());
+		LCMath::CalcMatrixMultply(mLocalMatrix , mParentTransform.GetWorldMatrixResult() , cameraWorld);
 
 		if(mGoalWorldMatrix != nullptr)
 		{
