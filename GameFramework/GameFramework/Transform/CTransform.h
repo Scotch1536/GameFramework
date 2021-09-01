@@ -69,6 +69,11 @@ public:
 
 	void RequestDebugLine();
 
+	const XMFLOAT4X4& GetWorldMatrixSelf()const
+	{
+		return mWorldMatrixSelf;
+	}
+	
 	const XMFLOAT4X4& GetWorldMatrixResult()const
 	{
 		return mWorldMatrixResult;

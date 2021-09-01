@@ -93,14 +93,14 @@ void CLineComponent::Update()
 
 			DX11MtxScale(scale.x , scale.y , scale.z , scaleMTX);
 			LCMath::InverseMatrix(scaleMTX , scaleMTX);
-			DX11MtxMultiply(resultMTX , resultMTX , scaleMTX);
+			LCMath::CalcMatrixMultply(resultMTX , scaleMTX , resultMTX);
 
 			std::vector<SVertexLine> vertices;
 
 			for(auto& v : mVertices)
 			{
 				SVertexLine vertex;
-				DX11Vec3MulMatrix(vertex.Pos , v.Pos , resultMTX);
+				LCMath::CalcFloat3MultplyMatrix(v.Pos , resultMTX , vertex.Pos);
 				vertex.Color = mColor;
 				vertices.emplace_back(vertex);
 			}
