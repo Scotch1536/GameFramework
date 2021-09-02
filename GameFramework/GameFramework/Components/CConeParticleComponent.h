@@ -7,7 +7,7 @@ class CConeParticleComponent:public CParticleSystemComponent
 {
 private:
 	std::vector<XMFLOAT3> mTemporaryDirection;
-	XMFLOAT3& mDirection;
+	XMFLOAT3 mDirection;
 	float mDegree;
 
 	void Update() override;
