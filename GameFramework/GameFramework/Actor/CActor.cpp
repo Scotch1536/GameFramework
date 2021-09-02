@@ -38,11 +38,6 @@ void CActor::AddRenderOrder(const SRenderInfo& order)
 	mRenderOrders.emplace_back(order);
 }
 
-void CActor::RequestAddDoAfterUpdateFunction(const std::function<void()>& func)
-{
-	mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
-}
-
 void CActor::Update()
 {
 	Transform.Update();

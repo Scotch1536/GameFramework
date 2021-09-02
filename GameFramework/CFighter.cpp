@@ -129,7 +129,7 @@ void CFighter::Move()
 
 void CFighter::Particle(CParticleSystemComponent::Particle& key, CTransform& trans)
 {
-	new CSphereMeshComponent(key, trans, 0.3, 30, { 1,1,1,1 });
+	//new CSphereMeshComponent(key, trans, 0.3, 30, { 1,1,1,1 });
 }
 
 void CFighter::Rot(int dire)
