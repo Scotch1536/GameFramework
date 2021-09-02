@@ -2,10 +2,12 @@
 #include "GameFramework/ExternalTools/imgui/myimgui.h"
 
 #include "GameFramework/Components/CStaticMeshComponent.h"
+#include "GameFramework/Components/CSphereMeshComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CSpringArmComponent.h"
+#include "GameFramework/Components/CParticleSystemComponent.h"
 
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CInputManager.h"
@@ -23,19 +25,19 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 	mPointer.Transform.Location.y = 4.0f;
 	mPointer.Transform.Location.z = 100.0f;
 
-	//ƒ^ƒO’Ç‰Á
+	//ã‚¿ã‚°è¿½åŠ 
 	AddTag("Fighter");
 
 	//CSoundManager::GetInstance().CreateSoundInfo("Assets/Sounds/shot.wav" , 0.05f , false , "SHOT");
 
 	/*
-	š’´d—vš
-	ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÍƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Ìˆø”owner‚É‚¢‚ê‚½ƒAƒNƒ^[‚É©“®‚Å’Ç‰Á‚³‚ê‚é
-	‚»‚ÌÛŒ´‘¥ƒq[ƒv—Ìˆæ‚É(new‚Å)ì¬‚·‚é‚±‚Æ
+	â˜…è¶…é‡è¦â˜…
+	ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã¯ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å¼•æ•°ownerã«ã„ã‚ŒãŸã‚¢ã‚¯ã‚¿ãƒ¼ã«è‡ªå‹•ã§è¿½åŠ ã•ã‚Œã‚‹
+	ãã®éš›åŸå‰‡ãƒ’ãƒ¼ãƒ—é ˜åŸŸã«(newã§)ä½œæˆã™ã‚‹ã“ã¨
 	*/
-	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , Transform ,
-		CModelDataManager::GetInstance().GetModel("Assets/Models/Fighter/F-15E.fbx" , "Assets/Models/Fighter/Textures/") ,
-		"Shader/vs.hlsl" , "Shader/ps.hlsl");
+	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this, Transform,
+		CModelDataManager::GetInstance().GetModel("Assets/Models/Fighter/F-15E.fbx", "Assets/Models/Fighter/Textures/"),
+		"Shader/vs.hlsl", "Shader/ps.hlsl");
 
 	mesh.Transform.Rotation.SetAngle({ -90.0f ,0.0f,180.0f });
 
@@ -50,15 +52,15 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 	cameraLoc.y += fv.y*-20.0f + 2.0f;
 	cameraLoc.z += fv.z*-20.0f;
 
-	camera.SetProjection(10.f , 10000.f , XM_PI / 4.f , CApplication::CLIENT_WIDTH , CApplication::CLIENT_HEIGHT);
-	camera.SetView(cameraLoc , loc , { 0.f,1.f,0.f });
+	camera.SetProjection(10.f, 10000.f, XM_PI / 4.f, CApplication::CLIENT_WIDTH, CApplication::CLIENT_HEIGHT);
+	camera.SetView(cameraLoc, loc, { 0.f,1.f,0.f });
 
-	CSpringArmComponent& spr = *new CSpringArmComponent(*this , Transform , camera);
+	CSpringArmComponent& spr = *new CSpringArmComponent(*this, Transform, camera);
 	spr.SetLerpTime(0.5f);
 
 	light.SetEyePos(camera.GetEye());
-	light.SetLightPos(XMFLOAT4(1.f , 1.f , -1.f , 0.f));
-	light.SetAmbient(XMFLOAT4(0.1f , 0.1f , 0.1f , 0.0f));
+	light.SetLightPos(XMFLOAT4(1.f, 1.f, -1.f, 0.f));
+	light.SetAmbient(XMFLOAT4(0.1f, 0.1f, 0.1f, 0.0f));
 
 	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
 	collider.Transform.Scale = { 0.8f,0.8f,0.8f };
@@ -67,24 +69,27 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 
 	Transform.RequestDebugLine();
 
+	CParticleSystemComponent::Create(*this, owner, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1, std::placeholders::_2),
+		60, 5, 300, 20, Transform.GetForwardVector());
 	/*
-	š’´d—vš
-	ƒ{ƒ^ƒ“‚Ì“ü—Í‚ÅŒÄ‚Ñ‚¾‚µ‚½‚¢ƒƒ\ƒbƒh‚Í‚±‚Ì‚æ‚¤‚ÉƒCƒ“ƒvƒbƒgƒ}ƒl[ƒWƒƒ[‚É’Ç‰Á‚Å‚«‚é
-	‘¼‚É‚à’Ç‰Á•û–@‚ª‚ ‚é‚Ì‚ÅƒCƒ“ƒvƒbƒgƒ}ƒl[ƒWƒƒ[‚Ìƒwƒbƒ_[‚ğŠm”F‚·‚é‚±‚Æ‚ğ„§
+	â˜…è¶…é‡è¦â˜…
+	ãƒœã‚¿ãƒ³ã®å…¥åŠ›ã§å‘¼ã³ã ã—ãŸã„ãƒ¡ã‚½ãƒƒãƒ‰ã¯ã“ã®ã‚ˆã†ã«ã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«è¿½åŠ ã§ãã‚‹
+	ä»–ã«ã‚‚è¿½åŠ æ–¹æ³•ãŒã‚ã‚‹ã®ã§ã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒ˜ãƒƒãƒ€ãƒ¼ã‚’ç¢ºèªã™ã‚‹ã“ã¨ã‚’æ¨å¥¨
 	*/
+
 	//CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
 	CInputManager::GetInstance().AddEvent("Rot-Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CFighter::Rot , std::ref(*this) , 0));
 	CInputManager::GetInstance().AddEvent("Rot+Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_D } , std::bind(&CFighter::Rot , std::ref(*this) , 1));
 	CInputManager::GetInstance().AddEvent("Rot-X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CFighter::Rot , std::ref(*this) , 2));
 	CInputManager::GetInstance().AddEvent("Rot+X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CFighter::Rot , std::ref(*this) , 3));
 	CInputManager::GetInstance().AddEvent("SpeedUP" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 0));
-	CInputManager::GetInstance().AddEvent("SpeedDPWN" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::R_BUTTON } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 1));
+	CInputManager::GetInstance().AddEvent("SpeedDOWN" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::R_BUTTON } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 1));
 	//CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
 }
 
 void CFighter::Shot()
 {
-	if(mShotCnt % 5 != 0)
+	if (mShotCnt % 5 != 0)
 	{
 		mShotCnt++;
 		return;
@@ -99,10 +104,10 @@ void CFighter::Shot()
 	loc.y += fv.y * 10.0f + 2.0f;
 	loc.z += fv.z * 10.0f;
 
-	LCMath::CalcFloat3FromStartToGoal(loc , mPointer.Transform.GetWorldLocation() , dire);
-	LCMath::CalcFloat3Normalize(dire , dire);
+	LCMath::CalcFloat3FromStartToGoal(loc, mPointer.Transform.GetWorldLocation(), dire);
+	LCMath::CalcFloat3Normalize(dire, dire);
 
-	new CBullet(mOwnerInterface , loc , dire , 60 * 3);
+	new CBullet(mOwnerInterface, loc, dire, 60 * 3);
 
 	//CSoundManager::GetInstance().PlaySound("SHOT");
 }
@@ -122,12 +127,17 @@ void CFighter::Move()
 	Transform.Location.z += fv.z * (mSpeed*dt);
 }
 
+void CFighter::Particle(CParticleSystemComponent::Particle& key, CTransform& trans)
+{
+	new CSphereMeshComponent(key, trans, 0.3, 30, { 1,1,1,1 });
+}
+
 void CFighter::Rot(int dire)
 {
-	if(dire == 0)Transform.Rotation.AddAngle({ 0.0f,-1.0f,0.0f });
-	else if(dire == 1)Transform.Rotation.AddAngle({ 0.0f,1.0f,0.0f });
-	else if(dire == 2)Transform.Rotation.AddAngle({ -1.0f,0.0f,0.0f });
-	else if(dire == 3)Transform.Rotation.AddAngle({ 1.0f,0.0f,0.0f });
+	if (dire == 0)Transform.Rotation.AddAngle({ 0.0f,-1.0f,0.0f });
+	else if (dire == 1)Transform.Rotation.AddAngle({ 0.0f,1.0f,0.0f });
+	else if (dire == 2)Transform.Rotation.AddAngle({ -1.0f,0.0f,0.0f });
+	else if (dire == 3)Transform.Rotation.AddAngle({ 1.0f,0.0f,0.0f });
 }
 
 void CFighter::SpeedChange(int type)
@@ -151,9 +161,9 @@ void CFighter::Tick()
 		ImGui::SetNextWindowPos(ImVec2(10 , CApplication::CLIENT_HEIGHT - 60) , ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(100 , 50) , ImGuiCond_Once);
 
-		ImGui::Begin(u8"í“¬‹@î•ñ");
+		ImGui::Begin(u8"æˆ¦é—˜æ©Ÿæƒ…å ±");
 
-		std::string speedStr = u8"ƒXƒs[ƒh:" + std::to_string(static_cast<int>(mSpeed));
+		std::string speedStr = u8"ã‚¹ãƒ”ãƒ¼ãƒ‰:" + std::to_string(static_cast<int>(mSpeed));
 		ImGui::Text(speedStr.c_str());
 
 		ImGui::End();

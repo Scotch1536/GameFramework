@@ -32,14 +32,14 @@ void CLevel::RequestSetCamera(CCameraComponent& camera)
 
 void CLevel::Update()
 {
-	//XV‘O‚És‚¤ŠÖ”‚ğÀs
+	//æ›´æ–°å‰ã«è¡Œã†é–¢æ•°ã‚’å®Ÿè¡Œ
 	if(mDoBeforeUpdateFunction.size() != 0)
 	{
 		for(auto& func : mDoBeforeUpdateFunction)
 		{
 			func();
 		}
-		//’†g‚ğ‹ó‚É‚·‚é
+		//ä¸­èº«ã‚’ç©ºã«ã™ã‚‹
 		mDoBeforeUpdateFunction.clear();
 		mDoBeforeUpdateFunction.shrink_to_fit();
 	}
@@ -65,16 +65,16 @@ void CLevel::Update()
 		}
 	}
 
-	//Tick‘Oƒgƒ‰ƒ“ƒXƒtƒH[ƒ€XVˆ—
+	//Tickå‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ æ›´æ–°å‡¦ç†
 	for(auto& actor : actors)
 	{
 		if(!actor->Transform.GetIsChild())actor->Transform.Update();
 	}
 
-	//ƒRƒŠƒWƒ‡ƒ“ƒ}ƒl[ƒWƒƒ[‚ÌXV
+	//ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®æ›´æ–°
 	CColliderManager::GetInstance().Update();
 
-	//ƒJƒƒ‰Š‚ÌƒAƒNƒ^[‚Ì‚İæ‚Éˆ—‚·‚é
+	//ã‚«ãƒ¡ãƒ©æ‰€æŒã®ã‚¢ã‚¯ã‚¿ãƒ¼ã®ã¿å…ˆã«å‡¦ç†ã™ã‚‹
 	if(mRenderingCamera != nullptr)
 	{
 		cameraActor = &mRenderingCamera->GetOwner();
@@ -90,13 +90,13 @@ void CLevel::Update()
 		}
 	}
 
-	//Tickˆ—
+	//Tickå‡¦ç†
 	for(auto& actor : actors)
 	{
 		actor->Tick();
 	}
 
-	//XVˆ—
+	//æ›´æ–°å‡¦ç†
 	for(auto& actor : actors)
 	{
 		actor->Update();
@@ -113,6 +113,7 @@ void CLevel::RequestRenderOrders(std::vector<SRenderInfo>& renderOrders)
 		else if(renderOrder.RenderOption == ERenderOption::OPACITY2D)Add2DOpacityRenderComponent(renderOrder.RenderComponentReference);
 		else if(renderOrder.RenderOption == ERenderOption::TRANSLUCENT2D)Add2DTranslucentRenderComponent(renderOrder.RenderComponentReference);
 	}
+
 	renderOrders.clear();
 	renderOrders.shrink_to_fit();
 }
@@ -123,10 +124,10 @@ void CLevel::Render()
 
 	float col[4] = { 0.f,0.f,1.f,1.f };
 
-	// ƒ^[ƒQƒbƒgƒoƒbƒtƒ@ƒNƒŠƒA
+	// ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒãƒƒãƒ•ã‚¡ã‚¯ãƒªã‚¢
 	CDirectXGraphics::GetInstance()->GetImmediateContext()->ClearRenderTargetView(
 		CDirectXGraphics::GetInstance()->GetRenderTargetView() , col);
-	// Zƒoƒbƒtƒ@ƒNƒŠƒA
+	// Zãƒãƒƒãƒ•ã‚¡ã‚¯ãƒªã‚¢
 	CDirectXGraphics::GetInstance()->GetImmediateContext()->ClearDepthStencilView(
 		CDirectXGraphics::GetInstance()->GetDepthStencilView() ,
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f , 0);
@@ -157,7 +158,7 @@ void CLevel::Render()
 
 	if(m3DTranslucentRenderComponents.size() != 0)
 	{
-		//ƒJƒƒ‰‚©‚ç‰“‚¢‡‚Éƒ\[ƒg
+		//ã‚«ãƒ¡ãƒ©ã‹ã‚‰é ã„é †ã«ã‚½ãƒ¼ãƒˆ
 		std::sort(m3DTranslucentRenderComponents.begin() , m3DTranslucentRenderComponents.end() ,
 			[](std::pair<IRender* , float>& lhs , std::pair<IRender* , float>& rhs)
 			{
@@ -174,7 +175,7 @@ void CLevel::Render()
 
 	if(m2DOpacityRenderComponents.size() != 0 || m2DTranslucentRenderComponents.size() != 0)
 	{
-		// 2D•`‰æ—pË‰e•ÏŠ·s—ñ
+		// 2Dæç”»ç”¨å°„å½±å¤‰æ›è¡Œåˆ—
 		XMFLOAT4X4 projectionMatrix2D = {
 				2.0f / static_cast<float>(CApplication::CLIENT_WIDTH) , 0.0f , 0.0f , 0.0f ,
 				0.0f , -2.0f / static_cast<float>(CApplication::CLIENT_HEIGHT), 0.0f , 0.0f ,
@@ -209,7 +210,7 @@ void CLevel::Render()
 		CDirectXGraphics::GetInstance()->TurnOnZBuffer();
 	}
 
-	//ImGui‚É“n‚·•`‰æ‚ÌŠÖ”ƒIƒuƒWƒFƒNƒgˆê‚Â‚ÌŠÖ”ƒIƒuƒWƒFƒNƒg‚É‚Ü‚Æ‚ß‚é
+	//ImGuiã«æ¸¡ã™æç”»ã®é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä¸€ã¤ã®é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã¾ã¨ã‚ã‚‹
 	auto allGuiMethodExecute = [&]
 	{
 		for(auto& guiMethod : mImGuiDrawFunction)
@@ -227,7 +228,7 @@ void CLevel::Render()
 
 void CLevel::DestroyActor(CActor& target)
 {
-	//ƒ‰ƒ€ƒ_®‚ğì¬
+	//ãƒ©ãƒ ãƒ€å¼ã‚’ä½œæˆ
 	auto destroyLambda = [&]
 	{
 		CComponent* refCamera;
@@ -248,7 +249,7 @@ void CLevel::DestroyActor(CActor& target)
 		}
 	};
 
-	//ì¬‚µ‚½ƒ‰ƒ€ƒ_®‚ğŠi”[
+	//ä½œæˆã—ãŸãƒ©ãƒ ãƒ€å¼ã‚’æ ¼ç´
 	mDoBeforeUpdateFunction.emplace_back(destroyLambda);
 }
 

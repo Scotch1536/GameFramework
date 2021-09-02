@@ -4,9 +4,9 @@
 
 #include "CActor.h"
 
-CActor::CActor(ILevel& owner , bool isAffectToPause)
-	:CObject("Actor") ,
-	mOwnerInterface(owner) , mIsAffectToPause(isAffectToPause) ,
+CActor::CActor(ILevel& owner, bool isAffectToPause)
+	:CObject("Actor"),
+	mOwnerInterface(owner), mIsAffectToPause(isAffectToPause),
 	Transform(*this)
 {
 	mOwnerInterface.AddActor(*this);
@@ -22,20 +22,25 @@ void CActor::AddComponent(CComponent& component)
 	int myPriority = component.GetPriority();
 	auto itr = this->mComponents.begin();
 
-	for(; itr != this->mComponents.end(); ++itr)
+	for (; itr != this->mComponents.end(); ++itr)
 	{
-		if((*itr).get() == &component)return;
-		if(myPriority < (*itr)->GetPriority())
+		if ((*itr).get() == &component)return;
+		if (myPriority < (*itr)->GetPriority())
 		{
 			break;
 		}
 	}
-	this->mComponents.emplace(itr , &component);
+	this->mComponents.emplace(itr, &component);
 }
 
 void CActor::AddRenderOrder(const SRenderInfo& order)
 {
 	mRenderOrders.emplace_back(order);
+}
+
+void CActor::RequestAddDoAfterUpdateFunction(const std::function<void()>& func)
+{
+	mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
 }
 
 void CActor::Update()
@@ -46,6 +51,7 @@ void CActor::Update()
 	{
 		component->Update();
 	}
+	
 }
 
 void CActor::Render()

@@ -1,85 +1,40 @@
-#include <random>
-
+#include "../Level/CLevel.h"
+#include "../Actor/CActor.h"
 #include "CParticleSystemComponent.h"
+#include "CConeParticleComponent.h"
 #include "CSphereMeshComponent.h"
 
 #include "../Transform/CTransform.h"
 
-
-CParticleSystemComponent::Particle::Particle(CTransform& parentTrans, const XMFLOAT3& direction, const int& life) :Transform(parentTrans), Direction(direction), Life(life) {}
-
-CParticleSystemComponent::CParticleSystemComponent(CActor& owner, CTransform& parentTrans, std::function<void(const CParticleSystemComponent&, CTransform&) > func
-	, EType type, int life, float qty, bool frameChoice, int priority)
-	:CComponent(owner, priority), Transform(parentTrans), mType(type), mLifeFlame(life),mFunction(func)
+CParticleSystemComponent::Particle::Particle(ILevel& owner, CTransform& parentTrans, const XMFLOAT3& direction, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> function, const int& life, const float& speed) :CActor(owner),
+Transform(*this, parentTrans), Direction(direction), Life(life), Speed(speed) 
 {
-	//trueÇ»ÇÁÇPÉtÉåÅ[ÉÄÇ≤Ç∆Ç…ê∂ê¨ falseÇ»ÇÁÇPïb
-	if (frameChoice)
+	function(*this, Transform);	
+}
+
+void CParticleSystemComponent::Particle::Update()
+{
+	Transform.Location.x += Direction.x * Speed;
+	Transform.Location.y += Direction.y * Speed;
+	Transform.Location.z += Direction.z * Speed;
+	Life--;
+
+	if (Life <= 0)
 	{
-		mQuantity = qty;
-	}
-	else
-	{
-		mQuantity = qty / 60;
+		Destroy();
 	}
 }
 
-void CParticleSystemComponent::Update()
+CParticleSystemComponent::CParticleSystemComponent(CActor& owner, ILevel& ownerLevel, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func
+	, int life, float qty, float speed, float second, int priority)
+	: CComponent(owner, priority), Transform(owner, parentTrans), mLevel(ownerLevel), mLifeFlame(life), mFunction(func), mSpeed(speed)
 {
-	std::random_device rd;
-	std::mt19937 mt(rd());
-	bool shouldJudge = false;
-	for (float q = 0; q < mQuantity; q++)
-	{
-		XMFLOAT3 direction;
-		direction.x = float(mt() % 50);
-		direction.y = float(mt() % 50);
-		direction.z = float(mt() % 50);
-		if (mt() % 2 == 0)
-		{
-			direction.x *= -1;
-		}
-		if (mt() % 2 == 0)
-		{
-			direction.y *= -1;
-		}
-		if (mt() % 2 == 0)
-		{
-			direction.z *= -1;
-		}
-
-		mParticle.emplace_back(new Particle(Transform, direction, mLifeFlame));
-
-		mFunction(*this,mParticle.back()->Transform);
-	}
-
-	Move();
-
-	for (auto itr = mParticle.begin(); itr != mParticle.end();)
-	{
-		if ((*itr)->Life <= 0)
-		{
-			itr = mParticle.erase(itr);
-			shouldJudge = true;
-			break;
-		}
-		else
-		{
-			itr++;
-		}
-	}
-	if (shouldJudge)
-	{
-		mParticle.shrink_to_fit();
-	}
+	float createTime = second * 60;
+	mQuantity = qty / createTime;
 }
 
-void CParticleSystemComponent::Move()
+void CParticleSystemComponent::Create(CActor& owner, ILevel& ownerLevel, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func,
+	int life, float speed, float qty, float degree, XMFLOAT3 direction, float second)
 {
-	for (auto& p : mParticle)
-	{
-		p->Transform.Location.x = p->Transform.Location.x + p->Direction.x;
-		p->Transform.Location.y = p->Transform.Location.y + p->Direction.y;
-		p->Transform.Location.z = p->Transform.Location.z + p->Direction.z;
-		p->Life--;
-	}
+	new CConeParticleComponent(owner, ownerLevel, parentTrans, func, life, speed, direction, qty, second, degree);
 }
