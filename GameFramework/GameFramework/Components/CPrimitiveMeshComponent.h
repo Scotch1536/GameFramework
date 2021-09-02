@@ -39,10 +39,25 @@ protected:
 
 	void GenerateVertexAndIndexBuffer();
 
+	void CheckTranslucent()
+	{
+		if(mColor.w < 1.0f)
+		{
+			mIsTranslucent = true;
+		}
+	}
+
 public:
 	CTransform Transform;			//トランスフォーム
 
-	CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color , std::string vertexShaderPath , std::string pixelShaderPath);
+	CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , const XMFLOAT4& color , std::string vertexShaderPath , std::string pixelShaderPath);
+
+	const XMFLOAT4& GetColor()const
+	{
+		return mColor;
+	}
+
+	void SetColor(const XMFLOAT4& color);
 
 	void Update()override;
 	void Render()override;

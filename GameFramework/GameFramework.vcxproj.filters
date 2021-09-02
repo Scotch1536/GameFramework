@@ -75,16 +75,10 @@
     <ClCompile Include="GameFramework\Actor\CActor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CTestLevel.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\DDSTextureLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CDice.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Library\LCCollision.cpp">
@@ -98,30 +92,6 @@
     </ClCompile>
     <ClCompile Include="EntryPoint.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_demo.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_draw.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_impl_dx11.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_impl_win32.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_tables.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_widgets.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\DebugTools\imgui\myimgui.cpp">
-      <Filter>imgui</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Game\CApplication.cpp">
       <Filter>ソース ファイル</Filter>
@@ -192,9 +162,6 @@
     <ClCompile Include="GameFramework\Components\CCameraComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CTest2D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\Components\CDisplay2DComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
@@ -209,6 +176,38 @@
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CConeParticleComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
+    <ClCompile Include="CAttachObject.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainGameLevel.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_impl_dx11.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_impl_win32.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\myimgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitle.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -272,12 +271,6 @@
     <ClInclude Include="GameFramework\Actor\CActor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CDice.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CTestLevel.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Library\LCCollision.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -289,33 +282,6 @@
     </ClInclude>
     <ClInclude Include="GameFramework\Object\CObject.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\DebugTools\imgui\imconfig.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\DebugTools\imgui\imgui.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\DebugTools\imgui\imgui_impl_dx11.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\DebugTools\imgui\imgui_impl_win32.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\DebugTools\imgui\imgui_internal.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\DebugTools\imgui\imstb_rectpack.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\DebugTools\imgui\imstb_textedit.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\DebugTools\imgui\imstb_truetype.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\DebugTools\imgui\myimgui.h">
-      <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Game\CApplication.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -389,9 +355,6 @@
     <ClInclude Include="GameFramework\Managers\CSoundManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CTest2D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Components\CDisplay2DComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
@@ -406,6 +369,50 @@
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CConeParticleComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
+    <ClInclude Include="CAttachObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Actor\CActorGenerator.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CMainGameLevel.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_impl_dx11.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_impl_win32.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\myimgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Actor\CDisplay2DActor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Actor\CFeedActor.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -440,6 +447,9 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\vsline.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\basicnotexvs.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

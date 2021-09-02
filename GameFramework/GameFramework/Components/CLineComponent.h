@@ -48,12 +48,12 @@ private:
 	}
 
 public:
-	CLineComponent(CActor& owner , XMFLOAT3 start , XMFLOAT3 end ,
-		XMFLOAT4 color = { 1.0f,1.0f,1.0f,1.0f } , CTransform* parentTrans = nullptr ,
+	CLineComponent(CActor& owner , const XMFLOAT3& start ,const XMFLOAT3& end ,
+		const XMFLOAT4& color = { 1.0f,1.0f,1.0f,1.0f } , CTransform* parentTrans = nullptr ,
 		std::string vertexShaderPath = "Shader/vsline.hlsl" , std::string pixelShaderPath = "Shader/psline.hlsl" , int priority = 90);
 
-	CLineComponent(CActor& owner , XMFLOAT3 start , XMFLOAT3 direction , float length ,
-		XMFLOAT4 color = { 1.0f,1.0f,1.0f,1.0f } , CTransform* parentTrans = nullptr ,
+	CLineComponent(CActor& owner ,const XMFLOAT3& start ,const XMFLOAT3& direction , float length ,
+		const XMFLOAT4& color = { 1.0f,1.0f,1.0f,1.0f } , CTransform* parentTrans = nullptr ,
 		std::string vertexShaderPath = "Shader/vsline.hlsl" , std::string pixelShaderPath = "Shader/psline.hlsl" , int priority = 90);
 
 	//•`‰æ

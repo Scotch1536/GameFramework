@@ -1,12 +1,11 @@
 #include "../Library/LCMath.h"
-#include "../ExternalCode/dx11mathutil.h"
 
 #include "CRotator.h"
 #include "CTransform.h"
 
 CRotator::CRotator(const CTransform& partner):mPartner(partner)
 {
-	DX11QtIdentity(mQuaternion);
+	LCMath::IdentityQuaternion(mQuaternion);
 }
 
 void CRotator::UpdateAngle(float& angle)
@@ -45,7 +44,7 @@ XMFLOAT4X4 CRotator::GenerateMatrix()
 	XMFLOAT4X4 ansMTX;
 
 	//クォータニオンから行列を作成
-	DX11MtxFromQt(ansMTX , mQuaternion);
+	LCMath::CalcMatrixFromQuaternion(mQuaternion , ansMTX);
 
 	return ansMTX;
 }
@@ -121,7 +120,7 @@ void CRotator::ChangeAngleAndQuaternionToLocation(XMFLOAT3 location)
 bool CRotator::CalcQuaternionToLocation(XMFLOAT3 location , XMFLOAT4& resultQua)
 {
 	XMFLOAT4 mulQua;
-	XMFLOAT3 vec , axis , eulerAngles;
+	XMFLOAT3 vec , axis;
 	float angle;
 
 	//向きたい位置へのベクトルを計算

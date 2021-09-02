@@ -25,7 +25,7 @@
 //-----------------------------------------------------------------------------
 // スタティック　メンバー
 //-----------------------------------------------------------------------------
-const char*			CApplication::WINDOW_TITLE = "GameFramework";
+const char*			CApplication::WINDOW_TITLE = "Attach!";
 const char*			CApplication::WINDOW_CLASS_NAME = "win32app";
 
 const uint32_t		CApplication::WINDOW_STYLE_WINDOWED = (WS_VISIBLE | WS_CAPTION | WS_SYSMENU);
@@ -164,7 +164,10 @@ unsigned long CApplication::MainLoop()
 
 		last_time = current_time;
 
-		if(delta_time != current_time)CGameManager::GetInstance().SetDeltaTime(*this , delta_time);
+		if(delta_time != current_time && delta_time < 1000)
+		{
+			CGameManager::GetInstance().SetDeltaTime(*this , delta_time);
+		}
 
 		//ゲームフロー
 		game.Input();

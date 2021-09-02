@@ -1,11 +1,12 @@
 #include <Windows.h>
 
-#include "../DebugTools/imgui/myimgui.h"
+#include "../ExternalTools/imgui/myimgui.h"
 #include "../ExternalCode/CDirectxGraphics.h"
 #include "../ExternalCode/DX11Settransform.h"
 #include "../ExternalCode/CDirectInput.h"
 #include "../Managers/CInputManager.h"
 #include "../Managers/CSoundManager.h"
+#include "../Actor/CFeedActor.h"
 
 #include "CGame.h"
 #include "CApplication.h"
@@ -102,11 +103,6 @@ void CGame::Init()
 	devCon->PSSetConstantBuffers(5 , 1 , mConstantBufferViewPort.GetAddressOf());
 
 	imguiInit();
-
-	if(mLevel != nullptr)
-	{
-		mLevel->Init();
-	}
 }
 
 void CGame::Input()
@@ -116,13 +112,19 @@ void CGame::Input()
 
 void CGame::Update()
 {
-	mLevel->Tick();
-	mLevel->Update();
+	if(mLevel != nullptr)
+	{
+		mLevel->Tick();
+		mLevel->Update();
+	}
 }
 
 void CGame::Render()
 {
-	mLevel->Render();
+	if(mLevel != nullptr)
+	{
+		mLevel->Render();
+	}
 
 	if(mLoadLevelFunction != nullptr)
 	{
@@ -131,13 +133,23 @@ void CGame::Render()
 	}
 }
 
-void CGame::LoadLevel(CLevel& level)
+void CGame::LoadLevel(CLevel& level , bool isFeed , XMFLOAT3 feedColor , float feedTime)
 {
-	auto loadLevel = [&]
+	if(isFeed&&mLevel != nullptr)
 	{
-		mLevel.reset(&level);
-
-		mLevel->Init();
-	};
-	mLoadLevelFunction = loadLevel;
+		auto loadLevelCall = [&]
+		{
+			LoadLevel(level);
+		};
+		new CFeedActor(*mLevel , loadLevelCall , CFeedActor::EOption::FEEDOUT , feedColor , feedTime);
+	}
+	else
+	{
+		auto loadLevel = [&]
+		{
+			mLevel.reset(&level);
+			mLevel->Init();
+		};
+		mLoadLevelFunction = loadLevel;
+	}
 }

@@ -33,19 +33,9 @@ void CActor::AddComponent(CComponent& component)
 	this->mComponents.emplace(itr, &component);
 }
 
-void CActor::AddRenderComponent(IRender& component)
+void CActor::AddRenderOrder(const SRenderInfo& order)
 {
-	mRenderComponents.emplace_back(&component);
-}
-
-void CActor::RequestAddAlphaRenderComponentToLevel(IRender& renderTarget, bool isFront)
-{
-	mOwnerInterface.AddAlphaRenderComponent(renderTarget, isFront);
-}
-
-void CActor::RequestAdd2DRenderComponentToLevel(IRender& renderTarget)
-{
-	mOwnerInterface.Add2DRenderComponent(renderTarget);
+	mRenderOrders.emplace_back(order);
 }
 
 void CActor::RequestAddDoAfterUpdateFunction(const std::function<void()>& func)
@@ -66,10 +56,7 @@ void CActor::Update()
 
 void CActor::Render()
 {
-	for (auto& renderComp : mRenderComponents)
-	{
-		renderComp->Render();
-	}
+	mOwnerInterface.RequestRenderOrders(mRenderOrders);
 }
 
 void CActor::Destroy()

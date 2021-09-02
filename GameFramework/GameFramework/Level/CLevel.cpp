@@ -1,20 +1,23 @@
-#include "../DebugTools/imgui/myimgui.h"
+#include <algorithm>
+
+#include "../ExternalTools/imgui/myimgui.h"
 #include "../ExternalCode/DX11Settransform.h"
 #include "../Game/CGame.h"
 #include "../Managers/CGameManager.h"
 #include "../Managers/CColliderManager.h"
+#include "../Managers/CInputManager.h"
 #include "../Components/CCameraComponent.h"
 
 #include "CLevel.h"
 
-CLevel::CLevel(IGame& owner):CObject("Level") , mOwnerInterface(&owner)
+CLevel::CLevel(IGame& owner , bool isFeed , XMFLOAT3 feedColor , float FeedTime):CObject("Level") , mOwnerInterface(owner)
 {
-	mOwnerInterface->LoadLevel(*this);
+	mOwnerInterface.LoadLevel(*this , isFeed , feedColor , FeedTime);
 }
 
-CLevel::CLevel(IGameManagerToLevel& receiver) : CObject("Level")
+CLevel::~CLevel()
 {
-	receiver.SetStartLevel(*this);
+	CInputManager::GetInstance().ReleaseBindTarget(*this);
 }
 
 void CLevel::AddActor(CActor& actor)
@@ -27,136 +30,152 @@ void CLevel::RequestSetCamera(CCameraComponent& camera)
 	mRenderingCamera = &camera;
 }
 
-void CLevel::RequestLoadLevel(CLevel& level)
-{
-	mOwnerInterface->LoadLevel(level);
-}
-
-void CLevel::RequestAddDoAfterUpdateFunction(const std::function<void()>& func)
-{
-	mDoAfterUpdateFunction.emplace_back(func);
-}
-
 void CLevel::Update()
 {
+	//æ›´æ–°å‰ã«è¡Œã†é–¢æ•°ã‚’å®Ÿè¡Œ
+	if(mDoBeforeUpdateFunction.size() != 0)
+	{
+		for(auto& func : mDoBeforeUpdateFunction)
+		{
+			func();
+		}
+		//ä¸­èº«ã‚’ç©ºã«ã™ã‚‹
+		mDoBeforeUpdateFunction.clear();
+		mDoBeforeUpdateFunction.shrink_to_fit();
+	}
+
+	std::vector<CActor*> actors;
 	CActor* cameraActor = nullptr;
 
-	//Tick‘Oƒgƒ‰ƒ“ƒXƒtƒH[ƒ€XVˆ—
-	for(auto& actor : mActors)
+	if(CGameManager::GetInstance().GetIsPause())
 	{
-		if(CGameManager::GetInstance().GetIsPause())
+		for(auto& actor : mActors)
 		{
-			if(actor->GetIsAffectToPause())continue;
+			if(!actor->GetIsAffectToPause())
+			{
+				actors.emplace_back(actor.get());
+			}
 		}
+	}
+	else
+	{
+		for(auto& actor : mActors)
+		{
+			actors.emplace_back(actor.get());
+		}
+	}
 
+	//Tickå‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ æ›´æ–°å‡¦ç†
+	for(auto& actor : actors)
+	{
 		if(!actor->Transform.GetIsChild())actor->Transform.Update();
 	}
 
+	//ã‚³ãƒªã‚¸ãƒ§ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®æ›´æ–°
 	CColliderManager::GetInstance().Update();
 
-	//ƒJƒƒ‰Š‚ÌƒAƒNƒ^[‚Ì‚İæ‚Éˆ—‚·‚é
+	//ã‚«ãƒ¡ãƒ©æ‰€æŒã®ã‚¢ã‚¯ã‚¿ãƒ¼ã®ã¿å…ˆã«å‡¦ç†ã™ã‚‹
 	if(mRenderingCamera != nullptr)
 	{
 		cameraActor = &mRenderingCamera->GetOwner();
-		cameraActor->Tick();
-		cameraActor->Update();
+
+		auto cameraActorItr = std::find(actors.begin() , actors.end() , cameraActor);
+		if(cameraActorItr != actors.end())
+		{
+			cameraActor->Tick();
+			cameraActor->Update();
+
+			actors.erase(cameraActorItr);
+			actors.shrink_to_fit();
+		}
 	}
 
-	//Tickˆ—
-	for(auto& actor : mActors)
+	//Tickå‡¦ç†
+	for(auto& actor : actors)
 	{
-		if(actor.get() == cameraActor)continue;
-
-		if(CGameManager::GetInstance().GetIsPause())
-		{
-			if(actor->GetIsAffectToPause())continue;
-		}
-
 		actor->Tick();
 	}
 
-	//TickŒã‚És‚¤ŠÖ”‚ğÀs
-	if(mDoAfterTickFunction.size() != 0)
+	//æ›´æ–°å‡¦ç†
+	for(auto& actor : actors)
 	{
-		for(auto& func : mDoAfterTickFunction)
-		{
-			func();
-		}
-		//’†g‚ğ‹ó‚É‚·‚é
-		mDoAfterTickFunction.clear();
-		mDoAfterTickFunction.shrink_to_fit();
-	}
-
-	for(auto& actor : mActors)
-	{
-		if(actor.get() == cameraActor)continue;
-
-		if(CGameManager::GetInstance().GetIsPause())
-		{
-			if(actor->GetIsAffectToPause())continue;
-		}
-
 		actor->Update();
 	}
+}
 
-	//XVŒã‚És‚¤ŠÖ”‚ğÀs
-	if (mDoAfterUpdateFunction.size() != 0)
+void CLevel::RequestRenderOrders(std::vector<SRenderInfo>& renderOrders)
+{
+	for(auto& renderOrder : renderOrders)
 	{
-		for (auto& func : mDoAfterUpdateFunction)
-		{
-			func();
-		}
-		//’†g‚ğ‹ó‚É‚·‚é
-		mDoAfterUpdateFunction.clear();
-		mDoAfterUpdateFunction.shrink_to_fit();
+		if(renderOrder.RenderOption == ERenderOption::OPACITY3D)Add3DOpacityRenderComponent(renderOrder.RenderComponentReference);
+		else if(renderOrder.RenderOption == ERenderOption::TRANSLUCENT3D)Add3DTranslucentRenderComponent(renderOrder.RenderComponentReference , renderOrder.DistanceToCamera);
+		else if(renderOrder.RenderOption == ERenderOption::BILLBOARD)Add3DTranslucentRenderComponent(renderOrder.RenderComponentReference , renderOrder.DistanceToCamera);
+		else if(renderOrder.RenderOption == ERenderOption::OPACITY2D)Add2DOpacityRenderComponent(renderOrder.RenderComponentReference);
+		else if(renderOrder.RenderOption == ERenderOption::TRANSLUCENT2D)Add2DTranslucentRenderComponent(renderOrder.RenderComponentReference);
 	}
+
+	renderOrders.clear();
+	renderOrders.shrink_to_fit();
 }
 
 void CLevel::Render()
 {
 	XMFLOAT4X4 bufMTX;
 
-	if(mRenderingCamera == nullptr)
-	{
-		MessageBox(NULL , "Not Found RenderingCamera" , "error" , MB_OK);
-		exit(1);
-	}
-
 	float col[4] = { 0.f,0.f,1.f,1.f };
 
-	// ƒ^[ƒQƒbƒgƒoƒbƒtƒ@ƒNƒŠƒA
+	// ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒãƒƒãƒ•ã‚¡ã‚¯ãƒªã‚¢
 	CDirectXGraphics::GetInstance()->GetImmediateContext()->ClearRenderTargetView(
 		CDirectXGraphics::GetInstance()->GetRenderTargetView() , col);
-	// Zƒoƒbƒtƒ@ƒNƒŠƒA
+	// Zãƒãƒƒãƒ•ã‚¡ã‚¯ãƒªã‚¢
 	CDirectXGraphics::GetInstance()->GetImmediateContext()->ClearDepthStencilView(
 		CDirectXGraphics::GetInstance()->GetDepthStencilView() ,
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f , 0);
 
-	bufMTX = mRenderingCamera->GetProjectionMatrix();
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , bufMTX);
+	if(mRenderingCamera != nullptr)
+	{
+		bufMTX = mRenderingCamera->GetProjectionMatrix();
+		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , bufMTX);
 
-	bufMTX = mRenderingCamera->GetViewMatrix();
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::VIEW , bufMTX);
-
+		bufMTX = mRenderingCamera->GetViewMatrix();
+		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::VIEW , bufMTX);
+	}
 
 	for(auto& actor : mActors)
 	{
 		actor->Render();
 	}
 
-	if(mAlphaRenderComponents.size() != 0)
+	if(m3DOpacityRenderComponents.size() != 0)
 	{
-		for(auto& alphaRender : mAlphaRenderComponents)
+		for(auto& alphaRender : m3DOpacityRenderComponents)
 		{
 			alphaRender->Render();
 		}
-		mAlphaRenderComponents.clear();
-		mAlphaRenderComponents.shrink_to_fit();
+		m3DOpacityRenderComponents.clear();
+		m3DOpacityRenderComponents.shrink_to_fit();
 	}
 
-	if(m2DRenderComponents.size() != 0)
+	if(m3DTranslucentRenderComponents.size() != 0)
 	{
-		// 2D•`‰æ—pË‰e•ÏŠ·s—ñ
+		//ã‚«ãƒ¡ãƒ©ã‹ã‚‰é ã„é †ã«ã‚½ãƒ¼ãƒˆ
+		std::sort(m3DTranslucentRenderComponents.begin() , m3DTranslucentRenderComponents.end() ,
+			[](std::pair<IRender* , float>& lhs , std::pair<IRender* , float>& rhs)
+			{
+				return lhs.second > rhs.second;
+			});
+
+		for(auto& alphaRender : m3DTranslucentRenderComponents)
+		{
+			alphaRender.first->Render();
+		}
+		m3DTranslucentRenderComponents.clear();
+		m3DTranslucentRenderComponents.shrink_to_fit();
+	}
+
+	if(m2DOpacityRenderComponents.size() != 0 || m2DTranslucentRenderComponents.size() != 0)
+	{
+		// 2Dæç”»ç”¨å°„å½±å¤‰æ›è¡Œåˆ—
 		XMFLOAT4X4 projectionMatrix2D = {
 				2.0f / static_cast<float>(CApplication::CLIENT_WIDTH) , 0.0f , 0.0f , 0.0f ,
 				0.0f , -2.0f / static_cast<float>(CApplication::CLIENT_HEIGHT), 0.0f , 0.0f ,
@@ -166,36 +185,50 @@ void CLevel::Render()
 
 		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , projectionMatrix2D);
 
-		for(auto& render : m2DRenderComponents)
+		CDirectXGraphics::GetInstance()->TurnOffZbuffer();
+
+		if(m2DOpacityRenderComponents.size() != 0)
 		{
-			render->Render();
+			for(auto& render : m2DOpacityRenderComponents)
+			{
+				render->Render();
+			}
+			m2DOpacityRenderComponents.clear();
+			m2DOpacityRenderComponents.shrink_to_fit();
 		}
-		m2DRenderComponents.clear();
-		m2DRenderComponents.shrink_to_fit();
+
+		if(m2DTranslucentRenderComponents.size() != 0)
+		{
+			for(auto& alphaRender : m2DTranslucentRenderComponents)
+			{
+				alphaRender->Render();
+			}
+			m2DTranslucentRenderComponents.clear();
+			m2DTranslucentRenderComponents.shrink_to_fit();
+		}
+
+		CDirectXGraphics::GetInstance()->TurnOnZBuffer();
 	}
 
-	//ImGui‚É“n‚·•`‰æ‚ÌŠÖ”ƒIƒuƒWƒFƒNƒgˆê‚Â‚ÌŠÖ”ƒIƒuƒWƒFƒNƒg‚É‚Ü‚Æ‚ß‚é
+	//ImGuiã«æ¸¡ã™æç”»ã®é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä¸€ã¤ã®é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã¾ã¨ã‚ã‚‹
 	auto allGuiMethodExecute = [&]
 	{
-		for(auto& guiMethod : mImGuiDrawMethod)
+		for(auto& guiMethod : mImGuiDrawFunction)
 		{
 			guiMethod();
 		}
 	};
-
-#ifdef _DEBUG
 	imguiDraw(allGuiMethodExecute);
-#endif
 
-	mImGuiDrawMethod.clear();
-	mImGuiDrawMethod.shrink_to_fit();
+	mImGuiDrawFunction.clear();
+	mImGuiDrawFunction.shrink_to_fit();
 
 	CDirectXGraphics::GetInstance()->GetSwapChain()->Present(0 , 0);
 }
 
 void CLevel::DestroyActor(CActor& target)
 {
-	//ƒ‰ƒ€ƒ_®‚ğì¬
+	//ãƒ©ãƒ ãƒ€å¼ã‚’ä½œæˆ
 	auto destroyLambda = [&]
 	{
 		CComponent* refCamera;
@@ -216,13 +249,8 @@ void CLevel::DestroyActor(CActor& target)
 		}
 	};
 
-	//ì¬‚µ‚½ƒ‰ƒ€ƒ_®‚ğŠi”[
-	mDoAfterTickFunction.emplace_back(destroyLambda);
-}
-
-void CLevel::SetOwnerInterface(CGame& owner)
-{
-	mOwnerInterface = &owner;
+	//ä½œæˆã—ãŸãƒ©ãƒ ãƒ€å¼ã‚’æ ¼ç´
+	mDoBeforeUpdateFunction.emplace_back(destroyLambda);
 }
 
 const XMFLOAT4X4* CLevel::GetRenderingCameraViewMatrix()const
@@ -235,4 +263,13 @@ const XMFLOAT4X4* CLevel::GetRenderingCameraViewMatrix()const
 	{
 		return &mRenderingCamera->GetViewMatrix();
 	}
+}
+
+const XMFLOAT3* CLevel::GetRenderingCameraLocation()const
+{
+	if(mRenderingCamera == nullptr)
+	{
+		return nullptr;
+	}
+	else return &mRenderingCamera->GetEye();
 }

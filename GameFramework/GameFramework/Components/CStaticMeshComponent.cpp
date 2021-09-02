@@ -9,13 +9,10 @@
 
 CStaticMeshComponent::CStaticMeshComponent(CActor& owner , CTransform& parentTrans , CModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority)
 	:CComponent(owner , priority) ,
-	Transform(owner,parentTrans) ,
+	Transform(owner , parentTrans) ,
 	mModel(model) ,
 	mRenderComponent(*new CRenderComponent(owner))
 {
-	//アクター(owner)にレンダー担当のコンポーネントとして登録
-	mOwnerInterface.AddRenderComponent(*this);
-
 	// 頂点データの定義（アニメーション対応）
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
@@ -27,6 +24,11 @@ CStaticMeshComponent::CStaticMeshComponent(CActor& owner , CTransform& parentTra
 
 	mRenderComponent.GenerateVertexShader(layout , numElements , vertexShaderPath);
 	mRenderComponent.GeneratePixelShader(pixelShaderPath);
+}
+
+void CStaticMeshComponent::Update()
+{
+	mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY3D });
 }
 
 void CStaticMeshComponent::Render()

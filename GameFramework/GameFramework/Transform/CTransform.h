@@ -13,6 +13,13 @@ class IActor;
 //トランスフォームクラス
 class CTransform
 {
+public:
+	enum class EOption
+	{
+		NONE = 0b00 ,
+		LOCATION_ONLY = 0b01 ,
+	};
+
 private:
 	XMFLOAT4X4 mWorldMatrixSelf;			//自身のワールド行列
 	XMFLOAT4X4 mWorldMatrixResult;			//最終的な結果のワールド行列
@@ -25,9 +32,11 @@ private:
 
 	IActor& mOwnerInterface;
 
+	int mOption = 0;
+
 	std::vector<std::function<void()>> mMatrixUpdateTimeFunction;		//マトリックス更新時実行関数
 
-	bool mShouldUpdateMatrix = true;		//マトリックスを更新したかどうか
+	bool mShouldUpdateMatrix = true;		//マトリックスを更新すべきか
 	bool mIsChild = false;					//自分が子トランスフォームか
 	bool mIsBillboard = false;				//ビルボードかどうか
 	bool mDoDrawDebugLine = false;			//デバッグラインを描画するか
@@ -60,6 +69,11 @@ public:
 
 	void RequestDebugLine();
 
+	const XMFLOAT4X4& GetWorldMatrixSelf()const
+	{
+		return mWorldMatrixSelf;
+	}
+	
 	const XMFLOAT4X4& GetWorldMatrixResult()const
 	{
 		return mWorldMatrixResult;
@@ -91,5 +105,10 @@ public:
 	{
 		mMatrixUpdateTimeFunction.emplace_back(func);
 	};
+
+	void AddOption(EOption option)
+	{
+		mOption ^= static_cast<int>(option);
+	}
 
 };

@@ -16,8 +16,8 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner, const CModelData& 
 	isMesh = false;
 #endif
 
-	if (isMesh)mBoxMesh = new CBoxMeshComponent(owner, Transform, mLocalMin, mLocalMax, { 1.0f,1.0f,1.0f,0.3f });
-
+	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , { 1.0f,1.0f,1.0f,0.3f } , mLocalMin , mLocalMax);
+    
 	parentTrans.AddMatrixUpdateTimeFunction(std::bind(&CAABBColliderComponent::SetShouldUpdate, std::ref(*this), true));
 }
 
@@ -29,7 +29,7 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner, CTransform& parent
 	isMesh = false;
 #endif
 
-	if (isMesh)mBoxMesh = new CBoxMeshComponent(owner, Transform, mLocalMin, mLocalMax, { 1.0f,1.0f,1.0f,0.3f });
+	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , { 1.0f,1.0f,1.0f,0.3f } , mLocalMin , mLocalMax);
 
 	parentTrans.AddMatrixUpdateTimeFunction(std::bind(&CAABBColliderComponent::SetShouldUpdate, std::ref(*this), true));
 }
@@ -40,7 +40,6 @@ void CAABBColliderComponent::ConvertWorldCollider()
 	{
 		mShouldUpdate = false;
 
-		//ç¿ïWçXêV
 		XMFLOAT4X4 worldMtx = Transform.GetWorldMatrixResult();
 		std::vector<XMFLOAT3> vertices;
 

@@ -48,6 +48,11 @@ void CInputManager::AddEvent(const std::string& actionName , const EButtonOption
 	mEventList[actionName].EventInfo = func;
 }
 
+void CInputManager::DeleteEvent(const std::string& actionName)
+{
+	mEventList[actionName].EventInfo = nullptr;
+}
+
 void CInputManager::ReleaseBindTarget(CObject& target)
 {
 	//アクションリストが空だった場合終了
@@ -76,6 +81,9 @@ void CInputManager::CheckInput()
 
 	for(auto& event : mEventList)
 	{
+		//イベント情報がなければcontinue
+		if(event.second.EventInfo == nullptr)continue;
+
 		//ゲームがポーズ状態の場合そのアクターがポーズの影響を受けるなら入力処理をとばす
 		if(gameManager.GetIsPause())
 		{
@@ -226,16 +234,7 @@ void CInputManager::CheckInput()
 		}
 		if(shouldEvent)
 		{
-			if(event.second.EventInfo != nullptr)
-			{
-				event.second.EventInfo();
-			}
-			else
-			{
-#ifdef _DEBUG
-				MessageBox(NULL , "Not Found Function" , "error" , MB_OK);
-#endif
-			}
+			event.second.EventInfo();
 			shouldEvent = false;
 		}
 	}

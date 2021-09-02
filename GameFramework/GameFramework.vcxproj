@@ -11,13 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CAttachObject.cpp" />
     <ClCompile Include="CBullet.cpp" />
-    <ClCompile Include="CDice.cpp" />
     <ClCompile Include="CFighter.cpp" />
+    <ClCompile Include="CMainGameLevel.cpp" />
     <ClCompile Include="CPointer.cpp" />
     <ClCompile Include="CSkyDome.cpp" />
-    <ClCompile Include="CTest2D.cpp" />
-    <ClCompile Include="CTestLevel.cpp" />
+    <ClCompile Include="CTitle.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
     <ClCompile Include="GameFramework\Components\CAABBColliderComponent.cpp" />
@@ -41,14 +41,6 @@
     <ClCompile Include="GameFramework\Data\CModelMeshData.cpp" />
     <ClCompile Include="GameFramework\Data\CModelData.cpp" />
     <ClCompile Include="GameFramework\Data\CWave.cpp" />
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui.cpp" />
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_demo.cpp" />
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_draw.cpp" />
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_impl_dx11.cpp" />
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_impl_win32.cpp" />
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_tables.cpp" />
-    <ClCompile Include="GameFramework\DebugTools\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="GameFramework\DebugTools\imgui\myimgui.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\AssimpScene.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\CDirectXGraphics.cpp" />
     <ClCompile Include="GameFramework\ExternalCode\CWindow.cpp" />
@@ -58,6 +50,14 @@
     <ClCompile Include="GameFramework\ExternalCode\utftosjisconv.cpp" />
     <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\DDSTextureLoader.cpp" />
     <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_demo.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_draw.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_tables.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="GameFramework\ExternalTools\imgui\myimgui.cpp" />
     <ClCompile Include="GameFramework\Game\CApplication.cpp" />
     <ClCompile Include="GameFramework\Game\CGame.cpp" />
     <ClCompile Include="GameFramework\Level\CLevel.cpp" />
@@ -73,14 +73,17 @@
     <ClCompile Include="GameFramework\Transform\CTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CAttachObject.h" />
     <ClInclude Include="CBullet.h" />
-    <ClInclude Include="CDice.h" />
     <ClInclude Include="CFighter.h" />
+    <ClInclude Include="CMainGameLevel.h" />
     <ClInclude Include="CPointer.h" />
     <ClInclude Include="CSkyDome.h" />
-    <ClInclude Include="CTest2D.h" />
-    <ClInclude Include="CTestLevel.h" />
+    <ClInclude Include="CTitle.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
+    <ClInclude Include="GameFramework\Actor\CActorGenerator.h" />
+    <ClInclude Include="GameFramework\Actor\CDisplay2DActor.h" />
+    <ClInclude Include="GameFramework\Actor\CFeedActor.h" />
     <ClInclude Include="GameFramework\Components\CAABBColliderComponent.h" />
     <ClInclude Include="GameFramework\Components\CBillboardComponent.h" />
     <ClInclude Include="GameFramework\Components\CBoxMeshComponent.h" />
@@ -104,15 +107,6 @@
     <ClInclude Include="GameFramework\Data\CModelData.h" />
     <ClInclude Include="GameFramework\Data\CWave.h" />
     <ClInclude Include="GameFramework\Data\VertexProto.h" />
-    <ClInclude Include="GameFramework\DebugTools\imgui\imconfig.h" />
-    <ClInclude Include="GameFramework\DebugTools\imgui\imgui.h" />
-    <ClInclude Include="GameFramework\DebugTools\imgui\imgui_impl_dx11.h" />
-    <ClInclude Include="GameFramework\DebugTools\imgui\imgui_impl_win32.h" />
-    <ClInclude Include="GameFramework\DebugTools\imgui\imgui_internal.h" />
-    <ClInclude Include="GameFramework\DebugTools\imgui\imstb_rectpack.h" />
-    <ClInclude Include="GameFramework\DebugTools\imgui\imstb_textedit.h" />
-    <ClInclude Include="GameFramework\DebugTools\imgui\imstb_truetype.h" />
-    <ClInclude Include="GameFramework\DebugTools\imgui\myimgui.h" />
     <ClInclude Include="GameFramework\ExternalCode\AssimpScene.h" />
     <ClInclude Include="GameFramework\ExternalCode\CDirectInput.h" />
     <ClInclude Include="GameFramework\ExternalCode\CDirectxGraphics.h" />
@@ -124,6 +118,15 @@
     <ClInclude Include="GameFramework\ExternalCode\Shader.h" />
     <ClInclude Include="GameFramework\ExternalCode\shaderhashmap.h" />
     <ClInclude Include="GameFramework\ExternalCode\utftosjisconv.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imconfig.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_internal.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_rectpack.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_textedit.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_truetype.h" />
+    <ClInclude Include="GameFramework\ExternalTools\imgui\myimgui.h" />
     <ClInclude Include="GameFramework\Game\CApplication.h" />
     <ClInclude Include="GameFramework\Game\CGame.h" />
     <ClInclude Include="GameFramework\Interfaces\IRender.h" />
@@ -141,6 +144,14 @@
     <ClInclude Include="GameFramework\Transform\CTransform.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Shader\basicnotexvs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="Shader\basicps.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

@@ -1,5 +1,4 @@
 #include "../ExternalCode/DX11Settransform.h"
-#include "../ExternalCode/dx11mathutil.h"
 #include "../Managers/CGameManager.h"
 #include "../Library/LCMath.h"
 #include "../Actor/CActor.h"
@@ -7,21 +6,21 @@
 
 #include "CTransform.h"
 
-CTransform::CTransform(IActor& partner) :Rotation(*this), mOwnerInterface(partner) /*, mIsDebugMode(isDebug)*/
+CTransform::CTransform(IActor& partner):Rotation(*this) , mOwnerInterface(partner) /*, mIsDebugMode(isDebug)*/
 {
 	LCMath::IdentityMatrix(mWorldMatrixSelf);
 	LCMath::IdentityMatrix(mWorldMatrixResult);
 }
 
-CTransform::CTransform(IActor& partner, CTransform& parentTrans) : CTransform(partner)
+CTransform::CTransform(IActor& partner , CTransform& parentTrans): CTransform(partner)
 {
 	parentTrans.AttachTransform(*this);
 }
 
 CTransform::~CTransform()
 {
-	if (mParentTransform != nullptr)mParentTransform->DetachTransform(*this);
-	for (auto& child : mChildTransform)
+	if(mParentTransform != nullptr)mParentTransform->DetachTransform(*this);
+	for(auto& child : mChildTransform)
 	{
 		child->DetachTransform(*this);
 	}
@@ -30,12 +29,12 @@ CTransform::~CTransform()
 void CTransform::RequestDebugLine()
 {
 #ifdef _DEBUG
-	if (!mDoDrawDebugLine)
+	if(!mDoDrawDebugLine)
 	{
 		mDoDrawDebugLine = true;
-		new CLineComponent(mOwnerInterface.GetActor(), { 0.0f,0.0f,0.0f }, { 1.0f , 0.0f , 0.0f }, 50.0f, { 1.0f,0.0f,0.0f,1.0f }, this);
-		new CLineComponent(mOwnerInterface.GetActor(), { 0.0f,0.0f,0.0f }, { 0.0f , 1.0f , 0.0f }, 50.0f, { 0.0f,1.0f,0.0f,1.0f }, this);
-		new CLineComponent(mOwnerInterface.GetActor(), { 0.0f,0.0f,0.0f }, { 0.0f , 0.0f , 1.0f }, 50.0f, { 0.0f,0.0f,1.0f,1.0f }, this);
+		new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 1.0f , 0.0f , 0.0f } , 50.0f , { 1.0f,0.0f,0.0f,1.0f } , this);
+		new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 0.0f , 1.0f , 0.0f } , 50.0f , { 0.0f,1.0f,0.0f,1.0f } , this);
+		new CLineComponent(mOwnerInterface.GetActor() , { 0.0f,0.0f,0.0f } , { 0.0f , 0.0f , 1.0f } , 50.0f , { 0.0f,0.0f,1.0f,1.0f } , this);
 	}
 #endif
 }
@@ -49,14 +48,14 @@ void CTransform::AttachTransform(CTransform& attachTarget)
 
 void CTransform::DetachTransform(CTransform& detachTarget)
 {
-	if (mParentTransform == &detachTarget)
+	if(mParentTransform == &detachTarget)
 	{
 		mParentTransform = nullptr;
 		mIsChild = false;
 	}
-	for (auto itr = mChildTransform.begin(); itr != mChildTransform.end(); ++itr)
+	for(auto itr = mChildTransform.begin(); itr != mChildTransform.end(); ++itr)
 	{
-		if ((*itr) == &detachTarget)
+		if((*itr) == &detachTarget)
 		{
 			mChildTransform.erase(itr);
 			mChildTransform.shrink_to_fit();
@@ -67,40 +66,52 @@ void CTransform::DetachTransform(CTransform& detachTarget)
 
 void CTransform::Update()
 {
-
-	if (mIsBillboard)
+	if(mIsBillboard)
 	{
 		XMFLOAT3 angle = Rotation.GetAngle();
-		if (angle.x != 0.0f || angle.y != 0)Rotation.SetAngle({ 0.0f,0.0f,angle.z });
+		if(angle.x != 0.0f || angle.y != 0)Rotation.SetAngle({ 0.0f,0.0f,angle.z });
 	}
 
 	Rotation.Update();
 
-	if (!LCMath::CompareFloat3(Location, mLastFrameLocation) || !LCMath::CompareFloat3(Scale, mLastFrameScale) || !Rotation.GetIsSameAngle())
+	if(!LCMath::CompareFloat3(Location , mLastFrameLocation) || !LCMath::CompareFloat3(Scale , mLastFrameScale) || !Rotation.GetIsSameAngle())
 	{
 		mShouldUpdateMatrix = true;
 		mLastFrameLocation = Location;
 		mLastFrameScale = Scale;
 	}
 
-	if (mShouldUpdateMatrix)
+	if(mShouldUpdateMatrix)
 	{
 		mShouldUpdateMatrix = false;
 
-		LCMath::UpdateMatrix(Location, Scale, Rotation.GenerateMatrix(), mWorldMatrixSelf);
+		LCMath::UpdateMatrix(Location , Scale , Rotation.GenerateMatrix() , mWorldMatrixSelf);
 
-		if (mMatrixUpdateTimeFunction.size() > 0)
+		if(mMatrixUpdateTimeFunction.size() > 0)
 		{
-			for (auto& func : mMatrixUpdateTimeFunction)
+			for(auto& func : mMatrixUpdateTimeFunction)
 			{
 				func();
 			}
 		}
 	}
 
-	if (mParentTransform != nullptr)
+	if(mParentTransform != nullptr)
 	{
-		DX11MtxMultiply(mWorldMatrixResult, mWorldMatrixSelf, mParentTransform->GetWorldMatrixResult());
+		LCMath::CalcMatrixMultply(mWorldMatrixSelf , mParentTransform->GetWorldMatrixResult() , mWorldMatrixResult);
+
+		if(mOption&static_cast<int>(EOption::LOCATION_ONLY))
+		{
+			mWorldMatrixResult._11 = mWorldMatrixSelf._11;
+			mWorldMatrixResult._12 = mWorldMatrixSelf._12;
+			mWorldMatrixResult._13 = mWorldMatrixSelf._13;
+			mWorldMatrixResult._21 = mWorldMatrixSelf._21;
+			mWorldMatrixResult._22 = mWorldMatrixSelf._22;
+			mWorldMatrixResult._23 = mWorldMatrixSelf._23;
+			mWorldMatrixResult._31 = mWorldMatrixSelf._31;
+			mWorldMatrixResult._32 = mWorldMatrixSelf._32;
+			mWorldMatrixResult._33 = mWorldMatrixSelf._33;
+		}
 	}
 	else
 	{
@@ -108,16 +119,16 @@ void CTransform::Update()
 	}
 
 	//ビルボードなら結果の行列に上書き処理
-	if (mIsBillboard)
+	if(mIsBillboard)
 	{
 		const XMFLOAT4X4* camera = CGameManager::GetInstance().GetCameraViewMatrix();
-		if (camera != nullptr)
+		if(camera != nullptr)
 		{
 			XMFLOAT4X4 inverseCamera;
 			XMFLOAT4X4 resultMTX;
-			LCMath::InverseMatrix(*camera, inverseCamera);
+			LCMath::InverseMatrix(*camera , inverseCamera);
 
-			DX11MtxMultiply(resultMTX, mWorldMatrixSelf, inverseCamera);
+			LCMath::CalcMatrixMultply(mWorldMatrixSelf , inverseCamera, resultMTX);
 
 			mWorldMatrixResult._11 = resultMTX._11;
 			mWorldMatrixResult._12 = resultMTX._12;
@@ -133,7 +144,7 @@ void CTransform::Update()
 		}
 	}
 
-	for (auto& child : mChildTransform)
+	for(auto& child : mChildTransform)
 	{
 		child->Update();
 	}
@@ -141,7 +152,7 @@ void CTransform::Update()
 
 void CTransform::RequestSetMatrix()
 {
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD, mWorldMatrixResult);
+	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD , mWorldMatrixResult);
 }
 
 XMFLOAT3 CTransform::GetRightVector()const
@@ -152,7 +163,7 @@ XMFLOAT3 CTransform::GetRightVector()const
 	result.y = mWorldMatrixResult._12;
 	result.z = mWorldMatrixResult._13;
 
-	LCMath::CalcFloat3Normalize(result, result);
+	LCMath::CalcFloat3Normalize(result , result);
 
 	return result;
 }
@@ -165,7 +176,7 @@ XMFLOAT3 CTransform::GetUpwardVector()const
 	result.y = mWorldMatrixResult._22;
 	result.z = mWorldMatrixResult._23;
 
-	LCMath::CalcFloat3Normalize(result, result);
+	LCMath::CalcFloat3Normalize(result , result);
 
 	return result;
 }
@@ -178,7 +189,7 @@ XMFLOAT3 CTransform::GetForwardVector()const
 	result.y = mWorldMatrixResult._32;
 	result.z = mWorldMatrixResult._33;
 
-	LCMath::CalcFloat3Normalize(result, result);
+	LCMath::CalcFloat3Normalize(result , result);
 
 	return result;
 }
@@ -198,7 +209,7 @@ XMFLOAT3 CTransform::GetWorldScale()const
 {
 	XMFLOAT3 result;
 
-	if (mParentTransform != nullptr)
+	if(mParentTransform != nullptr)
 	{
 		result = mParentTransform->GetWorldScale();
 
@@ -216,7 +227,7 @@ XMFLOAT3 CTransform::GetWorldRotatorAngle()const
 	XMFLOAT3 angle = Rotation.GetAngle();
 	XMFLOAT3 result;
 
-	if (mParentTransform != nullptr)
+	if(mParentTransform != nullptr)
 	{
 		result = mParentTransform->GetWorldRotatorAngle();
 
