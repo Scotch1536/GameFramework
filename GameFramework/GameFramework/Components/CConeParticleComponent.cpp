@@ -36,12 +36,12 @@ void CConeParticleComponent::Update()
 				direction = LCMath::CalcFloat3Normalize(direction);
 				mTemporaryDirection.emplace_back(direction);
 				auto func = [&] {new Particle(mLevel, Transform, mTemporaryDirection.back(), mFunction, mLifeFlame, mSpeed); };
-				mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
+				mOwnerInterface.RequestAddDoBeforeUpdateFunction(func);
 			}
 			else
 			{
 				auto func = [&] {new Particle(mLevel, Transform, mDirection, mFunction, mLifeFlame, mSpeed); };
-				mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
+				mOwnerInterface.RequestAddDoBeforeUpdateFunction(func);
 			}
 		}
 	}
@@ -65,12 +65,12 @@ void CConeParticleComponent::Update()
 			{
 				direction = LCMath::CalcFloat3Normalize(direction);
 				auto func = [&] {new Particle(mLevel, Transform, direction, mFunction, mLifeFlame, mSpeed); };
-				mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
+				mOwnerInterface.RequestAddDoBeforeUpdateFunction(func);
 			}
 			else
 			{
 				auto func = [&] {new Particle(mLevel, Transform, mDirection, mFunction, mLifeFlame, mSpeed); };
-				mOwnerInterface.RequestAddDoAfterUpdateFunction(func);
+				mOwnerInterface.RequestAddDoBeforeUpdateFunction(func);
 			}
 		}
 	}

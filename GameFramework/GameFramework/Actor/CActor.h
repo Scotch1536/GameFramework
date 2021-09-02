@@ -44,6 +44,7 @@ public:
 	virtual void AddComponent(CComponent& component) = 0;
 	virtual void AddRenderOrder(const SRenderInfo& order) = 0;
 	virtual CTransform& GetTransform() = 0;
+	virtual void RequestAddDoBeforeUpdateFunction(std::function<void()> func) = 0;
 };
 
 //アクタークラス
@@ -67,6 +68,9 @@ private:
 	//レンダー命令を追加する（毎フレーム必要）
 	void AddRenderOrder(const SRenderInfo& order)override;
   
+	//次のフレームに実行する関数を追加する
+	void RequestAddDoBeforeUpdateFunction(std::function<void()> func)override;
+
 	//アクター情報取得
 	CActor& GetActor()override
 	{
