@@ -15,7 +15,11 @@ public:
 
 	//クォータニオンからオイラー角に変換
 	static const XMFLOAT3& TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua, XMFLOAT3& resultAngle);
-	static XMFLOAT3 TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua);
+	static XMFLOAT3 TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua);	
+	
+	//行列からオイラー角に変換
+	static const XMFLOAT3& TransformFromMatrixToEulerAngles(const XMFLOAT4X4& matrix, XMFLOAT3& resultAngle);
+	static XMFLOAT3 TransformFromMatrixToEulerAngles(const XMFLOAT4X4& matrix);
 
 	//単位行列化
 	static void IdentityMatrix(XMFLOAT4X4& target);
@@ -37,6 +41,9 @@ public:
 
 	//指定のFloat3同士が一致しているかの比較
 	static bool CompareFloat3(const XMFLOAT3& target1, const XMFLOAT3& target2);
+	
+	//指定のFloat4同士が一致しているかの比較
+	static bool CompareFloat4(const XMFLOAT4& target1, const XMFLOAT4& target2);
 
 	//指定の行列同士が一致しているかの比較
 	static bool CompareMatrix(const XMFLOAT4X4& target1, const XMFLOAT4X4& target2);

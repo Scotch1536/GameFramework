@@ -25,7 +25,7 @@ void CMainGameLevel::Init()
 
 	CSkyDome& skyDome = *new CSkyDome(*this);
 	fighter.Transform.AttachTransform(skyDome.Transform);
-	skyDome.Transform.AddOption(CTransform::EOption::LOCATION_ONLY);
+	skyDome.Transform.SetOption(CTransform::EAttachOption::LOCATION_ONLY);
 	skyDome.GetComponent<CStaticMeshComponent>(buf);
 	XMFLOAT3 min , max;
 	min = max = { 0.0f,0.0f,0.0f };
