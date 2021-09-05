@@ -30,6 +30,7 @@
     <ClCompile Include="GameFramework\Components\CParticleSystemComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CLineComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CPlaneMeshComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CPointLightComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CPrimitiveMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSphereColliderComponent.cpp" />
@@ -66,6 +67,7 @@
     <ClCompile Include="GameFramework\Managers\CDirectXResourceManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CGameManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CInputManager.cpp" />
+    <ClCompile Include="GameFramework\Managers\CLightManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp" />
     <ClCompile Include="GameFramework\Managers\CSoundManager.cpp" />
     <ClCompile Include="GameFramework\Transform\CRotator.cpp" />
@@ -91,6 +93,7 @@
     <ClInclude Include="GameFramework\Components\CParticleSystemComponent.h" />
     <ClInclude Include="GameFramework\Components\CLineComponent.h" />
     <ClInclude Include="GameFramework\Components\CPlaneMeshComponent.h" />
+    <ClInclude Include="GameFramework\Components\CPointLightComponent.h" />
     <ClInclude Include="GameFramework\Components\CPrimitiveMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CRenderComponent.h" />
     <ClInclude Include="GameFramework\Components\CSphereColliderComponent.h" />
@@ -132,6 +135,7 @@
     <ClInclude Include="GameFramework\Managers\CDirectXResourceManager.h" />
     <ClInclude Include="GameFramework\Managers\CGameManager.h" />
     <ClInclude Include="GameFramework\Managers\CInputManager.h" />
+    <ClInclude Include="GameFramework\Managers\CLightManager.h" />
     <ClInclude Include="GameFramework\Managers\CModelDataManager.h" />
     <ClInclude Include="GameFramework\Managers\CSoundManager.h" />
     <ClInclude Include="GameFramework\Object\CObject.h" />

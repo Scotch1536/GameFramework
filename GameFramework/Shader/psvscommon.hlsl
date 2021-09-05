@@ -1,6 +1,11 @@
 Texture2D g_Tex : register(t0);				    // テクスチャ
 SamplerState g_SamplerLinear : register(s0);	// サンプラー
 
+struct SPLights
+{
+    float4 LightPos;    
+    float4 Attenuation;
+};
 //--------------------------------------------------------------------------------------
 // コンスタントバッファ
 //--------------------------------------------------------------------------------------
@@ -30,7 +35,8 @@ cbuffer ConstantBufferLight : register(b4)
 {
 	float4 LightDirection;			// 光の方向
 	float4 EyePos;					// 視点位置
-	float4 Ambient;
+	float4 Ambient;                 // 環境光
+    SPLights Lights[10];            
 }
 
 cbuffer ConstantBufferViewPort : register(b5)
@@ -38,6 +44,7 @@ cbuffer ConstantBufferViewPort : register(b5)
     uint4 ViewportWidth;        // ビューポート幅
     uint4 ViewportHeight;       // ビューポート高さ
 };
+
 
 //--------------------------------------------------------------------------------------
 // 構造体定義

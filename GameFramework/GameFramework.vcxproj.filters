@@ -207,6 +207,12 @@
     <ClCompile Include="GameFramework\Components\CLineComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="GameFramework\Managers\CLightManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CPointLightComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameFramework\Transform\CRotator.h">
@@ -399,6 +405,12 @@
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CLineComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Managers\CLightManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CPointLightComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
