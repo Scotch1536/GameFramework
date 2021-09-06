@@ -49,36 +49,6 @@ void CAttachObject::EventAtBeginCollide(CActor& collideActor)
 {
 	if(collideActor.HasTag("Fighter"))
 	{
-		XMFLOAT3 loc = collideActor.Transform.GetWorldLocation();
-		XMFLOAT3 rot = collideActor.Transform.GetWorldRotatorAngle();
-		XMFLOAT3 relativeVec;
-		XMFLOAT3 ansVec;
-
-		//XMFLOAT4 qua = collideActor.Transform.Rotation.GetQuaternion();
-		//XMFLOAT4X4 collideActorMTX = collideActor.Transform.GetWorldMatrixResult();
-		//XMFLOAT4X4 localMTX = Transform.GetWorldMatrixSelf();
-		//XMFLOAT4X4 afterCTMTX;
-
-		//LCMath::CalcMatrixMultply(localMTX , collideActorMTX , afterCTMTX);
-
-		//XMFLOAT3 myloc;
-		//mtx._41 = 0.0f;
-		//mtx._42 = 0.0f;
-		//mtx._43 = 0.0f;
-		//LCMath::CalcFloat3MultiplyToMatrix(Transform.Location , mtx , myloc);
-
-		LCMath::CalcFloat3FromStartToGoal(loc , Transform.Location , relativeVec);
-		LCMath::CalcFloat3Dot(relativeVec , collideActor.Transform.GetRightVector() , ansVec.x);
-		LCMath::CalcFloat3Dot(relativeVec , collideActor.Transform.GetUpwardVector() , ansVec.y);
-		LCMath::CalcFloat3Dot(relativeVec , collideActor.Transform.GetForwardVector() , ansVec.z);
-
-		Transform.Location = ansVec;
-		rot.x *= -1.0f;
-		rot.y *= -1.0f;
-		rot.z *= -1.0f;
-		Transform.Rotation.SetAngle(rot);
-		//Transform.Rotation.SetQuaternion(qua);
-
 		collideActor.Transform.AttachTransform(Transform);
 
 		XMFLOAT4 color = mMesh->GetColor();

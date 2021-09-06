@@ -80,6 +80,7 @@ XMFLOAT3 LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua)
 
 	double r11 , r12 , r21 , r31 , r32;
 
+	//x-y-z
 	r11 = -2 * (qua.y*qua.z - qua.w*qua.x);
 	r12 = qua.w*qua.w - qua.x*qua.x - qua.y*qua.y + qua.z*qua.z;
 	r21 = 2 * (qua.x*qua.z + qua.w*qua.y);
@@ -93,6 +94,34 @@ XMFLOAT3 LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua)
 	result.x = XMConvertToDegrees(pitch);
 	result.y = XMConvertToDegrees(yaw);
 	result.z = XMConvertToDegrees(roll);
+
+	return result;
+}
+
+const XMFLOAT3& LCMath::TransformFromMatrixToEulerAngles(const XMFLOAT4X4& matrix , XMFLOAT3& resultAngle)
+{
+	XMFLOAT3 axisX = CalcFloat3Normalize({ matrix._11,matrix._12,matrix._13 });
+	XMFLOAT3 axisY = CalcFloat3Normalize({ matrix._21,matrix._22,matrix._23 });
+	XMFLOAT3 axisZ = CalcFloat3Normalize({ matrix._31,matrix._32,matrix._33 });
+
+	resultAngle.x = XMConvertToDegrees(std::atan2(axisZ.x , axisZ.y));
+	resultAngle.y = XMConvertToDegrees(std::asin(axisY.x));
+	resultAngle.z = XMConvertToDegrees(std::atan2(axisX.x , axisX.y));
+
+	return resultAngle;
+}
+
+XMFLOAT3 LCMath::TransformFromMatrixToEulerAngles(const XMFLOAT4X4& matrix)
+{
+	XMFLOAT3 result;
+
+	XMFLOAT3 axisX = CalcFloat3Normalize({ matrix._11,matrix._12,matrix._13 });
+	XMFLOAT3 axisY = CalcFloat3Normalize({ matrix._21,matrix._22,matrix._23 });
+	XMFLOAT3 axisZ = CalcFloat3Normalize({ matrix._31,matrix._32,matrix._33 });
+
+	result.x = XMConvertToDegrees(std::atan2(axisZ.y , axisZ.z));
+	result.y = XMConvertToDegrees(std::asin(-axisZ.x));
+	result.z = XMConvertToDegrees(std::atan2(axisY.x , axisX.x));
 
 	return result;
 }
@@ -193,6 +222,16 @@ bool LCMath::CompareFloat3(const XMFLOAT3& target1 , const XMFLOAT3& target2)
 	if(target1.x != target2.x)return false;
 	if(target1.y != target2.y)return false;
 	if(target1.z != target2.z)return false;
+
+	return true;
+}
+
+bool LCMath::CompareFloat4(const XMFLOAT4& target1 , const XMFLOAT4& target2)
+{
+	if(target1.x != target2.x)return false;
+	if(target1.y != target2.y)return false;
+	if(target1.z != target2.z)return false;
+	if(target1.w != target2.w)return false;
 
 	return true;
 }
