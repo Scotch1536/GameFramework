@@ -16,7 +16,7 @@ void CConeParticleComponent::Update()
 	std::mt19937 mt(rd());
 
 	mTemporaryDirection.clear();
-	if (!Transform.Rotation.GetIsSameAngle())
+	if (!Transform.Rotation.GetIsSameAngleToBeforeFrame())
 	{
 		XMFLOAT4X4 rot = Transform.Rotation.GenerateMatrix();
 		LCMath::CalcFloat3MultplyMatrix(mDirection, rot, mDirection);
