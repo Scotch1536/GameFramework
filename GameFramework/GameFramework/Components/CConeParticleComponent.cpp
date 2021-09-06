@@ -118,10 +118,12 @@ bool CConeParticleComponent::ConvertDirection(XMFLOAT3 direction)
 
 	//クォータニオン作成
 	LCMath::CreateFromAxisAndAngleToQuaternion(axis, angle, mulQua);
+
 	//クォータニオンを回転行列に変換
-	DX11MtxFromQt(MTX, mulQua);
+	LCMath::CalcMatrixFromQuaternion(mulQua, MTX);
+
 	//回転行列とdirectionをかけてdirectionに代入
-	DX11Vec3MulMatrix(direction, direction, MTX);
+	LCMath::CalcFloat3MultplyMatrix(direction, MTX, direction);
 
 	return true;
 }

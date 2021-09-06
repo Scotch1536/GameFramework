@@ -69,8 +69,13 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 
 	Transform.RequestDebugLine();
 
+	XMFLOAT3 forwardVec = Transform.GetForwardVector();
+	forwardVec.x *= -1;
+	forwardVec.y *= -1;
+	forwardVec.z *= -1;
+
 	CParticleSystemComponent::Create(*this, owner, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1, std::placeholders::_2),
-		60, 5, 300, 20, Transform.GetForwardVector());
+		60, 5, 300, 20, forwardVec);
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
@@ -129,7 +134,7 @@ void CFighter::Move()
 
 void CFighter::Particle(CParticleSystemComponent::Particle& key, CTransform& trans)
 {
-	new CSphereMeshComponent(key, trans, { 1,1,1,1 }, 30, 0.3);
+	new CSphereMeshComponent(key, trans, { 1,1,1,1 });
 }
 
 void CFighter::Rot(int dire)
