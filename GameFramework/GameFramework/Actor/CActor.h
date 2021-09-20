@@ -11,7 +11,25 @@
 class ILevel;
 class CTransform;
 
-//ƒCƒ“ƒ^[ƒtƒF[ƒX
+//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚ªãƒ—ã‚·ãƒ§ãƒ³
+enum class ERenderOption
+{
+	OPACITY3D ,
+	TRANSLUCENT3D ,
+	BILLBOARD ,
+	OPACITY2D ,
+	TRANSLUCENT2D ,
+};
+
+//ãƒ¬ãƒ³ãƒ€ãƒ¼æƒ…å ±æ§‹é€ ä½“
+struct SRenderInfo
+{
+	IRender& RenderComponentReference;
+	ERenderOption RenderOption;
+	float DistanceToCamera = 0.0f;
+};
+
+//ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 class IActor
 {
 public:
@@ -24,81 +42,74 @@ class IActorToComponent :public IActor
 public:
 	virtual ~IActorToComponent() {};
 	virtual void AddComponent(CComponent& component) = 0;
-	virtual void AddRenderComponent(IRender& component) = 0;
+	virtual void AddRenderOrder(const SRenderInfo& order) = 0;
 	virtual CTransform& GetTransform() = 0;
-	virtual void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget , bool isFront = false) = 0;
-	virtual void RequestAdd2DRenderComponentToLevel(IRender& renderTarget) = 0;
 };
 
-//ƒAƒNƒ^[ƒNƒ‰ƒX
+//ã‚¢ã‚¯ã‚¿ãƒ¼ã‚¯ãƒ©ã‚¹
 class CActor :public CObject , public IActorToComponent
 {
 private:
-	std::vector<std::unique_ptr<CComponent>> mComponents;		//ƒRƒ“ƒ|[ƒlƒ“ƒg
-	std::vector<IRender*> mRenderComponents;					//•`‰æ‚Ì‘®«‚ğ‚à‚ÂƒRƒ“ƒ|[ƒlƒ“ƒg
-	std::vector<std::string> mActorTags;						//ƒ^ƒO
+	std::vector<std::unique_ptr<CComponent>> mComponents;		//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
+	std::vector<SRenderInfo> mRenderOrders;						//æç”»ã®å±æ€§ã‚’ã‚‚ã¤ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
+	std::vector<std::string> mActorTags;						//ã‚¿ã‚°
 
-	//ƒRƒs[‹Ö~
-	CActor(const CActor&) = delete;
-	CActor& operator=(const CActor&) = delete;
+	//ã‚³ãƒ”ãƒ¼ç¦æ­¢
+	//CActor(const CActor&) = delete;
+	//CActor& operator=(const CActor&) = delete;
 
-	/*ƒRƒ“ƒ|[ƒlƒ“ƒg’Ç‰Á
-	š’´d—všqƒNƒ‰ƒX‚ÍŒÄ‚Ô‚±‚Æ‚Í‚Å‚«‚È‚¢
-	ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô‚±‚Æ‚ÅƒAƒNƒ^[‚ÌQÆ‚©‚ç’H‚Á‚Ä‚±‚Ìƒƒ\ƒbƒh‚ªŒÄ‚Î‚ê‚é
+	/*ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆè¿½åŠ 
+	â˜…è¶…é‡è¦â˜…å­ã‚¯ãƒ©ã‚¹ã¯å‘¼ã¶ã“ã¨ã¯ã§ããªã„
+	ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã¶ã“ã¨ã§ã‚¢ã‚¯ã‚¿ãƒ¼ã®å‚ç…§ã‹ã‚‰è¾¿ã£ã¦ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ãŒå‘¼ã°ã‚Œã‚‹
 	*/
 	void AddComponent(CComponent& component)override;
 
-	//ƒŒƒ“ƒ_[‹@”\‚ğ‚ÂƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ“o˜^
-	void AddRenderComponent(IRender& component)override;
-
-	void RequestAddAlphaRenderComponentToLevel(IRender& renderTarget , bool isFront)override;
-
-	void RequestAdd2DRenderComponentToLevel(IRender& renderTarget)override;
-
-
-	//ƒAƒNƒ^[î•ñæ“¾
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼å‘½ä»¤ã‚’è¿½åŠ ã™ã‚‹ï¼ˆæ¯ãƒ•ãƒ¬ãƒ¼ãƒ å¿…è¦ï¼‰
+	void AddRenderOrder(const SRenderInfo& order)override;
+  
+	//ã‚¢ã‚¯ã‚¿ãƒ¼æƒ…å ±å–å¾—
 	CActor& GetActor()override
 	{
 		return *this;
 	}
 
-	//ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€æ“¾
+	//ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ å–å¾—
 	CTransform& GetTransform()override
 	{
 		return Transform;
 	}
 
 protected:
-	ILevel& mOwnerInterface;		//ƒCƒ“ƒ^[ƒtƒF[ƒX
+	ILevel& mOwnerInterface;		//ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 
-	bool mIsAffectToPause;			//ƒ|[ƒY‚Ì‰e‹¿‚ğó‚¯‚é‚©‚Ç‚¤‚©
+	bool mIsAffectToPause;			//ãƒãƒ¼ã‚ºã®å½±éŸ¿ã‚’å—ã‘ã‚‹ã‹ã©ã†ã‹
 
 public:
-	CTransform Transform;			//ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+	CTransform Transform;			//ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
 
-	//š’´d—vš@ƒAƒNƒ^[‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô‚±‚Æ‚ÍƒŒƒxƒ‹‚ÉƒAƒNƒ^[‚ğ’Ç‰Á‚·‚é‚±‚Æ‚ğˆÓ–¡‚·‚é
+	//â˜…è¶…é‡è¦â˜…ã€€ã‚¢ã‚¯ã‚¿ãƒ¼ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã¶ã“ã¨ã¯ãƒ¬ãƒ™ãƒ«ã«ã‚¢ã‚¯ã‚¿ãƒ¼ã‚’è¿½åŠ ã™ã‚‹ã“ã¨ã‚’æ„å‘³ã™ã‚‹
 	CActor(ILevel& owner , bool isAffectToPause = true);
 
 	virtual ~CActor();
 
-	/*XV
-	š’´d—vš‚±‚Ìƒƒ\ƒbƒh‚ğƒI[ƒo[ƒ‰ƒCƒh‚·‚éê‡‚Í•K‚¸ÅŒã‚Ée‚Ìƒƒ\ƒbƒh‚ğŒÄ‚Ô‚±‚Æ
+	/*æ›´æ–°
+	â˜…è¶…é‡è¦â˜…ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã™ã‚‹å ´åˆã¯å¿…ãšæœ€å¾Œã«è¦ªã®ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã¶ã“ã¨
 	*/
 	void Update()override;
 
-	//–ˆƒtƒŒ[ƒ€s‚¤ˆ—iqƒNƒ‰ƒX‚Ì‚½‚ß‚Ì‹@”\j
+	//æ¯ãƒ•ãƒ¬ãƒ¼ãƒ è¡Œã†å‡¦ç†ï¼ˆå­ã‚¯ãƒ©ã‚¹ã®ãŸã‚ã®æ©Ÿèƒ½ï¼‰
 	virtual void Tick() {};
 
-	//•`‰æ
+	//æç”»
 	void Render()override;
 
-	//”j‰ó
+	//ç ´å£Š
 	void Destroy();
 
-	//Õ“ËŠJn‚ÌƒCƒxƒ“ƒg
+	//è¡çªé–‹å§‹æ™‚ã®ã‚¤ãƒ™ãƒ³ãƒˆ
 	virtual void EventAtBeginCollide(CActor& collideActor) {};
 
-	//Õ“ËI—¹‚ÌƒCƒxƒ“ƒg
+	//è¡çªçµ‚äº†æ™‚ã®ã‚¤ãƒ™ãƒ³ãƒˆ
 	virtual void EventAtEndCollide(CActor& collideActor) {};
 
 	void AddTag(std::string tag)

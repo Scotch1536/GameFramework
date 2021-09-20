@@ -10,7 +10,7 @@ CColliderComponent::CColliderComponent(CActor& owner , CTransform& parentTrans ,
 	:CComponent(owner , priority) ,
 	mType(type) , mEventAtBeginningCollided(std::bind(&CActor::EventAtBeginCollide , std::ref(owner) , std::placeholders::_1)) ,
 	mEventAtEndCollided(std::bind(&CActor::EventAtEndCollide , std::ref(owner) , std::placeholders::_1)) ,
-	Transform(owner,parentTrans)
+	Transform(owner , parentTrans)
 {
 	CColliderManager::GetInstance().AddCollider(*this);			//コリジョンマネージャーに追加
 }
@@ -33,15 +33,19 @@ void CColliderComponent::UpdateCollidedCache(CColliderComponent* target , bool i
 	if(mCollidedCache[target].IsCollide == true && mCollidedCache[target].IsLastFrameCollide == false)
 	{
 		mEventAtBeginningCollided(target->GetOwner());
+		if(!target->mIsUpdate)target->mEventAtBeginningCollided(this->GetOwner());
 	}
 	else if(mCollidedCache[target].IsCollide == false && mCollidedCache[target].IsLastFrameCollide == true)
 	{
 		mEventAtEndCollided(target->GetOwner());
+		if(!target->mIsUpdate)target->mEventAtEndCollided(this->GetOwner());
 	}
 }
 
 void CColliderComponent::Update()
 {
+	if(!mIsUpdate)return;
+
 	if(!CColliderManager::GetInstance().GetColliders(this , mColliders))mShouldCompared = false;
 	else mShouldCompared = true;
 
@@ -52,11 +56,6 @@ void CColliderComponent::Update()
 			CAABBColliderComponent& thisObj = dynamic_cast<CAABBColliderComponent&>(*this);
 			for(auto& collider : mColliders)
 			{
-				if(mObjectType != "NONE" && mObjectType == collider->mObjectType)
-				{
-					continue;
-				}
-
 				if(collider->GetType() == EType::AABB)
 				{
 					CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);
@@ -82,11 +81,6 @@ void CColliderComponent::Update()
 			CSphereColliderComponent& thisObj = dynamic_cast<CSphereColliderComponent&>(*this);
 			for(auto& collider : mColliders)
 			{
-				if(mObjectType != "NONE"&&mObjectType == collider->mObjectType)
-				{
-					continue;
-				}
-
 				if(collider->GetType() == EType::AABB)
 				{
 					CAABBColliderComponent& AABBObj = dynamic_cast<CAABBColliderComponent&>(*collider);

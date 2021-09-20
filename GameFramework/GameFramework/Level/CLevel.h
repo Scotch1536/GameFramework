@@ -22,74 +22,91 @@ public:
 	virtual void DestroyActor(CActor& target) = 0;
 	virtual void AddActor(CActor& actor) = 0;
 	virtual void RequestSetCamera(CCameraComponent& camera) = 0;
-	virtual void AddImGuiDrawMethod(std::function<void()> method) = 0;
-	virtual void AddAlphaRenderComponent(IRender& renderTarget, bool isFront) = 0;
-	virtual void Add2DRenderComponent(IRender& renderTarget) = 0;
-	virtual void RequestLoadLevel(CLevel& level) = 0;
+	virtual void AddImGuiDrawFunction(std::function<void()> func) = 0;
+	virtual void RequestRenderOrders(std::vector<SRenderInfo>& renderOrders) = 0;
+	virtual void AddDoBeforeUpdateFunction(std::function<void()> func) = 0;
+	virtual void Notice(CActor& actor) = 0;
 };
 
-//ƒŒƒxƒ‹ƒNƒ‰ƒX
-class CLevel :public CObject, public ILevel
+//ãƒ¬ãƒ™ãƒ«ã‚¯ãƒ©ã‚¹
+class CLevel :public CObject , public ILevel
 {
 private:
-	std::vector<std::unique_ptr<CActor>> mActors;					//ƒAƒNƒ^[
-	std::vector<std::function<void()>> mDoAfterTickFunction;		//XVŒã‚És‚¤ŠÖ”ƒIƒuƒWƒFƒNƒg
-	std::vector<std::function<void()>> mImGuiDrawMethod;			//ImGui‚És‚í‚¹‚é•`‰æ‚ÌŠÖ”ƒIƒuƒWƒFƒNƒg
-	std::vector<IRender*> mAlphaRenderComponents;
-	std::vector<IRender*> m2DRenderComponents;
+	std::vector<std::unique_ptr<CActor>> mActors;					//ã‚¢ã‚¯ã‚¿ãƒ¼
 
-	CCameraComponent* mRenderingCamera = nullptr;		//ƒŒƒ“ƒ_[‚ğ’S“–‚·‚éƒJƒƒ‰
+	std::vector<std::function<void()>> mDoBeforeUpdateFunction;		//æ›´æ–°å¾Œã«è¡Œã†é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	std::vector<std::function<void()>> mImGuiDrawFunction;			//ImGuiã«è¡Œã‚ã›ã‚‹æç”»ã®é–¢æ•°ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
+	std::vector<IRender*> m3DOpacityRenderComponents;
+	std::vector<std::pair<IRender* , float>> m3DTranslucentRenderComponents;
+	std::vector<IRender*> m2DOpacityRenderComponents;
+	std::vector<IRender*> m2DTranslucentRenderComponents;
+
+	CCameraComponent* mRenderingCamera = nullptr;		//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚’æ‹…å½“ã™ã‚‹ã‚«ãƒ¡ãƒ©
 
 protected:
-	IGame* mOwnerInterface;			//ƒQ[ƒ€ƒCƒ“ƒ^[ƒtƒF[ƒX
+	IGame& mOwnerInterface;			//ã‚²ãƒ¼ãƒ ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 
 private:
-	//ƒRƒs[‹Ö~
+	//ã‚³ãƒ”ãƒ¼ç¦æ­¢
 	CLevel(const CLevel&) = delete;
 	CLevel& operator=(const CLevel&) = delete;
 
-	/*ƒAƒNƒ^[’Ç‰Á
-	š’´d—vš
-	qƒNƒ‰ƒX‚ÍŒÄ‚Ô‚±‚Æ‚Í‚Å‚«‚È‚¢
-	ƒAƒNƒ^[‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô‚±‚Æ‚ÅƒAƒNƒ^[‚ÌQÆ‚©‚ç’H‚Á‚Ä‚±‚Ìƒƒ\ƒbƒh‚ªŒÄ‚Î‚ê‚é
+	/*ã‚¢ã‚¯ã‚¿ãƒ¼è¿½åŠ 
+	â˜…è¶…é‡è¦â˜…
+	å­ã‚¯ãƒ©ã‚¹ã¯å‘¼ã¶ã“ã¨ã¯ã§ããªã„
+	ã‚¢ã‚¯ã‚¿ãƒ¼ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã¶ã“ã¨ã§ã‚¢ã‚¯ã‚¿ãƒ¼ã®å‚ç…§ã‹ã‚‰è¾¿ã£ã¦ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ãŒå‘¼ã°ã‚Œã‚‹
 	*/
 	void AddActor(CActor& actor)override;
 
-	//ƒAƒNƒ^[‚Ì”j‰ó
+	//ã‚¢ã‚¯ã‚¿ãƒ¼ã®ç ´å£Š
 	void DestroyActor(CActor& target)override;
 
-	void AddAlphaRenderComponent(IRender& renderTarget, bool isFront)override
+	void Add3DOpacityRenderComponent(IRender& renderTarget)
 	{
-		if (isFront)
-		{
-			auto itr = mAlphaRenderComponents.begin();
-			mAlphaRenderComponents.emplace(itr, &renderTarget);
-		}
-		else mAlphaRenderComponents.emplace_back(&renderTarget);
+		m3DOpacityRenderComponents.emplace_back(&renderTarget);
 	}
 
-	void Add2DRenderComponent(IRender& renderTarget)override
+	void Add3DTranslucentRenderComponent(IRender& renderTarget , float distanceToCamera)
 	{
-		m2DRenderComponents.emplace_back(&renderTarget);
+		m3DTranslucentRenderComponents.emplace_back(&renderTarget , distanceToCamera);
 	}
 
-	void RequestLoadLevel(CLevel& level)override;
+	void Add2DOpacityRenderComponent(IRender& renderTarget)
+	{
+		m2DOpacityRenderComponents.emplace_back(&renderTarget);
+	}
+
+	void Add2DTranslucentRenderComponent(IRender& renderTarget)
+	{
+		m2DTranslucentRenderComponents.emplace_back(&renderTarget);
+	}
+
+	void AddDoBeforeUpdateFunction(std::function<void()> func)override
+	{
+		mDoBeforeUpdateFunction.emplace_back(func);
+	}
+
+	void RequestRenderOrders(std::vector<SRenderInfo>& renderOrders)override;
+
+	virtual void Notice(CActor& actor)override {};
 
 protected:
-	//ƒJƒƒ‰‚ÌƒZƒbƒg‚ğƒŠƒNƒGƒXƒg
+	//ã‚«ãƒ¡ãƒ©ã®ã‚»ãƒƒãƒˆã‚’ãƒªã‚¯ã‚¨ã‚¹ãƒˆ
 	void RequestSetCamera(CCameraComponent& camera)override;
 
-	void AddImGuiDrawMethod(std::function<void()> method)override
+	void AddImGuiDrawFunction(std::function<void()> func)override
 	{
-		mImGuiDrawMethod.emplace_back(method);
+		mImGuiDrawFunction.emplace_back(func);
 	}
 
 	template<class T>
 	bool GetActor(CActor*& result)
 	{
-		for (auto& actor : mActors)
+		for(auto& actor : mActors)
 		{
-			if (typeid(T) == typeid(*actor))
+			if(typeid(T) == typeid(*actor))
 			{
 				result = actor.get();
 				return true;
@@ -101,50 +118,46 @@ protected:
 	template<class T>
 	bool GetAllActor(std::vector<CActor*>& result)
 	{
-		for (auto& actor : mActors)
+		for(auto& actor : mActors)
 		{
-			if (typeid(T) == typeid(*actor))
+			if(typeid(T) == typeid(*actor))
 			{
 				result.emplace_back(actor.get());
 			}
 		}
-		if (result.size() != 0)return true;
+		if(result.size() != 0)return true;
 		else return false;
 	}
 
 public:
-	//š’´d—vš@ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô‚±‚Æ‚ÍƒŒƒxƒ‹‚Ì‘JˆÚ‚ğˆÓ–¡‚·‚é
-	CLevel(IGame& owner);
+	//â˜…è¶…é‡è¦â˜…ã€€ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã¶ã“ã¨ã¯ãƒ¬ãƒ™ãƒ«ã®é·ç§»ã‚’æ„å‘³ã™ã‚‹
+	CLevel(IGame& owner , bool isFeed = false , XMFLOAT3 feedColor = { 1.0f,1.0f,1.0f } , float feedTime = 1.0f);
+
+	virtual ~CLevel();
 
 	/*
-	š’´d—vš
-	ƒQ[ƒ€ƒ}ƒl[ƒWƒƒ[‚ÉƒŒƒxƒ‹‚ğ‘—‚éê‡‚Ì‚İƒQ[ƒ€‚ÌQÆ‚È‚µ‚ÅƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ño‚µ‰Â”\
-	ŠJnƒŒƒxƒ‹‚Ìİ’è‚Ì‚½‚ß‚È‚Ì‚Åˆê“x‚Ì‚İ‰Â”\“ñ“x–Ú‚©‚ç‚ÍƒGƒ‰[‚ÅI—¹‚·‚é
+	â˜…è¶…é‡è¦â˜…
+	ã‚¢ã‚¯ã‚¿ãƒ¼ã®è¿½åŠ ã¯åŸºæœ¬ã“ã“ã§è¡Œã†
+	ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆè¿½åŠ ã™ã‚‹ã“ã¨ãŒã§ãã‚‹ãŒéæ¨å¥¨
+	ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã¯ã‚¢ã‚¯ã‚¿ãƒ¼ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§è¿½åŠ ã™ã‚‹ã“ã¨ã‚’æ¨å¥¨
 	*/
-	CLevel(IGameManagerToLevel& receiver);
-
-	virtual ~CLevel() {};
-
-	//‰Šú‰»
 	virtual void Init() = 0;
 
-	//XV
+	//æ›´æ–°
 	void Update()override;
 
 	/*
-	–ˆƒtƒŒ[ƒ€s‚¤ˆ—iqƒNƒ‰ƒX‚Ì‚½‚ß‚Ì‹@”\j
-	ƒvƒƒgƒ^ƒCƒv‚È‚Ç‚ÌŠÈ’P‚É‚µ‚½‚¢‚Ì‚½‚ß‚É—pˆÓ‚µ‚½‚Ì‚Å
-	–{§ì‚Å‚Ì—˜—p‚Í”ñ„§
-	ƒ|[ƒY‚È‚Ç‚Ì§Œä‚ª‚³‚ê‚Ä‚¢‚È‚¢‚Ì‚ÅƒoƒO‚Ì‰·°‚É‚È‚é
+	æ¯ãƒ•ãƒ¬ãƒ¼ãƒ è¡Œã†å‡¦ç†ï¼ˆå­ã‚¯ãƒ©ã‚¹ã®ãŸã‚ã®æ©Ÿèƒ½ï¼‰
+	ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—ãªã©ã®ç°¡å˜ã«è©¦ã—ãŸã„æ™‚ã®ãŸã‚ã«ç”¨æ„ã—ãŸã®ã§
+	æœ¬åˆ¶ä½œã§ã®åˆ©ç”¨ã¯éæ¨å¥¨
+	ãƒãƒ¼ã‚ºãªã©ã®åˆ¶å¾¡ãŒã•ã‚Œã¦ã„ãªã„ã®ã§ãƒã‚°ã®æ¸©åºŠã«ãªã‚‹
 	*/
 	virtual void Tick() {};
 
-	//•`‰æ
+	//æç”»
 	void Render()override;
-
-	//ƒCƒ“ƒ^[ƒtƒF[ƒX‚ÌƒZƒbƒg@ƒQ[ƒ€ƒ}ƒl[ƒWƒƒ[‚©‚ç‚µ‚©ŒÄ‚Ño‚·‘z’è‚ğ‚µ‚Ä‚¢‚È‚¢
-	void SetOwnerInterface(CGame& owner);
 
 	const XMFLOAT4X4* GetRenderingCameraViewMatrix()const;
 
+	const XMFLOAT3* GetRenderingCameraLocation()const;
 };

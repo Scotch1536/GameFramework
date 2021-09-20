@@ -1,30 +1,23 @@
 #include "../Actor/CActor.h"
 #include "../ExternalCode/Shader.h"
 #include "../ExternalCode/CDirectxGraphics.h"
+#include "../Managers/CGameManager.h"
 
 #include "CPrimitiveMeshComponent.h"
 #include "CRenderComponent.h"
 
 template<class VertexType>
-CPrimitiveMeshComponent<VertexType>::CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color , std::string vertexShaderPath , std::string pixelShaderPath)
+CPrimitiveMeshComponent<VertexType>::CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , const XMFLOAT4& color , std::string vertexShaderPath , std::string pixelShaderPath)
 	:CComponent(owner , 100) ,
 	mRenderComponent(*new CRenderComponent(owner)) ,
 	mColor(color) ,
-	Transform(owner,parentTrans)
+	Transform(owner , parentTrans)
 {}
 
 template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::Init(std::string vertexShaderPath , std::string pixelShaderPath)
 {
-	if(mColor.w < 1.0f)
-	{
-		mIsTranslucent = true;
-	}
-	else
-	{
-		//アクター(owner)にレンダー担当のコンポーネントとして登録
-		mOwnerInterface.AddRenderComponent(*this);
-	}
+	CheckTranslucent();
 
 	// 頂点データの定義
 	D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -72,7 +65,8 @@ void CPrimitiveMeshComponent<VertexType>::GenerateVertexAndIndexBuffer()
 template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::Update()
 {
-	if(mIsTranslucent)mOwnerInterface.RequestAddAlphaRenderComponentToLevel(*this);
+	if(!mIsTranslucent)mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY3D });
+	else mOwnerInterface.AddRenderOrder({ *this,ERenderOption::TRANSLUCENT3D,CGameManager::GetInstance().CalcDistanceToCamera(Transform.GetWorldLocation()) });
 }
 
 template<class VertexType>
@@ -83,6 +77,59 @@ void CPrimitiveMeshComponent<VertexType>::Render()
 	mRenderComponent.Render(sizeof(VertexType) , mIndices.size() , nullptr , mVertexBuffer.Get() , mIndexBuffer.Get() , nullptr);
 }
 
+template<class VertexType>
+void CPrimitiveMeshComponent<VertexType>::SetColor(const XMFLOAT4& color)
+{
+	mColor = color;
+
+	CheckTranslucent();
+}
+
+void CPrimitiveMeshComponent<SVertexColor>::SetColor(const XMFLOAT4& color)
+{
+	mColor = color;
+
+	CheckTranslucent();
+
+	for(auto& vertex : mVertices)
+	{
+		vertex.Color = color;
+	}
+
+	//頂点セット
+	D3D11_MAPPED_SUBRESOURCE pData;
+
+	HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get() , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &pData);
+	if(SUCCEEDED(hr))
+	{
+		memcpy_s(pData.pData , pData.RowPitch , mVertices.data() , sizeof(SVertexColor) * mVertices.size());
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get() , 0);
+	}
+}
+
+void CPrimitiveMeshComponent<SVertex2DColor>::SetColor(const XMFLOAT4& color)
+{
+	mColor = color;
+
+	CheckTranslucent();
+
+	for(auto& vertex : mVertices)
+	{
+		vertex.Color = color;
+	}
+
+	//頂点セット
+	D3D11_MAPPED_SUBRESOURCE pData;
+
+	HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get() , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &pData);
+	if(SUCCEEDED(hr))
+	{
+		memcpy_s(pData.pData , pData.RowPitch , mVertices.data() , sizeof(SVertex2DColor) * mVertices.size());
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get() , 0);
+	}
+}
+
 template class CPrimitiveMeshComponent<SVertexColor>;
 template class CPrimitiveMeshComponent<SVertexUV>;
-template class CPrimitiveMeshComponent<SVertex2D>;
+template class CPrimitiveMeshComponent<SVertex2DUV>;
+template class CPrimitiveMeshComponent<SVertex2DColor>;

@@ -6,20 +6,13 @@ class CGame;
 class IGame;
 class CApplication;
 
-class IGameManagerToLevel
-{
-public:
-	virtual ~IGameManagerToLevel() {};
-	virtual void SetStartLevel(CLevel& startLevel) = 0;
-};
-
 //ゲームマネージャークラス：シングルトン
-class CGameManager :public IGameManagerToLevel
+class CGameManager
 {
 private:
 	CGame mGame;			//ゲームクラス
 
-	int64_t mDeltaTime;		//デルタタイム
+	float mDeltaTime;		//デルタタイム(1秒単位)
 
 	bool mCanExecute = true;				//実行できるか
 	bool mCanSetStartLevel = true;			//スタートレベルをセットできるか
@@ -33,17 +26,17 @@ private:
 	CGameManager(CGameManager&&) = delete;
 	CGameManager& operator=(CGameManager&&) = delete;
 
-	//スタートレベルのセット
-	void SetStartLevel(CLevel& startLevel)override;
-
 public:
 	static CGameManager& GetInstance();
 
 	//実行をリクエスト
 	void RequestExecute(HINSTANCE hInst , int winMode);
 
-	//カメラのビュー行列を取得
+	//カメラのビュー行列（ポインタ）を取得（カメラがない場合nullptr)
 	const XMFLOAT4X4* GetCameraViewMatrix();
+
+	//使用中のカメラとの距離を計算（カメラがない場合0.0f）
+	float CalcDistanceToCamera(const XMFLOAT3& compareLocation);
 
 	//ゲームクラスの取得（アプリケーションクラスの参照が必要）
 	CGame& GetGame(const CApplication& partner)
@@ -61,7 +54,7 @@ public:
 		return mIsPause;
 	}
 
-	const int64_t& GetDeltaTime()const
+	const float& GetDeltaTime()const
 	{
 		return mDeltaTime;
 	}
@@ -73,7 +66,7 @@ public:
 
 	void SetDeltaTime(const CApplication& partner , int64_t dt)
 	{
-		mDeltaTime = dt;
+		mDeltaTime = dt / 1000.0f;
 	}
 
 	HWND GetHWnd()

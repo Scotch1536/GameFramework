@@ -4,42 +4,48 @@
 #include <functional>
 
 #include "CComponent.h"
+#include "../Components/CRenderComponent.h"
+#include "../Actor/CActor.h"
 #include "../Transform/CTransform.h"
-#include "..\Library\LCMath.h"
+#include "../Library\LCMath.h"
 
 class CTransform;
-
 
 class CParticleSystemComponent :public CComponent
 {
 public:
-	enum class EType
-	{
-		SPHERE,
-		RADIATION,
-	};
 
-	struct Particle
+	class Particle :public CActor
 	{
+	public:
+		IRender* MeshComponent;
 		CTransform Transform;
 		XMFLOAT3 Direction;
-		int Life;
 
-		Particle(CTransform& parentTrans, const XMFLOAT3& direction, const int& life);
+		int Life;
+		float Speed;
+
+		Particle(ILevel& owner, CTransform& parentTrans, const XMFLOAT3& direction, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func, const int& life, const float& speed);
+		void Update() override;
 	};
 
 private:
-	std::function<void(const CParticleSystemComponent&,CTransform&)> mFunction;
-	EType mType;
-	int mLifeFlame;
-	float mQuantity;
-	std::vector<std::unique_ptr<Particle>> mParticle;
-public:
+	std::vector<Particle*> mParticle;
+
+protected:
+	std::function<void(CParticleSystemComponent::Particle&, CTransform&)> mFunction;
+	ILevel& mLevel;
 	CTransform Transform;
 
-	CParticleSystemComponent(CActor& owner, CTransform& parentTrans, std::function<void(const CParticleSystemComponent&, CTransform&)> func,
-		EType type, int life, float qty, bool frameChoice, int priority = 100);
+	int mLifeFlame;
+	float mQuantity;
+	float mSpeed;
+	int mFrameCount;
 
-	void Update() override;
-	void Move();
+	CParticleSystemComponent(CActor& owner, ILevel& ownerLevel, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func,
+		int life, float qty, float speed, float second, int priority = 1);
+public:
+
+	static void Create(CActor& owner, ILevel& ownerLevel, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func,
+		int life, float speed, float qty,float degree, XMFLOAT3 direction = {0,1,0}, float second = 1);
 };

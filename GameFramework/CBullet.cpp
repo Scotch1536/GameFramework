@@ -1,6 +1,8 @@
-#include "CBullet.h"
 #include "GameFramework/Components/CSphereMeshComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
+#include "GameFramework/Managers/CGameManager.h"
+
+#include "CBullet.h"
 
 CBullet::CBullet(ILevel& partner , XMFLOAT3 initLocation , XMFLOAT3 direction , int destroyFrame)
 	:CActor(partner) ,
@@ -8,8 +10,9 @@ CBullet::CBullet(ILevel& partner , XMFLOAT3 initLocation , XMFLOAT3 direction , 
 {
 	AddTag("Bullet");
 
-	CSphereMeshComponent& mesh = *new CSphereMeshComponent(*this , Transform , 1.0f , 50 , { 1.0f,1.0f,0.0f,1.0f });
+	CSphereMeshComponent& mesh = *new CSphereMeshComponent(*this , Transform , { 1.0f,1.0f,0.0f,1.0f });
 	mesh.Transform.Location = initLocation;
+	mesh.Transform.Scale = { 2.0f,2.0f,2.0f };
 
 	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.Transform);
 	collider.SetObjectType("Bullet");
@@ -17,11 +20,13 @@ CBullet::CBullet(ILevel& partner , XMFLOAT3 initLocation , XMFLOAT3 direction , 
 
 void CBullet::Tick()
 {
+	float dt = CGameManager::GetInstance().GetDeltaTime();
+
 	mFrame++;
 
-	Transform.Location.x += mDirection.x*10.0f;
-	Transform.Location.y += mDirection.y*10.0f;
-	Transform.Location.z += mDirection.z*10.0f;
+	Transform.Location.x += mDirection.x*(500.0f*dt);
+	Transform.Location.y += mDirection.y*(500.0f*dt);
+	Transform.Location.z += mDirection.z*(500.0f*dt);
 
 	if(mFrame == mDestroyFrame)
 	{

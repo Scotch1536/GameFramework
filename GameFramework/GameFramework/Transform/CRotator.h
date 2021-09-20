@@ -14,14 +14,14 @@ class CRotator
 private:
 	const CTransform& mPartner;
 
-	XMFLOAT4 mQuaternion;		//クォータニオン（現在地）
+	XMFLOAT4 mQuaternion;				//クォータニオン（現在地）
+	XMFLOAT4 mLastFrameQuaternion;		//1フレーム前の角度（度数法）
 
-	XMFLOAT3 mAngle = { 0.f,0.f,0.f };				//角度（度数法）
-	XMFLOAT3 mLastFrameAngle = { 0.f,0.f,0.f };		//1フレーム前の角度（度数法）
+	//XMFLOAT3 mAngle = { 0.f,0.f,0.f };				//角度（度数法）
 
-	bool mIsSameAngle = true;				//比較結果（今のフレームの角度と前のフレーム角度の）
+	bool mIsSameAngleToBeforeFrame = true;			//比較結果（今のフレームの角度と前のフレーム角度の）
 
-	void UpdateAngle(float& angle);
+	//void UpdateAngle(float& angle);
 
 public:
 	CRotator(const CTransform& partner);
@@ -36,31 +36,26 @@ public:
 	void ChangeAngleAndQuaternionToLocation(XMFLOAT3 location);
 
 	//指定の位置に向くクォータニオンをゲットする
-	bool CalcQuaternionToLocation(XMFLOAT3 location , XMFLOAT4& resultQua);
+	void CalcQuaternionToLocation(XMFLOAT3 location , XMFLOAT4& resultQua);
 
 	const XMFLOAT4& GetQuaternion()const
 	{
 		return mQuaternion;
 	}
 
-	const XMFLOAT3& GetAngle()const
+	/*const XMFLOAT3& GetAngle()const
 	{
 		return mAngle;
-	}
+	}*/
 
-	const bool& GetIsSameAngle()const
+	const bool& GetIsSameAngleToBeforeFrame()const
 	{
-		return mIsSameAngle;
+		return mIsSameAngleToBeforeFrame;
 	}
 
 	void SetQuaternion(const XMFLOAT4& qua)
 	{
 		mQuaternion = qua;
-
-		XMFLOAT3 angle;
-
-		//クォータニオンをオイラー角に変換
-		mAngle = LCMath::TransformFromQuaternionToEulerAngles(mQuaternion , angle);
 	}
 
 	void SetAngle(const XMFLOAT3& angle);

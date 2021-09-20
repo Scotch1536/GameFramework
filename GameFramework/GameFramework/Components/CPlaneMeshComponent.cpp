@@ -1,7 +1,7 @@
 #include "CPlaneMeshComponent.h"
 
 template<class VertexType>
-CPlaneMeshComponent<VertexType>::CPlaneMeshComponent(CActor& owner , CTransform& parentTrans , XMFLOAT4 color ,
+CPlaneMeshComponent<VertexType>::CPlaneMeshComponent(CActor& owner , CTransform& parentTrans , const XMFLOAT4& color ,
 	std::string vertexShaderPath , std::string pixelShaderPath , bool isInit)
 	:CPrimitiveMeshComponent<VertexType>(owner , parentTrans , color , vertexShaderPath , pixelShaderPath)
 {
@@ -52,7 +52,7 @@ void CPlaneMeshComponent<SVertexUV>::CreateVertexData()
 	}
 }
 
-void CPlaneMeshComponent<SVertex2D>::CreateVertexData()
+void CPlaneMeshComponent<SVertex2DUV>::CreateVertexData()
 {
 	mVertices.resize(4);
 
@@ -67,6 +67,21 @@ void CPlaneMeshComponent<SVertex2D>::CreateVertexData()
 	mVertices.at(3).Tex = { 1.0f,1.0f };
 }
 
+void CPlaneMeshComponent<SVertex2DColor>::CreateVertexData()
+{
+	mVertices.resize(4);
+
+	mVertices.at(0).Pos = { -0.5f,-0.5f,0.0f };
+	mVertices.at(1).Pos = { 0.5f,-0.5f,0.0f };
+	mVertices.at(2).Pos = { -0.5f,0.5f,0.0f };
+	mVertices.at(3).Pos = { 0.5f,0.5f,0.0f };
+
+	mVertices.at(0).Color = mColor;
+	mVertices.at(1).Color = mColor;
+	mVertices.at(2).Color = mColor;
+	mVertices.at(3).Color = mColor;
+}
+
 template<class VertexType>
 void CPlaneMeshComponent<VertexType>::CreateIndexData()
 {
@@ -77,4 +92,5 @@ void CPlaneMeshComponent<VertexType>::CreateIndexData()
 
 template class CPlaneMeshComponent<SVertexColor>;
 template class CPlaneMeshComponent<SVertexUV>;
-template class CPlaneMeshComponent<SVertex2D>;
+template class CPlaneMeshComponent<SVertex2DUV>;
+template class CPlaneMeshComponent<SVertex2DColor>;

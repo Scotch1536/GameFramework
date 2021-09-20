@@ -36,6 +36,7 @@ private:
 	std::function<void(CActor&)> mEventAtEndCollided;			//衝突終了時に呼び出されるイベント
 
 	bool mShouldCompared = true;		//比較すべきか
+	bool mIsUpdate = true;				//更新するか
 
 	//キャッシュデータの更新
 	void UpdateCollidedCache(CColliderComponent* target , bool isCollided);
@@ -59,8 +60,19 @@ public:
 		return mType;
 	}
 
+	const std::string& GetObjectType()const
+	{
+		return mObjectType;
+	}
+
 	void SetObjectType(std::string objType)
 	{
 		mObjectType = objType;
 	}
+
+	void SetIsUpdate(bool flg)
+	{
+		mIsUpdate = flg;
+	}
+
 };
