@@ -4,19 +4,20 @@
 #include "../ExternalCode/Shader.h"
 #include "../ExternalCode/Memory.h"
 
+constexpr int LIGHT_NUM = 10;
+
 class CLightComponent;
 
 class CLightManager
 {
 private:
-
-	struct PointLight
+	ALIGN16 struct PointLight
 	{
-		XMFLOAT4 LightPos;
+		XMFLOAT3 LightPos;
 		XMFLOAT4 Attenuation;
 	};
 
-	struct SpotLight:public PointLight
+	ALIGN16 struct SpotLight:public PointLight
 	{
 		XMFLOAT3 Direction;
 		float Angle;
@@ -24,11 +25,11 @@ private:
 
 	ALIGN16 struct ConstantBufferLight
 	{
-		XMFLOAT4 DirectionOfLightDirection;
-		XMFLOAT4 EyePos;
-		XMFLOAT4 Ambient;
-		PointLight PointLights[10];
-		SpotLight SpotLights[10];
+		XMFLOAT3 EyePos;
+		XMFLOAT3 DirectionLightData;
+		XMFLOAT3 AmbientLightData;
+		PointLight PointLights[LIGHT_NUM];
+		SpotLight SpotLights[LIGHT_NUM];
 	};
 
 	ComPtr<ID3D11Buffer> mConstantBuffer = nullptr;		//定数バッファ
@@ -37,7 +38,7 @@ private:
 
 	std::vector<CLightComponent*> mLights;
 
-	XMFLOAT4 mEyePos;			//見ている位置
+	XMFLOAT3 mEyePos;			//見ている位置
 
 	XMFLOAT3 mDirectionLightData;
 
@@ -79,4 +80,5 @@ public:
 		mAmbientLightData = ambient;
 		Notice();
 	}
+
 };

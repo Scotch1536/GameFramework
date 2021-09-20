@@ -1,4 +1,4 @@
-#include<functional>
+#include <functional>
 #include "../Actor/CActor.h"
 
 #include "CPointLightComponent.h"
