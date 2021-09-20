@@ -6,32 +6,38 @@
 #include "CComponent.h"
 #include "../Managers/CLightManager.h"
 
+class CTransform;
+
 class CLightComponent :public CComponent
 {
-private:
-	
-	XMFLOAT4 mLightPos;			
-	
+
 public:
-	CLightComponent(CActor& owner , int priority = 40):CComponent(owner , priority)
-	{		
+
+	enum EType
+	{
+		POINT,
+		SPOT,
+		NONE
+	};
+
+private:
+			
+	
+protected:
+	EType mType = EType::NONE;
+	CLightComponent(CActor& owner, int priority = 40) :CComponent(owner, priority)
+	{
 		CLightManager::GetInstance().AddLight(*this);
 	}
+
+public:
 	
-	~CLightComponent()
+	static void Create(CActor& owner, CTransform& parentTrans, XMFLOAT4 attenuation, XMFLOAT3 location);
+
+	
+	virtual ~CLightComponent()
 	{
 		CLightManager::GetInstance().ReleaseLight(*this);
 	}
-
-	//çXêV
-	void Update()override
-	{
-		
-	}
-
-	void SetLightPos(XMFLOAT4 pos)
-	{
-		mLightPos = pos;
-	}
-
+	
 };

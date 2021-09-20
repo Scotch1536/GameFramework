@@ -10,37 +10,48 @@ class CLightManager
 {
 private:
 
-	XMFLOAT4 mEyePos;			//見ている位置
-	XMFLOAT4 mLightDirection;	//w=0の時は方向 w=1の時は位置
-	XMFLOAT4 mAmbient;			//アンビエント
-
-	std::vector<CLightComponent*> mLights;
-
-	struct SPLights
+	struct PointLight
 	{
 		XMFLOAT4 LightPos;
 		XMFLOAT4 Attenuation;
 	};
 
-	ALIGN16 struct ConstantBufferLight
+	struct SpotLight:public PointLight
 	{
-		XMFLOAT4 LightDirection;
-		XMFLOAT4 EyePos;
-		XMFLOAT4 Ambient;
-		SPLights Lights[10];
+		XMFLOAT3 Direction;
+		float Angle;
 	};
 
-	ComPtr<ID3D11Buffer> mConstantBufferLight = nullptr;		//定数バッファ
+	ALIGN16 struct ConstantBufferLight
+	{
+		XMFLOAT4 DirectionOfLightDirection;
+		XMFLOAT4 EyePos;
+		XMFLOAT4 Ambient;
+		PointLight PointLights[10];
+		SpotLight SpotLights[10];
+	};
 
-	CLightManager() = default;
+	ComPtr<ID3D11Buffer> mConstantBuffer = nullptr;		//定数バッファ
+
+	ConstantBufferLight mConstantBufferLightData;
+
+	std::vector<CLightComponent*> mLights;
+
+	XMFLOAT4 mEyePos;			//見ている位置
+
+	XMFLOAT3 mDirectionLightData;
+
+	XMFLOAT3 mAmbientLightData;
+
+	bool mShouldUpdate=false;
+
+	CLightManager();
 
 	//コピー＆ムーブ禁止
 	CLightManager(const CLightManager&) = delete;
 	CLightManager& operator=(const CLightManager&) = delete;
 	CLightManager(CLightManager&&) = delete;
 	CLightManager& operator=(CLightManager&&) = delete;
-
-	bool Init();
 
 public:
 	static CLightManager& GetInstance();
@@ -51,19 +62,21 @@ public:
 	void ReleaseLight(CLightComponent& light);
 
 	void Update();
+
+	void Notice()
+	{
+		mShouldUpdate = true;
+	}
 	
-	void SetEyePos(XMFLOAT4 eyepos)
+	void SetDirectionLight(XMFLOAT3 direction)
 	{
-		mEyePos = eyepos;
+		mDirectionLightData = direction;
+		Notice();
 	}
 
-	void SetLightPos(XMFLOAT4 lightpos)
+	void SetAmbientLight(XMFLOAT3 ambient)
 	{
-		mLightDirection = lightpos;
-	}
-
-	void SetAmbient(XMFLOAT4 amb)
-	{
-		mAmbient = amb;
+		mAmbientLightData = ambient;
+		Notice();
 	}
 };

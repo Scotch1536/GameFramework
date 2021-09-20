@@ -27,6 +27,7 @@
     <ClCompile Include="GameFramework\Components\CColliderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CDisplay2DComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CLightComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CParticleSystemComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CLineComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CPlaneMeshComponent.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="GameFramework\Components\CRenderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSphereColliderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSphereMeshComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSpotLightComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CVisionComponent.cpp" />
@@ -98,6 +100,7 @@
     <ClInclude Include="GameFramework\Components\CRenderComponent.h" />
     <ClInclude Include="GameFramework\Components\CSphereColliderComponent.h" />
     <ClInclude Include="GameFramework\Components\CSphereMeshComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSpotLightComponent.h" />
     <ClInclude Include="GameFramework\Components\CSpringArmComponent.h" />
     <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CVisionComponent.h" />
