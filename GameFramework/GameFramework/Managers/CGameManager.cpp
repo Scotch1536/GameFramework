@@ -35,6 +35,11 @@ const XMFLOAT4X4* CGameManager::GetCameraViewMatrix()
 	return mGame.GetLevel().GetRenderingCameraViewMatrix();
 }
 
+const XMFLOAT3* CGameManager::GetCameraLocation()
+{
+	return mGame.GetLevel().GetRenderingCameraLocation();
+}
+
 float CGameManager::CalcDistanceToCamera(const XMFLOAT3& compareLocation)
 {
 	const XMFLOAT3* cameraVec = mGame.GetLevel().GetRenderingCameraLocation();
