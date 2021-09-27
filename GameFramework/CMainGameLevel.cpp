@@ -53,7 +53,7 @@ void CMainGameLevel::Init()
 	max.y *= (skyDomeMesh.Transform.Scale.y / 2.0f);
 	max.z *= (skyDomeMesh.Transform.Scale.z / 2.0f);
 
-	new CActorGenerator(*this , [&] { return new CAttachObject(*this); } , min , max , 15.0f);
+	//new CActorGenerator(*this , [&] { return new CAttachObject(*this); } , min , max , 15.0f);
 
 	fighter.GetComponent<CCameraComponent>(buf);
 	RequestSetCamera(*dynamic_cast<CCameraComponent*>(buf));

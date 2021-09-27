@@ -69,20 +69,25 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 
 	Transform.RequestDebugLine();
 
+	XMFLOAT3 forwardVec = Transform.GetForwardVector();
+	forwardVec.x *= -1;
+	forwardVec.y *= -1;
+	forwardVec.z *= -1;
+
 	CParticleSystemComponent::Create(*this, owner, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1, std::placeholders::_2),
-		60, 5, 300, 20, Transform.GetForwardVector());
+		60, 1, 60, 20, forwardVec);
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
 	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
 	*/
 
-	//CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
+	CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
 	CInputManager::GetInstance().AddEvent("Rot-Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CFighter::Rot , std::ref(*this) , 0));
 	CInputManager::GetInstance().AddEvent("Rot+Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_D } , std::bind(&CFighter::Rot , std::ref(*this) , 1));
 	CInputManager::GetInstance().AddEvent("Rot-X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CFighter::Rot , std::ref(*this) , 2));
 	CInputManager::GetInstance().AddEvent("Rot+X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CFighter::Rot , std::ref(*this) , 3));
-	CInputManager::GetInstance().AddEvent("SpeedUP" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 0));
+	//CInputManager::GetInstance().AddEvent("SpeedUP" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 0));
 	CInputManager::GetInstance().AddEvent("SpeedDOWN" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::R_BUTTON } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 1));
 	//CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
 }
@@ -129,7 +134,8 @@ void CFighter::Move()
 
 void CFighter::Particle(CParticleSystemComponent::Particle& key, CTransform& trans)
 {
-	//new CSphereMeshComponent(key, trans, 0.3, 30, { 1,1,1,1 });
+	CSphereMeshComponent& sphereMesh = *new CSphereMeshComponent(key, trans, { 1,1,1,1 });
+	sphereMesh.Transform.Scale = { 2.f,2.f,2.f};
 }
 
 void CFighter::Rot(int dire)

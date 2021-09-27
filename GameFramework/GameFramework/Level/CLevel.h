@@ -144,7 +144,7 @@ public:
 	virtual void Init() = 0;
 
 	//更新
-	void Update()override;
+	void Update()override final;
 
 	/*
 	毎フレーム行う処理（子クラスのための機能）
