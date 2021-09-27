@@ -99,7 +99,7 @@ public:
 	/*更新
 	★超重要★このメソッドをオーバーライドする場合は必ず最後に親のメソッドを呼ぶこと
 	*/
-	void Update()override;
+	void Update()override final;
 
 	//毎フレーム行う処理（子クラスのための機能）
 	virtual void Tick() {};

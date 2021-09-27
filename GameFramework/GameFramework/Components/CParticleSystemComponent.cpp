@@ -6,13 +6,14 @@
 
 #include "../Transform/CTransform.h"
 
-CParticleSystemComponent::Particle::Particle(ILevel& owner, CTransform& parentTrans, const XMFLOAT3& direction, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> function, const int& life, const float& speed) :CActor(owner),
-Transform(*this, parentTrans), Direction(direction), Life(life), Speed(speed) 
+CParticleSystemComponent::Particle::Particle(ILevel& owner, const XMFLOAT3& direction, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> function, const int& life, const float& speed) 
+	:CActor(owner), Direction(direction), Life(life), Speed(speed) 
 {
 	function(*this, Transform);	
+	AddTag("Particle");
 }
 
-void CParticleSystemComponent::Particle::Update()
+void CParticleSystemComponent::Particle::Tick()
 {
 	Transform.Location.x += Direction.x * Speed;
 	Transform.Location.y += Direction.y * Speed;

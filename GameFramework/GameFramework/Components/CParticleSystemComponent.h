@@ -19,14 +19,13 @@ public:
 	{
 	public:
 		IRender* MeshComponent;
-		CTransform Transform;
 		XMFLOAT3 Direction;
 
 		int Life;
 		float Speed;
 
-		Particle(ILevel& owner, CTransform& parentTrans, const XMFLOAT3& direction, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func, const int& life, const float& speed);
-		void Update() override;
+		Particle(ILevel& owner, const XMFLOAT3& direction, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func, const int& life, const float& speed);
+		void Tick() override;
 	};
 
 private:
@@ -37,10 +36,10 @@ protected:
 	ILevel& mLevel;
 	CTransform Transform;
 
-	int mLifeFlame;
 	float mQuantity;
 	float mSpeed;
-	int mFrameCount;
+	float mGenerationGauge = 0.f;
+	int mLifeFlame;
 
 	CParticleSystemComponent(CActor& owner, ILevel& ownerLevel, CTransform& parentTrans, std::function<void(CParticleSystemComponent::Particle&, CTransform&)> func,
 		int life, float qty, float speed, float second, int priority = 1);
