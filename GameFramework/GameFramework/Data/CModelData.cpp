@@ -403,9 +403,11 @@ void CModelData::ReadData(const CModelDataManager& partner , std::fstream& file)
 	mMaterials.resize(bufSize);
 	file.read((char*)&bufSize , sizeof(size_t));
 	file.read((char*)&mMaterials[0] , bufSize);
+
+	ReadDataInit();
 }
 
-void CModelData::ReadDataInit(const CModelDataManager& partner)
+void CModelData::ReadDataInit()
 {
 	for(auto& mesh : mMeshes)
 	{
