@@ -40,6 +40,7 @@ private:
 		const aiScene * scene);
 
 	void TextureInit(STexture& target);
+	void ReadDataInit();
 
 public:
 	CModelData() = default;
@@ -49,7 +50,6 @@ public:
 
 	void WriteData(const CModelDataManager& partner , std::fstream& file);
 	void ReadData(const CModelDataManager& partner , std::fstream& file);
-	void ReadDataInit(const CModelDataManager& partner);
 
 	const std::vector<CModelMeshData>& GetMeshes()const
 	{

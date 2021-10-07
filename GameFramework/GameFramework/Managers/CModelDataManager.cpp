@@ -64,8 +64,6 @@ bool CModelDataManager::InputFile(CModelData& target , std::string filePath)
 		target.ReadData(*this , file);
 		file.close();
 
-		target.ReadDataInit(*this);
-
 		return true;
 	}
 }
