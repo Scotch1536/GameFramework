@@ -21,20 +21,20 @@ public:
 protected:
 	EType mType = EType::NONE;
 
-	CLightComponent(CActor& owner, int priority = 40) :CComponent(owner, priority)
+	CLightComponent(CActor& owner, int priority) :CComponent(owner, priority)
 	{
 		CLightManager::GetInstance().AddLight(*this);
 	}
 
-public:	
+public:
 	static void Create(CActor& owner, CTransform& parentTrans, XMFLOAT4 attenuation, XMFLOAT3 location);
 	static void Create(CActor& owner, CTransform& parentTrans, XMFLOAT4 attenuation, XMFLOAT3 direction, float angle, XMFLOAT3 location);
-	   	
+
 	virtual ~CLightComponent()
 	{
 		CLightManager::GetInstance().ReleaseLight(*this);
 	}
-	
+
 	const EType& GetType()const
 	{
 		return mType;

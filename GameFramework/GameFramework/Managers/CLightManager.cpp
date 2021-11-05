@@ -74,7 +74,7 @@ void CLightManager::Update()
 
 		for (auto& light : mLights)
 		{
-			if (light->GetType == CLightComponent::EType::POINT)
+			if (light->GetType() == CLightComponent::EType::POINT)
 			{
 				if (countPL < LIGHT_NUM)
 				{
@@ -90,7 +90,7 @@ void CLightManager::Update()
 #endif
 				}
 			}
-			else if (light->GetType == CLightComponent::EType::SPOT)
+			else if (light->GetType() == CLightComponent::EType::SPOT)
 			{
 				if (countSL < LIGHT_NUM)
 				{
