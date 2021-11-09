@@ -21,7 +21,7 @@ public:
 protected:
 	EType mType = EType::NONE;
 
-	CLightComponent(CActor& owner, int priority) :CComponent(owner, priority)
+	CLightComponent(CActor& owner) :CComponent(owner, 40)
 	{
 		CLightManager::GetInstance().AddLight(*this);
 	}
