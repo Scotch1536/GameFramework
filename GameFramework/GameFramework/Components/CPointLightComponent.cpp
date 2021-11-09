@@ -4,7 +4,7 @@
 #include "CPointLightComponent.h"
 
 CPointLightComponent::CPointLightComponent(CActor& owner, CTransform& parentTrans, XMFLOAT4 attenuation, XMFLOAT3 location) :
-	CLightComponent(owner),
+	CLightComponent(owner, 40),
 	mAttenuation(attenuation),
 	Transform(owner, parentTrans)
 {
