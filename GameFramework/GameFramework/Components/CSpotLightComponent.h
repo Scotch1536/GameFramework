@@ -9,7 +9,7 @@ private:
 
 public:
 	CSpotLightComponent(CActor& owner, CTransform& parentTrans,
-		XMFLOAT4 attenuation, XMFLOAT3 direction, float angle, XMFLOAT3 location);
+		XMFLOAT4 attenuation, XMFLOAT3 direction, float angle, XMFLOAT3 location = { 0.0f,0.0f,0.0f });
 
 	const XMFLOAT3 GetDirection()const
 	{
