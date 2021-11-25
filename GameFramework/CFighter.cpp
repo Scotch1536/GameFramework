@@ -35,13 +35,13 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 	コンポーネントはコンストラクタの引数ownerにいれたアクターに自動で追加される
 	その際原則ヒープ領域に(newで)作成すること
 	*/
-	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this, Transform,
-		CModelDataManager::GetInstance().GetModel("Assets/Models/Fighter/F-15E.fbx", "Assets/Models/Fighter/Textures/"),
-		"Shader/vs.hlsl", "Shader/ps.hlsl");
+	CStaticMeshComponent& mesh = *new CStaticMeshComponent(*this , Transform ,
+		CModelDataManager::GetInstance().GetModel("Assets/Models/Fighter/F-15E.fbx" , "Assets/Models/Fighter/Textures/") ,
+		"Shader/vs.hlsl" , "Shader/ps.hlsl");
 
 	mesh.Transform.Rotation.SetAngle({ -90.0f ,0.0f,180.0f });
 
-	CLightComponent& light = *new CLightComponent(*this);
+	//CLightComponent& light = *new CLightComponent(*this);
 
 	CCameraComponent& camera = *new CCameraComponent(*this);
 
@@ -52,15 +52,15 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 	cameraLoc.y += fv.y*-20.0f + 2.0f;
 	cameraLoc.z += fv.z*-20.0f;
 
-	camera.SetProjection(10.f, 10000.f, XM_PI / 4.f, CApplication::CLIENT_WIDTH, CApplication::CLIENT_HEIGHT);
-	camera.SetView(cameraLoc, loc, { 0.f,1.f,0.f });
+	camera.SetProjection(10.f , 10000.f , XM_PI / 4.f , CApplication::CLIENT_WIDTH , CApplication::CLIENT_HEIGHT);
+	camera.SetView(cameraLoc , loc , { 0.f,1.f,0.f });
 
-	CSpringArmComponent& spr = *new CSpringArmComponent(*this, Transform, camera);
+	CSpringArmComponent& spr = *new CSpringArmComponent(*this , Transform , camera);
 	spr.SetLerpTime(0.5f);
 
-	light.SetEyePos(camera.GetEye());
-	light.SetLightPos(XMFLOAT4(1.f, 1.f, -1.f, 0.f));
-	light.SetAmbient(XMFLOAT4(0.1f, 0.1f, 0.1f, 0.0f));
+	//light.SetEyePos(camera.GetEye());
+	//light.SetLightPos(XMFLOAT4(1.f, 1.f, -1.f, 0.f));
+	//light.SetAmbient(XMFLOAT4(0.1f, 0.1f, 0.1f, 0.0f));
 
 	CSphereColliderComponent& collider = *new CSphereColliderComponent(*this , mesh.GetModel() , Transform);
 	collider.Transform.Scale = { 0.8f,0.8f,0.8f };
@@ -74,27 +74,27 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 	forwardVec.y *= -1;
 	forwardVec.z *= -1;
 
-	CParticleSystemComponent::Create(*this, owner, Transform, std::bind(&CFighter::Particle, std::ref(*this), std::placeholders::_1, std::placeholders::_2),
-		60, 1, 60, 20, forwardVec);
+	CParticleSystemComponent::Create(*this , owner , Transform , std::bind(&CFighter::Particle , std::ref(*this) , std::placeholders::_1 , std::placeholders::_2) ,
+		60 , 1 , 60 , 20 , forwardVec);
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
 	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
 	*/
 
-	CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
+	//CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
 	CInputManager::GetInstance().AddEvent("Rot-Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CFighter::Rot , std::ref(*this) , 0));
 	CInputManager::GetInstance().AddEvent("Rot+Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_D } , std::bind(&CFighter::Rot , std::ref(*this) , 1));
 	CInputManager::GetInstance().AddEvent("Rot-X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CFighter::Rot , std::ref(*this) , 2));
 	CInputManager::GetInstance().AddEvent("Rot+X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_S } , std::bind(&CFighter::Rot , std::ref(*this) , 3));
-	//CInputManager::GetInstance().AddEvent("SpeedUP" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 0));
+	CInputManager::GetInstance().AddEvent("SpeedUP" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 0));
 	CInputManager::GetInstance().AddEvent("SpeedDOWN" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::R_BUTTON } , std::bind(&CFighter::SpeedChange , std::ref(*this) , 1));
 	//CInputManager::GetInstance().AddEvent("Reset" , EButtonOption::RELEASE , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::ShotReset , std::ref(*this)));
 }
 
 void CFighter::Shot()
 {
-	if (mShotCnt % 5 != 0)
+	if(mShotCnt % 5 != 0)
 	{
 		mShotCnt++;
 		return;
@@ -109,10 +109,10 @@ void CFighter::Shot()
 	loc.y += fv.y * 10.0f + 2.0f;
 	loc.z += fv.z * 10.0f;
 
-	LCMath::CalcFloat3FromStartToGoal(loc, mPointer.Transform.GetWorldLocation(), dire);
-	LCMath::CalcFloat3Normalize(dire, dire);
+	LCMath::CalcFloat3FromStartToGoal(loc , mPointer.Transform.GetWorldLocation() , dire);
+	LCMath::CalcFloat3Normalize(dire , dire);
 
-	new CBullet(mOwnerInterface, loc, dire, 60 * 3);
+	new CBullet(mOwnerInterface , loc , dire , 60 * 3);
 
 	//CSoundManager::GetInstance().PlaySound("SHOT");
 }
@@ -132,18 +132,18 @@ void CFighter::Move()
 	Transform.Location.z += fv.z * (mSpeed*dt);
 }
 
-void CFighter::Particle(CParticleSystemComponent::Particle& key, CTransform& trans)
+void CFighter::Particle(CParticleSystemComponent::Particle& key , CTransform& trans)
 {
-	CSphereMeshComponent& sphereMesh = *new CSphereMeshComponent(key, trans, { 1,1,1,1 });
-	sphereMesh.Transform.Scale = { 2.f,2.f,2.f};
+	CSphereMeshComponent& sphereMesh = *new CSphereMeshComponent(key , trans , { 1,1,1,1 });
+	sphereMesh.Transform.Scale = { 2.f,2.f,2.f };
 }
 
 void CFighter::Rot(int dire)
 {
-	if (dire == 0)Transform.Rotation.AddAngle({ 0.0f,-1.0f,0.0f });
-	else if (dire == 1)Transform.Rotation.AddAngle({ 0.0f,1.0f,0.0f });
-	else if (dire == 2)Transform.Rotation.AddAngle({ -1.0f,0.0f,0.0f });
-	else if (dire == 3)Transform.Rotation.AddAngle({ 1.0f,0.0f,0.0f });
+	if(dire == 0)Transform.Rotation.AddAngle({ 0.0f,-1.0f,0.0f });
+	else if(dire == 1)Transform.Rotation.AddAngle({ 0.0f,1.0f,0.0f });
+	else if(dire == 2)Transform.Rotation.AddAngle({ -1.0f,0.0f,0.0f });
+	else if(dire == 3)Transform.Rotation.AddAngle({ 1.0f,0.0f,0.0f });
 }
 
 void CFighter::SpeedChange(int type)
@@ -167,9 +167,9 @@ void CFighter::Tick()
 		ImGui::SetNextWindowPos(ImVec2(10 , CApplication::CLIENT_HEIGHT - 60) , ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(100 , 50) , ImGuiCond_Once);
 
-		ImGui::Begin(u8"戦闘機情報");
+		ImGui::Begin("Speed");
 
-		std::string speedStr = u8"スピード:" + std::to_string(static_cast<int>(mSpeed));
+		std::string speedStr = std::to_string(static_cast<int>(mSpeed));
 		ImGui::Text(speedStr.c_str());
 
 		ImGui::End();

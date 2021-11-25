@@ -20,10 +20,11 @@ public:
 
 protected:
 	EType mType = EType::NONE;
+	ILightManagerToLightComponent& mOwnerInterface;
 
-	CLightComponent(CActor& owner) :CComponent(owner, 40)
+	CLightComponent(CActor& owner) :CComponent(owner, 40),mOwnerInterface(CLightManager::GetInstance())
 	{
-		CLightManager::GetInstance().AddLight(*this);
+		mOwnerInterface.AddLight(*this);
 	}
 
 public:
@@ -32,7 +33,7 @@ public:
 
 	virtual ~CLightComponent()
 	{
-		CLightManager::GetInstance().ReleaseLight(*this);
+		mOwnerInterface.ReleaseLight(*this);
 	}
 
 	const EType& GetType()const

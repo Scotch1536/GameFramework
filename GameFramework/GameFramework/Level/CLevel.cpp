@@ -6,6 +6,7 @@
 #include "../Managers/CGameManager.h"
 #include "../Managers/CColliderManager.h"
 #include "../Managers/CInputManager.h"
+#include "../Managers/CLightManager.h"
 #include "../Components/CCameraComponent.h"
 
 #include "CLevel.h"
@@ -101,6 +102,8 @@ void CLevel::Update()
 	{
 		actor->Update();
 	}
+
+	CLightManager::GetInstance().Update();
 }
 
 void CLevel::RequestRenderOrders(std::vector<SRenderInfo>& renderOrders)
