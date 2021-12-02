@@ -222,6 +222,12 @@
     <ClCompile Include="GameFramework\Components\CSpotLightComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="GameFramework\Components\CSquareDivisionComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\C2DAnimationComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameFramework\Transform\CRotator.h">
@@ -435,6 +441,12 @@
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CSpotLightComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\C2DAnimationComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CSquareDivisionComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

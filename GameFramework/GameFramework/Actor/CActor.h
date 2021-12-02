@@ -51,7 +51,7 @@ public:
 class CActor :public CObject , public IActorToComponent
 {
 private:
-	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント
+	std::vector<std::unique_ptr<CComponent>> mComponents;		//コンポーネント※優先度の昇順に整列される
 	std::vector<SRenderInfo> mRenderOrders;						//描画の属性をもつコンポーネント
 	std::vector<std::string> mActorTags;						//タグ
 
