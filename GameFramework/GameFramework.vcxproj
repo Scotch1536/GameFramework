@@ -106,6 +106,7 @@
     <ClInclude Include="GameFramework\Components\CPointLightComponent.h" />
     <ClInclude Include="GameFramework\Components\CPrimitiveMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CRenderComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSceneComponent.h" />
     <ClInclude Include="GameFramework\Components\CSphereColliderComponent.h" />
     <ClInclude Include="GameFramework\Components\CSphereMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CSpotLightComponent.h" />
