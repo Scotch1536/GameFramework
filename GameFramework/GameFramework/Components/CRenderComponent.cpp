@@ -50,6 +50,11 @@ void CRenderComponent::Render(unsigned int stride ,
 	{
 		devcontext->PSSetShaderResources(0 , 1 , &shaderResourceView);
 	}
+	else
+	{
+		ID3D11ShaderResourceView* white = CDirectXResourceManager::GetInstance().GetTextureSRV("GameFramework/Assets/white.bmp");
+		devcontext->PSSetShaderResources(0 , 1 , &white);
+	}
 
 	if(cBMaterial != nullptr)
 	{

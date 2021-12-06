@@ -13,8 +13,12 @@ class CRenderComponent;
 class CStaticMeshComponent :public CComponent , public IRender
 {
 private:
-	CModelData& mModel;							//モデルデータ
+	CModelData* mModel;							//モデルデータ
 	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
+
+	void Update()override;
+
+	void Render()override;
 
 public:
 	CTransform Transform;			//トランスフォーム
@@ -24,15 +28,12 @@ public:
 	//モデルのセット
 	void SetModel(CModelData& model)
 	{
-		mModel = model;
+		mModel = &model;
 	}
 
 	const CModelData& GetModel()
 	{
-		return mModel;
+		return *mModel;
 	}
 
-	void Update()override;
-
-	void Render()override;
 };

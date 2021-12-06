@@ -32,4 +32,5 @@ public:
 		ID3D11Buffer* vertexBuffer ,
 		ID3D11Buffer* indexBuffer ,
 		ID3D11Buffer* cBMaterial);
+
 };

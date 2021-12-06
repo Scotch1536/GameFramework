@@ -37,15 +37,15 @@ private:
 	//ビュー行列作成
 	void CreateViewMatrix();
 
+	//更新
+	void Update()override;
+
 public:
 	CCameraComponent(CActor& owner , int priority = 80):CComponent(owner , priority)
 	{
 		LCMath::IdentityMatrix(mProjection);
 		LCMath::IdentityMatrix(mView);
 	}
-
-	//更新
-	void Update()override;
 
 	void SetProjection(float nearclip , float farclip , float fov , float width , float height)
 	{

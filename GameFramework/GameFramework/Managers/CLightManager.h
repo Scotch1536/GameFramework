@@ -8,26 +8,38 @@ constexpr int LIGHT_NUM = 10;
 
 class CLightComponent;
 
-class CLightManager
+class ILightManagerToLightComponent
+{
+public:
+	virtual void AddLight(CLightComponent& light) = 0;
+	virtual void ReleaseLight(CLightComponent& light) = 0;
+};
+
+class CLightManager :public ILightManagerToLightComponent
 {
 private:
 	ALIGN16 struct PointLight
 	{
 		XMFLOAT3 LightPos;
+		float Pad1;
 		XMFLOAT4 Attenuation;
 	};
 
-	ALIGN16 struct SpotLight:public PointLight
+	ALIGN16 struct SpotLight :public PointLight
 	{
 		XMFLOAT3 Direction;
+		float Pad1;
 		float Angle;
 	};
 
 	ALIGN16 struct ConstantBufferLight
 	{
 		XMFLOAT3 EyePos;
+		float Pad1;
 		XMFLOAT3 DirectionLightData;
+		float Pad2;
 		XMFLOAT3 AmbientLightData;
+		float Pad3;
 		PointLight PointLights[LIGHT_NUM];
 		SpotLight SpotLights[LIGHT_NUM];
 	};
@@ -44,7 +56,7 @@ private:
 
 	XMFLOAT3 mAmbientLightData;
 
-	bool mShouldUpdate=false;
+	bool mShouldUpdate = false;
 
 	CLightManager();
 
@@ -54,13 +66,14 @@ private:
 	CLightManager(CLightManager&&) = delete;
 	CLightManager& operator=(CLightManager&&) = delete;
 
-public:
-	static CLightManager& GetInstance();
-
 	//ライトコンポーネントのポインタを追加
 	void AddLight(CLightComponent& light);
 
+	//ライトコンポーネントのポインタを削除
 	void ReleaseLight(CLightComponent& light);
+
+public:
+	static CLightManager& GetInstance();
 
 	void Update();
 
@@ -68,7 +81,7 @@ public:
 	{
 		mShouldUpdate = true;
 	}
-	
+
 	void SetDirectionLight(XMFLOAT3 direction)
 	{
 		mDirectionLightData = direction;

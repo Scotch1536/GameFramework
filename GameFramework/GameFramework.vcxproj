@@ -20,6 +20,7 @@
     <ClCompile Include="CTitle.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="GameFramework\Actor\CActor.cpp" />
+    <ClCompile Include="GameFramework\Components\C2DAnimationComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CAABBColliderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CBillboardComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CBoxMeshComponent.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="GameFramework\Components\CSphereMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSpotLightComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CSquareDivisionComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CVisionComponent.cpp" />
     <ClCompile Include="GameFramework\Data\CModelMeshData.cpp" />
@@ -88,6 +90,7 @@
     <ClInclude Include="GameFramework\Actor\CActorGenerator.h" />
     <ClInclude Include="GameFramework\Actor\CDisplay2DActor.h" />
     <ClInclude Include="GameFramework\Actor\CFeedActor.h" />
+    <ClInclude Include="GameFramework\Components\C2DAnimationComponent.h" />
     <ClInclude Include="GameFramework\Components\CAABBColliderComponent.h" />
     <ClInclude Include="GameFramework\Components\CBillboardComponent.h" />
     <ClInclude Include="GameFramework\Components\CBoxMeshComponent.h" />
@@ -109,6 +112,7 @@
     <ClInclude Include="GameFramework\Components\CSpringArmComponent.h" />
     <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CVisionComponent.h" />
+    <ClInclude Include="GameFramework\Components\CSquareDivisionComponent.h" />
     <ClInclude Include="GameFramework\Data\CModelMeshData.h" />
     <ClInclude Include="GameFramework\Data\CModelData.h" />
     <ClInclude Include="GameFramework\Data\CWave.h" />
@@ -151,14 +155,6 @@
     <ClInclude Include="GameFramework\Transform\CTransform.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\basicnotexvs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </FxCompile>
     <FxCompile Include="Shader\basicps.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

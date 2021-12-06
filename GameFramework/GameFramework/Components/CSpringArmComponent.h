@@ -42,10 +42,10 @@ private:
 	//目標のリセット
 	void ResetGoal();
 
+	void Update()override;
+
 public:
 	CSpringArmComponent(CActor& owner , const CTransform& parentTrans , CCameraComponent& useCamera , ESyncMode syncMode = ESyncMode::ALL_SYNC , int priority = 10);
-
-	void Update()override;
 
 	const ESyncMode& GetSyncMode()
 	{

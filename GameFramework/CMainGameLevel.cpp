@@ -6,6 +6,7 @@
 #include "GameFramework/ExternalTools/imgui/myimgui.h"
 #include "GameFramework/Game/CApplication.h"
 #include "GameFramework/Managers/CGameManager.h"
+#include "GameFramework/Managers/CLightManager.h"
 
 #include "CFighter.h"
 #include "CSkyDome.h"
@@ -53,10 +54,13 @@ void CMainGameLevel::Init()
 	max.y *= (skyDomeMesh.Transform.Scale.y / 2.0f);
 	max.z *= (skyDomeMesh.Transform.Scale.z / 2.0f);
 
-	//new CActorGenerator(*this , [&] { return new CAttachObject(*this); } , min , max , 15.0f);
+	new CActorGenerator(*this , [&] { return new CAttachObject(*this); } , min , max , 15.0f);
 
 	fighter.GetComponent<CCameraComponent>(buf);
 	RequestSetCamera(*dynamic_cast<CCameraComponent*>(buf));
+
+	CLightManager::GetInstance().SetDirectionLight({ 1.0f,1.0f,-1.0f });
+	CLightManager::GetInstance().SetAmbientLight({ 0.1f,0.1f,0.1f });
 }
 
 void CMainGameLevel::Tick()

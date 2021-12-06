@@ -51,7 +51,6 @@ void CActor::Update()
 	{
 		component->Update();
 	}
-	
 }
 
 void CActor::Render()

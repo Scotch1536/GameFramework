@@ -210,6 +210,24 @@
     <ClCompile Include="CTitle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="GameFramework\Managers\CLightManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CLightComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CPointLightComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CSpotLightComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CSquareDivisionComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\C2DAnimationComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameFramework\Transform\CRotator.h">
@@ -368,7 +386,7 @@
     <ClInclude Include="GameFramework\Components\CConeParticleComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
-      <ClInclude Include="CAttachObject.h">
+    <ClInclude Include="CAttachObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Actor\CActorGenerator.h">
@@ -416,6 +434,21 @@
     <ClInclude Include="GameFramework\Components\CComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
+    <ClInclude Include="GameFramework\Managers\CLightManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CPointLightComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CSpotLightComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\C2DAnimationComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CSquareDivisionComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\ps.hlsl">
@@ -449,9 +482,6 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\vsline.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Shader\basicnotexvs.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

@@ -4,6 +4,7 @@
 // Vertex Shader
 //--------------------------------------------------------------------------------------
 VS_OUTPUT main(float4 Pos : POSITION,
+                float4 Color : COLOR,
 				float2 Tex : TEXCOORD)
 {
     VS_OUTPUT output = (VS_OUTPUT) 0;
@@ -17,6 +18,6 @@ VS_OUTPUT main(float4 Pos : POSITION,
     output.Tex = Tex;
     
 	// カラー値セット
-    output.Color = 1.0f;
+    output.Color = Color;
     return output;
 }

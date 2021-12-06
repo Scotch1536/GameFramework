@@ -26,16 +26,11 @@ struct SVertexLine
 	XMFLOAT4 Color;		//カラー
 };
 
-struct SVertex2DUV
-{
-	XMFLOAT3 Pos;		//位置
-	XMFLOAT2 Tex;		//UV座標
-};
-
-struct SVertex2DColor
+struct SVertex2D
 {
 	XMFLOAT3 Pos;		//位置
 	XMFLOAT4 Color;		//カラー
+	XMFLOAT2 Tex;		//UV座標
 };
 
 // マテリアル

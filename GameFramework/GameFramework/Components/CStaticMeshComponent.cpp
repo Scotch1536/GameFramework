@@ -10,7 +10,7 @@
 CStaticMeshComponent::CStaticMeshComponent(CActor& owner , CTransform& parentTrans , CModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority)
 	:CComponent(owner , priority) ,
 	Transform(owner , parentTrans) ,
-	mModel(model) ,
+	mModel(&model) ,
 	mRenderComponent(*new CRenderComponent(owner))
 {
 	// 頂点データの定義（アニメーション対応）
@@ -35,7 +35,7 @@ void CStaticMeshComponent::Render()
 {
 	Transform.RequestSetMatrix();
 
-	for(auto& mesh : mModel.GetMeshes())
+	for(auto& mesh : mModel->GetMeshes())
 	{
 		unsigned int indexSize = static_cast <unsigned int>(mesh.Indices.size());
 
