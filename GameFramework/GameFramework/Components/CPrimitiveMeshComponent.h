@@ -59,6 +59,8 @@ public:
 
 	void SetColor(const XMFLOAT4& color);
 
+	void UpdateVertexBuffer();
+
 	void Update()override;
 	void Render()override;
 

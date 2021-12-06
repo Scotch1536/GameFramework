@@ -107,7 +107,7 @@ void CPrimitiveMeshComponent<SVertexColor>::SetColor(const XMFLOAT4& color)
 	}
 }
 
-void CPrimitiveMeshComponent<SVertex2DColor>::SetColor(const XMFLOAT4& color)
+void CPrimitiveMeshComponent<SVertex2D>::SetColor(const XMFLOAT4& color)
 {
 	mColor = color;
 
@@ -124,12 +124,11 @@ void CPrimitiveMeshComponent<SVertex2DColor>::SetColor(const XMFLOAT4& color)
 	HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get() , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &pData);
 	if(SUCCEEDED(hr))
 	{
-		memcpy_s(pData.pData , pData.RowPitch , mVertices.data() , sizeof(SVertex2DColor) * mVertices.size());
+		memcpy_s(pData.pData , pData.RowPitch , mVertices.data() , sizeof(SVertex2D) * mVertices.size());
 		CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get() , 0);
 	}
 }
 
 template class CPrimitiveMeshComponent<SVertexColor>;
 template class CPrimitiveMeshComponent<SVertexUV>;
-template class CPrimitiveMeshComponent<SVertex2DUV>;
-template class CPrimitiveMeshComponent<SVertex2DColor>;
+template class CPrimitiveMeshComponent<SVertex2D>;

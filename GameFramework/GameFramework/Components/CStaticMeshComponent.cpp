@@ -35,7 +35,7 @@ void CStaticMeshComponent::Render()
 {
 	Transform.RequestSetMatrix();
 
-	for(auto& mesh : mModel.GetMeshes())
+	for(auto& mesh : mModel->GetMeshes())
 	{
 		unsigned int indexSize = static_cast <unsigned int>(mesh.Indices.size());
 

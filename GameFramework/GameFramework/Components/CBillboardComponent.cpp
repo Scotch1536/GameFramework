@@ -38,6 +38,16 @@ void CBillboardComponent::Init(std::string vertexShaderPath , std::string pixelS
 void CBillboardComponent::Update()
 {
 	mOwnerInterface.AddRenderOrder({ *this,ERenderOption::BILLBOARD,CGameManager::GetInstance().CalcDistanceToCamera(Transform.GetWorldLocation()) });
+
+	//頂点セット
+	D3D11_MAPPED_SUBRESOURCE pData;
+
+	HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get() , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &pData);
+	if(SUCCEEDED(hr))
+	{
+		memcpy_s(pData.pData , pData.RowPitch , mVertices.data() , sizeof(SVertex2D) * mVertices.size());
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get() , 0);
+	}
 }
 
 void CBillboardComponent::Render()

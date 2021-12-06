@@ -4,7 +4,7 @@
 
 C2DAnimationComponent::C2DAnimationComponent(CActor& owner , int divWidth , int divHeight , float oneLoopTime , bool isLoop ,
 	XMFLOAT2& changeTargetUV1 , XMFLOAT2& changeTargetUV2 , XMFLOAT2& changeTargetUV3 , XMFLOAT2& changeTargetUV4)
-	:CSquareDivisionComponent(owner , divWidth , divHeight) , mIsLoop(isLoop) , 
+	:CSquareDivisionComponent(owner , divWidth , divHeight) , mIsLoop(isLoop) ,
 	mChangeTargetUV1(changeTargetUV1) , mChangeTargetUV2(changeTargetUV2) ,
 	mChangeTargetUV3(changeTargetUV4) , mChangeTargetUV4(changeTargetUV4)
 {
@@ -29,7 +29,7 @@ void C2DAnimationComponent::Update()
 	if(changeNum >= 1)
 	{
 		mAnimCounter += changeNum;
-		mTimeCounter -= mAnimFrameTime;
+		mTimeCounter -= mAnimFrameTime * changeNum;
 
 		if(mAnimCounter >= mAnimFrameMax)
 		{

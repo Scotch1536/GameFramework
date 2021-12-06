@@ -12,6 +12,11 @@ public:
 	CBillboardComponent(CActor& owner , CTransform& parentTrans , std::string texturePath ,
 		std::string vertexShaderPath = "Shader/vs.hlsl" , std::string pixelShaderPath = "Shader/basicps.hlsl");
 
+	XMFLOAT2& GetUV(int index)
+	{
+		return mVertices.at(index).Tex;
+	};
+
 	void Update()override;
 	void Render()override;
 };

@@ -8,25 +8,36 @@
 class CDisplay2DActor :public CActor
 {
 private:
-	CDisplay2DComponent<SVertex2DColor>* mDisplay2DColor = nullptr;
+	CDisplay2DComponent* mDisplay2D = nullptr;
 
 public:
-	CDisplay2DActor(ILevel& partner ,const XMFLOAT4& color):CActor(partner)
+	CDisplay2DActor(ILevel& partner , const XMFLOAT4& color , std::string texturePath):CActor(partner)
 	{
-		mDisplay2DColor = new CDisplay2DComponent<SVertex2DColor>(*this , Transform , color);
+		mDisplay2D = new CDisplay2DComponent(*this , Transform , color , texturePath);
 	}
+
+	CDisplay2DActor(ILevel& partner , const XMFLOAT4& color):CActor(partner)
+	{
+		mDisplay2D = new CDisplay2DComponent(*this , Transform , color);
+	}
+	
 	CDisplay2DActor(ILevel& partner , std::string texturePath):CActor(partner)
 	{
-		new CDisplay2DComponent<SVertex2DUV>(*this , Transform , texturePath);
+		mDisplay2D = new CDisplay2DComponent(*this , Transform , texturePath);
 	}
 
 	const XMFLOAT4& GetColor()const
 	{
-		return mDisplay2DColor->GetColor();
+		return mDisplay2D->GetColor();
+	}
+
+	XMFLOAT2& GetUV(int index)
+	{
+		return mDisplay2D->GetUV(index);
 	}
 
 	void SetColor(const XMFLOAT4& color)
 	{
-		if(mDisplay2DColor != nullptr)mDisplay2DColor->SetColor(color);
+		if(mDisplay2D != nullptr)mDisplay2D->SetColor(color);
 	}
 };
