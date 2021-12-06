@@ -48,8 +48,8 @@ XMFLOAT4X4 CRotator::GenerateMatrix()
 
 void CRotator::SetAngle(const XMFLOAT3& angle)
 {
-	LCMath::TransformFromEulerAnglesToQuaternion(mPartner.GetRightVector() , mPartner.GetUpwardVector() ,
-		mPartner.GetForwardVector() , angle , mQuaternion);
+	LCMath::TransformFromEulerAnglesToQuaternion({ 1.0f,0.0f,0.0f } , { 0.0f , 1.0f , 0.0f } ,
+		{ 0.0f,0.0f,1.0f } , angle , mQuaternion);
 }
 
 void CRotator::AddAngle(const XMFLOAT3& angle)

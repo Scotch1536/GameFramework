@@ -449,6 +449,9 @@
     <ClInclude Include="GameFramework\Components\CSquareDivisionComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
+    <ClInclude Include="GameFramework\Components\CSceneComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\ps.hlsl">
