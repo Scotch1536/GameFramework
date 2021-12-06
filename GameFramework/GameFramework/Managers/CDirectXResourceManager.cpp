@@ -2,6 +2,11 @@
 
 #include "CDirectXResourceManager.h"
 
+CDirectXResourceManager::CDirectXResourceManager()
+{
+	GetTextureSRV("GameFramework/Assets/white.bmp");
+}
+
 CDirectXResourceManager& CDirectXResourceManager::GetInstance()
 {
 	static CDirectXResourceManager instance;

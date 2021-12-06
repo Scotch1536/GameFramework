@@ -16,6 +16,10 @@ private:
 	CModelData* mModel;							//モデルデータ
 	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
 
+	void Update()override;
+
+	void Render()override;
+
 public:
 	CTransform Transform;			//トランスフォーム
 
@@ -32,7 +36,4 @@ public:
 		return *mModel;
 	}
 
-	void Update()override;
-
-	void Render()override;
 };

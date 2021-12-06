@@ -41,6 +41,8 @@ private:
 	//キャッシュデータの更新
 	void UpdateCollidedCache(CColliderComponent* target , bool isCollided);
 
+	void Update() override;
+
 protected:
 	//頂点メッシュの最大最小を取り出す
 	static void CalcMinMaxOfMeshes(const std::vector<CModelMeshData>& meshes , XMFLOAT3& min , XMFLOAT3& max);
@@ -52,8 +54,6 @@ public:
 	virtual ~CColliderComponent();
 
 	virtual void ConvertWorldCollider() = 0;
-
-	void Update() override;
 
 	const EType& GetType()const
 	{

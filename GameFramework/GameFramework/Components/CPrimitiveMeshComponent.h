@@ -47,6 +47,9 @@ protected:
 		}
 	}
 
+	void Update()override;
+	void Render()override;
+
 public:
 	CTransform Transform;			//トランスフォーム
 
@@ -60,8 +63,5 @@ public:
 	void SetColor(const XMFLOAT4& color);
 
 	void UpdateVertexBuffer();
-
-	void Update()override;
-	void Render()override;
 
 };

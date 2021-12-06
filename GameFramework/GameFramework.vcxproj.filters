@@ -484,8 +484,5 @@
     <FxCompile Include="Shader\vsline.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader\basicnotexvs.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

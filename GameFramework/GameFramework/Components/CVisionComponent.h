@@ -15,6 +15,7 @@ private:
 	std::function<void(CActor&)> mEvent;
 
 	void Update() override;
+
 public:
 	CTransform Transform;
 

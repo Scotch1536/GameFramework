@@ -12,7 +12,7 @@ private:
 	std::unordered_map<std::string , ComPtr<ID3D11PixelShader>> mPixelShaderMap;
 	std::unordered_map<std::string , ComPtr<ID3D11InputLayout>> mVertexLayoutMap;
 
-	CDirectXResourceManager() = default;
+	CDirectXResourceManager();
 
 	//コピー＆ムーブ禁止
 	CDirectXResourceManager(const CDirectXResourceManager&) = delete;

@@ -96,15 +96,7 @@ void CPrimitiveMeshComponent<SVertexColor>::SetColor(const XMFLOAT4& color)
 		vertex.Color = color;
 	}
 
-	//頂点セット
-	D3D11_MAPPED_SUBRESOURCE pData;
-
-	HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get() , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &pData);
-	if(SUCCEEDED(hr))
-	{
-		memcpy_s(pData.pData , pData.RowPitch , mVertices.data() , sizeof(SVertexColor) * mVertices.size());
-		CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get() , 0);
-	}
+	UpdateVertexBuffer();
 }
 
 void CPrimitiveMeshComponent<SVertex2D>::SetColor(const XMFLOAT4& color)
@@ -118,6 +110,12 @@ void CPrimitiveMeshComponent<SVertex2D>::SetColor(const XMFLOAT4& color)
 		vertex.Color = color;
 	}
 
+	UpdateVertexBuffer();
+}
+
+template<class VertexType>
+void CPrimitiveMeshComponent<VertexType>::UpdateVertexBuffer()
+{
 	//頂点セット
 	D3D11_MAPPED_SUBRESOURCE pData;
 

@@ -83,6 +83,7 @@ private:
 		return Transform;
 	}
 
+
 protected:
 	ILevel& mOwnerInterface;		//インターフェース
 
@@ -101,11 +102,11 @@ public:
 	*/
 	void Update()override final;
 
-	//毎フレーム行う処理（子クラスのための機能）
-	virtual void Tick() {};
-
 	//描画
 	void Render()override;
+
+	//毎フレーム行う処理（子クラスのための機能）
+	virtual void Tick() {};
 
 	//破壊
 	void Destroy();

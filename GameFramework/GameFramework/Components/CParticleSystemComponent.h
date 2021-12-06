@@ -14,7 +14,6 @@ class CTransform;
 class CParticleSystemComponent :public CComponent
 {
 public:
-
 	class Particle :public CActor
 	{
 	public:

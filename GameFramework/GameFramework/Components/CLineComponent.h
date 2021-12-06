@@ -47,6 +47,12 @@ private:
 		mShouldUpdate = flg;
 	}
 
+	//描画
+	void Render()override;
+
+	//更新
+	void Update()override;
+
 public:
 	CLineComponent(CActor& owner , const XMFLOAT3& start ,const XMFLOAT3& end ,
 		const XMFLOAT4& color = { 1.0f,1.0f,1.0f,1.0f } , CTransform* parentTrans = nullptr ,
@@ -55,12 +61,6 @@ public:
 	CLineComponent(CActor& owner ,const XMFLOAT3& start ,const XMFLOAT3& direction , float length ,
 		const XMFLOAT4& color = { 1.0f,1.0f,1.0f,1.0f } , CTransform* parentTrans = nullptr ,
 		std::string vertexShaderPath = "Shader/vsline.hlsl" , std::string pixelShaderPath = "Shader/psline.hlsl" , int priority = 90);
-
-	//描画
-	void Render()override;
-
-	//更新
-	void Update()override;
 
 	void SetStartPoint(const XMFLOAT3& point)
 	{

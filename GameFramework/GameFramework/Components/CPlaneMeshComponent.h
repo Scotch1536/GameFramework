@@ -11,4 +11,5 @@ protected:
 public:
 	CPlaneMeshComponent(CActor& owner , CTransform& parentTrans , const XMFLOAT4& color ,
 		std::string vertexShaderPath = "Shader/vsnotex.hlsl" , std::string pixelShaderPath = "Shader/psnotex.hlsl" , bool isInit = true);
+
 };

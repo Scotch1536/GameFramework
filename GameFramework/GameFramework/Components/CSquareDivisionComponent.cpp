@@ -53,6 +53,9 @@ void CSquareDivisionComponent::GetUV(std::string alias , std::array<XMFLOAT2 , 4
 {
 	if(mAlias.count(alias) != 0)
 	{
-		result = mUVDivisionData.at(mAlias[alias]);
+		if(mAlias[alias].first == mAlias[alias].second)
+		{
+			result = mUVDivisionData.at(mAlias[alias].first);
+		}
 	}
 }
