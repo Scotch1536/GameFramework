@@ -67,7 +67,7 @@ void CLevel::Update()
 	}
 
 	//Tick前トランスフォーム更新処理
-	for(auto& actor : actors)
+	for(auto& actor : mActors)
 	{
 		if(!actor->Transform.GetIsChild())actor->Transform.Update();
 	}
@@ -83,7 +83,10 @@ void CLevel::Update()
 		auto cameraActorItr = std::find(actors.begin() , actors.end() , cameraActor);
 		if(cameraActorItr != actors.end())
 		{
-			cameraActor->Tick();
+			if(!(CGameManager::GetInstance().GetIsPause() && cameraActor->GetIsAffectToPause()))
+			{
+				cameraActor->Tick();
+			}
 			cameraActor->Update();
 
 			actors.erase(cameraActorItr);
@@ -98,7 +101,7 @@ void CLevel::Update()
 	}
 
 	//更新処理
-	for(auto& actor : actors)
+	for(auto& actor : mActors)
 	{
 		actor->Update();
 	}
