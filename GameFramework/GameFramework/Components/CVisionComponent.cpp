@@ -47,7 +47,7 @@ void CVisionComponent::Update()
 		XMFLOAT3 targetVec;
 		XMFLOAT3 targetLoc;
 		XMFLOAT3 selfLoc = Transform.GetWorldLocation();
-		XMFLOAT3 selfForwardVec = Transform.GetForwardVector();
+		XMFLOAT3 selfForwardVec = Transform.GetForwardVectorWorld();
 
 		if (collider->GetType() == CColliderComponent::EType::AABB)
 		{

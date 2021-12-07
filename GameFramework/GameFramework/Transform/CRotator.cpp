@@ -3,7 +3,7 @@
 #include "CRotator.h"
 #include "CTransform.h"
 
-CRotator::CRotator(const CTransform& partner):mPartner(partner)
+CRotator::CRotator(CTransform& partner):mPartner(partner)
 {
 	LCMath::IdentityQuaternion(mQuaternion);
 	LCMath::IdentityQuaternion(mLastFrameQuaternion);
@@ -50,15 +50,19 @@ void CRotator::SetAngle(const XMFLOAT3& angle)
 {
 	LCMath::TransformFromEulerAnglesToQuaternion({ 1.0f,0.0f,0.0f } , { 0.0f , 1.0f , 0.0f } ,
 		{ 0.0f,0.0f,1.0f } , angle , mQuaternion);
+
+	mPartner.Update();
 }
 
 void CRotator::AddAngle(const XMFLOAT3& angle)
 {
 	XMFLOAT4 qua;
 
-	LCMath::TransformFromEulerAnglesToQuaternion(mPartner.GetRightVector() , mPartner.GetUpwardVector() ,
-		mPartner.GetForwardVector() , angle , qua);
-	LCMath::CalcQuaternionMultiply(mQuaternion , qua , mQuaternion);
+	LCMath::TransformFromEulerAnglesToQuaternion(mPartner.GetRightVectorRelative() , mPartner.GetUpwardVectorRelative() ,
+		mPartner.GetForwardVectorRelative() , angle , qua);
+	LCMath::CalcQuaternionMultiply(qua , mQuaternion , mQuaternion);
+
+	mPartner.Update();
 }
 
 void CRotator::ChangeAngleAndQuaternionToLocation(XMFLOAT3 location)
@@ -74,7 +78,7 @@ void CRotator::ChangeAngleAndQuaternionToLocation(XMFLOAT3 location)
 	LCMath::CalcFloat3Normalize(vec , vec);
 
 	//クォータニオンに必要な角度を計算
-	LCMath::CalcFloat3Dot(mPartner.GetForwardVector() , vec , angle);
+	LCMath::CalcFloat3Dot(mPartner.GetForwardVectorWorld() , vec , angle);
 
 	/*
 	結果が1(小数点がはみ出ることがあるので1以上)ならベクトル同士が平行なので終了
@@ -87,12 +91,12 @@ void CRotator::ChangeAngleAndQuaternionToLocation(XMFLOAT3 location)
 	angle = std::acosf(angle);
 
 	//クォータニオンに必要な軸を計算
-	LCMath::CalcFloat3Cross(mPartner.GetForwardVector() , vec , axis);
+	LCMath::CalcFloat3Cross(mPartner.GetForwardVectorWorld() , vec , axis);
 
 	//軸が全て0なら軸を自分の上向きベクトルにする
 	if(axis.x == 0 && axis.y == 0 && axis.z == 0)
 	{
-		axis = mPartner.GetUpwardVector();
+		axis = mPartner.GetUpwardVectorWorld();
 	};
 
 	//クォータニオン作成
@@ -115,7 +119,7 @@ void CRotator::CalcQuaternionToLocation(XMFLOAT3 location , XMFLOAT4& resultQua)
 	LCMath::CalcFloat3Normalize(vec , vec);
 
 	//クォータニオンに必要な角度を計算
-	LCMath::CalcFloat3Dot(mPartner.GetForwardVector() , vec , angle);
+	LCMath::CalcFloat3Dot(mPartner.GetForwardVectorWorld() , vec , angle);
 
 	/*
 	結果が1(小数点がはみ出ることがあるので1以上)ならベクトル同士が平行なので終了
@@ -133,12 +137,12 @@ void CRotator::CalcQuaternionToLocation(XMFLOAT3 location , XMFLOAT4& resultQua)
 	angle = std::acosf(angle);
 
 	//クォータニオンに必要な軸を計算
-	LCMath::CalcFloat3Cross(mPartner.GetForwardVector() , vec , axis);
+	LCMath::CalcFloat3Cross(mPartner.GetForwardVectorWorld() , vec , axis);
 
 	//軸が全て0なら軸を自分の上向きベクトルにする
 	if(axis.x == 0 && axis.y == 0 && axis.z == 0)
 	{
-		axis = mPartner.GetUpwardVector();
+		axis = mPartner.GetUpwardVectorWorld();
 	};
 
 	//クォータニオン作成

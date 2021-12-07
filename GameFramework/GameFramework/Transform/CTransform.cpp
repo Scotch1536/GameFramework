@@ -181,7 +181,7 @@ void CTransform::RequestSetMatrix()
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD , mWorldMatrixResult);
 }
 
-XMFLOAT3 CTransform::GetRightVector()const
+XMFLOAT3 CTransform::GetRightVectorWorld()const
 {
 	XMFLOAT3 result;
 
@@ -194,7 +194,7 @@ XMFLOAT3 CTransform::GetRightVector()const
 	return result;
 }
 
-XMFLOAT3 CTransform::GetUpwardVector()const
+XMFLOAT3 CTransform::GetUpwardVectorWorld()const
 {
 	XMFLOAT3 result;
 
@@ -207,13 +207,52 @@ XMFLOAT3 CTransform::GetUpwardVector()const
 	return result;
 }
 
-XMFLOAT3 CTransform::GetForwardVector()const
+XMFLOAT3 CTransform::GetForwardVectorWorld()const
 {
 	XMFLOAT3 result;
 
 	result.x = mWorldMatrixResult._31;
 	result.y = mWorldMatrixResult._32;
 	result.z = mWorldMatrixResult._33;
+
+	LCMath::CalcFloat3Normalize(result , result);
+
+	return result;
+}
+
+XMFLOAT3 CTransform::GetRightVectorRelative()const
+{
+	XMFLOAT3 result;
+
+	result.x = mWorldMatrixSelf._11;
+	result.y = mWorldMatrixSelf._12;
+	result.z = mWorldMatrixSelf._13;
+
+	LCMath::CalcFloat3Normalize(result , result);
+
+	return result;
+}
+
+XMFLOAT3 CTransform::GetUpwardVectorRelative()const
+{
+	XMFLOAT3 result;
+
+	result.x = mWorldMatrixSelf._21;
+	result.y = mWorldMatrixSelf._22;
+	result.z = mWorldMatrixSelf._23;
+
+	LCMath::CalcFloat3Normalize(result , result);
+
+	return result;
+}
+
+XMFLOAT3 CTransform::GetForwardVectorRelative()const
+{
+	XMFLOAT3 result;
+
+	result.x = mWorldMatrixSelf._31;
+	result.y = mWorldMatrixSelf._32;
+	result.z = mWorldMatrixSelf._33;
 
 	LCMath::CalcFloat3Normalize(result , result);
 

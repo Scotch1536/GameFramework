@@ -87,11 +87,17 @@ public:
 		return mIsChild;
 	}
 
-	XMFLOAT3 GetRightVector()const;
+	XMFLOAT3 GetRightVectorWorld()const;
 
-	XMFLOAT3 GetUpwardVector()const;
+	XMFLOAT3 GetUpwardVectorWorld()const;
 
-	XMFLOAT3 GetForwardVector()const;
+	XMFLOAT3 GetForwardVectorWorld()const;
+	
+	XMFLOAT3 GetRightVectorRelative()const;
+
+	XMFLOAT3 GetUpwardVectorRelative()const;
+
+	XMFLOAT3 GetForwardVectorRelative()const;
 
 	XMFLOAT3 GetWorldLocation()const;
 
