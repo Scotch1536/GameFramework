@@ -12,7 +12,7 @@ class CTransform;
 class CRotator
 {
 private:
-	const CTransform& mPartner;
+	CTransform& mPartner;
 
 	XMFLOAT4 mQuaternion;				//クォータニオン（現在地）
 	XMFLOAT4 mLastFrameQuaternion;		//1フレーム前の角度（度数法）
@@ -24,7 +24,7 @@ private:
 	//void UpdateAngle(float& angle);
 
 public:
-	CRotator(const CTransform& partner);
+	CRotator(CTransform& partner);
 
 	//更新
 	bool Update();

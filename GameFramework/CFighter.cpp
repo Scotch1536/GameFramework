@@ -45,7 +45,7 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 
 	CCameraComponent& camera = *new CCameraComponent(*this);
 
-	XMFLOAT3 fv = Transform.GetForwardVector();
+	XMFLOAT3 fv = Transform.GetForwardVectorWorld();
 	XMFLOAT3 loc = Transform.Location;
 	XMFLOAT3 cameraLoc = Transform.Location;
 	cameraLoc.x += fv.x*-20.0f;
@@ -69,7 +69,7 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 
 	Transform.RequestDebugLine();
 
-	XMFLOAT3 forwardVec = Transform.GetForwardVector();
+	XMFLOAT3 forwardVec = Transform.GetForwardVectorWorld();
 	forwardVec.x *= -1;
 	forwardVec.y *= -1;
 	forwardVec.z *= -1;
@@ -102,7 +102,7 @@ void CFighter::Shot()
 	mShotCnt++;
 
 	XMFLOAT3 loc = Transform.GetWorldLocation();
-	XMFLOAT3 fv = Transform.GetForwardVector();
+	XMFLOAT3 fv = Transform.GetForwardVectorWorld();
 	XMFLOAT3 dire;
 
 	loc.x += fv.x * 10.0f;
@@ -124,7 +124,7 @@ void CFighter::ShotReset()
 
 void CFighter::Move()
 {
-	XMFLOAT3 fv = Transform.GetForwardVector();
+	XMFLOAT3 fv = Transform.GetForwardVectorWorld();
 	float dt = CGameManager::GetInstance().GetDeltaTime();
 
 	Transform.Location.x += fv.x * (mSpeed*dt);
