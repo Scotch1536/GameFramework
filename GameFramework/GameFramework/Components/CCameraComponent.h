@@ -15,7 +15,9 @@ class CCameraComponent :public CComponent
 private:
 	XMFLOAT4X4 mProjection;		//プロジェクション行列
 
-	XMFLOAT4X4 mView;			//ビュー行列
+	XMFLOAT4X4 mCameraTransMatrixBase;		//カメラ座標変換行列のベース
+	XMFLOAT4X4 mCameraTransMatrix;			//カメラ座標変換行列
+	XMFLOAT4X4 mView;						//ビュー行列
 
 	XMFLOAT3 mEye;				//カメラ位置(相対座標)
 	XMFLOAT3 mLookAt;			//注視点
@@ -44,6 +46,7 @@ public:
 	CCameraComponent(CActor& owner , int priority = 80):CComponent(owner , priority)
 	{
 		LCMath::IdentityMatrix(mProjection);
+		LCMath::IdentityMatrix(mCameraTransMatrix);
 		LCMath::IdentityMatrix(mView);
 	}
 
@@ -67,11 +70,21 @@ public:
 		return mProjection;
 	}
 
+	const XMFLOAT4X4& GetCameraTransMatrixBase()
+	{
+		return mCameraTransMatrixBase;
+	}
+	
+	const XMFLOAT4X4& GetCameraTransMatrix()
+	{
+		return mCameraTransMatrix;
+	}
+
 	const XMFLOAT4X4& GetViewMatrix()
 	{
 		return mView;
 	}
-
+	
 	const XMFLOAT3& GetEye() const
 	{
 		return mEye;
@@ -95,6 +108,13 @@ public:
 	const bool& GetShouldUpdateViewMatrix()const
 	{
 		return mShouldUpdateViewMatrix;
+	}
+
+	void SetCameraTransMatrix(const XMFLOAT4X4& mat)
+	{
+		mCameraTransMatrix = mat;
+
+		LCMath::InverseMatrix(mCameraTransMatrix , mView);
 	}
 
 	void SetNear(float nearclip)

@@ -55,7 +55,7 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 	camera.SetProjection(10.f , 10000.f , XM_PI / 4.f , CApplication::CLIENT_WIDTH , CApplication::CLIENT_HEIGHT);
 	camera.SetView(cameraLoc , loc , { 0.f,1.f,0.f });
 
-	CSpringArmComponent& spr = *new CSpringArmComponent(*this , Transform , camera);
+	CSpringArmComponent& spr = *new CSpringArmComponent(*this , Transform , camera,ESyncMode::LOCATION_ONLY_SYNC);
 	spr.SetLerpTime(0.5f);
 
 	//light.SetEyePos(camera.GetEye());
