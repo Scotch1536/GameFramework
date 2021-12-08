@@ -140,9 +140,18 @@ void CFighter::Particle(CParticleSystemComponent::Particle& key , CTransform& tr
 
 void CFighter::Rot(int dire)
 {
-	if(dire == 0)Transform.Rotation.AddAngle({ 0.0f,-1.0f,0.0f });
+	if(dire == 0)
+	{
+		Transform.Location.x -= 1.0f;
+		//Transform.Rotation.AddAngle({ 0.0f,-1.0f,0.0f });
+	}
 	else if(dire == 1)Transform.Rotation.AddAngle({ 0.0f,1.0f,0.0f });
-	else if(dire == 2)Transform.Rotation.AddAngle({ -1.0f,0.0f,0.0f });
+	else if(dire == 2)
+	{
+		Transform.Location.y += 1.0f;
+
+		//Transform.Rotation.AddAngle({ -1.0f,0.0f,0.0f });
+	}
 	else if(dire == 3)Transform.Rotation.AddAngle({ 1.0f,0.0f,0.0f });
 }
 
@@ -160,7 +169,7 @@ void CFighter::SpeedChange(int type)
 
 void CFighter::Tick()
 {
-	Move();
+	//Move();
 
 	auto displayFighterInfo = [&]
 	{

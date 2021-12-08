@@ -24,10 +24,10 @@ private:
 	XMFLOAT3 mInitLockAt;		//初期化に使う注視点
 	XMFLOAT3 mInitUp;			//初期化に使う上向きベクトル
 
-	std::unique_ptr<XMFLOAT4X4> mGoalWorldMatrix;		//目標のワールド行列
-	std::unique_ptr<XMFLOAT3> mGoalEye;					//目標のカメラ位置
-	std::unique_ptr<XMFLOAT3> mGoalLockAt;				//目標の注視点
-	std::unique_ptr<XMFLOAT3> mGoalUp;					//目標の上向きベクトル
+	std::unique_ptr<XMFLOAT4X4> mResultWorldMatrix;			//結果のワールド行列
+	std::unique_ptr<XMFLOAT3> mResultEye;					//結果のカメラ位置
+	std::unique_ptr<XMFLOAT3> mResultLockAt;				//結果の注視点
+	std::unique_ptr<XMFLOAT3> mResultUp;					//結果の上向きベクトル
 
 	float mLerpTime = 0.0f;
 	float mAlpha = 1.0f;

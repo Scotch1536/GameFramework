@@ -61,10 +61,10 @@ void CSpringArmComponent::IncreaseAlpha()
 
 void CSpringArmComponent::ResetGoal()
 {
-	mGoalWorldMatrix.reset();
-	mGoalEye.reset();
-	mGoalLockAt.reset();
-	mGoalUp.reset();
+	mResultWorldMatrix.reset();
+	mResultEye.reset();
+	mResultLockAt.reset();
+	mResultUp.reset();
 }
 
 void CSpringArmComponent::Update()
@@ -77,26 +77,26 @@ void CSpringArmComponent::Update()
 
 		LCMath::CalcMatrixMultply(mLocalMatrix , mParentTransform.GetWorldMatrixResult() , cameraWorld);
 
-		if(mGoalWorldMatrix != nullptr)
+		if(mResultWorldMatrix != nullptr)
 		{
-			if(!LCMath::CompareMatrix(*mGoalWorldMatrix , cameraWorld))
+			if(!LCMath::CompareMatrix(*mResultWorldMatrix , cameraWorld))
 			{
-				mGoalWorldMatrix.reset(new XMFLOAT4X4(cameraWorld));
+				mResultWorldMatrix.reset(new XMFLOAT4X4(cameraWorld));
 
-				mGoalEye.reset(new XMFLOAT3(mGoalWorldMatrix->_11 , mGoalWorldMatrix->_12 , mGoalWorldMatrix->_13));
-				mGoalLockAt.reset(new XMFLOAT3(mGoalWorldMatrix->_31 , mGoalWorldMatrix->_32 , mGoalWorldMatrix->_33));
-				mGoalUp.reset(new XMFLOAT3(mGoalWorldMatrix->_21 , mGoalWorldMatrix->_22 , mGoalWorldMatrix->_23));
+				mResultEye.reset(new XMFLOAT3(mResultWorldMatrix->_11 , mResultWorldMatrix->_12 , mResultWorldMatrix->_13));
+				mResultLockAt.reset(new XMFLOAT3(mResultWorldMatrix->_31 , mResultWorldMatrix->_32 , mResultWorldMatrix->_33));
+				mResultUp.reset(new XMFLOAT3(mResultWorldMatrix->_21 , mResultWorldMatrix->_22 , mResultWorldMatrix->_23));
 
 				mAlpha = 0.0f;
 			}
 		}
 		else
 		{
-			mGoalWorldMatrix.reset(new XMFLOAT4X4(cameraWorld));
+			mResultWorldMatrix.reset(new XMFLOAT4X4(cameraWorld));
 
-			mGoalEye.reset(new XMFLOAT3(mGoalWorldMatrix->_11 , mGoalWorldMatrix->_12 , mGoalWorldMatrix->_13));
-			mGoalLockAt.reset(new XMFLOAT3(mGoalWorldMatrix->_31 , mGoalWorldMatrix->_32 , mGoalWorldMatrix->_33));
-			mGoalUp.reset(new XMFLOAT3(mGoalWorldMatrix->_21 , mGoalWorldMatrix->_22 , mGoalWorldMatrix->_23));
+			mResultEye.reset(new XMFLOAT3(mResultWorldMatrix->_11 , mResultWorldMatrix->_12 , mResultWorldMatrix->_13));
+			mResultLockAt.reset(new XMFLOAT3(mResultWorldMatrix->_31 , mResultWorldMatrix->_32 , mResultWorldMatrix->_33));
+			mResultUp.reset(new XMFLOAT3(mResultWorldMatrix->_21 , mResultWorldMatrix->_22 , mResultWorldMatrix->_23));
 
 			mAlpha = 1.0f;
 		}
@@ -105,9 +105,9 @@ void CSpringArmComponent::Update()
 
 		XMFLOAT3 eye , lookAt , up;
 
-		mUseCamera.SetEye(LCMath::Lerp(mUseCamera.GetEye() , *mGoalEye , mAlpha , eye));
-		mUseCamera.SetLookat(LCMath::Lerp(mUseCamera.GetLookAt() , *mGoalLockAt , mAlpha , lookAt));
-		mUseCamera.SetUp(LCMath::Lerp(mUseCamera.GetUp() , *mGoalUp , mAlpha , up));
+		mUseCamera.SetEye(LCMath::Lerp(mUseCamera.GetEye() , *mResultEye , mAlpha , eye));
+		mUseCamera.SetLookat(LCMath::Lerp(mUseCamera.GetLookAt() , *mResultLockAt , mAlpha , lookAt));
+		mUseCamera.SetUp(LCMath::Lerp(mUseCamera.GetUp() , *mResultUp , mAlpha , up));
 	}
 	else if(mSyncMode == ESyncMode::LOCATION_ONLY_SYNC)
 	{
@@ -117,18 +117,18 @@ void CSpringArmComponent::Update()
 		compareLocation.y += mLocalMatrix._12;
 		compareLocation.z += mLocalMatrix._13;
 
-		if(mGoalEye != nullptr)
+		if(mResultEye != nullptr)
 		{
-			if(!LCMath::CompareFloat3(*mGoalEye , compareLocation))
+			if(!LCMath::CompareFloat3(*mResultEye , compareLocation))
 			{
-				mGoalEye.reset(new XMFLOAT3(compareLocation));
+				mResultEye.reset(new XMFLOAT3(compareLocation));
 
 				mAlpha = 0.0f;
 			}
 		}
 		else
 		{
-			mGoalEye.reset(new XMFLOAT3(compareLocation));
+			mResultEye.reset(new XMFLOAT3(compareLocation));
 
 			mAlpha = 1.0f;
 		}
@@ -137,7 +137,7 @@ void CSpringArmComponent::Update()
 
 		XMFLOAT3 eye;
 
-		mUseCamera.SetEye(LCMath::Lerp(mUseCamera.GetEye() , *mGoalEye , mAlpha , eye));
+		mUseCamera.SetEye(LCMath::Lerp(mUseCamera.GetEye() , *mResultEye , mAlpha , eye));
 		mUseCamera.SetLookat(mParentTransform.Location);
 	}
 }
