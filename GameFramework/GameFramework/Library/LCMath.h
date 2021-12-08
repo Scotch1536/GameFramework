@@ -106,4 +106,6 @@ public:
 	static XMFLOAT3 Lerp(const XMFLOAT3& start, const XMFLOAT3& end, const float& alpha);
 	static const XMFLOAT4& Lerp(const XMFLOAT4& start, const XMFLOAT4& end, const float& alpha, XMFLOAT4& result);
 	static XMFLOAT4 Lerp(const XMFLOAT4& start, const XMFLOAT4& end, const float& alpha);
+	static const XMFLOAT4X4& Lerp(const XMFLOAT4X4& start, const XMFLOAT4X4& end, const float& alpha, XMFLOAT4X4& result);
+	static XMFLOAT4X4 Lerp(const XMFLOAT4X4& start, const XMFLOAT4X4& end, const float& alpha);
 };

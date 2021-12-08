@@ -549,3 +549,55 @@ XMFLOAT4 LCMath::Lerp(const XMFLOAT4& start , const XMFLOAT4& end , const float&
 
 	return result;
 }
+
+const XMFLOAT4X4& LCMath::Lerp(const XMFLOAT4X4& start , const XMFLOAT4X4& end , const float& alpha , XMFLOAT4X4& result)
+{
+	Lerp(start._11 , end._11 , alpha , result._11);
+	Lerp(start._12 , end._12 , alpha , result._12);
+	Lerp(start._13 , end._13 , alpha , result._13);
+	Lerp(start._14 , end._14 , alpha , result._14);
+
+	Lerp(start._21 , end._21 , alpha , result._21);
+	Lerp(start._22 , end._22 , alpha , result._22);
+	Lerp(start._23 , end._23 , alpha , result._23);
+	Lerp(start._24 , end._24 , alpha , result._24);
+
+	Lerp(start._31 , end._31 , alpha , result._31);
+	Lerp(start._32 , end._32 , alpha , result._32);
+	Lerp(start._33 , end._33 , alpha , result._33);
+	Lerp(start._34 , end._34 , alpha , result._34);
+
+	Lerp(start._41 , end._41 , alpha , result._41);
+	Lerp(start._42 , end._42 , alpha , result._42);
+	Lerp(start._43 , end._43 , alpha , result._43);
+	Lerp(start._44 , end._44 , alpha , result._44);
+
+	return result;
+}
+
+XMFLOAT4X4 LCMath::Lerp(const XMFLOAT4X4& start , const XMFLOAT4X4& end , const float& alpha)
+{
+	XMFLOAT4X4 result;
+
+	Lerp(start._11 , end._11 , alpha , result._11);
+	Lerp(start._12 , end._12 , alpha , result._12);
+	Lerp(start._13 , end._13 , alpha , result._13);
+	Lerp(start._14 , end._14 , alpha , result._14);
+
+	Lerp(start._21 , end._21 , alpha , result._21);
+	Lerp(start._22 , end._22 , alpha , result._22);
+	Lerp(start._23 , end._23 , alpha , result._23);
+	Lerp(start._24 , end._24 , alpha , result._24);
+
+	Lerp(start._31 , end._31 , alpha , result._31);
+	Lerp(start._32 , end._32 , alpha , result._32);
+	Lerp(start._33 , end._33 , alpha , result._33);
+	Lerp(start._34 , end._34 , alpha , result._34);
+
+	Lerp(start._41 , end._41 , alpha , result._41);
+	Lerp(start._42 , end._42 , alpha , result._42);
+	Lerp(start._43 , end._43 , alpha , result._43);
+	Lerp(start._44 , end._44 , alpha , result._44);
+
+	return result;
+}
