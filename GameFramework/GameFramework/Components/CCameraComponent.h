@@ -43,9 +43,10 @@ private:
 	void Update()override;
 
 public:
-	CCameraComponent(CActor& owner , int priority = 80):CComponent(owner , priority)
+	CCameraComponent(CActor& owner , int priority = 0):CComponent(owner , priority)
 	{
 		LCMath::IdentityMatrix(mProjection);
+		LCMath::IdentityMatrix(mCameraTransMatrixBase);
 		LCMath::IdentityMatrix(mCameraTransMatrix);
 		LCMath::IdentityMatrix(mView);
 	}

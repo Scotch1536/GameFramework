@@ -55,6 +55,8 @@ void CCameraComponent::CreateViewMatrix()
 	mCameraTransMatrixBase._43 = LCMath::CalcFloat3Dot(mEye , vecZ);
 	mCameraTransMatrixBase._44 = 1.0f;
 
+	mCameraTransMatrix = mCameraTransMatrixBase;
+
 	LCMath::InverseMatrix(mCameraTransMatrixBase , mView);
 }
 

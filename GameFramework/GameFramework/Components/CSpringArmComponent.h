@@ -22,8 +22,8 @@ private:
 	std::unique_ptr<XMFLOAT4X4> mIdealMatrix;		//結果のワールド行列
 
 	float mLerpTime = 0.0f;
-	float mAlpha = 1.0f;
-	float mIncrementAlpha = 1.0f;
+	float mAlpha = 0.0f;
+	float mIncrementAlpha = 0.0f;
 
 	//線形補間のアルファ増加値を計算してセット
 	void IncreaseAlpha();

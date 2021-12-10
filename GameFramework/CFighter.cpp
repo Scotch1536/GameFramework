@@ -74,8 +74,8 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 	forwardVec.y *= -1;
 	forwardVec.z *= -1;
 
-	CParticleSystemComponent::Create(*this , owner , Transform , std::bind(&CFighter::Particle , std::ref(*this) , std::placeholders::_1 , std::placeholders::_2) ,
-		60 , 1 , 60 , 20 , forwardVec);
+	/*CParticleSystemComponent::Create(*this , owner , Transform , std::bind(&CFighter::Particle , std::ref(*this) , std::placeholders::_1 , std::placeholders::_2) ,
+		60 , 1 , 60 , 20 , forwardVec);*/
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
