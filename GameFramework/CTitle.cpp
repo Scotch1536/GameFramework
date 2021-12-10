@@ -26,7 +26,6 @@ void CTitle::Init()
 	anim = new C2DAnimationComponent(aurora , 3 , 4);
 	anim->AddAnimData(aurora.GetDisplay2D().GetUV(0) , aurora.GetDisplay2D().GetUV(1) , aurora.GetDisplay2D().GetUV(2) , aurora.GetDisplay2D().GetUV(3) , updateVertex , "Dragon");
 	anim->AddAnimInfo("mot1" , 0 , 2 , 0.5f , true);
-	anim->AddAnimInfo("mot1" ,3.5f , false);
 	anim->AddAnimInfo("mot2" , 3 , 5 , 0.5f , true);
 	anim->AddAnimInfo("mot3" , 6 , 8 , 0.5f , true);
 	anim->Play("mot1" , "Dragon");

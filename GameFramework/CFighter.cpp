@@ -55,7 +55,7 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 	camera.SetProjection(10.f , 10000.f , XM_PI / 4.f , CApplication::CLIENT_WIDTH , CApplication::CLIENT_HEIGHT);
 	camera.SetView(cameraLoc , loc , { 0.f,1.f,0.f });
 
-	CSpringArmComponent& spr = *new CSpringArmComponent(*this , Transform , camera,ESyncMode::LOCATION_ONLY_SYNC);
+	CSpringArmComponent& spr = *new CSpringArmComponent(*this , Transform , camera);
 	spr.SetLerpTime(0.5f);
 
 	//light.SetEyePos(camera.GetEye());
@@ -74,8 +74,8 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 	forwardVec.y *= -1;
 	forwardVec.z *= -1;
 
-	CParticleSystemComponent::Create(*this , owner , Transform , std::bind(&CFighter::Particle , std::ref(*this) , std::placeholders::_1 , std::placeholders::_2) ,
-		60 , 1 , 60 , 20 , forwardVec);
+	/*CParticleSystemComponent::Create(*this , owner , Transform , std::bind(&CFighter::Particle , std::ref(*this) , std::placeholders::_1 , std::placeholders::_2) ,
+		60 , 1 , 60 , 20 , forwardVec);*/
 	/*
 	★超重要★
 	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる

@@ -43,18 +43,24 @@ void CSpringArmComponent::Update()
 
 	if(mIdealMatrix != nullptr)
 	{
-		if(!LCMath::CompareMatrix(*mIdealMatrix , idealMatrix))
+		if(!LCMath::CompareMatrix(*mIdealMatrix , idealMatrix) && mAlpha != 0.0f)
 		{
 			mIdealMatrix.reset(new XMFLOAT4X4(idealMatrix));
 
 			mAlpha = 0.0f;
+
+			mUseCamera.SetCameraTransMatrix(LCMath::Lerp(mUseCamera.GetCameraTransMatrix() , *mIdealMatrix , mAlpha));
+
+			return;
 		}
 	}
 	else
 	{
 		mIdealMatrix.reset(new XMFLOAT4X4(idealMatrix));
 
-		mAlpha = 1.0f;
+		mUseCamera.SetCameraTransMatrix(LCMath::Lerp(mUseCamera.GetCameraTransMatrix() , *mIdealMatrix , 1.0f));
+
+		return;
 	}
 
 	IncreaseAlpha();
