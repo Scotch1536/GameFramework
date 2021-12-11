@@ -46,6 +46,7 @@ void CLevel::Update()
 	}
 
 	std::vector<CActor*> actors;
+	std::vector<CActor*> allActors;		//そのフレームでのUpdate開始時の全てのアクター
 	CActor* cameraActor = nullptr;
 
 	if(CGameManager::GetInstance().GetIsPause())
@@ -56,6 +57,7 @@ void CLevel::Update()
 			{
 				actors.emplace_back(actor.get());
 			}
+			allActors.emplace_back(actor.get());
 		}
 	}
 	else
@@ -63,11 +65,12 @@ void CLevel::Update()
 		for(auto& actor : mActors)
 		{
 			actors.emplace_back(actor.get());
+			allActors.emplace_back(actor.get());
 		}
 	}
 
 	//Tick前トランスフォーム更新処理
-	for(auto& actor : mActors)
+	for(auto& actor : allActors)
 	{
 		if(!actor->Transform.GetIsChild())actor->Transform.Update();
 	}
@@ -101,7 +104,7 @@ void CLevel::Update()
 	}
 
 	//更新処理
-	for(auto& actor : mActors)
+	for(auto& actor : allActors)
 	{
 		actor->Update();
 	}
