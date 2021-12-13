@@ -21,10 +21,10 @@ public:
 	virtual ~ILevel() {};
 	virtual void DestroyActor(CActor& target) = 0;
 	virtual void AddActor(CActor& actor) = 0;
-	virtual void RequestSetCamera(CCameraComponent& camera) = 0;
 	virtual void AddImGuiDrawFunction(std::function<void()> func) = 0;
-	virtual void RequestRenderOrders(std::vector<SRenderInfo>& renderOrders) = 0;
 	virtual void AddDoBeforeUpdateFunction(std::function<void()> func) = 0;
+	virtual void RequestSetCamera(CCameraComponent& camera) = 0;
+	virtual void RequestRenderOrders(std::vector<SRenderInfo>& renderOrders) = 0;
 	virtual void Notice(CActor& actor) = 0;
 };
 

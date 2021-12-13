@@ -27,11 +27,11 @@ bool CRotator::Update()
 	{
 		mLastFrameQuaternion = mQuaternion;
 
-		mIsSameAngleToBeforeFrame = false;
+		mIsSameQuaternionToBeforeFrame = false;
 	}
 	else
 	{
-		mIsSameAngleToBeforeFrame = true;
+		mIsSameQuaternionToBeforeFrame = true;
 	}
 	return false;
 }
@@ -65,7 +65,7 @@ void CRotator::AddAngle(const XMFLOAT3& angle)
 	mPartner.Update();
 }
 
-void CRotator::ChangeAngleAndQuaternionToLocation(XMFLOAT3 location)
+void CRotator::ChangeQuaternionToLocation(XMFLOAT3 location)
 {
 	XMFLOAT4 mulQua;
 	XMFLOAT3 vec , axis;

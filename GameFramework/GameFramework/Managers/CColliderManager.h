@@ -27,7 +27,7 @@ public:
 	//自分以外のコリジョンコンポーネントのポインタをあげる
 	bool GetColliders(CColliderComponent* caller, std::vector<CColliderComponent*>& result);
 
-	//登録しているコリジョンデータの削除
+	//登録しているコリジョンデータの解放
 	void ReleaseCollider(CColliderComponent& collider);
 
 	void Update();

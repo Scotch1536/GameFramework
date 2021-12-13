@@ -1,3 +1,5 @@
+#include <filesystem>
+
 #include "../ExternalCode/CDirectxGraphics.h"
 #include "../ExternalCode/Shader.h"
 #include "../Managers/CDirectXResourceManager.h"
@@ -52,7 +54,21 @@ void CRenderComponent::Render(unsigned int stride ,
 	}
 	else
 	{
-		ID3D11ShaderResourceView* white = CDirectXResourceManager::GetInstance().GetTextureSRV("GameFramework/Assets/white.bmp");
+		ID3D11ShaderResourceView* white = nullptr;
+
+		if(std::filesystem::exists("Assets/Textures/White/white.bmp"))
+		{
+			white = CDirectXResourceManager::GetInstance().GetTextureSRV("Assets/Textures/White/white.bmp");
+		}
+		else if(std::filesystem::exists("GameFramework/Assets/white.bmp"))
+		{
+			white = CDirectXResourceManager::GetInstance().GetTextureSRV("GameFramework/Assets/white.bmp");
+		}
+		else
+		{
+			MessageBox(nullptr , "Not Found White Texture" , "error" , MB_OK);
+		}
+
 		devcontext->PSSetShaderResources(0 , 1 , &white);
 	}
 

@@ -18,21 +18,21 @@ public:
 class CLightManager :public ILightManagerToLightComponent
 {
 private:
-	ALIGN16 struct PointLight
+	ALIGN16 struct SPointLight
 	{
 		XMFLOAT3 LightPos;
 		float Pad1;
 		XMFLOAT4 Attenuation;
 	};
 
-	ALIGN16 struct SpotLight :public PointLight
+	ALIGN16 struct SSpotLight :public SPointLight
 	{
 		XMFLOAT3 Direction;
 		float Pad1;
 		float Angle;
 	};
 
-	ALIGN16 struct ConstantBufferLight
+	ALIGN16 struct SConstantBufferLight
 	{
 		XMFLOAT3 EyePos;
 		float Pad1;
@@ -40,13 +40,13 @@ private:
 		float Pad2;
 		XMFLOAT3 AmbientLightData;
 		float Pad3;
-		PointLight PointLights[LIGHT_NUM];
-		SpotLight SpotLights[LIGHT_NUM];
+		SPointLight PointLights[LIGHT_NUM];
+		SSpotLight SpotLights[LIGHT_NUM];
 	};
 
 	ComPtr<ID3D11Buffer> mConstantBuffer = nullptr;		//定数バッファ
 
-	ConstantBufferLight mConstantBufferLightData;
+	SConstantBufferLight mConstantBufferLightData;
 
 	std::vector<CLightComponent*> mLights;
 
@@ -69,7 +69,7 @@ private:
 	//ライトコンポーネントのポインタを追加
 	void AddLight(CLightComponent& light);
 
-	//ライトコンポーネントのポインタを削除
+	//ライトコンポーネントのポインタを解放
 	void ReleaseLight(CLightComponent& light);
 
 public:

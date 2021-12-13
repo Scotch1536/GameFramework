@@ -11,7 +11,7 @@
 CLightManager::CLightManager()
 {
 	//コンスタントバッファ作成
-	bool sts = CreateConstantBuffer(CDirectXGraphics::GetInstance()->GetDXDevice(), sizeof(ConstantBufferLight), mConstantBuffer.GetAddressOf());
+	bool sts = CreateConstantBuffer(CDirectXGraphics::GetInstance()->GetDXDevice(), sizeof(SConstantBufferLight), mConstantBuffer.GetAddressOf());
 	if (!sts)
 	{
 		MessageBox(NULL, "CreateBuffer(constant buffer Light) error", "Error", MB_OK);

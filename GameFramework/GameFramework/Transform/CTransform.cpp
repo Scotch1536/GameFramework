@@ -92,7 +92,7 @@ void CTransform::Update()
 {
 	Rotation.Update();
 
-	if(!LCMath::CompareFloat3(Location , mLastFrameLocation) || !LCMath::CompareFloat3(Scale , mLastFrameScale) || !Rotation.GetIsSameAngleToBeforeFrame())
+	if(!LCMath::CompareFloat3(Location , mLastFrameLocation) || !LCMath::CompareFloat3(Scale , mLastFrameScale) || !Rotation.GetIsSameQuaternionToBeforeFrame())
 	{
 		if(!mIgnoreUpdateMatrixOnce)
 		{
