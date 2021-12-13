@@ -10,7 +10,7 @@ class CSoundManager
 {
 private:
 	//サウンド情報構造体
-	struct SoundInfo
+	struct SSoundInfo
 	{
 		std::string FilePath;		//ファイルパス
 		float Volume;				//ボリューム
@@ -22,7 +22,7 @@ private:
 
 	std::unordered_map<std::string , IXAudio2SourceVoice*> mSourceVoice;		//ソースボイス格納辞書
 	std::unordered_map<std::string , CWave> mSoundData;							//サウンド格納辞書
-	std::unordered_map<std::string , SoundInfo> mSoundInfo;						//サウンド情報格納辞書
+	std::unordered_map<std::string , SSoundInfo> mSoundInfo;						//サウンド情報格納辞書
 
 	/*
 	XAudioの初期化のタイミングによってはテクスチャローダーとのエラーが発生する

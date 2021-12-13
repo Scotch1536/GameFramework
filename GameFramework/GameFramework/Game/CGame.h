@@ -33,19 +33,20 @@ public:
 class CGame :public IGame , public IGameToGameManager
 {
 private:
-	ALIGN16 struct ConstantBufferViewPort
+	//ビューポート定数バッファ構造体
+	ALIGN16 struct SConstantBufferViewPort
 	{
 		uint32_t ScreenWidth;
 		uint32_t ScreenHeight;
 	};
 
-	ComPtr<ID3D11Buffer> mConstantBufferViewPort = nullptr;		//定数バッファ
+	ComPtr<ID3D11Buffer> mConstantBufferViewPort = nullptr;		//ビューポート定数バッファ
 
 	CApplication mApp;		//アプリケーション
 
 	std::unique_ptr<CLevel> mLevel;			//レベル
 
-	std::function<void()> mLoadLevelFunction;			//ロードレベル関数オブジェクト
+	std::function<void()> mLoadLevelFunction;			//ロードレベルの関数を格納しておく関数オブジェクト
 
 
 	//コピー＆ムーブ禁止
@@ -54,12 +55,13 @@ private:
 	CGame(CGame&&) = delete;
 	CGame& operator=(CGame&&) = delete;
 
-	//実行　※このメソッドをエントリーポイントの関数で呼べばウィンドウが作られゲームがスタートする
+	//ゲームフローの実行
 	long Execute(HINSTANCE hInst , int winMode)override;
 
+	//レベルのセット
 	void SetLevel(CLevel& level)override;
 
-	//レベルのロード（遷移）
+	//レベルのロード（レベルの遷移、変更）
 	void LoadLevel(CLevel& level , bool isFeed = false , XMFLOAT3 feedColor = { 1.0f,1.0f,1.0f } , float feedTime = 1.0f)override;
 
 	CApplication& GetApp()override

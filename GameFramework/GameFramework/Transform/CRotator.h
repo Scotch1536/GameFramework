@@ -15,13 +15,9 @@ private:
 	CTransform& mPartner;
 
 	XMFLOAT4 mQuaternion;				//クォータニオン（現在地）
-	XMFLOAT4 mLastFrameQuaternion;		//1フレーム前の角度（度数法）
+	XMFLOAT4 mLastFrameQuaternion;		//1フレーム前のクォータニオン
 
-	//XMFLOAT3 mAngle = { 0.f,0.f,0.f };				//角度（度数法）
-
-	bool mIsSameAngleToBeforeFrame = true;			//比較結果（今のフレームの角度と前のフレーム角度の）
-
-	//void UpdateAngle(float& angle);
+	bool mIsSameQuaternionToBeforeFrame = true;			//比較結果（今のフレームの角度と前のフレーム角度の）
 
 public:
 	CRotator(CTransform& partner);
@@ -33,7 +29,7 @@ public:
 	XMFLOAT4X4 GenerateMatrix();
 
 	//指定の位置に角度を変更する
-	void ChangeAngleAndQuaternionToLocation(XMFLOAT3 location);
+	void ChangeQuaternionToLocation(XMFLOAT3 location);
 
 	//指定の位置に向くクォータニオンをゲットする
 	void CalcQuaternionToLocation(XMFLOAT3 location , XMFLOAT4& resultQua);
@@ -43,14 +39,9 @@ public:
 		return mQuaternion;
 	}
 
-	/*const XMFLOAT3& GetAngle()const
+	const bool& GetIsSameQuaternionToBeforeFrame()const
 	{
-		return mAngle;
-	}*/
-
-	const bool& GetIsSameAngleToBeforeFrame()const
-	{
-		return mIsSameAngleToBeforeFrame;
+		return mIsSameQuaternionToBeforeFrame;
 	}
 
 	void SetQuaternion(const XMFLOAT4& qua)

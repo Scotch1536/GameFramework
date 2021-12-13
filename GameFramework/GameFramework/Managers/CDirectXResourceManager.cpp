@@ -1,10 +1,30 @@
+#include <filesystem>
 #include "../ExternalCode/Shader.h"
 
 #include "CDirectXResourceManager.h"
 
 CDirectXResourceManager::CDirectXResourceManager()
 {
-	GetTextureSRV("GameFramework/Assets/white.bmp");
+	//指定のパスにファイルがない場合
+	if(!std::filesystem::exists("Assets/Textures/White/white.bmp"))
+	{
+		//ディレクトリを作成
+		std::filesystem::create_directories("Assets/Textures/White");
+
+		if(std::filesystem::exists("GameFramework/Assets/white.bmp"))
+		{
+			std::filesystem::copy("GameFramework/Assets/white.bmp" , "Assets/Textures/White/white.bmp");
+		}
+		else
+		{
+			MessageBox(nullptr , 
+				"white.bmpが見つかりません\nGameFrameworkのフォルダを実行ファイルのカレントディレクトリに配置して実行してください\nその後white.bmpが\"Assets/Textures/White/\"に作成されます" ,
+				"error" , MB_OK);
+			exit(1);
+		}
+	}
+
+	GetTextureSRV("Assets/Textures/White/white.bmp");
 }
 
 CDirectXResourceManager& CDirectXResourceManager::GetInstance()
