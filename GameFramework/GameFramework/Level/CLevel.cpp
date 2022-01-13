@@ -44,6 +44,18 @@ void CLevel::Update()
 		mDoBeforeUpdateFunction.clear();
 		mDoBeforeUpdateFunction.shrink_to_fit();
 	}
+	
+	//デストロイ関数を実行
+	if(mDestroyFunction.size() != 0)
+	{
+		for(auto& func : mDestroyFunction)
+		{
+			func();
+		}
+		//中身を空にする
+		mDestroyFunction.clear();
+		mDestroyFunction.shrink_to_fit();
+	}
 
 	std::vector<CActor*> actors;
 	std::vector<CActor*> allActors;		//そのフレームでのUpdate開始時の全てのアクター
@@ -259,7 +271,7 @@ void CLevel::DestroyActor(CActor& target)
 	};
 
 	//作成したラムダ式を格納
-	mDoBeforeUpdateFunction.emplace_back(destroyLambda);
+	mDestroyFunction.emplace_back(destroyLambda);
 }
 
 const XMFLOAT4X4* CLevel::GetRenderingCameraViewMatrix()const

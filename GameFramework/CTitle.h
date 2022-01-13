@@ -9,6 +9,7 @@ class CTitle :public CLevel
 {
 public:
 	CActor* mParticle;
+	int mCounter;
 
 	using CLevel::CLevel;
 

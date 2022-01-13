@@ -35,7 +35,7 @@ void CTitle::Init()
 	};
 
 	//コーンパーティクル作成
-	new CParticleGeneratorComponent(*mParticle , createParticle , 20 , 2.0f , 30.0f , *new CParticleBaseGeneratorLine({ 0.0f,1.0f,0.0f }));
+	new CParticleGeneratorComponent(*mParticle , createParticle , 2.0f , 2.0f , 30.0f , *new CParticleBaseGeneratorLine({ 0.0f,1.0f,0.0f }),100);
 	mParticle->Transform.Location.y = -25.0f;
 	mParticle->Transform.Location.z = 100.0f;
 
@@ -69,8 +69,18 @@ void CTitle::Init()
 
 void CTitle::Tick()
 {
-	mParticle->Transform.Location.z++;
-	mParticle->Transform.Rotation.AddAngle({ 0.0f,0.0f,2.0f });
+	mCounter++;
+	if(mParticle != nullptr)
+	{
+		mParticle->Transform.Location.z++;
+		mParticle->Transform.Rotation.AddAngle({ 0.0f,0.0f,2.0f });
+
+		if(mCounter > 50)
+		{
+			mParticle->Destroy();
+			mParticle = nullptr;
+		}
+	}
 }
 
 void CTitle::End()

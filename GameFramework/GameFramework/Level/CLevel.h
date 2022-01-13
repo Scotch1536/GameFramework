@@ -34,7 +34,8 @@ class CLevel :public CObject , public ILevel
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;					//アクター
 
-	std::vector<std::function<void()>> mDoBeforeUpdateFunction;		//更新後に行う関数オブジェクト
+	std::vector<std::function<void()>> mDoBeforeUpdateFunction;		//更新前に行う関数オブジェクト
+	std::vector<std::function<void()>> mDestroyFunction;			//デストロイの関数オブジェクト
 	std::vector<std::function<void()>> mImGuiDrawFunction;			//ImGuiに行わせる描画の関数オブジェクト
 
 	//レンダーコンポーネント

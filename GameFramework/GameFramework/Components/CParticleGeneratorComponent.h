@@ -87,7 +87,7 @@ class CParticleGeneratorComponent :public CComponent
 	};
 
 private:
-	std::vector<CParticle*> mParticles;			//パーティクル
+	CParticle* mParticleBuffer;			//パーティクルを一時的に保持する変数
 
 	std::unique_ptr<CParticleBaseGenerator> mParticleBaseGenerator;			//パーティクル生成機の形状
 
@@ -103,9 +103,6 @@ private:
 	float mIncreasedValueOfGenerationGauge;			//生成ゲージの増加値（毎フレーム）
 	float mParticleSpeed;							//パーティクルの速度（毎フレーム）
 
-	//パーティクルをリンクするか（リンクしている場合はデストラクタ時に一緒にパーティクルもデストロイされる）
-	bool mIsParticleLink = true;
-
 	//更新
 	void Update()override;
 
@@ -118,7 +115,5 @@ public:
 	CParticleGeneratorComponent(CActor& partner , std::function<void(CActor&)> particleBodyFunc ,
 		float lifetime , float particleSpeed , float generationPerSecond ,
 		CParticleBaseGenerator& directionGenerator , int generationLimit = 1000);
-
-	~CParticleGeneratorComponent();
 
 };

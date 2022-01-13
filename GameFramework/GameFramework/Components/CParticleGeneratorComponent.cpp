@@ -66,18 +66,6 @@ CParticleGeneratorComponent::CParticleGeneratorComponent(CActor& partner , std::
 	mIncreasedValueOfGenerationGauge(generationPerSecond / 60.0f) , mParticleBaseGenerator(&directionGenerator)
 {}
 
-CParticleGeneratorComponent::~CParticleGeneratorComponent()
-{
-	//パーティクルリンクしているならパーティクルを全てデストロイ
-	if(mIsParticleLink)
-	{
-		for(auto& particle : mParticles)
-		{
-			particle->Destroy();
-		}
-	}
-}
-
 void CParticleGeneratorComponent::Update()
 {
 	mGenerationGauge += mIncreasedValueOfGenerationGauge;		//ゲージに増加値を加算
@@ -95,7 +83,7 @@ void CParticleGeneratorComponent::Update()
 				if(mGenerationLimit <= mGenerationCounter)break;		//生成カウンターが生成限界値以上ならループを抜ける
 
 				GenerateParticle();
-				mParticleBodyGenerateFunction(*mParticles.back());
+				mParticleBodyGenerateFunction(*mParticleBuffer);
 
 				mGenerationCounter++;		//生成カウンター加算
 			}
@@ -148,6 +136,6 @@ void CParticleGeneratorComponent::GenerateParticle()
 	LCMath::CalcFloat3Scalar(bufVec , mParticleSpeed , particleVelocity);
 
 	//パーティクル作成
-	mParticles.emplace_back(new CParticle(CGameManager::GetInstance().GetLevelInterface() , particleVelocity , mParticleLifetime));
-	mParticles.back()->Transform.Location = particleLocation;
+	mParticleBuffer = new CParticle(CGameManager::GetInstance().GetLevelInterface() , particleVelocity , mParticleLifetime);
+	mParticleBuffer->Transform.Location = particleLocation;
 }
