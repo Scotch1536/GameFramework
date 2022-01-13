@@ -59,6 +59,8 @@ void CTransform::DetachTransform(CTransform& detachTarget)
 {
 	if(mParentTransform == &detachTarget)
 	{
+		mWorldMatrixSelf = mWorldMatrixResult;
+
 		mParentTransform = nullptr;
 		mIsChild = false;
 	}

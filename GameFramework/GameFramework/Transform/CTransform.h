@@ -7,6 +7,8 @@
 
 #include "CRotator.h"
 
+using namespace DirectX;
+
 class CChildTransform;
 class IActor;
 
@@ -64,7 +66,7 @@ public:
 	//行列をDirectxにセットしてもらうリクエスト
 	void RequestSetMatrix();
 
-	//引数のトランスフォームをアタッチ（親子付け）する
+	//引数のトランスフォームをアタッチ（子として親子付け）する
 	void AttachTransform(CTransform& attachTarget);
 
 	//引数のトランスフォームをデタッチ（親子付け解除）する

@@ -168,13 +168,7 @@
     <ClCompile Include="GameFramework\Components\CVisionComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Components\CParticleSystemComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\Components\CLineComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Components\CConeParticleComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="CAttachObject.cpp">
@@ -226,6 +220,9 @@
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\C2DAnimationComponent.cpp">
+      <Filter>Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Components\CParticleGeneratorComponent.cpp">
       <Filter>Components\ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -377,13 +374,7 @@
     <ClInclude Include="GameFramework\Components\CVisionComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Components\CParticleSystemComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Components\CLineComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Components\CConeParticleComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="CAttachObject.h">
@@ -449,8 +440,14 @@
     <ClInclude Include="GameFramework\Components\CSquareDivisionComponent.h">
       <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
+    <ClInclude Include="GameFramework\Actor\CCameraActor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="GameFramework\Components\CSceneComponent.h">
-      <Filter>Components</Filter>
+      <Filter>Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Components\CParticleGeneratorComponent.h">
+      <Filter>Components\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

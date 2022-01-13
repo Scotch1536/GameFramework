@@ -27,10 +27,9 @@
     <ClCompile Include="GameFramework\Components\CCameraComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CColliderComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CComponent.cpp" />
-    <ClCompile Include="GameFramework\Components\CConeParticleComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CDisplay2DComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CLightComponent.cpp" />
-    <ClCompile Include="GameFramework\Components\CParticleSystemComponent.cpp" />
+    <ClCompile Include="GameFramework\Components\CParticleGeneratorComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CLineComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CPlaneMeshComponent.cpp" />
     <ClCompile Include="GameFramework\Components\CPointLightComponent.cpp" />
@@ -88,6 +87,7 @@
     <ClInclude Include="CTitle.h" />
     <ClInclude Include="GameFramework\Actor\CActor.h" />
     <ClInclude Include="GameFramework\Actor\CActorGenerator.h" />
+    <ClInclude Include="GameFramework\Actor\CCameraActor.h" />
     <ClInclude Include="GameFramework\Actor\CDisplay2DActor.h" />
     <ClInclude Include="GameFramework\Actor\CFeedActor.h" />
     <ClInclude Include="GameFramework\Components\C2DAnimationComponent.h" />
@@ -97,10 +97,9 @@
     <ClInclude Include="GameFramework\Components\CCameraComponent.h" />
     <ClInclude Include="GameFramework\Components\CColliderComponent.h" />
     <ClInclude Include="GameFramework\Components\CComponent.h" />
-    <ClInclude Include="GameFramework\Components\CConeParticleComponent.h" />
     <ClInclude Include="GameFramework\Components\CDisplay2DComponent.h" />
     <ClInclude Include="GameFramework\Components\CLightComponent.h" />
-    <ClInclude Include="GameFramework\Components\CParticleSystemComponent.h" />
+    <ClInclude Include="GameFramework\Components\CParticleGeneratorComponent.h" />
     <ClInclude Include="GameFramework\Components\CLineComponent.h" />
     <ClInclude Include="GameFramework\Components\CPlaneMeshComponent.h" />
     <ClInclude Include="GameFramework\Components\CPointLightComponent.h" />

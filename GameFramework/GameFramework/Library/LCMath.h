@@ -49,8 +49,8 @@ public:
 	static bool CompareMatrix(const XMFLOAT4X4& target1, const XMFLOAT4X4& target2);
 
 	//軸（向きベクトル）と角度(ラジアン)からクォータニオンを作成	
-	static const XMFLOAT4& CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis, const float& angle, XMFLOAT4& resultQua);
-	static XMFLOAT4 CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis, const float& angle);
+	static const XMFLOAT4& CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis, const float& angleOfRadian, XMFLOAT4& resultQua);
+	static XMFLOAT4 CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis, const float& angleOfRadian);
 
 	//クォータニオン同士の乗算
 	static const XMFLOAT4& CalcQuaternionMultiply(const XMFLOAT4& qua1, const XMFLOAT4& qua2, XMFLOAT4& resultQua);

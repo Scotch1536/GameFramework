@@ -1,58 +1,81 @@
 #include "GameFramework/Actor/CDisplay2DActor.h"
+#include "GameFramework/Actor/CCameraActor.h"
+#include "GameFramework/Actor/CActorGenerator.h"
 #include "GameFramework/Game/CApplication.h"
 #include "GameFramework/Managers/CInputManager.h"
 #include "GameFramework/Managers/CSoundManager.h"
-#include "GameFramework/Components/C2DAnimationComponent.h"
+#include "GameFramework/Managers/CLightManager.h"
+#include "GameFramework/Components/CParticleGeneratorComponent.h"
+#include "GameFramework/Components/CSphereMeshComponent.h"
 
+#include "CSkyDome.h"
+#include "CAttachObject.h"
 #include "CMainGameLevel.h"
 #include "CTitle.h"
 
 void CTitle::Init()
 {
-	CDisplay2DActor& title = *new CDisplay2DActor(*this , "Assets/Textures/Decal/Title.png");
-	title.Transform.Scale = { static_cast<float>(CApplication::CLIENT_WIDTH),static_cast<float>(CApplication::CLIENT_HEIGHT),0.0f };
-	title.Transform.Location.x = static_cast<float>(CApplication::CLIENT_WIDTH / 2.0f);
-	title.Transform.Location.y = static_cast<float>(CApplication::CLIENT_HEIGHT / 2.0f);
+	//スカイドーム作成
+	CSkyDome& skyDome = *new CSkyDome(*this);
 
-	CDisplay2DActor& aurora = *new CDisplay2DActor(*this , "Assets/Textures/Anim/dora01.png");
-	aurora.Transform.Scale = { 500.0f,500.0f,0.0f };
-	aurora.Transform.Location.x = static_cast<float>(CApplication::CLIENT_WIDTH / 2.0f);
-	aurora.Transform.Location.y = static_cast<float>(CApplication::CLIENT_HEIGHT / 2.0f);
+	//カメラ作成
+	CCameraActor& camera = *new CCameraActor(*this);
 
-	auto updateVertex = [&]
+	//アクタージェネレーター作成
+	//new CActorGenerator(*this , [&] { return new CAttachObject(*this); } , { -40.0f,-20.0f,40.0f } , { 40.0f,20.0f,50.0f } , 5.0f);
+
+	//パーティクルアクター用の空アクター作成
+	mParticle = new CActor(*this);
+
+	//パーティクル作成時に行う振舞いの作成
+	auto createParticle = [&](CActor& actor)
 	{
-		aurora.GetDisplay2D().UpdateVertexBuffer();
+		CSphereMeshComponent& sphere = *new CSphereMeshComponent(actor , actor.Transform);
+		sphere.Transform.Scale = { 2.0f,2.0f,2.0f };
 	};
-	anim = new C2DAnimationComponent(aurora , 3 , 4);
-	anim->AddAnimData(aurora.GetDisplay2D().GetUV(0) , aurora.GetDisplay2D().GetUV(1) , aurora.GetDisplay2D().GetUV(2) , aurora.GetDisplay2D().GetUV(3) , updateVertex , "Dragon");
-	anim->AddAnimInfo("mot1" , 0 , 2 , 0.5f , true);
-	anim->AddAnimInfo("mot2" , 3 , 5 , 0.5f , true);
-	anim->AddAnimInfo("mot3" , 6 , 8 , 0.5f , true);
-	anim->Play("mot1" , "Dragon");
 
+	//コーンパーティクル作成
+	new CParticleGeneratorComponent(*mParticle , createParticle , 20 , 2.0f , 30.0f , *new CParticleBaseGeneratorLine({ 0.0f,1.0f,0.0f }));
+	mParticle->Transform.Location.y = -25.0f;
+	mParticle->Transform.Location.z = 100.0f;
+
+	//ライト設定
+	CLightManager::GetInstance().SetDirectionLight({ 1.0f,1.0f,-1.0f });
+	CLightManager::GetInstance().SetAmbientLight({ 0.1f,0.1f,0.1f });
+
+	//カメラをレベルに設定
+	RequestSetCamera(*camera.mCamera);
+
+	//2Dディスプレイテクスチャアクターを作成
+	//CDisplay2DActor& title = *new CDisplay2DActor(*this , "Assets/Textures/Decal/AttachTitle.png");
+	//title.Transform.Scale = { 600.0f,300.0f,0.0f };
+	//title.Transform.Location.x = static_cast<float>(CApplication::CLIENT_WIDTH / 2.0f);
+	//title.Transform.Location.y = (200.0f);
+	//CDisplay2DActor& pressSpace = *new CDisplay2DActor(*this , "Assets/Textures/Decal/PressSpace.png");
+	//pressSpace.Transform.Scale = { 600.0f,300.0f,0.0f };
+	//pressSpace.Transform.Location.x = static_cast<float>(CApplication::CLIENT_WIDTH / 2.0f);
+	//pressSpace.Transform.Location.y = (500.0f);
+
+	//音情報作成
 	CSoundManager::GetInstance().CreateSoundInfo("Assets/Sounds/button_click.wav" , 0.2f , false , "CLICK");
 	CSoundManager::GetInstance().CreateSoundInfo("Assets/Sounds/title_bgm.wav" , 0.1f , true , "BGM");
 
+	//BGMを流す
 	CSoundManager::GetInstance().PlaySound("BGM");
 
+	//入力イベントの登録
 	CInputManager::GetInstance().AddEvent("TitleEnd" , EButtonOption::TRIGGER , *this , { {EButtonType::MOUSE,EMouseButtonType::L_BUTTON},{EButtonType::KEYBOARD,DIK_SPACE} } , std::bind(&CTitle::End , std::ref(*this)));
-	CInputManager::GetInstance().AddEvent("Test" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_2 } , std::bind(&CTitle::Test , std::ref(*this)));
-	CInputManager::GetInstance().AddEvent("Test2" , EButtonOption::TRIGGER , *this , { EButtonType::KEYBOARD,DIK_3 } , std::bind(&CTitle::Test2 , std::ref(*this)));
 }
 
-void CTitle::Test()
+void CTitle::Tick()
 {
-	anim->Play("mot2" , "Dragon");
-}
-
-void CTitle::Test2()
-{
-	anim->Stop("Dragon");
+	mParticle->Transform.Location.z++;
+	mParticle->Transform.Rotation.AddAngle({ 0.0f,0.0f,2.0f });
 }
 
 void CTitle::End()
 {
-	new CMainGameLevel(mOwnerInterface , true);
+	new CTitle(mOwnerInterface , true);
 	CSoundManager::GetInstance().PlaySound("CLICK");
 	CInputManager::GetInstance().DeleteEvent("TitleEnd");
 }
