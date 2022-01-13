@@ -1,8 +1,9 @@
 #include <random>
 
 #include "GameFramework/Components/CBoxMeshComponent.h"
-#include "GameFramework/Components/CAABBColliderComponent.h"
+#include "GameFramework/Components/CPlaneMeshComponent.h"
 #include "GameFramework/Components/CSphereMeshComponent.h"
+#include "GameFramework/Components/CAABBColliderComponent.h"
 #include "GameFramework/Components/CSphereColliderComponent.h"
 #include "GameFramework/Level/CLevel.h"
 #include "GameFramework/Managers/CSoundManager.h"
@@ -14,21 +15,30 @@ CAttachObject::CAttachObject(ILevel& partner):CActor(partner)
 	std::random_device rd;
 	std::mt19937 mt(rd());
 	std::uniform_real_distribution<float> colorGenerator(0.0f , 1.0f);
-	std::uniform_real_distribution<float> scaleGenerator(2.0f , 20.0f);
+	std::uniform_real_distribution<float> scaleGenerator(15.0f , 20.0f);
 
 	AddTag("AttachObject");
 
 	CColliderComponent* collider = nullptr;
 
-	int randomNum = mt() % 2;
+	//int randomNum = mt() % 2;
+	int randomNum = 0;
 
 	if(randomNum == 0)
 	{
-		CBoxMeshComponent& box = *new CBoxMeshComponent(*this , Transform , { colorGenerator(mt),colorGenerator(mt),colorGenerator(mt),0.99f });
+	/*	CBoxMeshComponent& box = *new CBoxMeshComponent(*this , Transform , { colorGenerator(mt),colorGenerator(mt),colorGenerator(mt),0.99f });
 		box.Transform.Scale = { scaleGenerator(mt),scaleGenerator(mt) ,scaleGenerator(mt) };
-		mMesh = &box;
+		mMesh = &box;*/
+		
+		CPlaneMeshComponent<>& plane = *new CPlaneMeshComponent<>(*this , Transform , { colorGenerator(mt),colorGenerator(mt),colorGenerator(mt),0.99f });
+		plane.Transform.Scale = { scaleGenerator(mt),scaleGenerator(mt) ,scaleGenerator(mt) };
+		mMesh = &plane;
 
-		collider = new CAABBColliderComponent(*this , box.Transform);
+		XMFLOAT4 color = mMesh->GetColor();
+		color.w = 0.5f;
+		mMesh->SetColor(color);
+
+		collider = new CAABBColliderComponent(*this , plane.Transform);
 	}
 	else if(randomNum == 1)
 	{

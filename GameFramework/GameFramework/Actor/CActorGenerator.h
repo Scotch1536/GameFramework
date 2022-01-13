@@ -9,63 +9,60 @@
 class CActorGenerator :public CActor
 {
 private:
-	std::function<CActor*()> mInstantiationEvent;
+	std::function<CActor*()> mInstantiationEvent;		//インスタンス化イベント
 
-	std::random_device mRandomSeed;
-	std::mt19937 mRandomEngine;
+	std::random_device mRandomSeed;			//乱数デバイス
+	std::mt19937 mRandomEngine;				//乱数アルゴリズム
+
+	//乱数生成器
 	std::uniform_real_distribution<float> mRandomGeneratorX;
 	std::uniform_real_distribution<float> mRandomGeneratorY;
 	std::uniform_real_distribution<float> mRandomGeneratorZ;
 
-	int mGenerationLimit;
-	int mGenerationCounter = 0;
+	int mGenerationLimit;				//生成限界値
+	int mGenerationCounter = 0;			//生成カウンター
 
-	float mGenerationGauge = 0.0f;
-	float mGenerationGaugePerFrame;
+	float mGenerationGauge = 0.0f;				//生成ゲージ
+	float mIncreasedValueOfGenerationGauge;		//生成ゲージの増加値（毎フレーム）
 
 public:
 	CActorGenerator(ILevel& partner , std::function<CActor*()> instantiationEvent , XMFLOAT3 minRange , XMFLOAT3 maxRange , float generationPerSecond , int generationLimit = 1000):CActor(partner) ,
 		mInstantiationEvent(instantiationEvent) ,
 		mRandomEngine(mRandomSeed()) , mRandomGeneratorX(minRange.x , maxRange.x) ,
 		mRandomGeneratorY(minRange.y , maxRange.y) , mRandomGeneratorZ(minRange.z , maxRange.z) ,
-		mGenerationLimit(generationLimit) , mGenerationGaugePerFrame(generationPerSecond / 60.0f)
+		mGenerationLimit(generationLimit) , mIncreasedValueOfGenerationGauge(generationPerSecond / 60.0f)
 	{}
 
 	void Tick()override
 	{
-		mGenerationGauge += mGenerationGaugePerFrame;
+		mGenerationGauge += mIncreasedValueOfGenerationGauge;
 		int numGeneration = mGenerationGauge / 1;
 
 		if(numGeneration >= 1)
 		{
 			mGenerationGauge -= numGeneration;
-			mGenerationCounter += numGeneration;
 
-			if(mGenerationLimit >= mGenerationCounter)
+			auto generationActor = [& , numGeneration]
 			{
-				auto generationActor = [& , numGeneration]
+				for(int i = 0; i < numGeneration; ++i)
 				{
-					for(int i = 0; i < numGeneration; ++i)
-					{
-						CActor* actor = mInstantiationEvent();
+					if(mGenerationLimit <= mGenerationCounter)break;
 
-						actor->Transform.Location.x = mRandomGeneratorX(mRandomEngine);
-						actor->Transform.Location.y = mRandomGeneratorY(mRandomEngine);
-						actor->Transform.Location.z = mRandomGeneratorZ(mRandomEngine);
-					}
-				};
-				mOwnerInterface.AddDoBeforeUpdateFunction(generationActor);
-			}
+					CActor* actor = mInstantiationEvent();
+
+					actor->Transform.Location.x = mRandomGeneratorX(mRandomEngine);
+					actor->Transform.Location.y = mRandomGeneratorY(mRandomEngine);
+					actor->Transform.Location.z = mRandomGeneratorZ(mRandomEngine);
+
+					mGenerationCounter++;
+				}
+			};
+			mOwnerInterface.AddDoBeforeUpdateFunction(generationActor);
 		}
 	}
 
 	const int& GetGenerationCounter()const
 	{
 		return mGenerationCounter;
-	}
-
-	void SetGenerationCounter(int count)
-	{
-		mGenerationCounter = count;
 	}
 };

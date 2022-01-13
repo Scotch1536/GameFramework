@@ -48,7 +48,6 @@ private:
 
 	std::function<void()> mLoadLevelFunction;			//ロードレベルの関数を格納しておく関数オブジェクト
 
-
 	//コピー＆ムーブ禁止
 	CGame(const CGame&) = delete;
 	CGame& operator=(const CGame&) = delete;
@@ -85,7 +84,7 @@ public:
 	//描画
 	void Render();
 
-	const CLevel& GetLevel()
+	CLevel& GetLevel()
 	{
 		return *mLevel;
 	}

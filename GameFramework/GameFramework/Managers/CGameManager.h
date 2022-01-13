@@ -52,6 +52,11 @@ public:
 		return mGame;
 	}
 
+	ILevel& GetLevelInterface()
+	{
+		return mGame.GetLevel();
+	}
+
 	const bool& GetIsPause()const
 	{
 		return mIsPause;

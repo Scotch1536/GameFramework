@@ -7,7 +7,7 @@
 #include "GameFramework/Components/CLightComponent.h"
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CSpringArmComponent.h"
-#include "GameFramework/Components/CParticleSystemComponent.h"
+#include "GameFramework/Components/CParticleGeneratorComponent.h"
 
 #include "GameFramework/Managers/CModelDataManager.h"
 #include "GameFramework/Managers/CInputManager.h"
@@ -130,12 +130,6 @@ void CFighter::Move()
 	Transform.Location.x += fv.x * (mSpeed*dt);
 	Transform.Location.y += fv.y * (mSpeed*dt);
 	Transform.Location.z += fv.z * (mSpeed*dt);
-}
-
-void CFighter::Particle(CParticleSystemComponent::Particle& key , CTransform& trans)
-{
-	CSphereMeshComponent& sphereMesh = *new CSphereMeshComponent(key , trans , { 1,1,1,1 });
-	sphereMesh.Transform.Scale = { 2.f,2.f,2.f };
 }
 
 void CFighter::Rot(int dire)

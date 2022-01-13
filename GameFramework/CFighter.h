@@ -1,7 +1,9 @@
 #pragma once
 #include <memory>
+
 #include "GameFramework/Actor/CActor.h"
-#include "GameFramework/Components/CParticleSystemComponent.h"
+#include "GameFramework/Components/CParticleGeneratorComponent.h"
+
 #include "CPointer.h"
 
 class CParticleSystemComponent;
@@ -27,7 +29,6 @@ public:
 	void Shot();
 	void ShotReset();
 	void Move();
-	void Particle(CParticleSystemComponent::Particle& key,CTransform& trans);
 	void Rot(int dire);
 	void SpeedChange(int type);
 

@@ -1,19 +1,21 @@
 #pragma once
 #include "GameFramework/Level/CLevel.h"
 #include "GameFramework/Components/C2DAnimationComponent.h"
+#include "GameFramework/Actor/CActor.h"
 
 #include "CTitle.h"
 
 class CTitle :public CLevel
 {
-	C2DAnimationComponent* anim;
 public:
+	CActor* mParticle;
+
 	using CLevel::CLevel;
 
-	void Test();
-	void Test2();
-
+	//ƒŒƒxƒ‹‚ÌI—¹ˆ—
 	void End();
+
+	void Tick()override;
 
 	void Init()override;
 };

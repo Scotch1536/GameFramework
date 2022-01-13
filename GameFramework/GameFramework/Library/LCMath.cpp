@@ -261,24 +261,24 @@ bool LCMath::CompareMatrix(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2
 	return true;
 }
 
-const XMFLOAT4& LCMath::CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis , const float& angle , XMFLOAT4& result)
+const XMFLOAT4& LCMath::CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis , const float& angleOfRadian , XMFLOAT4& result)
 {
 	XMVECTOR axisVec = XMLoadFloat3(&axis);
 
-	XMVECTOR resultVec = XMQuaternionRotationAxis(axisVec , angle);
+	XMVECTOR resultVec = XMQuaternionRotationAxis(axisVec , angleOfRadian);
 
 	XMStoreFloat4(&result , resultVec);
 
 	return result;
 }
 
-XMFLOAT4 LCMath::CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis , const float& angle)
+XMFLOAT4 LCMath::CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis , const float& angleOfRadian)
 {
 	XMFLOAT4 result;
 
 	XMVECTOR axisVec = XMLoadFloat3(&axis);
 
-	XMVECTOR resultVec = XMQuaternionRotationAxis(axisVec , angle);
+	XMVECTOR resultVec = XMQuaternionRotationAxis(axisVec , angleOfRadian);
 
 	XMStoreFloat4(&result , resultVec);
 
