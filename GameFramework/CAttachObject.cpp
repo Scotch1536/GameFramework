@@ -25,22 +25,19 @@ CAttachObject::CAttachObject(ILevel& partner):CActor(partner)
 
 	if(randomNum == 0)
 	{
-		CBoxMeshComponent& box = *new CBoxMeshComponent(*this , Transform , { colorGenerator(mt),colorGenerator(mt),colorGenerator(mt),0.99f });
+		CBoxMeshComponent& box = *new CBoxMeshComponent(*this , Transform , { colorGenerator(mt),colorGenerator(mt),colorGenerator(mt),1.0f });
 		box.Transform.Scale = { scaleGenerator(mt),scaleGenerator(mt) ,scaleGenerator(mt) };
 		mMesh = &box;
-	/*	XMFLOAT4 color = mMesh->GetColor();
-		color.w = 0.5f;
-		mMesh->SetColor(color);*/
 
-		collider = new CAABBColliderComponent(*this , box.Transform);
+		collider = new CAABBColliderComponent(*this , mMesh->Transform);
 	}
 	else if(randomNum == 1)
 	{
-		CSphereMeshComponent& sphere = *new CSphereMeshComponent(*this , Transform , { colorGenerator(mt),colorGenerator(mt),colorGenerator(mt),0.99f });
+		CSphereMeshComponent& sphere = *new CSphereMeshComponent(*this , Transform , { colorGenerator(mt),colorGenerator(mt),colorGenerator(mt),1.0f });
 		sphere.Transform.Scale = { scaleGenerator(mt),scaleGenerator(mt) ,scaleGenerator(mt) };
 		mMesh = &sphere;
 
-		collider = new CSphereColliderComponent(*this , sphere.Transform);
+		collider = new CSphereColliderComponent(*this , mMesh->Transform);
 	}
 
 	collider->SetIsUpdate(false);
