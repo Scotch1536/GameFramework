@@ -68,6 +68,8 @@ CParticleGeneratorComponent::CParticleGeneratorComponent(CActor& partner ,CTrans
 
 void CParticleGeneratorComponent::Update()
 {
+	if(!mShouldUpdate)return;
+
 	mGenerationGauge += mIncreasedValueOfGenerationGauge;		//ƒQ[ƒW‚É‘‰Á’l‚ğ‰ÁZ
 	int numGeneration = mGenerationGauge / 1;					//¶¬”‚ÌŒvZ
 

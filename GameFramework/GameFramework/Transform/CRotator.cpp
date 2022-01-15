@@ -54,13 +54,24 @@ void CRotator::SetAngle(const XMFLOAT3& angle)
 	mPartner.Update();
 }
 
-void CRotator::AddAngle(const XMFLOAT3& angle)
+void CRotator::AddAngleRelative(const XMFLOAT3& angle)
 {
 	XMFLOAT4 qua;
 
 	LCMath::TransformFromEulerAnglesToQuaternion(mPartner.GetRightVectorRelative() , mPartner.GetUpwardVectorRelative() ,
 		mPartner.GetForwardVectorRelative() , angle , qua);
-	LCMath::CalcQuaternionMultiply(qua , mQuaternion , mQuaternion);
+	LCMath::CalcQuaternionMultiply(mQuaternion , qua , mQuaternion);
+
+	mPartner.Update();
+}
+
+void CRotator::AddAngleWorld(const XMFLOAT3& angle)
+{
+	XMFLOAT4 qua;
+
+	LCMath::TransformFromEulerAnglesToQuaternion(mPartner.GetRightVectorWorld() , mPartner.GetUpwardVectorWorld() ,
+		mPartner.GetForwardVectorWorld() , angle , qua);
+	LCMath::CalcQuaternionMultiply(mQuaternion , qua , mQuaternion);
 
 	mPartner.Update();
 }
