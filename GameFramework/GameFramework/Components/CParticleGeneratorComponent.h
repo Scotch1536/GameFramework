@@ -5,6 +5,7 @@
 #include <functional>
 #include <DirectXMath.h>
 
+#include "../Actor/CActor.h"
 #include "../Transform/CTransform.h"
 
 #include "CComponent.h"
