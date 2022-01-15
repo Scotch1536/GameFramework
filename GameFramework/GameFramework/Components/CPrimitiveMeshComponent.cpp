@@ -122,7 +122,7 @@ void CPrimitiveMeshComponent<VertexType>::UpdateVertexBuffer()
 	HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get() , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &pData);
 	if(SUCCEEDED(hr))
 	{
-		memcpy_s(pData.pData , pData.RowPitch , mVertices.data() , sizeof(SVertex2D) * mVertices.size());
+		memcpy_s(pData.pData , pData.RowPitch , mVertices.data() , sizeof(VertexType) * mVertices.size());
 		CDirectXGraphics::GetInstance()->GetImmediateContext()->Unmap(mVertexBuffer.Get() , 0);
 	}
 }
