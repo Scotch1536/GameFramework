@@ -18,28 +18,24 @@ void CTitle::Init()
 	//スカイドーム作成
 	CSkyDome& skyDome = *new CSkyDome(*this);
 
-	//カメラ作成
-	CCameraActor& camera = *new CCameraActor(*this);
+	////カメラ作成
+	//CCameraActor& camera = *new CCameraActor(*this);
 
-	//アクタージェネレーター作成
-	new CActorGenerator(*this , [&] { return new CAttachObject(*this); } , { -40.0f,-20.0f,40.0f } , { 40.0f,20.0f,50.0f } , 5.0f);
+	////アクタージェネレーター作成
+	//new CActorGenerator(*this , [&] { return new CAttachObject(*this); } , { -40.0f,-20.0f,40.0f } , { 40.0f,20.0f,50.0f } , 5.0f);
 
 	//ライト設定
 	CLightManager::GetInstance().SetDirectionLight({ 1.0f,1.0f,-1.0f });
 	CLightManager::GetInstance().SetAmbientLight({ 0.1f,0.1f,0.1f });
 
 	//カメラをレベルに設定
-	RequestSetCamera(*camera.mCamera);
+	//RequestSetCamera(*camera.mCamera);
 
 	//2Dディスプレイテクスチャアクターを作成
-	CDisplay2DActor& title = *new CDisplay2DActor(*this , "Assets/Textures/Decal/AttachTitle.png");
-	title.Transform.Scale = { 600.0f,300.0f,0.0f };
+	CDisplay2DActor& title = *new CDisplay2DActor(*this , "Assets/Textures/Decal/Title.png");
+	title.Transform.Scale = { static_cast<float>(CApplication::CLIENT_WIDTH),static_cast<float>(CApplication::CLIENT_HEIGHT),0.0f };
 	title.Transform.Location.x = static_cast<float>(CApplication::CLIENT_WIDTH / 2.0f);
-	title.Transform.Location.y = (200.0f);
-	CDisplay2DActor& pressSpace = *new CDisplay2DActor(*this , "Assets/Textures/Decal/PressSpace.png");
-	pressSpace.Transform.Scale = { 600.0f,300.0f,0.0f };
-	pressSpace.Transform.Location.x = static_cast<float>(CApplication::CLIENT_WIDTH / 2.0f);
-	pressSpace.Transform.Location.y = (500.0f);
+	title.Transform.Location.y = static_cast<float>(CApplication::CLIENT_HEIGHT / 2.0f);
 
 	//音情報作成
 	CSoundManager::GetInstance().CreateSoundInfo("Assets/Sounds/button_click.wav" , 0.2f , false , "CLICK");

@@ -11,10 +11,10 @@
 CLightManager::CLightManager()
 {
 	//コンスタントバッファ作成
-	bool sts = CreateConstantBuffer(CDirectXGraphics::GetInstance()->GetDXDevice(), sizeof(SConstantBufferLight), mConstantBuffer.GetAddressOf());
-	if (!sts)
+	bool sts = CreateConstantBuffer(CDirectXGraphics::GetInstance()->GetDXDevice() , sizeof(SConstantBufferLight) , mConstantBuffer.GetAddressOf());
+	if(!sts)
 	{
-		MessageBox(NULL, "CreateBuffer(constant buffer Light) error", "Error", MB_OK);
+		MessageBox(NULL , "CreateBuffer(constant buffer Light) error" , "Error" , MB_OK);
 	}
 }
 
@@ -34,9 +34,9 @@ void CLightManager::AddLight(CLightComponent& light)
 
 void CLightManager::ReleaseLight(CLightComponent& light)
 {
-	for (auto itr = mLights.begin(); itr != mLights.end(); itr++)
+	for(auto itr = mLights.begin(); itr != mLights.end(); itr++)
 	{
-		if ((*itr) == &light)
+		if((*itr) == &light)
 		{
 			mLights.erase(itr);
 			mLights.shrink_to_fit();
@@ -50,19 +50,15 @@ void CLightManager::ReleaseLight(CLightComponent& light)
 
 void CLightManager::Update()
 {
-	const XMFLOAT3* cameraLocation = nullptr;
-	cameraLocation = CGameManager::GetInstance().GetCameraLocation();
+	XMFLOAT3 cameraLocation = CGameManager::GetInstance().GetCameraLocation();
 
-	if (cameraLocation != nullptr)
+	if(!LCMath::CompareFloat3(mEyePos , cameraLocation))
 	{
-		if (!LCMath::CompareFloat3(mEyePos, *cameraLocation))
-		{
-			mShouldUpdate = true;
-			mEyePos = *cameraLocation;
-		}
+		mShouldUpdate = true;
+		mEyePos = cameraLocation;
 	}
 
-	if (mShouldUpdate)
+	if(mShouldUpdate)
 	{
 		int countPL = 0;
 		int countSL = 0;
@@ -72,11 +68,11 @@ void CLightManager::Update()
 		mConstantBufferLightData.DirectionLightData = mDirectionLightData;
 		mConstantBufferLightData.AmbientLightData = mAmbientLightData;
 
-		for (auto& light : mLights)
+		for(auto& light : mLights)
 		{
-			if (light->GetType() == CLightComponent::EType::POINT)
+			if(light->GetType() == CLightComponent::EType::POINT)
 			{
-				if (countPL < LIGHT_NUM)
+				if(countPL < LIGHT_NUM)
 				{
 					CPointLightComponent& buf = dynamic_cast<CPointLightComponent&>(*light);
 					mConstantBufferLightData.PointLights[countPL].LightPos = buf.Transform.GetWorldLocation();
@@ -86,13 +82,13 @@ void CLightManager::Update()
 				else
 				{
 #ifdef _DEBUG
-					MessageBox(NULL, "ライトマネージャーに格納可能なポイントライトを超えています。", "Error", MB_OK);
+					MessageBox(NULL , "ライトマネージャーに格納可能なポイントライトを超えています。" , "Error" , MB_OK);
 #endif
 				}
 			}
-			else if (light->GetType() == CLightComponent::EType::SPOT)
+			else if(light->GetType() == CLightComponent::EType::SPOT)
 			{
-				if (countSL < LIGHT_NUM)
+				if(countSL < LIGHT_NUM)
 				{
 					CSpotLightComponent& buf = dynamic_cast<CSpotLightComponent&>(*light);
 					mConstantBufferLightData.SpotLights[countSL].LightPos = buf.Transform.GetWorldLocation();
@@ -104,17 +100,17 @@ void CLightManager::Update()
 				else
 				{
 #ifdef _DEBUG
-					MessageBox(NULL, "ライトマネージャーに格納可能なスポットライトを超えています。", "Error", MB_OK);
+					MessageBox(NULL , "ライトマネージャーに格納可能なスポットライトを超えています。" , "Error" , MB_OK);
 #endif
 				}
 			}
 		}
 
-		CDirectXGraphics::GetInstance()->GetImmediateContext()->UpdateSubresource(mConstantBuffer.Get(), 0, nullptr, &mConstantBufferLightData, 0, 0);
+		CDirectXGraphics::GetInstance()->GetImmediateContext()->UpdateSubresource(mConstantBuffer.Get() , 0 , nullptr , &mConstantBufferLightData , 0 , 0);
 	}
 
 	// コンスタントバッファ4をｂ4レジスタへセット（頂点シェーダー用）
-	CDirectXGraphics::GetInstance()->GetImmediateContext()->VSSetConstantBuffers(4, 1, mConstantBuffer.GetAddressOf());
+	CDirectXGraphics::GetInstance()->GetImmediateContext()->VSSetConstantBuffers(4 , 1 , mConstantBuffer.GetAddressOf());
 	// コンスタントバッファ4をｂ4レジスタへセット(ピクセルシェーダー用)
-	CDirectXGraphics::GetInstance()->GetImmediateContext()->PSSetConstantBuffers(4, 1, mConstantBuffer.GetAddressOf());
+	CDirectXGraphics::GetInstance()->GetImmediateContext()->PSSetConstantBuffers(4 , 1 , mConstantBuffer.GetAddressOf());
 }

@@ -21,24 +21,18 @@ CAttachObject::CAttachObject(ILevel& partner):CActor(partner)
 
 	CColliderComponent* collider = nullptr;
 
-	//int randomNum = mt() % 2;
-	int randomNum = 0;
+	int randomNum = mt() % 2;
 
 	if(randomNum == 0)
 	{
-	/*	CBoxMeshComponent& box = *new CBoxMeshComponent(*this , Transform , { colorGenerator(mt),colorGenerator(mt),colorGenerator(mt),0.99f });
+		CBoxMeshComponent& box = *new CBoxMeshComponent(*this , Transform , { colorGenerator(mt),colorGenerator(mt),colorGenerator(mt),0.99f });
 		box.Transform.Scale = { scaleGenerator(mt),scaleGenerator(mt) ,scaleGenerator(mt) };
-		mMesh = &box;*/
-		
-		CPlaneMeshComponent<>& plane = *new CPlaneMeshComponent<>(*this , Transform , { colorGenerator(mt),colorGenerator(mt),colorGenerator(mt),0.99f });
-		plane.Transform.Scale = { scaleGenerator(mt),scaleGenerator(mt) ,scaleGenerator(mt) };
-		mMesh = &plane;
-
-		XMFLOAT4 color = mMesh->GetColor();
+		mMesh = &box;
+	/*	XMFLOAT4 color = mMesh->GetColor();
 		color.w = 0.5f;
-		mMesh->SetColor(color);
+		mMesh->SetColor(color);*/
 
-		collider = new CAABBColliderComponent(*this , plane.Transform);
+		collider = new CAABBColliderComponent(*this , box.Transform);
 	}
 	else if(randomNum == 1)
 	{

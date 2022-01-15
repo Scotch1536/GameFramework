@@ -48,7 +48,8 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 		CSphereMeshComponent& sphere = *new CSphereMeshComponent(actor , actor.Transform , { 0.3f,0.3f,0.3f,0.8f });
 		sphere.Transform.Scale = { 4.0f,4.0f,4.0f };
 	};
-	CParticleGeneratorComponent& particle = *new CParticleGeneratorComponent(*this , Transform , particleBody , 10.0f , 1.0f , 30.0f , *new CParticleBaseGeneratorCone({ 0.0f,0.0f,-1.0f } , 60.0f));
+	CParticleGeneratorComponent& particle = *new CParticleGeneratorComponent(*this , Transform , particleBody , 1.0f , 1.0f , 30.0f ,
+		*new CParticleBaseGeneratorCone({ 0.0f,0.0f,-1.0f } , 60.0f),100000);
 	particle.Transform.Location.z = -5.0f;
 
 	CCameraComponent& camera = *new CCameraComponent(*this);

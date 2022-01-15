@@ -160,5 +160,5 @@ public:
 
 	const XMFLOAT4X4* GetRenderingCameraViewMatrix()const;
 
-	const XMFLOAT3* GetRenderingCameraLocation()const;
+	XMFLOAT3 GetRenderingCameraLocation()const;
 };

@@ -44,7 +44,7 @@ void CLevel::Update()
 		mDoBeforeUpdateFunction.clear();
 		mDoBeforeUpdateFunction.shrink_to_fit();
 	}
-	
+
 	//デストロイ関数を実行
 	if(mDestroyFunction.size() != 0)
 	{
@@ -286,11 +286,22 @@ const XMFLOAT4X4* CLevel::GetRenderingCameraViewMatrix()const
 	}
 }
 
-const XMFLOAT3* CLevel::GetRenderingCameraLocation()const
+XMFLOAT3 CLevel::GetRenderingCameraLocation()const
 {
+	XMFLOAT3 result;
+
 	if(mRenderingCamera == nullptr)
 	{
-		return nullptr;
+		result = { 0.0f,0.0f,0.0f };
 	}
-	else return &mRenderingCamera->GetEye();
+	else
+	{
+		XMFLOAT4X4 buf = mRenderingCamera->GetCameraTransMatrix();
+
+		result.x = buf._41;
+		result.y = buf._42;
+		result.z = buf._43;
+	}
+
+	return result;
 }

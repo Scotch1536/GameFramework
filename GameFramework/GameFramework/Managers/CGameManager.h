@@ -36,7 +36,7 @@ public:
 	const XMFLOAT4X4* GetCameraViewMatrix();
 
 	//使用中のカメラの位置を取得
-	const XMFLOAT3* GetCameraLocation();
+	XMFLOAT3 GetCameraLocation();
 
 	//使用中のカメラとの距離を計算（カメラがない場合0.0f）
 	float CalcDistanceToCamera(const XMFLOAT3& compareLocation);
