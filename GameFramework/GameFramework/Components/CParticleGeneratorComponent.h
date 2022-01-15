@@ -76,11 +76,17 @@ class CParticleGeneratorComponent :public CComponent
 
 	public:
 		CParticle(ILevel& partner , XMFLOAT3 velocity , float lifetime):CActor(partner) ,
-			mVelocity(velocity) , mLifetime(lifetime) {};
+			mVelocity(velocity) , mLifetime(lifetime)
+		{};
 
 		void Tick()override;
 
-		XMFLOAT3 SetVelocity(XMFLOAT3 velocity)
+		const XMFLOAT3& GetVelocity()const
+		{
+			return mVelocity;
+		}
+
+		void SetVelocity(XMFLOAT3 velocity)
 		{
 			mVelocity = velocity;
 		}
@@ -112,7 +118,7 @@ private:
 public:
 	CTransform Transform;		//トランスフォーム
 
-	CParticleGeneratorComponent(CActor& partner , std::function<void(CActor&)> particleBodyFunc ,
+	CParticleGeneratorComponent(CActor& partner , CTransform& parentTrans , std::function<void(CActor&)> particleBodyFunc ,
 		float lifetime , float particleSpeed , float generationPerSecond ,
 		CParticleBaseGenerator& directionGenerator , int generationLimit = 1000);
 

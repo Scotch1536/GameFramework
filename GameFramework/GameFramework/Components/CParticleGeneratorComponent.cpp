@@ -58,10 +58,10 @@ void CParticleGeneratorComponent::CParticle::Tick()
 	LCMath::CalcFloat3Addition(Transform.Location , mVelocity , Transform.Location);
 }
 
-CParticleGeneratorComponent::CParticleGeneratorComponent(CActor& partner , std::function<void(CActor&)> particleBodyFunc ,
+CParticleGeneratorComponent::CParticleGeneratorComponent(CActor& partner ,CTransform& parentTrans, std::function<void(CActor&)> particleBodyFunc ,
 	float lifetime , float particleSpeed , float generationPerSecond ,
 	CParticleBaseGenerator& directionGenerator , int generationLimit):CComponent(partner) ,
-	Transform(partner , partner.Transform) , mParticleBodyGenerateFunction(particleBodyFunc) ,
+	Transform(partner , parentTrans) , mParticleBodyGenerateFunction(particleBodyFunc) ,
 	mParticleLifetime(lifetime) , mParticleSpeed(particleSpeed) , mGenerationLimit(generationLimit) ,
 	mIncreasedValueOfGenerationGauge(generationPerSecond / 60.0f) , mParticleBaseGenerator(&directionGenerator)
 {}
@@ -82,10 +82,11 @@ void CParticleGeneratorComponent::Update()
 			{
 				if(mGenerationLimit <= mGenerationCounter)break;		//生成カウンターが生成限界値以上ならループを抜ける
 
-				GenerateParticle();
-				mParticleBodyGenerateFunction(*mParticleBuffer);
+				GenerateParticle();										//パーティクル生成
 
-				mGenerationCounter++;		//生成カウンター加算
+				mParticleBodyGenerateFunction(*mParticleBuffer);		//パーティクルボディ生成
+
+				mGenerationCounter++;									//生成カウンター加算
 			}
 		};
 
