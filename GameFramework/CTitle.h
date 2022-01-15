@@ -8,15 +8,10 @@
 class CTitle :public CLevel
 {
 public:
-	CActor* mParticle;
-	int mCounter;
-
 	using CLevel::CLevel;
 
 	//ƒŒƒxƒ‹‚ÌI—¹ˆ—
 	void End();
-
-	void Tick()override;
 
 	void Init()override;
 };

@@ -51,6 +51,8 @@ public:
 
 	void SetAngle(const XMFLOAT3& angle);
 
-	void AddAngle(const XMFLOAT3& angle);
+	void AddAngleRelative(const XMFLOAT3& angle);
+
+	void AddAngleWorld(const XMFLOAT3& angle);
 
 };

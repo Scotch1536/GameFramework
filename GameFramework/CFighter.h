@@ -16,6 +16,8 @@ private:
 
 	int mShotCnt = 0;
 
+	float mAngleX;
+	float mAngleY;
 	float mSpeed = 50.0f;
 	float mSpeedLimitMin , mSpeedLimitMax;
 

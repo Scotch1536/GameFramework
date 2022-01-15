@@ -43,6 +43,14 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 
 	//CLightComponent& light = *new CLightComponent(*this);
 
+	auto particleBody = [&](CActor& actor)
+	{
+		CSphereMeshComponent& sphere = *new CSphereMeshComponent(actor , actor.Transform , { 0.3f,0.3f,0.3f,0.8f });
+		sphere.Transform.Scale = { 4.0f,4.0f,4.0f };
+	};
+	CParticleGeneratorComponent& particle = *new CParticleGeneratorComponent(*this , Transform , particleBody , 10.0f , 1.0f , 30.0f , *new CParticleBaseGeneratorCone({ 0.0f,0.0f,-1.0f } , 60.0f));
+	particle.Transform.Location.z = -5.0f;
+
 	CCameraComponent& camera = *new CCameraComponent(*this);
 
 	XMFLOAT3 fv = Transform.GetForwardVectorWorld();
@@ -76,13 +84,13 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 
 	/*CParticleSystemComponent::Create(*this , owner , Transform , std::bind(&CFighter::Particle , std::ref(*this) , std::placeholders::_1 , std::placeholders::_2) ,
 		60 , 1 , 60 , 20 , forwardVec);*/
-	/*
-	★超重要★
-	ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
-	他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
-	*/
+		/*
+		★超重要★
+		ボタンの入力で呼びだしたいメソッドはこのようにインプットマネージャーに追加できる
+		他にも追加方法があるのでインプットマネージャーのヘッダーを確認することを推奨
+		*/
 
-	//CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
+		//CInputManager::GetInstance().AddEvent("Shot" , EButtonOption::PRESS , *this , { EButtonType::MOUSE,EMouseButtonType::L_BUTTON } , std::bind(&CFighter::Shot , std::ref(*this)));
 	CInputManager::GetInstance().AddEvent("Rot-Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_A } , std::bind(&CFighter::Rot , std::ref(*this) , 0));
 	CInputManager::GetInstance().AddEvent("Rot+Y" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_D } , std::bind(&CFighter::Rot , std::ref(*this) , 1));
 	CInputManager::GetInstance().AddEvent("Rot-X" , EButtonOption::PRESS , *this , { EButtonType::KEYBOARD,DIK_W } , std::bind(&CFighter::Rot , std::ref(*this) , 2));
@@ -134,10 +142,10 @@ void CFighter::Move()
 
 void CFighter::Rot(int dire)
 {
-	if(dire == 0)Transform.Rotation.AddAngle({ 0.0f,-1.0f,0.0f });
-	else if(dire == 1)Transform.Rotation.AddAngle({ 0.0f,1.0f,0.0f });
-	else if(dire == 2)Transform.Rotation.AddAngle({ -1.0f,0.0f,0.0f });
-	else if(dire == 3)Transform.Rotation.AddAngle({ 1.0f,0.0f,0.0f });
+	if(dire == 0)Transform.Rotation.AddAngleWorld({ 0.0f,-1.0f,0.0f });
+	else if(dire == 1)Transform.Rotation.AddAngleWorld({ 0.0f,1.0f,0.0f });
+	else if(dire == 2)Transform.Rotation.AddAngleWorld({ -1.0f,0.0f,0.0f });
+	else if(dire == 3)Transform.Rotation.AddAngleWorld({ 1.0f,0.0f,0.0f });
 }
 
 void CFighter::SpeedChange(int type)
@@ -156,6 +164,7 @@ void CFighter::Tick()
 {
 	Move();
 
+	//Transform.Rotation.SetAngle({ mAngleX,mAngleY,0.0f });
 	auto displayFighterInfo = [&]
 	{
 		ImGui::SetNextWindowPos(ImVec2(10 , CApplication::CLIENT_HEIGHT - 60) , ImGuiCond_Once);

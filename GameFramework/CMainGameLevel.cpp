@@ -1,5 +1,7 @@
 #include "GameFramework/Components/CStaticMeshComponent.h"
 #include "GameFramework/Components/CCameraComponent.h"
+#include "GameFramework/Components/CParticleGeneratorComponent.h"
+#include "GameFramework/Components/CSphereMeshComponent.h"
 #include "GameFramework/Actor/CActorGenerator.h"
 #include "GameFramework/Actor/CActor.h"
 #include "GameFramework/Actor/CFeedActor.h"

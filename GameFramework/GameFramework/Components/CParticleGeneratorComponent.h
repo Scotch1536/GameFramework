@@ -102,13 +102,15 @@ private:
 
 	XMFLOAT3 mBaseAxis;								//パーティクルシステムの基礎軸
 
-	int mGenerationLimit;							//生成限界値
+	int mGenerationLimit;							//生成限界値(総数)
 	int mGenerationCounter = 0;						//生成カウンター
 
 	float mParticleLifetime;						//パーティクルのライフタイム（秒）
 	float mGenerationGauge = 0.0f;					//生成ゲージ
 	float mIncreasedValueOfGenerationGauge;			//生成ゲージの増加値（毎フレーム）
 	float mParticleSpeed;							//パーティクルの速度（毎フレーム）
+
+	bool mShouldUpdate = true;						//更新すべきか
 
 	//更新
 	void Update()override;
@@ -122,5 +124,10 @@ public:
 	CParticleGeneratorComponent(CActor& partner , CTransform& parentTrans , std::function<void(CActor&)> particleBodyFunc ,
 		float lifetime , float particleSpeed , float generationPerSecond ,
 		CParticleBaseGenerator& directionGenerator , int generationLimit = 1000);
+
+	bool SetShouldUpdate(bool flg)
+	{
+		mShouldUpdate = flg;
+	}
 
 };
