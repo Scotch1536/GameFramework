@@ -20,9 +20,13 @@ CTransform::CTransform(IActor& partner , CTransform& parentTrans): CTransform(pa
 CTransform::~CTransform()
 {
 	if(mParentTransform != nullptr)mParentTransform->DetachTransform(*this);
-	for(auto& child : mChildTransform)
+
+	if(mChildTransform.size() != 0)
 	{
-		child->DetachTransform(*this);
+		for(auto& child : mChildTransform)
+		{
+			child->DetachTransform(*this);
+		}
 	}
 }
 
@@ -175,9 +179,12 @@ void CTransform::Update()
 		}
 	}
 
-	for(auto& child : mChildTransform)
+	if(mChildTransform.size() != 0)
 	{
-		child->Update();
+		for(auto& child : mChildTransform)
+		{
+			child->Update();
+		}
 	}
 }
 
