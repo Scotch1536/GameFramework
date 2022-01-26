@@ -4,6 +4,20 @@
 
 #include "CParticleGeneratorComponent.h"
 
+//!
+//! @file
+//! @brief パーティクル生成コンポーネント類のソースファイル
+//!
+
+SParticleBase CParticleBaseGeneratorLine::GenerateParticleBase()
+{
+	SParticleBase result;
+	result.Direction = mBaseAxis;
+	result.StartPoint = { 0.0f,0.0f,0.0f };
+
+	return result;
+}
+
 SParticleBase CParticleBaseGeneratorCone::GenerateParticleBase()
 {
 	SParticleBase result;
@@ -33,15 +47,6 @@ SParticleBase CParticleBaseGeneratorCone::GenerateParticleBase()
 	return result;
 }
 
-SParticleBase CParticleBaseGeneratorLine::GenerateParticleBase()
-{
-	SParticleBase result;
-	result.Direction = mBaseAxis;
-	result.StartPoint = { 0.0f,0.0f,0.0f };
-
-	return result;
-}
-
 void CParticleGeneratorComponent::CParticle::Tick()
 {
 	//ライフタイム更新
@@ -60,10 +65,10 @@ void CParticleGeneratorComponent::CParticle::Tick()
 
 CParticleGeneratorComponent::CParticleGeneratorComponent(CActor& partner ,CTransform& parentTrans, std::function<void(CActor&)> particleBodyFunc ,
 	float lifetime , float particleSpeed , float generationPerSecond ,
-	CParticleBaseGenerator& directionGenerator , int generationLimit):CComponent(partner) ,
+	CParticleBaseGenerator& particleBaseGenerator , int generationLimit):CComponent(partner) ,
 	Transform(partner , parentTrans) , mParticleBodyGenerateFunction(particleBodyFunc) ,
 	mParticleLifetime(lifetime) , mParticleSpeed(particleSpeed) , mGenerationLimit(generationLimit) ,
-	mIncreasedValueOfGenerationGauge(generationPerSecond / 60.0f) , mParticleBaseGenerator(&directionGenerator)
+	mIncreasedValueOfGenerationGauge(generationPerSecond / 60.0f) , mParticleBaseGenerator(&particleBaseGenerator)
 {}
 
 void CParticleGeneratorComponent::Update()

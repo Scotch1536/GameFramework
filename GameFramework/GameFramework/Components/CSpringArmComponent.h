@@ -2,43 +2,59 @@
 #include <memory>
 #include "CComponent.h"
 
+//!
+//! @file
+//! @brief スプリングアームコンポーネントのヘッダーファイル
+//!
+
 class CTransform;
 class CCameraComponent;
 
-enum class ESyncMode
+//! @brief 接続モード列挙型
+enum class ELinkMode
 {
-	ALL_SYNC ,
-	LOCATION_ONLY_SYNC ,
+	ALL_LINK ,				//!< すべてのトランスフォームを接続
+	LOCATION_ONLY_LINK ,	//!< ロケーション情報のみ接続
 };
 
+//!< @brief スプリングアームコンポーネントクラス
 class CSpringArmComponent :public CComponent
 {
 private:
-	ESyncMode mSyncMode = ESyncMode::ALL_SYNC;		//カメラの動き方
+	ELinkMode mSyncMode = ELinkMode::ALL_LINK;		//!< 接続モード
 
-	const CTransform& mParentTransform;				//親トランスフォーム
-	CCameraComponent& mUseCamera;					//使うカメラ
+	const CTransform& mTargetTransform;				//!< ターゲットのトランスフォーム
+	CCameraComponent& mPartnerCamera;				//!< パートナーカメラ
 
-	std::unique_ptr<XMFLOAT4X4> mIdealMatrix;		//結果のワールド行列
+	std::unique_ptr<XMFLOAT4X4> mIdealMatrix;		//!< 理想の行列
 
-	float mLerpTime = 0.0f;
-	float mAlpha = 0.0f;
-	float mIncrementAlpha = 0.0f;
+	float mLerpTime = 0.0f;							//!< 線形補間のアルファ値が0～1までにかかる秒数
+	float mAlpha = 0.0f;							//!< アルファ値
+	float mIncrementAlpha = 0.0f;					//!< アルファ値の増加量
 
-	//線形補間のアルファ増加値を計算してセット
-	void IncreaseAlpha();
-
+	//! @brief 更新
 	void Update()override;
 
-public:
-	CSpringArmComponent(CActor& owner , const CTransform& parentTrans , CCameraComponent& useCamera , ESyncMode syncMode = ESyncMode::ALL_SYNC , int priority = 10);
+	//! @brief アルファ値の増加
+	void IncreaseAlpha();
 
-	const ESyncMode& GetSyncMode()
+public:
+	//!
+	//! @brief コンストラクタ
+	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] targetTrans ターゲットのトランスフォーム
+	//! @param[in] partnerCamera パートナーとなるカメラ
+	//! @param[in] linkMode 接続モードカメラ
+	//! @param[in] priority 優先度
+	//!
+	CSpringArmComponent(CActor& owner , const CTransform& targetTrans , CCameraComponent& partnerCamera , ELinkMode linkMode = ELinkMode::ALL_LINK , int priority = 10);
+
+	const ELinkMode& GetLinkMode()
 	{
 		return mSyncMode;
 	}
 
-	void SetSyncMode(ESyncMode mode)
+	void SetLinkMode(ELinkMode mode)
 	{
 		mSyncMode = mode;
 	}
@@ -46,6 +62,8 @@ public:
 	void SetLerpTime(float time)
 	{
 		mLerpTime = time;
+
+		//アルファ値の増加量の計算
 		mIncrementAlpha = 1.0f / (60.0f * mLerpTime);
 	}
 

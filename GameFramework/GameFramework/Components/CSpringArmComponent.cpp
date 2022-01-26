@@ -5,21 +5,26 @@
 #include "CCameraComponent.h"
 #include "CSpringArmComponent.h"
 
-CSpringArmComponent::CSpringArmComponent(CActor& owner , const CTransform& parentTrans , CCameraComponent& useCamera , ESyncMode syncMode , int priority)
+//!
+//! @file
+//! @brief スプリングアームコンポーネントのソースファイル
+//!
+
+CSpringArmComponent::CSpringArmComponent(CActor& owner , const CTransform& targetTrans , CCameraComponent& partnerCamera , ELinkMode linkMode , int priority)
 	:CComponent(owner , priority) ,
-	mSyncMode(syncMode) ,
-	mParentTransform(parentTrans) ,
-	mUseCamera(useCamera)
+	mSyncMode(linkMode) ,
+	mTargetTransform(targetTrans) ,
+	mPartnerCamera(partnerCamera)
 {
-	//カメラコンポーネントにスプリングアームを繋げたことを通知
-	mUseCamera.JoinSpringArm(*this);
+	//カメラコンポーネントにスプリングアームを繋げる
+	mPartnerCamera.JoinSpringArm(*this);
 }
 
 void CSpringArmComponent::IncreaseAlpha()
 {
 	mAlpha += mIncrementAlpha;
 
-	if(mAlpha >= 1.0f)
+	if(mAlpha > 1.0f)
 	{
 		mAlpha = 1.0f;
 	}
@@ -29,41 +34,48 @@ void CSpringArmComponent::Update()
 {
 	XMFLOAT4X4 idealMatrix;
 
-	if(mSyncMode == ESyncMode::ALL_SYNC)
+	if(mSyncMode == ELinkMode::ALL_LINK)
 	{
-		LCMath::CalcMatrixMultply(mUseCamera.GetCameraTransMatrixBase() , mParentTransform.GetWorldMatrixResult() , idealMatrix);
+		//パートナーカメラのカメラ座標変換行列のベースにターゲットのワールド変換行列を乗算することで親子関係を実現しその結果を理想の行列とする
+		LCMath::CalcMatrixMultply(mPartnerCamera.GetCameraTransMatrixBase() , mTargetTransform.GetWorldMatrixResult() , idealMatrix);
 	}
-	else if(mSyncMode == ESyncMode::LOCATION_ONLY_SYNC)
+	else if(mSyncMode == ELinkMode::LOCATION_ONLY_LINK)
 	{
-		idealMatrix = mUseCamera.GetCameraTransMatrixBase();
-		idealMatrix._41 += mParentTransform.Location.x;
-		idealMatrix._42 += mParentTransform.Location.y;
-		idealMatrix._43 += mParentTransform.Location.z;
+		//パートナーカメラのカメラ座標変換行列のベースにターゲットのロケーションのみ加算する
+		idealMatrix = mPartnerCamera.GetCameraTransMatrixBase();
+		idealMatrix._41 += mTargetTransform.Location.x;
+		idealMatrix._42 += mTargetTransform.Location.y;
+		idealMatrix._43 += mTargetTransform.Location.z;
 	}
 
+	//理想の行列があるなら
 	if(mIdealMatrix != nullptr)
 	{
+		//前回の理想の行列と今回の理想の行列が違うかつアルファ値がゼロ以外なら
 		if(!LCMath::CompareMatrix(*mIdealMatrix , idealMatrix) && mAlpha != 0.0f)
 		{
+			//理想の行列の入れ替え
 			mIdealMatrix.reset(new XMFLOAT4X4(idealMatrix));
 
 			mAlpha = 0.0f;
-
-			mUseCamera.SetCameraTransMatrix(LCMath::Lerp(mUseCamera.GetCameraTransMatrix() , *mIdealMatrix , mAlpha));
 
 			return;
 		}
 	}
 	else
 	{
+		//理想の行列を設定
 		mIdealMatrix.reset(new XMFLOAT4X4(idealMatrix));
 
-		mUseCamera.SetCameraTransMatrix(LCMath::Lerp(mUseCamera.GetCameraTransMatrix() , *mIdealMatrix , 1.0f));
+		//理想の行列を新しいカメラ座標変換行列としてセットする
+		mPartnerCamera.SetCameraTransMatrix(*mIdealMatrix);
 
 		return;
 	}
 
+	//アルファ値の増加
 	IncreaseAlpha();
 
-	mUseCamera.SetCameraTransMatrix(LCMath::Lerp(mUseCamera.GetCameraTransMatrix() , *mIdealMatrix , mAlpha));
+	//現在のパートナーカメラのカメラ座標変換行列と理想の行列を線形補間しその結果を新しいカメラ座標変換行列としてセットする
+	mPartnerCamera.SetCameraTransMatrix(LCMath::Lerp(mPartnerCamera.GetCameraTransMatrix() , *mIdealMatrix , mAlpha));
 }

@@ -4,12 +4,18 @@
 #include "CRenderComponent.h"
 #include "CDisplay2DComponent.h"
 
+//!
+//! @file
+//! @brief ディスプレイ2Dコンポーネントのソースファイル
+//!
+
 CDisplay2DComponent::CDisplay2DComponent(CActor& owner , CTransform& parentTrans , std::string texturePath , const XMFLOAT4& color ,
 	std::string vertexShaderPath , std::string pixelShaderPath)
 	:CPlaneMeshComponent(owner , parentTrans , color , vertexShaderPath , pixelShaderPath , false)
 {
 	mTextureSRV = CDirectXResourceManager::GetInstance().GetTextureSRV(texturePath);
 
+	//初期化
 	Init(vertexShaderPath , pixelShaderPath);
 }
 
@@ -17,6 +23,7 @@ CDisplay2DComponent::CDisplay2DComponent(CActor& owner , CTransform& parentTrans
 	std::string vertexShaderPath , std::string pixelShaderPath)
 	:CPlaneMeshComponent(owner , parentTrans , color , vertexShaderPath , pixelShaderPath , false)
 {
+	//初期化
 	Init(vertexShaderPath , pixelShaderPath);
 }
 
@@ -32,13 +39,13 @@ void CDisplay2DComponent::Init(std::string vertexShaderPath , std::string pixelS
 
 	unsigned int numElements = ARRAYSIZE(layout);
 
-	mRenderComponent.GenerateVertexShader(layout , numElements , vertexShaderPath);
+	mRenderComponent.GenerateVertexShader(layout , numElements , vertexShaderPath);		//頂点シェーダ生成
+	mRenderComponent.GeneratePixelShader(pixelShaderPath);								//ピクセルシェーダ生成
 
-	mRenderComponent.GeneratePixelShader(pixelShaderPath);
+	CreateVertexData();		//頂点データ作成
+	CreateIndexData();		//インデックスデータ作成
 
-	CreateVertexData();
-	CreateIndexData();
-
+	//頂点&インデックスバッファの生成
 	GenerateVertexAndIndexBuffer();
 }
 
@@ -49,13 +56,16 @@ XMFLOAT2* CDisplay2DComponent::GetUV(int index)
 
 void CDisplay2DComponent::Update()
 {
-	if(!this->mIsTranslucent)this->mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY2D });
-	else this->mOwnerInterface.AddRenderOrder({ *this,ERenderOption::TRANSLUCENT2D });
+	//半透明じゃなければ
+	if(!this->mIsTranslucent)this->mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY2D });		//描画命令追加
+	else this->mOwnerInterface.AddRenderOrder({ *this,ERenderOption::TRANSLUCENT2D });						//描画命令追加
 }
 
 void CDisplay2DComponent::Render()
 {
+	//GPUへの行列のセットをリクエスト
 	this->Transform.RequestSetMatrix();
 
+	//描画
 	this->mRenderComponent.Render(sizeof(SVertex2D) , this->mIndices.size() , mTextureSRV , this->mVertexBuffer.Get() , this->mIndexBuffer.Get() , nullptr);
 }

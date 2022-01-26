@@ -64,13 +64,16 @@ void CTransform::DetachTransform(CTransform& detachTarget)
 		mParentTransform = nullptr;
 		mIsChild = false;
 	}
-	for(auto itr = mChildTransform.begin(); itr != mChildTransform.end(); ++itr)
+	if(mChildTransform.size() != 0)
 	{
-		if((*itr) == &detachTarget)
+		for(auto itr = mChildTransform.begin(); itr != mChildTransform.end(); ++itr)
 		{
-			mChildTransform.erase(itr);
-			mChildTransform.shrink_to_fit();
-			break;
+			if((*itr) == &detachTarget)
+			{
+				mChildTransform.erase(itr);
+				mChildTransform.shrink_to_fit();
+				break;
+			}
 		}
 	}
 }
