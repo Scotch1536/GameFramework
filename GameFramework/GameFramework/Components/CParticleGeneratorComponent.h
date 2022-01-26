@@ -163,7 +163,7 @@ public:
 		float lifetime , float particleSpeed , float generationPerSecond ,
 		CParticleBaseGenerator& particleBaseGenerator , int generationLimit = 1000);
 
-	bool SetShouldUpdate(bool flg)
+	void SetShouldUpdate(bool flg)
 	{
 		mShouldUpdate = flg;
 	}

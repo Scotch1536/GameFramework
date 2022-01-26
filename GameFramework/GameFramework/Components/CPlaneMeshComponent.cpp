@@ -26,7 +26,7 @@ void CPlaneMeshComponent<SVertexColor>::CreateVertexData()
 
 	for(auto& vertex : mVertices)
 	{
-		//法線の計算
+		//法線の算出
 		XMFLOAT3 vec , normal;
 		LCMath::CalcFloat3FromStartToGoal({ 0.0f,0.0f,0.0f } , vertex.Pos , vec);
 		LCMath::CalcFloat3Normalize(vec , normal);
@@ -53,7 +53,7 @@ void CPlaneMeshComponent<SVertexUV>::CreateVertexData()
 
 	for(auto& vertex : mVertices)
 	{
-		//法線の計算
+		//法線の算出
 		XMFLOAT3 vec , normal;
 		LCMath::CalcFloat3FromStartToGoal({ 0.0f,0.0f,0.0f } , vertex.Pos , vec);
 		LCMath::CalcFloat3Normalize(vec , normal);

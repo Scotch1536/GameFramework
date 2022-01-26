@@ -38,7 +38,7 @@ public:
 	//使用中のカメラの位置を取得
 	XMFLOAT3 GetCameraLocation();
 
-	//使用中のカメラとの距離を計算（カメラがない場合0.0f）
+	//使用中のカメラとの距離を算出（カメラがない場合0.0f）
 	float CalcDistanceToCamera(const XMFLOAT3& compareLocation);
 
 	//ゲームクラスの取得（アプリケーションクラスの参照が必要）

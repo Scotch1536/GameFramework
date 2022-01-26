@@ -43,7 +43,7 @@ bool LCCollision::IsCollide(const XMFLOAT3& ACenter, const float& ARadius, const
 
 bool LCCollision::IsCollide(const XMFLOAT3& AMin, const XMFLOAT3& AMax, const XMFLOAT3& BCenter, const float& BRadius)
 {
-	//²‚Ì·‚ğŒvZ
+	//²‚Ì·‚ğZo
 	float dx = (std::max)(AMin.x - BCenter.x, 0.0f);
 	dx = (std::max)(dx, BCenter.x - AMax.x);
 	float dy = (std::max)(AMin.y - BCenter.y, 0.0f);

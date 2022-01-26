@@ -15,14 +15,14 @@
 CAABBColliderComponent::CAABBColliderComponent(CActor& owner, const CModelData& model, CTransform& parentTrans, bool isMesh, int priority)
 	:CColliderComponent(owner, parentTrans, CColliderComponent::EType::AABB, priority)
 {
-	//メッシュの最小最大値を計算
+	//メッシュの最小最大値を算出
 	CalcMinMaxOfMeshes(model.GetMeshes(), mLocalMin, mLocalMax);
 
 #ifndef _DEBUG
 	isMesh = false;
 #endif
 
-	//フラグがtrueならボックスメッシュを作成
+	//ボックスメッシュ作成
 	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , { 1.0f,1.0f,1.0f,0.3f } , mLocalMin , mLocalMax);
     
 	//トランスフォームの行列更新時関数に自身のメソッドを追加
@@ -37,7 +37,7 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner, CTransform& parent
 	isMesh = false;
 #endif
 
-	//フラグがtrueならボックスメッシュを作成
+	//ボックスメッシュ作成
 	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , { 1.0f,1.0f,1.0f,0.3f } , mLocalMin , mLocalMax);
 
 	//トランスフォームの行列更新時関数に自身のメソッドを追加
@@ -70,7 +70,7 @@ void CAABBColliderComponent::ConvertWorldCollider()
 			LCMath::CalcFloat3MultplyMatrix(v, worldMtx, v);
 		}
 
-		//最小最大値を計算
+		//最小最大値を算出
 		LCMath::CalcFloat3MinMax(vertices, mWorldMin, mWorldMax);
 	}
 }

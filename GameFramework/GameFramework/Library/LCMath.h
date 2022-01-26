@@ -56,7 +56,7 @@ public:
 	static const XMFLOAT4& CalcQuaternionMultiply(const XMFLOAT4& qua1, const XMFLOAT4& qua2, XMFLOAT4& resultQua);
 	static XMFLOAT4 CalcQuaternionMultiply(const XMFLOAT4& qua1, const XMFLOAT4& qua2);
 
-	//クオータニオンから行列を計算
+	//クオータニオンから行列を算出
 	static const XMFLOAT4X4& CalcMatrixFromQuaternion(const XMFLOAT4& target ,XMFLOAT4X4& resultMTX);
 	static XMFLOAT4X4 CalcMatrixFromQuaternion(const XMFLOAT4& target);
 

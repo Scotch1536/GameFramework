@@ -6,6 +6,11 @@
 
 #include "CRenderComponent.h"
 
+//!
+//! @file
+//! @brief レンダーコンポーネントのソースファイル
+//!
+
 CRenderComponent::CRenderComponent(CActor& owner , int priority):CComponent(owner , priority)
 {}
 
@@ -27,35 +32,41 @@ void CRenderComponent::Render(unsigned int stride ,
 	ID3D11ShaderResourceView* shaderResourceView ,
 	ID3D11Buffer* vertexBuffer ,
 	ID3D11Buffer* indexBuffer ,
-	ID3D11Buffer* cBMaterial)
+	ID3D11Buffer* materialCB)
 {
-	ID3D11DeviceContext*	devcontext;			// デバイスコンテキスト
-
 	unsigned int offset = 0;
 
-	devcontext = CDirectXGraphics::GetInstance()->GetImmediateContext();
-	// 頂点フォーマットをセット
+	ID3D11DeviceContext* devcontext = CDirectXGraphics::GetInstance()->GetImmediateContext();
+
+	//頂点フォーマットをセット
 	devcontext->IASetInputLayout(mVertexLayout);
-	// 頂点シェーダーをセット
+
+	//頂点シェーダーをセット
 	devcontext->VSSetShader(mVertexShader , nullptr , 0);
-	// ピクセルシェーダーをセット
+
+	//ピクセルシェーダーをセット
 	devcontext->PSSetShader(mPixelShader , nullptr , 0);
-	// 頂点バッファをセット
+
+	//頂点バッファをセット
 	devcontext->IASetVertexBuffers(0 , 1 , &vertexBuffer , &stride , &offset);
-	// インデックスバッファをセット
+
+	//インデックスバッファをセット
 	devcontext->IASetIndexBuffer(indexBuffer , DXGI_FORMAT_R32_UINT , 0);
-	// トポロジーをセット
+
+	//トポロジーをセット
 	devcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	// SRVをセット
+	//SRVが存在していれば
 	if(shaderResourceView != nullptr)
 	{
+		//SRVをセット
 		devcontext->PSSetShaderResources(0 , 1 , &shaderResourceView);
 	}
 	else
 	{
 		ID3D11ShaderResourceView* white = nullptr;
 
+		//引数のパスがカレントディレクトリから存在するか
 		if(std::filesystem::exists("Assets/Textures/White/white.bmp"))
 		{
 			white = CDirectXResourceManager::GetInstance().GetTextureSRV("Assets/Textures/White/white.bmp");
@@ -69,16 +80,17 @@ void CRenderComponent::Render(unsigned int stride ,
 			MessageBox(nullptr , "Not Found White Texture" , "error" , MB_OK);
 		}
 
+		//SRVをセット
 		devcontext->PSSetShaderResources(0 , 1 , &white);
 	}
 
-	if(cBMaterial != nullptr)
+	if(materialCB != nullptr)
 	{
-		// マテリアルをVSへセット
-		devcontext->VSSetConstantBuffers(3 , 1 , &cBMaterial);
-		devcontext->PSSetConstantBuffers(3 , 1 , &cBMaterial);
+		//マテリアル定数バッファをセット
+		devcontext->VSSetConstantBuffers(3 , 1 , &materialCB);
+		devcontext->PSSetConstantBuffers(3 , 1 , &materialCB);
 	}
 
-	// インデックスバッファを利用して描画
+	//インデックスバッファを利用して描画
 	devcontext->DrawIndexed(indexSize , 0 , 0);
 }
