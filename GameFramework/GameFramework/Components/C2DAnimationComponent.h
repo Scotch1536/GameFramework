@@ -45,7 +45,7 @@ private:
 
 	std::unordered_map<std::string , std::pair<float , bool>> mAnimInfo;		//!< アニメ情報（コマの範囲、１ループにかかる秒数、ループするかどうか）
 
-	//! 更新
+	//! @brief 更新
 	void Update()override;
 
 public:
@@ -147,6 +147,47 @@ public:
 	}
 
 	//!
+	//! @brief アニメーションが再生されているかのチェック
+	//! @param[in] index アニメデータが格納されている配列のインデックス
+	//!
+	bool CheckIsPlay(int index)
+	{
+		//インデックスが範囲内に収まっているか
+		if(index >= 0 && index < mAnimData.size())
+		{
+			return mAnimData.at(index).IsPlay;
+		}
+		else
+		{
+			MessageBox(NULL , "アニメデータが見つかりませんでした" , "Error" , MB_OK);
+			return false;
+		}
+	}	
+	
+	//!
+	//! @brief アニメーションが再生されているかのチェック
+	//! @details アニメデータのエイリアスからチェックしたい際に利用する
+	//! @param[in] animDataAlias アニメデータのエイリアス
+	//!
+	bool CheckIsPlay(std::string animDataAlias)
+	{
+		int index = 0;
+
+		for(auto& indexAlias : mAnimDataAlias)
+		{
+			//一致するか
+			if(indexAlias == animDataAlias)
+			{
+				return CheckIsPlay(index);		//プレイしているかのチェック
+			}
+			else index++;
+		}
+
+		MessageBox(NULL , "登録済みのアニメデータのエイリアスが見つかりませんでした" , "Error" , MB_OK);
+		return false;
+	}
+
+	//!
 	//! @brief アニメ情報の削除
 	//! @param[in] animName アニメーションの名前
 	//!
@@ -183,10 +224,10 @@ public:
 
 			int index = mAnimData[animDataIndex].AnimStartIndex + mAnimData[animDataIndex].AnimCounter;
 
-			*mAnimData[animDataIndex].ChangeTargetUV1 = mUVDivisionData.at(index).at(0);
-			*mAnimData[animDataIndex].ChangeTargetUV2 = mUVDivisionData.at(index).at(1);
-			*mAnimData[animDataIndex].ChangeTargetUV3 = mUVDivisionData.at(index).at(2);
-			*mAnimData[animDataIndex].ChangeTargetUV4 = mUVDivisionData.at(index).at(3);
+			*mAnimData[animDataIndex].ChangeTargetUV1 = mUVData.at(index).at(0);
+			*mAnimData[animDataIndex].ChangeTargetUV2 = mUVData.at(index).at(1);
+			*mAnimData[animDataIndex].ChangeTargetUV3 = mUVData.at(index).at(2);
+			*mAnimData[animDataIndex].ChangeTargetUV4 = mUVData.at(index).at(3);
 
 			//UV更新時実行関数の呼び出し
 			if(mAnimData[animDataIndex].FunctionWhenChangingUV != nullptr)mAnimData[animDataIndex].FunctionWhenChangingUV();

@@ -24,7 +24,7 @@ private:
 	ComPtr<ID3D11Buffer> mVertexBuffer;				//!< 頂点バッファ
 	ComPtr<ID3D11PixelShader> mPixelShader;			//!< ピクセルシェーダー
 	ComPtr<ID3D11VertexShader> mVertexShader;		//!< 頂点シェーダー
-	ComPtr<ID3D11InputLayout> mVertexLayout;		//!< 頂点フォーマット定義
+	ComPtr<ID3D11InputLayout> mVertexLayout;		//!< 頂点フォーマット
 
 	std::array<SVertexLine , 2> mVertices;		//!< 頂点
 

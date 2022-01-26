@@ -44,7 +44,7 @@ void C2DAnimationComponent::Update()
 		//タイムカウンターにデルタタイムを加算
 		anim.TimeCounter += CGameManager::GetInstance().GetDeltaTime();
 
-		//変更するコマ数を計算
+		//変更するコマ数を算出
 		int changeNum = anim.TimeCounter / anim.AnimFrameTime;
 
 		if(changeNum >= 1)
@@ -67,14 +67,14 @@ void C2DAnimationComponent::Update()
 				}
 			}
 
-			//インデックスの計算
+			//インデックスの算出
 			int index = anim.AnimStartIndex + anim.AnimCounter;
 
 			//UVの変更
-			*anim.ChangeTargetUV1 = mUVDivisionData.at(index).at(0);
-			*anim.ChangeTargetUV2 = mUVDivisionData.at(index).at(1);
-			*anim.ChangeTargetUV3 = mUVDivisionData.at(index).at(2);
-			*anim.ChangeTargetUV4 = mUVDivisionData.at(index).at(3);
+			*anim.ChangeTargetUV1 = mUVData.at(index).at(0);
+			*anim.ChangeTargetUV2 = mUVData.at(index).at(1);
+			*anim.ChangeTargetUV3 = mUVData.at(index).at(2);
+			*anim.ChangeTargetUV4 = mUVData.at(index).at(3);
 
 			//UV変更時実行関数の呼び出し
 			if(anim.FunctionWhenChangingUV != nullptr)anim.FunctionWhenChangingUV();

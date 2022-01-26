@@ -34,7 +34,7 @@ void CBoxMeshComponent::CreateVertexData()
 	{
 		XMFLOAT3 vec , normal;
 
-		//法線の計算
+		//法線の算出
 		LCMath::CalcFloat3FromStartToGoal({ 0.0f,0.0f,0.0f } , vertex.Pos , vec);
 		LCMath::CalcFloat3Normalize(vec , normal);
 

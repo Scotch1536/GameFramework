@@ -82,13 +82,13 @@ void CRotator::ChangeQuaternionToLocation(XMFLOAT3 location)
 	XMFLOAT3 vec , axis;
 	float angle;
 
-	//向きたい位置へのベクトルを計算
+	//向きたい位置へのベクトルを算出
 	LCMath::CalcFloat3FromStartToGoal(mPartner.Location , location , vec);
 
 	//向きベクトルにするために正規化
 	LCMath::CalcFloat3Normalize(vec , vec);
 
-	//クォータニオンに必要な角度を計算
+	//クォータニオンに必要な角度を算出
 	LCMath::CalcFloat3Dot(mPartner.GetForwardVectorWorld() , vec , angle);
 
 	/*
@@ -101,7 +101,7 @@ void CRotator::ChangeQuaternionToLocation(XMFLOAT3 location)
 	//角度を求める
 	angle = std::acosf(angle);
 
-	//クォータニオンに必要な軸を計算
+	//クォータニオンに必要な軸を算出
 	LCMath::CalcFloat3Cross(mPartner.GetForwardVectorWorld() , vec , axis);
 
 	//軸が全て0なら軸を自分の上向きベクトルにする
@@ -123,13 +123,13 @@ void CRotator::CalcQuaternionToLocation(XMFLOAT3 location , XMFLOAT4& resultQua)
 	XMFLOAT3 vec , axis;
 	float angle;
 
-	//向きたい位置へのベクトルを計算
+	//向きたい位置へのベクトルを算出
 	LCMath::CalcFloat3FromStartToGoal(mPartner.GetWorldLocation() , location , vec);
 
 	//向きベクトルにするために正規化
 	LCMath::CalcFloat3Normalize(vec , vec);
 
-	//クォータニオンに必要な角度を計算
+	//クォータニオンに必要な角度を算出
 	LCMath::CalcFloat3Dot(mPartner.GetForwardVectorWorld() , vec , angle);
 
 	/*
@@ -147,7 +147,7 @@ void CRotator::CalcQuaternionToLocation(XMFLOAT3 location , XMFLOAT4& resultQua)
 	//角度を求める
 	angle = std::acosf(angle);
 
-	//クォータニオンに必要な軸を計算
+	//クォータニオンに必要な軸を算出
 	LCMath::CalcFloat3Cross(mPartner.GetForwardVectorWorld() , vec , axis);
 
 	//軸が全て0なら軸を自分の上向きベクトルにする

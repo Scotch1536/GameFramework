@@ -6,6 +6,11 @@
 #include "CPrimitiveMeshComponent.h"
 #include "CRenderComponent.h"
 
+//!
+//! @file
+//! @brief プリミティブメッシュコンポーネントのソースファイル
+//!
+
 template<class VertexType>
 CPrimitiveMeshComponent<VertexType>::CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , const XMFLOAT4& color , std::string vertexShaderPath , std::string pixelShaderPath)
 	:CComponent(owner , 100) ,
@@ -17,6 +22,7 @@ CPrimitiveMeshComponent<VertexType>::CPrimitiveMeshComponent(CActor& owner , CTr
 template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::Init(std::string vertexShaderPath , std::string pixelShaderPath)
 {
+	//不透明チェック
 	CheckTranslucent();
 
 	// 頂点データの定義
@@ -28,12 +34,13 @@ void CPrimitiveMeshComponent<VertexType>::Init(std::string vertexShaderPath , st
 	};
 	unsigned int numElements = ARRAYSIZE(layout);
 
-	mRenderComponent.GenerateVertexShader(layout , numElements , vertexShaderPath);
-	mRenderComponent.GeneratePixelShader(pixelShaderPath);
+	mRenderComponent.GenerateVertexShader(layout , numElements , vertexShaderPath);		//頂点シェーダ生成
+	mRenderComponent.GeneratePixelShader(pixelShaderPath);								//ピクセルシェーダ生成
 
-	CreateVertexData();
-	CreateIndexData();
+	CreateVertexData();		//頂点データ作成
+	CreateIndexData();		//インデックスデータ作成
 
+	//頂点&インデックスバッファ生成
 	GenerateVertexAndIndexBuffer();
 }
 
@@ -65,15 +72,18 @@ void CPrimitiveMeshComponent<VertexType>::GenerateVertexAndIndexBuffer()
 template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::Update()
 {
-	if(!mIsTranslucent)mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY3D });
-	else mOwnerInterface.AddRenderOrder({ *this,ERenderOption::TRANSLUCENT3D,CGameManager::GetInstance().CalcDistanceToCamera(Transform.GetWorldLocation()) });
+	//不透明じゃなければ
+	if(!mIsTranslucent)mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY3D });																				//描画命令追加
+	else mOwnerInterface.AddRenderOrder({ *this,ERenderOption::TRANSLUCENT3D,CGameManager::GetInstance().CalcDistanceToCamera(Transform.GetWorldLocation()) });			//描画命令追加
 }
 
 template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::Render()
 {
+	//GPUへの行列のセットをリクエスト
 	Transform.RequestSetMatrix();
 
+	//描画
 	mRenderComponent.Render(sizeof(VertexType) , mIndices.size() , nullptr , mVertexBuffer.Get() , mIndexBuffer.Get() , nullptr);
 }
 
@@ -82,6 +92,7 @@ void CPrimitiveMeshComponent<VertexType>::SetColor(const XMFLOAT4& color)
 {
 	mColor = color;
 
+	//不透明チェック
 	CheckTranslucent();
 }
 
@@ -89,6 +100,7 @@ void CPrimitiveMeshComponent<SVertexColor>::SetColor(const XMFLOAT4& color)
 {
 	mColor = color;
 
+	//不透明チェック
 	CheckTranslucent();
 
 	for(auto& vertex : mVertices)
@@ -96,6 +108,7 @@ void CPrimitiveMeshComponent<SVertexColor>::SetColor(const XMFLOAT4& color)
 		vertex.Color = color;
 	}
 
+	//頂点バッファ更新
 	UpdateVertexBuffer();
 }
 
@@ -103,6 +116,7 @@ void CPrimitiveMeshComponent<SVertex2D>::SetColor(const XMFLOAT4& color)
 {
 	mColor = color;
 
+	//不透明チェック
 	CheckTranslucent();
 
 	for(auto& vertex : mVertices)
@@ -110,15 +124,16 @@ void CPrimitiveMeshComponent<SVertex2D>::SetColor(const XMFLOAT4& color)
 		vertex.Color = color;
 	}
 
+	//頂点バッファ更新
 	UpdateVertexBuffer();
 }
 
 template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::UpdateVertexBuffer()
 {
-	//頂点セット
 	D3D11_MAPPED_SUBRESOURCE pData;
 
+	//頂点バッファ更新
 	HRESULT hr = CDirectXGraphics::GetInstance()->GetImmediateContext()->Map(mVertexBuffer.Get() , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &pData);
 	if(SUCCEEDED(hr))
 	{

@@ -26,9 +26,7 @@ private:
 
 	bool mShouldUpdate = true;					//!< 更新すべきか
 
-	//!
 	//! @brief ワールド座標空間への変換
-	//!
 	void ConvertWorldCollider()override;
 
 	void SetShouldUpdate(bool flg)

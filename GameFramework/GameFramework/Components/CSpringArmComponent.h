@@ -63,7 +63,7 @@ public:
 	{
 		mLerpTime = time;
 
-		//アルファ値の増加量の計算
+		//アルファ値の増加量の算出
 		mIncrementAlpha = 1.0f / (60.0f * mLerpTime);
 	}
 

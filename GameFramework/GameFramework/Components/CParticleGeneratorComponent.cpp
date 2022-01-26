@@ -38,10 +38,10 @@ SParticleBase CParticleBaseGeneratorCone::GenerateParticleBase()
 	rotationBaseDirection.y = 1.0f;
 	rotationBaseDirection.z = sinf(rotationBaseAngle);
 
-	LCMath::CalcFloat3Cross(mBaseAxis , rotationBaseDirection , rotationAxis);									//外積で回転軸を計算
-	LCMath::CreateFromAxisAndAngleToQuaternion(rotationAxis , rotationAngle(mRandomEngine) , quaternion);		//回転行列の元となるクオータニオンを計算
+	LCMath::CalcFloat3Cross(mBaseAxis , rotationBaseDirection , rotationAxis);									//外積で回転軸を算出
+	LCMath::CreateFromAxisAndAngleToQuaternion(rotationAxis , rotationAngle(mRandomEngine) , quaternion);		//回転行列の元となるクオータニオンを算出
 	LCMath::CalcMatrixFromQuaternion(quaternion , rotMTX);														//回転行列作成
-	LCMath::CalcFloat3MultplyMatrix(mBaseAxis , rotMTX , result.Direction);										//向きを計算
+	LCMath::CalcFloat3MultplyMatrix(mBaseAxis , rotMTX , result.Direction);										//向きを算出
 	result.StartPoint = { 0.0f,0.0f,0.0f };
 
 	return result;
@@ -76,7 +76,7 @@ void CParticleGeneratorComponent::Update()
 	if(!mShouldUpdate)return;
 
 	mGenerationGauge += mIncreasedValueOfGenerationGauge;		//ゲージに増加値を加算
-	int numGeneration = mGenerationGauge / 1;					//生成数の計算
+	int numGeneration = mGenerationGauge / 1;					//生成数の算出
 
 	if(numGeneration >= 1)
 	{
@@ -110,7 +110,7 @@ void CParticleGeneratorComponent::GenerateParticle()
 	//パーティクルベース生成
 	SParticleBase particleBase = mParticleBaseGenerator->GenerateParticleBase();
 
-	//ロケーション計算
+	//ロケーション算出
 	LCMath::CalcFloat3Addition(Transform.GetWorldLocation() , particleBase.StartPoint , particleLocation);
 
 	//回転行列作成処理
