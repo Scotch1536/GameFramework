@@ -1,15 +1,22 @@
 #include "CPlaneMeshComponent.h"
 
+//!
+//! @file
+//! @brief 平面コンポーネントのソースファイル
+//!
+
 template<class VertexType>
 CPlaneMeshComponent<VertexType>::CPlaneMeshComponent(CActor& owner , CTransform& parentTrans , const XMFLOAT4& color ,
 	std::string vertexShaderPath , std::string pixelShaderPath , bool isInit)
 	:CPrimitiveMeshComponent<VertexType>(owner , parentTrans , color , vertexShaderPath , pixelShaderPath)
 {
+	//初期化
 	if(isInit)this->Init(vertexShaderPath , pixelShaderPath);
 }
 
 void CPlaneMeshComponent<SVertexColor>::CreateVertexData()
 {
+	//頂点数の拡張と初期化
 	mVertices.resize(4);
 
 	mVertices.at(0).Pos = { -0.5f,0.5f,0.0f };
@@ -19,6 +26,7 @@ void CPlaneMeshComponent<SVertexColor>::CreateVertexData()
 
 	for(auto& vertex : mVertices)
 	{
+		//法線の計算
 		XMFLOAT3 vec , normal;
 		LCMath::CalcFloat3FromStartToGoal({ 0.0f,0.0f,0.0f } , vertex.Pos , vec);
 		LCMath::CalcFloat3Normalize(vec , normal);
@@ -30,6 +38,7 @@ void CPlaneMeshComponent<SVertexColor>::CreateVertexData()
 
 void CPlaneMeshComponent<SVertexUV>::CreateVertexData()
 {
+	//頂点数の拡張と初期化
 	mVertices.resize(4);
 
 	mVertices.at(0).Pos = { -0.5f,0.5f,0.0f };
@@ -44,6 +53,7 @@ void CPlaneMeshComponent<SVertexUV>::CreateVertexData()
 
 	for(auto& vertex : mVertices)
 	{
+		//法線の計算
 		XMFLOAT3 vec , normal;
 		LCMath::CalcFloat3FromStartToGoal({ 0.0f,0.0f,0.0f } , vertex.Pos , vec);
 		LCMath::CalcFloat3Normalize(vec , normal);
@@ -54,6 +64,7 @@ void CPlaneMeshComponent<SVertexUV>::CreateVertexData()
 
 void CPlaneMeshComponent<SVertex2D>::CreateVertexData()
 {
+	//頂点数の拡張と初期化
 	mVertices.resize(4);
 
 	mVertices.at(0).Pos = { -0.5f,-0.5f,0.0f };

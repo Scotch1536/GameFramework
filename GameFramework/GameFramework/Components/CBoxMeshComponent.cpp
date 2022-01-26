@@ -2,19 +2,25 @@
 
 #include "CBoxMeshComponent.h"
 
+//!
+//! @file
+//! @brief ボックスメッシュコンポーネントのソースファイル
+//!
+
 CBoxMeshComponent::CBoxMeshComponent(CActor& owner , CTransform& parentTrans ,const XMFLOAT4& color ,
 	XMFLOAT3 min , XMFLOAT3 max ,
 	std::string vertexShaderPath , std::string pixelShaderPath)
 	:CPrimitiveMeshComponent(owner , parentTrans , color , vertexShaderPath , pixelShaderPath) ,
 	mMin(min) , mMax(max)
 {
+	//初期化
 	Init(vertexShaderPath , pixelShaderPath);
 }
 
 void CBoxMeshComponent::CreateVertexData()
 {
+	//頂点数の拡張と初期化
 	mVertices.resize(8);
-
 	mVertices.at(0).Pos = { mMin.x,mMax.y,mMin.z };
 	mVertices.at(1).Pos = { mMax.x,mMax.y,mMin.z };
 	mVertices.at(2).Pos = { mMax.x,mMax.y,mMax.z };
@@ -27,6 +33,8 @@ void CBoxMeshComponent::CreateVertexData()
 	for(auto& vertex : mVertices)
 	{
 		XMFLOAT3 vec , normal;
+
+		//法線の計算
 		LCMath::CalcFloat3FromStartToGoal({ 0.0f,0.0f,0.0f } , vertex.Pos , vec);
 		LCMath::CalcFloat3Normalize(vec , normal);
 
@@ -37,6 +45,7 @@ void CBoxMeshComponent::CreateVertexData()
 
 void CBoxMeshComponent::CreateIndexData()
 {
+	//インデックスデータ作成
 	std::vector<unsigned int> indices =
 	{
 		0,1,2,0,2,3,

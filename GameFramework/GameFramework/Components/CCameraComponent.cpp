@@ -1,40 +1,59 @@
 #include "CCameraComponent.h"
 #include "CSpringArmComponent.h"
 
-void CCameraComponent::CreateProjectionMatrix()
+//!
+//! @file
+//! @brief カメラコンポーネントのソースファイル
+//!
+
+void CCameraComponent::Update()
 {
-	ALIGN16 XMMATRIX projection;
+	if(mShouldUpdateProjectionMatrix)
+	{
+		mShouldUpdateProjectionMatrix = false;
 
-	projection = XMMatrixPerspectiveFovLH(mFov , mAspect , mNear , mFar);
+		UpdateProjectionMatrix();		//プロジェクション行列更新
+	}
 
-	XMStoreFloat4x4(&mProjection , projection);
+	if(mShouldUpdateViewMatrix)
+	{
+		mShouldUpdateViewMatrix = false;
+
+		UpdateViewMatrix();				//ビュー行列更新
+	}
 }
 
-void CCameraComponent::CreateViewMatrix()
+void CCameraComponent::UpdateViewMatrix()
 {
 	XMFLOAT3 eye;
 
+	//スプリングアームがあるか
 	if(mSpringArm != nullptr)
 	{
 		eye = mEye;
 	}
 	else
 	{
+		//カメラ位置をワールド座標系に変換する
 		XMFLOAT3 pLoc = mOwnerInterface.GetTransform().Location;
 		eye = { pLoc.x + mEye.x , pLoc.y + mEye.y , pLoc.z + mEye.z };
 	}
 
 	XMFLOAT3 vecX , vecY , vecZ;
 
+	//カメラ位置から注視点に向かうベクトルをZ軸とする
 	LCMath::CalcFloat3FromStartToGoal(eye , mLookAt , vecZ);
 	LCMath::CalcFloat3Normalize(vecZ , vecZ);
 
+	//上向きベクトルとZ軸の外積の結果をX軸とする
 	LCMath::CalcFloat3Cross(mUp , vecZ , vecX);
 	LCMath::CalcFloat3Normalize(vecX , vecX);
 
+	//Z軸とX軸の外積の結果をY軸とする
 	LCMath::CalcFloat3Cross(vecZ , vecX , vecY);
 	LCMath::CalcFloat3Normalize(vecY , vecY);
 
+	//カメラ座標変換行列のベースの初期化
 	mCameraTransMatrixBase._11 = vecX.x;
 	mCameraTransMatrixBase._12 = vecX.y;
 	mCameraTransMatrixBase._13 = vecX.z;
@@ -57,22 +76,17 @@ void CCameraComponent::CreateViewMatrix()
 
 	mCameraTransMatrix = mCameraTransMatrixBase;
 
-	LCMath::InverseMatrix(mCameraTransMatrixBase , mView);
+	//カメラ座標変換行列の逆行列をビュー行列とする
+	LCMath::InverseMatrix(mCameraTransMatrix , mView);
 }
 
-void CCameraComponent::Update()
+void CCameraComponent::UpdateProjectionMatrix()
 {
-	if(mShouldUpdateProjectionMatrix)
-	{
-		mShouldUpdateProjectionMatrix = false;
+	ALIGN16 XMMATRIX projection;
 
-		CreateProjectionMatrix();
-	}
+	//プロジェクション行列作成
+	projection = XMMatrixPerspectiveFovLH(mFov , mAspect , mNear , mFar);
 
-	if(mShouldUpdateViewMatrix)
-	{
-		mShouldUpdateViewMatrix = false;
-
-		CreateViewMatrix();
-	}
+	//型変換
+	XMStoreFloat4x4(&mProjection , projection);
 }

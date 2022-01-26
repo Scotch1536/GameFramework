@@ -3,6 +3,11 @@
 
 #include "../Transform/CTransform.h"
 
+//!
+//! @file
+//! @brief ポイントライトコンポーネントのヘッダーファイル
+//!
+
 class CPointLightComponent : public CLightComponent
 {
 private:

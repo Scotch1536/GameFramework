@@ -40,7 +40,7 @@ CAttachObject::CAttachObject(ILevel& partner):CActor(partner)
 		collider = new CSphereColliderComponent(*this , mMesh->Transform);
 	}
 
-	collider->SetIsUpdate(false);
+	collider->SetShouldUpdate(false);
 	collider->SetObjectType("AttachObject");
 
 	CSoundManager::GetInstance().CreateSoundInfo("Assets/Sounds/attach.wav" , 0.1f , false , "Attach");
