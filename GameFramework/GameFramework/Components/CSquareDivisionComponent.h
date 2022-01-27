@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief 四角分割コンポーネントのヘッダーファイル
+//!
+
 #pragma once
 #include <DirectXMath.h>
 #include <vector>
@@ -6,11 +11,6 @@
 #include <string>
 
 #include "CComponent.h"
-
-//!
-//! @file
-//! @brief 四角分割コンポーネントのヘッダーファイル
-//!
 
 using namespace DirectX;
 
@@ -38,7 +38,7 @@ protected:
 public:
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] divWidth 横幅の分割数
 	//! @param[in] divHeight 縦幅の分割数
 	//!

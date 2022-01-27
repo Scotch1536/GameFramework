@@ -1,9 +1,9 @@
-#pragma once
-
 //!
 //! @file
 //! @brief コンポーネントのヘッダーファイル
 //!
+
+#pragma once
 
 class IActorToComponent;
 class CActor;
@@ -12,7 +12,7 @@ class CActor;
 class CComponent
 {
 private:
-	int mPriority = 0;		//!< 優先度 0～100を想定
+	int mPriority = 0;		//!< 優先度　※0～100を想定
 
 protected:
 	IActorToComponent& mOwnerInterface;		//!< 所有者のインターフェース
@@ -24,8 +24,8 @@ protected:
 public:
 	//!
 	//! @brief コンストラクタ
-	//! @details ★超重要★　コンストラクタを呼ぶことはアクターにコンポーネントを追加することを意味する
-	//! @param[in] owner このコンポーネントの所有者
+	//! @details コンストラクタを呼ぶことはアクターにコンポーネントを追加することを意味する
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] priority 優先度
 	//!
 	CComponent(CActor& owner , int priority = 100);

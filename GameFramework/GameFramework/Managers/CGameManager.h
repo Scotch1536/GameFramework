@@ -1,4 +1,19 @@
 #pragma once
+#pragma comment (lib,"d3d11.lib")					// リンク対象ライブラリ
+#pragma comment (lib,"dxgi.lib")					// リンク対象ライブラリ
+#pragma comment (lib,"D3DCompiler.lib")				// リンク対象ライブラリ
+#pragma comment (lib,"winmm.lib")					// リンク対象ライブラリ
+#pragma comment (lib,"dxguid.lib")					// リンク対象ライブラリ
+#pragma comment (lib,"dinput8.lib")					// リンク対象ライブラリ
+
+#pragma comment (lib,"assimp-vc141-mtd.lib")		// リンク対象ライブラリ
+
+#ifdef _DEBUG
+#pragma comment (lib,"_debug/directxtex.lib")		// リンク対象ライブラリ
+#else
+#pragma comment (lib,"_release/directxtex.lib")		// リンク対象ライブラリ
+#endif
+
 #include "../Game/CGame.h"
 
 class CLevel;

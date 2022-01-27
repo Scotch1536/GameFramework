@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief ラインコンポーネントのソースファイル
+//!
+
 #include "../Actor/CActor.h"
 #include "../Managers/CDirectXResourceManager.h"
 #include "../ExternalCode/CDirectxGraphics.h"
@@ -6,11 +11,6 @@
 #include "../Library/LCMath.h"
 
 #include "CLineComponent.h"
-
-//!
-//! @file
-//! @brief ラインコンポーネントのソースファイル
-//!
 
 CLineComponent::CLineComponent(CActor& owner , const XMFLOAT3& start , const XMFLOAT3& end ,
 	const XMFLOAT4& color , CTransform* parentTrans , std::string vertexShaderPath ,

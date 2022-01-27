@@ -1,10 +1,10 @@
-#pragma once
-#include "CPrimitiveMeshComponent.h"
-
 //!
 //! @file
 //! @brief 平面コンポーネントのヘッダーファイル
 //!
+
+#pragma once
+#include "CPrimitiveMeshComponent.h"
 
 //! @brief 平面コンポーネントクラス
 template<class VertexType = SVertexColor>
@@ -20,7 +20,7 @@ protected:
 public:
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] parentTans 親のトランスフォーム
 	//! @param[in] color 色情報
 	//! @param[in] vertexShaderPath 頂点シェーダのパス

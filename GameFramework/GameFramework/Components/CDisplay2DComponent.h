@@ -1,10 +1,10 @@
-#pragma once
-#include "CPlaneMeshComponent.h"
-
 //!
 //! @file
 //! @brief ディスプレイ2Dコンポーネントのヘッダーファイル
 //!
+
+#pragma once
+#include "CPlaneMeshComponent.h"
 
 //! @brief ディスプレイ2Dコンポーネントクラス
 class CDisplay2DComponent :public CPlaneMeshComponent<SVertex2D>
@@ -28,7 +28,7 @@ private:
 public:
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
 	//! @param[in] texturePath テクスチャファイルのパス
 	//! @param[in] color 色情報
@@ -41,7 +41,7 @@ public:
 	//!
 	//! @brief コンストラクタ
 	//! @details テクスチャがない場合のコンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
 	//! @param[in] color 色情報
 	//! @param[in] vertexShaderPath 頂点シェーダのパス

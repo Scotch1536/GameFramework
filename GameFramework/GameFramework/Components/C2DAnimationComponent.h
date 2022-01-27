@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief 2Dアニメーションコンポーネントのヘッダーファイル
+//!
+
 #pragma once
 #include <DirectXMath.h>
 #include <functional>
@@ -7,11 +12,6 @@
 
 #include "CSquareDivisionComponent.h"
 
-//!
-//! @file
-//! @brief 2Dアニメーションコンポーネントのヘッダーファイル
-//!
-
 using namespace DirectX;
 
 //! @brief 2Dアニメーションコンポーネントクラス
@@ -20,7 +20,7 @@ class C2DAnimationComponent :public CSquareDivisionComponent
 	//! @brief アニメデータ構造体
 	struct SAnimData
 	{
-		std::string AnimInfoName;			//!< 再生するアニメ情報の名前
+		std::string AnimInfoName;		//!< 再生するアニメ情報の名前
 
 		XMFLOAT2* ChangeTargetUV1;		//!< 変更ターゲットのUV座標の参照1
 		XMFLOAT2* ChangeTargetUV2;		//!< 変更ターゲットのUV座標の参照2
@@ -51,7 +51,7 @@ private:
 public:
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] divWidth アニメーション素材の横幅の分割数
 	//! @param[in] divHeight アニメーション素材の縦幅の分割数
 	//!
@@ -149,6 +149,7 @@ public:
 	//!
 	//! @brief アニメーションが再生されているかのチェック
 	//! @param[in] index アニメデータが格納されている配列のインデックス
+	//! @return bool 再生されているか
 	//!
 	bool CheckIsPlay(int index)
 	{
@@ -168,6 +169,7 @@ public:
 	//! @brief アニメーションが再生されているかのチェック
 	//! @details アニメデータのエイリアスからチェックしたい際に利用する
 	//! @param[in] animDataAlias アニメデータのエイリアス
+	//! @return bool 再生されているか
 	//!
 	bool CheckIsPlay(std::string animDataAlias)
 	{

@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief スフィアコライダーコンポーネントのソースファイル
+//!
+
 #include <algorithm>
 
 #include "../Library/LCCollision.h"
@@ -8,11 +13,6 @@
 #include "CAABBColliderComponent.h"
 #include "CSphereColliderComponent.h"
 #include "CSphereMeshComponent.h"
-
-//!
-//! @file
-//! @brief スフィアコライダーコンポーネントのソースファイル
-//!
 
 CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const CModelData& model , CTransform& parentTrans , bool isMesh , int priority)
 	:CColliderComponent(owner , parentTrans , CColliderComponent::EType::SPHERE , priority)

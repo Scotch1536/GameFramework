@@ -1,13 +1,13 @@
+//!
+//! @file
+//! @brief ビルボードコンポーネントのソースファイル
+//!
+
 #include "../Managers/CDirectXResourceManager.h"
 #include "../Managers/CGameManager.h"
 
 #include "CBillboardComponent.h"
 #include "CRenderComponent.h"
-
-//!
-//! @file
-//! @brief ビルボードコンポーネントのソースファイル
-//!
 
 CBillboardComponent::CBillboardComponent(CActor& owner , CTransform& parentTrans , std::string texturePath ,
 	std::string vertexShaderPath , std::string pixelShaderPath)
@@ -23,7 +23,7 @@ CBillboardComponent::CBillboardComponent(CActor& owner , CTransform& parentTrans
 
 void CBillboardComponent::Init(std::string vertexShaderPath , std::string pixelShaderPath)
 {
-	// 頂点データの定義
+	//頂点データの定義
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		{ "POSITION",	0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },

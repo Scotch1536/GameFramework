@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief モデルデータのヘッダーファイル
+//!
+
 #pragma once
 #include <d3d11.h>
 #include <DirectXMath.h>
@@ -8,48 +13,86 @@
 #include "../ExternalCode/CDirectxGraphics.h"
 #include "../ExternalCode/AssimpScene.h"
 
-#include "VertexProto.h"
+#include "MeshDataDefinition.h"
 #include "CModelMeshData.h"
 
 class CModelDataManager;
 
+//! @brief モデルデータクラス
 class CModelData
 {
 private:
-	AssimpScene mAssimpScene;		// assimp scene
-	std::string mDirectory;			// テクスチャファイルの位置
+	AssimpScene mAssimpScene;					//!< Assimpシーン
+	std::string mDirectory;						//!< テクスチャファイルのパス
 
-	std::vector<CModelMeshData> mMeshes;				// メッシュの集合がモデル
-	std::vector<STexture> mTexturesLoaded;		// 既にロードされているテクスチャ
-	std::vector<SMaterial> mMaterials;			// マテリアル群
+	std::vector<CModelMeshData> mMeshes;		//!< メッシュ
+	std::vector<STexture> mTexturesLoaded;		//!< 既にロードされているテクスチャ
+	std::vector<SMaterial> mMaterials;			//!< マテリアル
 
-	// ノードを解析
+	//!
+	//! @brief ノード解析
+	//! @param[in] node 解析するノード
+	//! @param[in] scene シーン
+	//!
 	void ProcessNode(aiNode* node , const aiScene* scene);
 
-	// メッシュを解析
-	CModelMeshData ProcessMesh(aiMesh* mesh , const aiScene* scene , int meshidx);
+	//!
+	//! @brief メッシュ解析
+	//! @param[in] mesh 解析するメッシュ
+	//! @param[in] scene シーン
+	//!
+	CModelMeshData ProcessMesh(aiMesh* mesh , const aiScene* scene);
 
-	// マテリアルを読み込む
+	//! @brief マテリアルのロード
 	void LoadMaterial();
 
-	// マテリアルに対応したテクスチャを取得する
-	std::vector<STexture> LoadMaterialTextures(
-		aiMaterial * mat ,
-		aiTextureType type ,
-		std::string typeName ,
-		const aiScene * scene);
+	//!
+	//! @brief テクスチャのロード
+	//! @param[in] mtrl マテリアル
+	//! @param[in] type テクスチャタイプ
+	//! @param[in] typeName テクスチャ名
+	//! @param[in] scene シーン
+	//! @return std::vector<STexture> 結果のテクスチャ
+	//!
+	std::vector<STexture> LoadTextures(aiMaterial* mtrl ,aiTextureType type ,std::string typeName ,const aiScene* scene);
 
+	//!
+	//! @brief テクスチャ初期化
+	//! @param[in] target 初期化したいテクスチャ
+	//!
 	void TextureInit(STexture& target);
+
+	//! @brief 読み込みデータ初期化
 	void ReadDataInit();
 
 public:
+	//! @brief コンストラクタ
 	CModelData() = default;
+
+	//! @brief デストラクタ
 	~CModelData();
 
-	bool Load(std::string resourcefolder , std::string filename);
+	//!
+	//! @brief モデルデータのロード
+	//! @param[in] resourceFolderPath リソースフォルダのパス
+	//! @param[in] filePath モデルファイルのパス
+	//! @return bool ロードが成功したか
+	//!
+	bool Load(std::string resourceFolderPath , std::string filePath);
 
-	void WriteData(const CModelDataManager& partner , std::fstream& file);
-	void ReadData(const CModelDataManager& partner , std::fstream& file);
+	//!
+	//! @brief キャッシュデータの書き込み
+	//! @param[in] partner モデルデータマネージャーの参照
+	//! @param[in] file 書き込むファイル
+	//!
+	void WriteCacheData(const CModelDataManager& partner , std::fstream& file);
+
+	//!
+	//! @brief キャッシュデータの読み込み
+	//! @param[in] partner モデルデータマネージャーの参照
+	//! @param[in] file 読み込むファイル
+	//!
+	void ReadCacheData(const CModelDataManager& partner , std::fstream& file);
 
 	const std::vector<CModelMeshData>& GetMeshes()const
 	{

@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief スタティックメッシュコンポーネントのヘッダーファイル
+//!
+
 #pragma once
 #include <string>
 
@@ -10,22 +15,32 @@
 class CModelData;
 class CRenderComponent;
 
+//! @brief スタティックメッシュコンポーネントクラス
 class CStaticMeshComponent :public CComponent , public IRender
 {
 private:
-	CModelData* mModel;							//モデルデータ
-	CRenderComponent& mRenderComponent;			//レンダーコンポーネント
+	CModelData* mModel;							//!< モデルデータ
+	CRenderComponent& mRenderComponent;			//!< レンダーコンポーネント
 
+	//! @brief 更新
 	void Update()override;
 
+	//! @brief 描画
 	void Render()override;
 
 public:
-	CTransform Transform;			//トランスフォーム
+	CTransform Transform;			//!< トランスフォーム
 
-	CStaticMeshComponent(CActor& owner , CTransform& parentTrans , CModelData& model , std::string vertexShaderPath , std::string pixelShaderPath , int priority = 90);
+	//!
+	//! @brief コンストラクタ
+	//! @param[in] owner このコンポーネントを所有するアクター
+	//! @param[in] parentTrans 親のトランスフォーム
+	//! @param[in] model モデルデータ
+	//! @param[in] vertexShaderPath 頂点シェーダのパス
+	//! @param[in] pixelShaderPath ピクセルシェーダのパス
+	//!
+	CStaticMeshComponent(CActor& owner , CTransform& parentTrans , CModelData& model , std::string vertexShaderPath , std::string pixelShaderPath);
 
-	//モデルのセット
 	void SetModel(CModelData& model)
 	{
 		mModel = &model;

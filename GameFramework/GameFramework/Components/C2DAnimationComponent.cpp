@@ -1,11 +1,11 @@
-#include "../Managers/CGameManager.h"
-
-#include "C2DAnimationComponent.h"
-
 //!
 //! @file
 //! @brief 2Dアニメーションコンポーネントのソースファイル
 //!
+
+#include "../Managers/CGameManager.h"
+
+#include "C2DAnimationComponent.h"
 
 C2DAnimationComponent::C2DAnimationComponent(CActor& owner , int divWidth , int divHeight)
 	:CSquareDivisionComponent(owner , divWidth , divHeight)

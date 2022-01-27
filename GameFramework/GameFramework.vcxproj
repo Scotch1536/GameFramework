@@ -116,7 +116,7 @@
     <ClInclude Include="GameFramework\Data\CModelMeshData.h" />
     <ClInclude Include="GameFramework\Data\CModelData.h" />
     <ClInclude Include="GameFramework\Data\CWave.h" />
-    <ClInclude Include="GameFramework\Data\VertexProto.h" />
+    <ClInclude Include="GameFramework\Data\MeshDataDefinition.h" />
     <ClInclude Include="GameFramework\ExternalCode\AssimpScene.h" />
     <ClInclude Include="GameFramework\ExternalCode\CDirectInput.h" />
     <ClInclude Include="GameFramework\ExternalCode\CDirectxGraphics.h" />

@@ -1,13 +1,13 @@
+//!
+//! @file
+//! @brief ディスプレイ2Dコンポーネントのソースファイル
+//!
+
 #include "../Managers/CDirectXResourceManager.h"
 #include "../Actor/CActor.h"
 
 #include "CRenderComponent.h"
 #include "CDisplay2DComponent.h"
-
-//!
-//! @file
-//! @brief ディスプレイ2Dコンポーネントのソースファイル
-//!
 
 CDisplay2DComponent::CDisplay2DComponent(CActor& owner , CTransform& parentTrans , std::string texturePath , const XMFLOAT4& color ,
 	std::string vertexShaderPath , std::string pixelShaderPath)

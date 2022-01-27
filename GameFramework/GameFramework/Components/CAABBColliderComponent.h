@@ -1,11 +1,11 @@
-#pragma once
-#include <DirectXMath.h>
-#include "CColliderComponent.h"
-
 //!
 //! @file
 //! @brief AABBコライダーコンポーネントのヘッダーファイル
 //!
+
+#pragma once
+#include <DirectXMath.h>
+#include "CColliderComponent.h"
 
 using namespace DirectX;
 
@@ -38,7 +38,7 @@ public:
 	//!
 	//! @brief コンストラクタ
 	//! @details 3Dモデルをベースにコライダーを作りたい際のコンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] model コライダーの元になるモデルデータ
 	//! @param[in] parentTrans 親のトランスフォーム
 	//! @param[in] isMesh メッシュを描画するか
@@ -49,7 +49,7 @@ public:
 	//!
 	//! @brief コンストラクタ
 	//! @details ベースなしでコライダーを作りたい際のコンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
 	//! @param[in] isMesh メッシュを描画するか
 	//! @param[in] priority 優先度

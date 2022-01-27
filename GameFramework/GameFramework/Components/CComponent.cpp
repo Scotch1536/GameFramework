@@ -1,11 +1,11 @@
-#include "../Actor/CActor.h"
-
-#include "CComponent.h"
-
 //!
 //! @file
 //! @brief コンポーネントのソースファイル
 //!
+
+#include "../Actor/CActor.h"
+
+#include "CComponent.h"
 
 CComponent::CComponent(CActor& owner , int priority):mPriority(priority),mOwnerInterface(owner)
 {

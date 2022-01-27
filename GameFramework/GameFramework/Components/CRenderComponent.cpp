@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief レンダーコンポーネントのソースファイル
+//!
+
 #include <filesystem>
 
 #include "../ExternalCode/CDirectxGraphics.h"
@@ -5,11 +10,6 @@
 #include "../Managers/CDirectXResourceManager.h"
 
 #include "CRenderComponent.h"
-
-//!
-//! @file
-//! @brief レンダーコンポーネントのソースファイル
-//!
 
 CRenderComponent::CRenderComponent(CActor& owner , int priority):CComponent(owner , priority)
 {}

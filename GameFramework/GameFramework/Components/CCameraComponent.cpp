@@ -1,10 +1,10 @@
-#include "CCameraComponent.h"
-#include "CSpringArmComponent.h"
-
 //!
 //! @file
 //! @brief カメラコンポーネントのソースファイル
 //!
+
+#include "CCameraComponent.h"
+#include "CSpringArmComponent.h"
 
 void CCameraComponent::Update()
 {
@@ -19,7 +19,7 @@ void CCameraComponent::Update()
 	{
 		mShouldUpdateViewMatrix = false;
 
-		UpdateViewMatrix();				//ビュー行列更新
+		UpdateViewMatrix();			//ビュー行列更新
 	}
 }
 

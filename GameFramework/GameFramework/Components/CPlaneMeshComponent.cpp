@@ -1,9 +1,9 @@
-#include "CPlaneMeshComponent.h"
-
 //!
 //! @file
 //! @brief 平面コンポーネントのソースファイル
 //!
+
+#include "CPlaneMeshComponent.h"
 
 template<class VertexType>
 CPlaneMeshComponent<VertexType>::CPlaneMeshComponent(CActor& owner , CTransform& parentTrans , const XMFLOAT4& color ,

@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief ラインコンポーネントのヘッダーファイル
+//!
+
 #pragma once
 
 #include <array>
@@ -7,13 +12,8 @@
 #include <d3d11.h>
 
 #include "../Interfaces/IRender.h"
-#include "../Data/VertexProto.h"
+#include "../Data/MeshDataDefinition.h"
 #include "CComponent.h"
-
-//!
-//! @file
-//! @brief ラインコンポーネントのヘッダーファイル
-//!
 
 using Microsoft::WRL::ComPtr;
 
@@ -66,7 +66,7 @@ public:
 	//!
 	//! @brief コンストラクタ
 	//! @details 始点と終点を結んだ線を作る場合のコンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] start 始点
 	//! @param[in] end 終点
 	//! @param[in] color 色情報
@@ -82,7 +82,7 @@ public:
 	//!
 	//! @brief コンストラクタ
 	//! @details 始点からの向きと長さで線を作る場合のコンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] start 始点
 	//! @param[in] direction 向き
 	//! @param[in] length 長さ
@@ -114,4 +114,5 @@ public:
 	{
 		mVertices.at(0).Color = mVertices.at(1).Color = mColor = color;
 	}
+
 };

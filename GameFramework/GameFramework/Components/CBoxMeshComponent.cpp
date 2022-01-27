@@ -1,11 +1,11 @@
-#include "../Library/LCMath.h"
-
-#include "CBoxMeshComponent.h"
-
 //!
 //! @file
 //! @brief ボックスメッシュコンポーネントのソースファイル
 //!
+
+#include "../Library/LCMath.h"
+
+#include "CBoxMeshComponent.h"
 
 CBoxMeshComponent::CBoxMeshComponent(CActor& owner , CTransform& parentTrans ,const XMFLOAT4& color ,
 	XMFLOAT3 min , XMFLOAT3 max ,

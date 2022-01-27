@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief プリミティブメッシュコンポーネントのヘッダーファイル
+//!
+
 #pragma once
 #include <d3d11.h>
 #include <wrl/client.h>
@@ -7,15 +12,10 @@
 #include <string>
 
 #include "../Interfaces/IRender.h"
-#include "../Data/VertexProto.h"
+#include "../Data/MeshDataDefinition.h"
 #include "../Transform/CTransform.h"
 
 #include "CComponent.h"
-
-//!
-//! @file
-//! @brief プリミティブメッシュコンポーネントのヘッダーファイル
-//!
 
 using namespace DirectX;
 using Microsoft::WRL::ComPtr;
@@ -55,7 +55,7 @@ protected:
 	//! @brief 頂点&インデックスバッファ生成
 	void GenerateVertexAndIndexBuffer();
 
-	//! @brief 不透明かどうかのチェック
+	//! @brief 半透明かどうかのチェック
 	void CheckTranslucent()
 	{
 		//アルファ値が1未満なら
@@ -76,7 +76,7 @@ public:
 
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
 	//! @param[in] color 色情報
 	//! @param[in] vertexShaderPath 頂点シェーダのパス
