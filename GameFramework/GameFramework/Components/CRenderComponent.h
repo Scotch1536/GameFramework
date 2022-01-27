@@ -1,15 +1,15 @@
-#pragma once
-#include <d3d11.h>
-#include <wrl/client.h>
-
-#include "../Data/VertexProto.h"
-
-#include "CComponent.h"
-
 //!
 //! @file
 //! @brief レンダーコンポーネントのヘッダーファイル
 //!
+
+#pragma once
+#include <d3d11.h>
+#include <wrl/client.h>
+
+#include "../Data/MeshDataDefinition.h"
+
+#include "CComponent.h"
 
 using Microsoft::WRL::ComPtr;
 
@@ -24,7 +24,7 @@ private:
 public:
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] priority 優先度
 	//!
 	CRenderComponent(CActor& owner , int priority = 100);

@@ -1,11 +1,11 @@
-#include <algorithm>
-
-#include "CSquareDivisionComponent.h"
-
 //!
 //! @file
 //! @brief 四角分割コンポーネントのソースファイル
 //!
+
+#include <algorithm>
+
+#include "CSquareDivisionComponent.h"
 
 CSquareDivisionComponent::CSquareDivisionComponent(CActor& owner , int divWidth , int divHeight):CComponent(owner)
 {

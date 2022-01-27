@@ -1,12 +1,12 @@
-#pragma once
-#include <vector>
-
-#include "CPrimitiveMeshComponent.h"
-
 //!
 //! @file
 //! @brief ボックスメッシュコンポーネントのヘッダーファイル
 //!
+
+#pragma once
+#include <vector>
+
+#include "CPrimitiveMeshComponent.h"
 
 class CBoxMeshComponent :public CPrimitiveMeshComponent<>
 {
@@ -22,7 +22,7 @@ private:
 public:
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
 	//! @param[in] color 色情報
 	//! @param[in] min 最小値

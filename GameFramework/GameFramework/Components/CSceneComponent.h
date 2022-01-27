@@ -1,13 +1,13 @@
+//!
+//! @file
+//! @brief シーンコンポーネントのヘッダーファイル
+//!
+
 #pragma once
 #include "../Transform/CTransform.h"
 #include "../Actor/CActor.h"
 
 #include "CComponent.h"
-
-//!
-//! @file
-//! @brief シーンコンポーネントのヘッダーファイル
-//!
 
 //! @brief シーンコンポーネントクラス
 class CSceneComponent :public CComponent
@@ -17,8 +17,9 @@ public:
 
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
 	//!
 	CSceneComponent(CActor& owner , CTransform& parentTrans):CComponent(owner) , Transform(owner , parentTrans) {};
+
 };

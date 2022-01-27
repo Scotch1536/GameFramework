@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief プリミティブメッシュコンポーネントのソースファイル
+//!
+
 #include "../Actor/CActor.h"
 #include "../ExternalCode/Shader.h"
 #include "../ExternalCode/CDirectxGraphics.h"
@@ -5,11 +10,6 @@
 
 #include "CPrimitiveMeshComponent.h"
 #include "CRenderComponent.h"
-
-//!
-//! @file
-//! @brief プリミティブメッシュコンポーネントのソースファイル
-//!
 
 template<class VertexType>
 CPrimitiveMeshComponent<VertexType>::CPrimitiveMeshComponent(CActor& owner , CTransform& parentTrans , const XMFLOAT4& color , std::string vertexShaderPath , std::string pixelShaderPath)
@@ -22,7 +22,7 @@ CPrimitiveMeshComponent<VertexType>::CPrimitiveMeshComponent(CActor& owner , CTr
 template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::Init(std::string vertexShaderPath , std::string pixelShaderPath)
 {
-	//不透明チェック
+	//半透明チェック
 	CheckTranslucent();
 
 	// 頂点データの定義
@@ -72,7 +72,7 @@ void CPrimitiveMeshComponent<VertexType>::GenerateVertexAndIndexBuffer()
 template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::Update()
 {
-	//不透明じゃなければ
+	//半透明じゃなければ
 	if(!mIsTranslucent)mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY3D });																				//描画命令追加
 	else mOwnerInterface.AddRenderOrder({ *this,ERenderOption::TRANSLUCENT3D,CGameManager::GetInstance().CalcDistanceToCamera(Transform.GetWorldLocation()) });			//描画命令追加
 }
@@ -92,7 +92,7 @@ void CPrimitiveMeshComponent<VertexType>::SetColor(const XMFLOAT4& color)
 {
 	mColor = color;
 
-	//不透明チェック
+	//半透明チェック
 	CheckTranslucent();
 }
 
@@ -100,7 +100,7 @@ void CPrimitiveMeshComponent<SVertexColor>::SetColor(const XMFLOAT4& color)
 {
 	mColor = color;
 
-	//不透明チェック
+	//半透明チェック
 	CheckTranslucent();
 
 	for(auto& vertex : mVertices)
@@ -116,7 +116,7 @@ void CPrimitiveMeshComponent<SVertex2D>::SetColor(const XMFLOAT4& color)
 {
 	mColor = color;
 
-	//不透明チェック
+	//半透明チェック
 	CheckTranslucent();
 
 	for(auto& vertex : mVertices)

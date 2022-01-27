@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief ライトコンポーネントのヘッダーファイル
+//!
+
 #pragma once
 #include "../ExternalCode/CDirectxGraphics.h"
 #include "../ExternalCode/Shader.h"
@@ -5,11 +10,6 @@
 
 #include "CComponent.h"
 #include "../Managers/CLightManager.h"
-
-//!
-//! @file
-//! @brief ライトコンポーネントのヘッダーファイル
-//!
 
 class CTransform;
 
@@ -31,7 +31,7 @@ protected:
 
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//!
 	CLightComponent(CActor& owner):CComponent(owner , 40) , mOwnerInterface(CLightManager::GetInstance())
 	{
@@ -43,7 +43,7 @@ public:
 	//!
 	//! @brief ライトを作成
 	//! @details ポイントライトが作成される
-	//! param[in] owner このコンポーネントの所有者
+	//! param[in] owner このコンポーネントを所有するアクター
 	//! param[in] parentTrans 親のトランスフォーム
 	//! param[in] attenuation 減衰率
 	//! param[in] location ロケーション
@@ -53,7 +53,7 @@ public:
 	//!
 	//! @brief ライトを作成
 	//! @details スポットライトが作成される
-	//! param[in] owner このコンポーネントの所有者
+	//! param[in] owner このコンポーネントを所有するアクター
 	//! param[in] parentTrans 親のトランスフォーム
 	//! param[in] attenuation 減衰率
 	//! param[in] direction 向き

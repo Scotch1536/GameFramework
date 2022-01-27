@@ -1,12 +1,12 @@
-#pragma once
-#include "CLightComponent.h"
-
-#include "../Transform/CTransform.h"
-
 //!
 //! @file
 //! @brief ポイントライトコンポーネントのヘッダーファイル
 //!
+
+#pragma once
+#include "CLightComponent.h"
+
+#include "../Transform/CTransform.h"
 
 //! @brief ポイントライトコンポーネントクラス
 class CPointLightComponent : public CLightComponent
@@ -19,7 +19,7 @@ public:
 
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
 	//! @param[in] attenuation 減衰率
 	//! @param[in] location ロケーション

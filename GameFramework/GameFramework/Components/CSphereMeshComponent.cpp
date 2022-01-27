@@ -1,14 +1,14 @@
+//!
+//! @file
+//! @brief スフィアメッシュコンポーネントのソースファイル
+//!
+
 #include "../Actor/CActor.h"
 
 #include "../Library/LCMath.h"
 
 #include "CSphereMeshComponent.h"
 #include "CRenderComponent.h"
-
-//!
-//! @file
-//! @brief スフィアメッシュコンポーネントのソースファイル
-//!
 
 CSphereMeshComponent::CSphereMeshComponent(CActor& owner , CTransform& parentTrans ,const XMFLOAT4& color , int divNum , float radius ,
 	std::string vertexShaderPath , std::string pixelShaderPath)

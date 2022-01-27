@@ -13,139 +13,154 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="imgui">
-      <UniqueIdentifier>{7da443de-4dca-4fef-a713-10f04d3d9ac6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader">
       <UniqueIdentifier>{2cc4b330-84cf-498a-8c5f-6e90f06f142f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components">
+    <Filter Include="GameFramework">
+      <UniqueIdentifier>{6f24529f-e83c-42f9-bdfd-0b387b7f413b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Actor">
+      <UniqueIdentifier>{9ef5d82c-0c35-4ba6-89fe-4f87e916a9f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Data">
+      <UniqueIdentifier>{c4eb808b-6384-4ff8-bed1-6d4675ccbdc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Components">
       <UniqueIdentifier>{5b6134b8-b698-4ed9-acd4-80c57eaca0f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\ソースファイル">
+    <Filter Include="GameFramework\Components\ソースファイル">
       <UniqueIdentifier>{e7b1dd70-b92b-4a4e-b36e-eef80591ad12}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\ヘッダーファイル">
+    <Filter Include="GameFramework\Components\ヘッダーファイル">
       <UniqueIdentifier>{e39a951d-6eb2-40e6-a599-06185b976966}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\ExternalCode">
+      <UniqueIdentifier>{a47130a7-1016-4313-a86a-84875051e55a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\ExternalLibrary">
+      <UniqueIdentifier>{c2f2bad8-7fff-4a84-8d9b-32a01f4df768}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Game">
+      <UniqueIdentifier>{8a6d1af8-ff81-42a3-8727-def1467c9a3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Interfaces">
+      <UniqueIdentifier>{491282a6-7941-4916-9f79-842af7ddacac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Level">
+      <UniqueIdentifier>{850da0b5-e6f0-4eb6-a60c-5c122546a603}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Library">
+      <UniqueIdentifier>{3169844d-6107-4a6b-9a87-1bc1f7b3108a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Managers">
+      <UniqueIdentifier>{209cc194-93a7-445a-b727-9d6affa075cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Object">
+      <UniqueIdentifier>{e134d954-aa10-4e7e-9ef8-f1db5baabb17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Actor\ヘッダーファイル">
+      <UniqueIdentifier>{1ba9e61d-7eff-4d06-99c3-9b6f401518f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Actor\ソースファイル">
+      <UniqueIdentifier>{3bf8a79c-8415-4de8-85d9-ec4cb3bf64e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Data\ヘッダーファイル">
+      <UniqueIdentifier>{9fd00625-cefb-4d96-9d7b-8e6371494323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Data\ソースファイル">
+      <UniqueIdentifier>{dbf7d8cc-739d-424d-87cf-0e3d5e92be27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\ExternalCode\ソースファイル">
+      <UniqueIdentifier>{2515c5dd-f746-4e05-ad45-99af12b5dd03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\ExternalCode\ヘッダーファイル">
+      <UniqueIdentifier>{c025a49e-f5bf-48dc-87f4-4cbf791b6359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Game\ソースファイル">
+      <UniqueIdentifier>{f7312ac8-d819-4880-8d7b-bb27310f9350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Game\ヘッダーファイル">
+      <UniqueIdentifier>{627cf73c-eaee-41f0-999b-a5466c750131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Library\ソースファイル">
+      <UniqueIdentifier>{ccb8e0b2-728b-487b-ac19-e29237592192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Library\ヘッダーファイル">
+      <UniqueIdentifier>{363f8b41-d4fc-46ab-ad34-2701739eaaef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Library\ソースファイル\ExternalTools">
+      <UniqueIdentifier>{87132ef9-5bbd-4983-ab95-d0e8c77c7568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Library\ソースファイル\ExternalTools\imgui">
+      <UniqueIdentifier>{7da443de-4dca-4fef-a713-10f04d3d9ac6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Library\ソースファイル\ExternalTools\imgui\ソースファイル">
+      <UniqueIdentifier>{59bf62b7-d639-4f50-b716-616a8209d926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Library\ソースファイル\ExternalTools\imgui\ヘッダーファイル">
+      <UniqueIdentifier>{85fe971e-b1af-43b3-9a3f-6b364a30019d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Managers\ヘッダーファイル">
+      <UniqueIdentifier>{bee70908-82ce-4a98-9b2c-8c3351d29c1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Managers\ソースファイル">
+      <UniqueIdentifier>{3bc9357b-9540-4778-b7b2-f19a892272b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Transform">
+      <UniqueIdentifier>{9fb7058d-9f74-4819-9bf3-6237b60a7fdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Transform\ヘッダーファイル">
+      <UniqueIdentifier>{aeb3d55c-68e1-493d-8c7c-3b64f4de7541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework\Transform\ソースファイル">
+      <UniqueIdentifier>{54a7be63-09d6-408c-82b5-78a880ef4200}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameFramework\Transform\CRotator.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Transform\CTransform.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Managers\CGameManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Managers\CInputManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Level\CLevel.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Game\CGame.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalCode\AssimpScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalCode\CDirectXGraphics.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalCode\CWindow.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalCode\CWindowCallback.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalCode\dx11mathutil.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalCode\Shader.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalCode\utftosjisconv.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Actor\CActor.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\DDSTextureLoader.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Library\LCCollision.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Library\LCMath.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CSkyDome.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="EntryPoint.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Game\CApplication.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CFighter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Managers\CDirectXResourceManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Managers\CColliderManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Data\CModelData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Data\CModelMeshData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\Components\CAABBColliderComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CBoxMeshComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CColliderComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CPrimitiveMeshComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CRenderComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CSphereColliderComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CSphereMeshComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CSpringArmComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CStaticMeshComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CBillboardComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CPlaneMeshComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="CPointer.cpp">
       <Filter>ソース ファイル</Filter>
@@ -153,23 +168,17 @@
     <ClCompile Include="CBullet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Data\CWave.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\Managers\CSoundManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\Components\CCameraComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CDisplay2DComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CVisionComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CLineComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="CAttachObject.cpp">
       <Filter>ソース ファイル</Filter>
@@ -177,184 +186,181 @@
     <ClCompile Include="CMainGameLevel.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_demo.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_draw.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_impl_dx11.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_impl_win32.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_tables.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_widgets.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework\ExternalTools\imgui\myimgui.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
     <ClCompile Include="CTitle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GameFramework\Managers\CLightManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\Components\CLightComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CPointLightComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CSpotLightComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CSquareDivisionComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\C2DAnimationComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameFramework\Components\CParticleGeneratorComponent.cpp">
-      <Filter>Components\ソースファイル</Filter>
+      <Filter>GameFramework\Components\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Actor\CActor.cpp">
+      <Filter>GameFramework\Actor\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Data\CModelData.cpp">
+      <Filter>GameFramework\Data\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Data\CModelMeshData.cpp">
+      <Filter>GameFramework\Data\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Data\CWave.cpp">
+      <Filter>GameFramework\Data\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalCode\AssimpScene.cpp">
+      <Filter>GameFramework\ExternalCode\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalCode\CDirectXGraphics.cpp">
+      <Filter>GameFramework\ExternalCode\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalCode\CWindow.cpp">
+      <Filter>GameFramework\ExternalCode\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalCode\CWindowCallback.cpp">
+      <Filter>GameFramework\ExternalCode\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalCode\dx11mathutil.cpp">
+      <Filter>GameFramework\ExternalCode\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalCode\Shader.cpp">
+      <Filter>GameFramework\ExternalCode\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalCode\utftosjisconv.cpp">
+      <Filter>GameFramework\ExternalCode\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\WICTextureLoader.cpp">
+      <Filter>GameFramework\ExternalLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalLibrary\DirectXTex\include\DDSTextureLoader.cpp">
+      <Filter>GameFramework\ExternalLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Game\CApplication.cpp">
+      <Filter>GameFramework\Game\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Game\CGame.cpp">
+      <Filter>GameFramework\Game\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Level\CLevel.cpp">
+      <Filter>GameFramework\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\myimgui.cpp">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_tables.cpp">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_widgets.cpp">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui.cpp">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_demo.cpp">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_draw.cpp">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_impl_dx11.cpp">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\ExternalTools\imgui\imgui_impl_win32.cpp">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Library\LCCollision.cpp">
+      <Filter>GameFramework\Library\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Library\LCMath.cpp">
+      <Filter>GameFramework\Library\ヘッダーファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Managers\CGameManager.cpp">
+      <Filter>GameFramework\Managers\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Managers\CInputManager.cpp">
+      <Filter>GameFramework\Managers\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Managers\CLightManager.cpp">
+      <Filter>GameFramework\Managers\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Managers\CModelDataManager.cpp">
+      <Filter>GameFramework\Managers\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Managers\CColliderManager.cpp">
+      <Filter>GameFramework\Managers\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Managers\CDirectXResourceManager.cpp">
+      <Filter>GameFramework\Managers\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Managers\CSoundManager.cpp">
+      <Filter>GameFramework\Managers\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Transform\CTransform.cpp">
+      <Filter>GameFramework\Transform\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework\Transform\CRotator.cpp">
+      <Filter>GameFramework\Transform\ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameFramework\Transform\CRotator.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Transform\CTransform.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Managers\CGameManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Managers\CInputManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Managers\CModelDataManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Level\CLevel.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Interfaces\IRender.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Game\CGame.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\AssimpScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\ExternalCode\CDirectInput.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\CDirectxGraphics.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\CWindow.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\CWindowCallback.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\dx11mathutil.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\DX11Settransform.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\Memory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\Shader.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalCode\utftosjisconv.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Actor\CActor.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Library\LCCollision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Library\LCMath.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="CSkyDome.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Object\CObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Game\CApplication.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CFighter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Managers\CDirectXResourceManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Managers\CColliderManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Data\CModelData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Data\VertexProto.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Data\CModelMeshData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Components\CAABBColliderComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CBoxMeshComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CCameraComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CColliderComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CLightComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CPrimitiveMeshComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CRenderComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CSphereColliderComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CSphereMeshComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CSpringArmComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CStaticMeshComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CBillboardComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CPlaneMeshComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="CPointer.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -362,92 +368,176 @@
     <ClInclude Include="CBullet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Data\CWave.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Managers\CSoundManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Components\CDisplay2DComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CVisionComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CLineComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="CAttachObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Actor\CActorGenerator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="CMainGameLevel.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\ExternalTools\imgui\imconfig.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_impl_dx11.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_impl_win32.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_internal.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_rectpack.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_textedit.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_truetype.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\ExternalTools\imgui\myimgui.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
     <ClInclude Include="CTitle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameFramework\Actor\CDisplay2DActor.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Actor\CFeedActor.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GameFramework\Components\CComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Managers\CLightManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CPointLightComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CSpotLightComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\C2DAnimationComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CSquareDivisionComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework\Actor\CCameraActor.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CSceneComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CParticleGeneratorComponent.h">
-      <Filter>Components\ヘッダーファイル</Filter>
+      <Filter>GameFramework\Components\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Actor\CActor.h">
+      <Filter>GameFramework\Actor\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Actor\CActorGenerator.h">
+      <Filter>GameFramework\Actor\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Actor\CCameraActor.h">
+      <Filter>GameFramework\Actor\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Actor\CDisplay2DActor.h">
+      <Filter>GameFramework\Actor\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Actor\CFeedActor.h">
+      <Filter>GameFramework\Actor\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Data\CModelData.h">
+      <Filter>GameFramework\Data\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Data\CModelMeshData.h">
+      <Filter>GameFramework\Data\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Data\CWave.h">
+      <Filter>GameFramework\Data\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalCode\AssimpScene.h">
+      <Filter>GameFramework\ExternalCode\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalCode\CDirectxGraphics.h">
+      <Filter>GameFramework\ExternalCode\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalCode\CWindow.h">
+      <Filter>GameFramework\ExternalCode\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalCode\CWindowCallback.h">
+      <Filter>GameFramework\ExternalCode\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalCode\dx11mathutil.h">
+      <Filter>GameFramework\ExternalCode\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalCode\DX11Settransform.h">
+      <Filter>GameFramework\ExternalCode\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalCode\Memory.h">
+      <Filter>GameFramework\ExternalCode\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalCode\Shader.h">
+      <Filter>GameFramework\ExternalCode\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalCode\shaderhashmap.h">
+      <Filter>GameFramework\ExternalCode\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalCode\utftosjisconv.h">
+      <Filter>GameFramework\ExternalCode\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Game\CApplication.h">
+      <Filter>GameFramework\Game\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Game\CGame.h">
+      <Filter>GameFramework\Game\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Interfaces\IRender.h">
+      <Filter>GameFramework\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Level\CLevel.h">
+      <Filter>GameFramework\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imconfig.h">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui.h">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_impl_dx11.h">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_internal.h">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_rectpack.h">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_textedit.h">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imstb_truetype.h">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\imgui_impl_win32.h">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalTools\imgui\myimgui.h">
+      <Filter>GameFramework\Library\ソースファイル\ExternalTools\imgui\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Library\LCMath.h">
+      <Filter>GameFramework\Library\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Library\LCCollision.h">
+      <Filter>GameFramework\Library\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Managers\CColliderManager.h">
+      <Filter>GameFramework\Managers\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Managers\CDirectXResourceManager.h">
+      <Filter>GameFramework\Managers\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Managers\CGameManager.h">
+      <Filter>GameFramework\Managers\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Managers\CInputManager.h">
+      <Filter>GameFramework\Managers\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Managers\CLightManager.h">
+      <Filter>GameFramework\Managers\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Managers\CModelDataManager.h">
+      <Filter>GameFramework\Managers\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Managers\CSoundManager.h">
+      <Filter>GameFramework\Managers\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Object\CObject.h">
+      <Filter>GameFramework\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Transform\CRotator.h">
+      <Filter>GameFramework\Transform\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Transform\CTransform.h">
+      <Filter>GameFramework\Transform\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\Data\MeshDataDefinition.h">
+      <Filter>GameFramework\Data\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -469,9 +559,6 @@
     <FxCompile Include="Shader\vsnotex.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <ClInclude Include="GameFramework\ExternalCode\shaderhashmap.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <FxCompile Include="Shader\basicps.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>

@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief 視覚コンポーネントのソースファイル
+//!
+
 #include <iostream>
 #include <vector>
 
@@ -10,138 +15,164 @@
 #include "..\Actor\CActor.h"
 #include "..\Managers\CColliderManager.h"
 
-CVisionComponent::CVisionComponent(CActor& owner, CTransform& parentTrans, float length, float angle, std::function<void(CActor&)> event, int priority)
-	:CComponent(owner, priority), Transform(owner,parentTrans), mLength(length), mEvent(event)
+CVisionComponent::CVisionComponent(CActor& owner , CTransform& parentTrans , float distance , float fov , std::function<void(CActor&)> event)
+	:CComponent(owner , 90) , Transform(owner , parentTrans) , mDistance(distance) , mEvent(event)
 {
-	mRadian = XMConvertToRadians(angle);
+	//視野角（弧度法）をラジアンに変換する
+	mBaseAngle = XMConvertToRadians(fov / 2.0f);
 }
 
 void CVisionComponent::Update()
 {
+	//コライダーコンポーネントをすべて取得
 	std::vector<CColliderComponent*> colliders;
-	CColliderManager::GetInstance().GetColliders(nullptr, colliders);
+	CColliderManager::GetInstance().GetColliders(nullptr , colliders);
 
+	//自分の所有者のコライダーコンポーネントをすべて取得
 	std::vector<CComponent*> selfColliders;
 	mOwnerInterface.GetActor().GetAllComponents<CColliderComponent>(selfColliders);
-	for (auto collider : colliders)
+
+	for(auto collider : colliders)
 	{
-		bool shouldEvent = false;
-		if (selfColliders.size() != 0)
+		bool shouldEvent = false;		//イベントを行うべきか
+
+		//存在していれば
+		if(selfColliders.size() != 0)
 		{
-			bool shouldJudge = true;
-			for (const auto& selfCollider : selfColliders)
+			bool shouldJudge = true;		//判定すべきか
+			for(const auto& selfCollider : selfColliders)
 			{
-				if (collider == selfCollider)
+				if(collider == selfCollider)
 				{
 					shouldJudge = false;
 					break;
 				}
 			}
-			if (!shouldJudge)
+			if(!shouldJudge)
 			{
 				continue;
 			}
 		}
 
-		float length;
-		XMFLOAT3 targetVec;
-		XMFLOAT3 targetLoc;
+		XMFLOAT3 targetVec;			//ターゲットまでのベクトル
+		XMFLOAT3 targetLoc;			//ターゲットのロケーション
+		float targetDistance;		//ターゲットまでの距離
+
 		XMFLOAT3 selfLoc = Transform.GetWorldLocation();
 		XMFLOAT3 selfForwardVec = Transform.GetForwardVectorWorld();
 
-		if (collider->GetType() == CColliderComponent::EType::AABB)
+		XMFLOAT3 keyVec;		//ターゲットの位置から自分の向きベクトルを無限遠に伸ばした線に最短で交わる線のベクトル情報でキーになるベクトル
+		float keyVecLength;		//キーベクトルの長さ
+
+		if(collider->GetType() == CColliderComponent::EType::AABB)
 		{
-			float dot;
-			XMFLOAT3 minLoc;
-			XMFLOAT3 maxLoc;
-			XMFLOAT3 addLoc;
+			CAABBColliderComponent* aabb = dynamic_cast<CAABBColliderComponent*>(collider);
 
-			CAABBColliderComponent* AABB = dynamic_cast<CAABBColliderComponent*>(collider);
-			targetLoc = AABB->Transform.GetWorldLocation();
-			minLoc = AABB->GetWorldMin();
-			maxLoc = AABB->GetWorldMax();
+			//ターゲットのロケーションを代入
+			targetLoc = aabb->Transform.GetWorldLocation();
 
-			//自分から相手への向きベクトルを求める
-			LCMath::CalcFloat3FromStartToGoal(selfLoc, targetLoc, targetVec);
-			//相手への向きベクトルと自分の向いてる方向への内積を求める
-			LCMath::CalcFloat3Dot(targetVec, selfForwardVec, dot);
+			//最小最大値をターゲットのロケーションからの相対座標として算出
+			XMFLOAT3 minLoc = LCMath::CalcFloat3Addition(targetLoc , aabb->GetWorldMin());
+			XMFLOAT3 maxLoc = LCMath::CalcFloat3Subtraction(aabb->GetWorldMax() , targetLoc);
 
-			//内積で求めた長さに向いてる方向をかけて向きベクトルを求める
-			//相手への向きベクトルから上で求めたベクトルを引いて相手から垂直に交わる座標への向きベクトルを求める
-			LCMath::CalcFloat3FromStartToGoal(LCMath::CalcFloat3Scalar(selfForwardVec, dot), targetVec, addLoc);
+			//自分からターゲットまでのベクトルを算出
+			LCMath::CalcFloat3FromStartToGoal(selfLoc , targetLoc , targetVec);
 
-			if ((minLoc.x < addLoc.x && addLoc.x < maxLoc.x) && (minLoc.y < addLoc.y && addLoc.y < maxLoc.y) && (minLoc.z < addLoc.z && addLoc.z < maxLoc.z))
+			//ターゲットまでのベクトルと自分の向きベクトルとの内積を求め、コサイン（長さ）を算出
+			LCMath::CalcFloat3Dot(targetVec , selfForwardVec , keyVecLength);
+
+			//内積で求めた長さを自分の向きベクトルにかけてベクトルを算出、
+			//算出したベクトルとターゲットまでのベクトルで減算を行いその二点間のベクトルを算出
+			LCMath::CalcFloat3FromStartToGoal(targetVec , LCMath::CalcFloat3Scalar(selfForwardVec , keyVecLength) , keyVec);
+
+			//キーベクトルがAABBの中だったら視界に入ってる判定にする
+			if((minLoc.x < keyVec.x && keyVec.x < maxLoc.x) &&
+				(minLoc.y < keyVec.y && keyVec.y < maxLoc.y) &&
+				(minLoc.z < keyVec.z && keyVec.z < maxLoc.z))
 			{
 				shouldEvent = true;
 			}
 			else
 			{
-				if (addLoc.x < minLoc.x) targetLoc.x = minLoc.x;
-				else if (addLoc.x > maxLoc.x) targetLoc.x = maxLoc.x;			
-				else targetLoc.x = addLoc.x;
+				//キーベクトルを更新する
+				if(keyVec.x < minLoc.x) keyVec.x = minLoc.x;
+				else if(keyVec.x > maxLoc.x) keyVec.x = maxLoc.x;
+				else keyVec.x = keyVec.x;
 
-				if (addLoc.y < minLoc.y) targetLoc.y = minLoc.y;
-				else if (addLoc.y > maxLoc.y) targetLoc.y = maxLoc.y;
-				else targetLoc.y = addLoc.y;
-				
-				if (addLoc.z < minLoc.z) targetLoc.z = minLoc.z;
-				else if (addLoc.z > maxLoc.z) targetLoc.z = maxLoc.z;
-				else targetLoc.z = addLoc.z;
+				if(keyVec.y < minLoc.y) keyVec.y = minLoc.y;
+				else if(keyVec.y > maxLoc.y) keyVec.y = maxLoc.y;
+				else keyVec.y = keyVec.y;
+
+				if(keyVec.z < minLoc.z) keyVec.z = minLoc.z;
+				else if(keyVec.z > maxLoc.z) keyVec.z = maxLoc.z;
+				else keyVec.z = keyVec.z;
+
+				//ターゲットまでのベクトルを更新する
+				LCMath::CalcFloat3Addition(targetVec , keyVec , targetVec);
 			}
 		}
-		if (collider->GetType() == CColliderComponent::EType::SPHERE)
+		if(collider->GetType() == CColliderComponent::EType::SPHERE)
 		{
-			float dot;
-			XMFLOAT3 addLoc;
-			XMFLOAT3 normal;
-
 			CSphereColliderComponent* sphere = dynamic_cast<CSphereColliderComponent*>(collider);
+
+			//ターゲットのロケーションを代入
 			targetLoc = sphere->GetCenter();
 
-			//自分から相手への向きベクトルを求める
-			LCMath::CalcFloat3FromStartToGoal(selfLoc, targetLoc, targetVec);
-			//相手への向きベクトルと自分の向いてる方向への内積を求める
-			LCMath::CalcFloat3Dot(targetVec, selfForwardVec, dot);
+			//自分からターゲットまでのベクトルを算出
+			LCMath::CalcFloat3FromStartToGoal(selfLoc , targetLoc , targetVec);
 
-			//内積で求めた長さに向いてる方向をかけて向きベクトルを求める
-			//相手への向きベクトルから上で求めたベクトルを引いて相手から垂直に交わる座標への向きベクトルを求める
-			LCMath::CalcFloat3FromStartToGoal(LCMath::CalcFloat3Scalar(selfForwardVec, dot), targetVec, addLoc);
+			//ターゲットまでのベクトルと自分の向きベクトルとの内積を求め、コサイン（長さ）を算出
+			LCMath::CalcFloat3Dot(targetVec , selfForwardVec , keyVecLength);
 
-			//向きベクトルが半径の中だったら視界に入ってる判定にする
-			if ((addLoc.x * addLoc.x) + (addLoc.y * addLoc.y) + (addLoc.z * addLoc.z) <= (sphere->GetWorldRadius() * sphere->GetWorldRadius()))
+			//内積で求めた長さを自分の向きベクトルにかけてベクトルを算出、
+			//算出したベクトルとターゲットまでのベクトルで減算を行いその二点間のベクトルを算出
+			LCMath::CalcFloat3FromStartToGoal(targetVec , LCMath::CalcFloat3Scalar(selfForwardVec , keyVecLength) , keyVec);
+
+			//キーベクトルがスフィアの中だったら視界に入ってる判定にする
+			if(((keyVec.x * keyVec.x) + (keyVec.y * keyVec.y) + (keyVec.z * keyVec.z)) <= (sphere->GetWorldRadius() * sphere->GetWorldRadius()))
 			{
 				shouldEvent = true;
 			}
 			else
 			{
-				//相手から垂直に交わる座標への向きベクトルを正規化する
-				LCMath::CalcFloat3Normalize(addLoc, normal);
+				//キーベクトルを正規化して向きベクトルにする
+				LCMath::CalcFloat3Normalize(keyVec , keyVec);
 
-				//正規化した向きベクトルに相手のコリジョンの半径をかけて自分から一番近い距離を求める
-				LCMath::CalcFloat3Scalar(normal, sphere->GetWorldRadius(), targetLoc);
+				//キーベクトルの向きベクトルにターゲットのコリジョンの半径をかけてキーベクトルを更新する
+				LCMath::CalcFloat3Scalar(keyVec , sphere->GetWorldRadius() , keyVec);
+
+				//ターゲットまでのベクトルを更新する
+				LCMath::CalcFloat3Addition(targetVec , keyVec , targetVec);
 			}
 		}
 
-		if (!shouldEvent)
+		if(!shouldEvent)
 		{
-			LCMath::CalcFloat3Length(targetVec, length);
-			if (length <= mLength)
-			{
-				float dot;
-				LCMath::CalcFloat3Normalize(targetVec, targetVec);
-				LCMath::CalcFloat3Dot(selfForwardVec, targetVec, dot);
+			//ターゲットまでの距離を算出
+			LCMath::CalcFloat3Length(targetVec , targetDistance);
 
-				std::acos(dot);
-				if (dot > mRadian)
+			//視覚の届く距離にターゲットまでの距離が収まっているなら
+			if(targetDistance <= mDistance)
+			{
+				float targetAngle;		//ターゲットまでの角度
+
+				LCMath::CalcFloat3Normalize(targetVec , targetVec);
+				LCMath::CalcFloat3Dot(selfForwardVec , targetVec , targetAngle);
+
+				//ラジアンに変換
+				std::acos(targetAngle);
+
+				//ターゲットまでの角度がベースとなる角度に収まるなら
+				if(targetAngle <= mBaseAngle || targetAngle <= -mBaseAngle)
 				{
 					shouldEvent = true;
 				}
 			}
 		}
 
-		//入れた関数を実行する用にするかも
-		if (shouldEvent && mEvent != nullptr)
+		if(shouldEvent)
 		{
+			//イベントを呼び出す
 			mEvent(collider->GetOwner());
 		}
 	}

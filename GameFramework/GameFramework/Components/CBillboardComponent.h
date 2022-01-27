@@ -1,10 +1,10 @@
-#pragma once
-#include "CPlaneMeshComponent.h"
-
 //!
 //! @file
 //! @brief ビルボードコンポーネントのヘッダーファイル
 //!
+
+#pragma once
+#include "CPlaneMeshComponent.h"
 
 //! @brief ビルボードコンポーネントクラス
 class CBillboardComponent :public CPlaneMeshComponent<SVertexUV>
@@ -28,7 +28,7 @@ private:
 public:
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
 	//! @param[in] texturePath テクスチャファイルのパス
 	//! @param[in] vertexShaderPath 頂点シェーダのパス

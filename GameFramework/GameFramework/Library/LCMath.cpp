@@ -4,7 +4,7 @@
 #include "../ExternalCode/dx11mathutil.h"
 
 const XMFLOAT4& LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& axisX , const XMFLOAT3& axisY , const XMFLOAT3& axisZ ,
-	const XMFLOAT3& eulerAngle , XMFLOAT4& resultQua)
+	const XMFLOAT3& eulerAngle , XMFLOAT4& result)
 {
 	XMFLOAT4 qtx , qty , qtz;
 
@@ -12,10 +12,10 @@ const XMFLOAT4& LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& axi
 	CreateFromAxisAndAngleToQuaternion(axisY , XMConvertToRadians(eulerAngle.y) , qty);
 	CreateFromAxisAndAngleToQuaternion(axisZ , XMConvertToRadians(eulerAngle.z) , qtz);
 
-	DX11QtMul(resultQua , qtx , qty);
-	DX11QtMul(resultQua , resultQua , qtz);
+	DX11QtMul(result , qtx , qty);
+	DX11QtMul(result , result , qtz);
 
-	return resultQua;
+	return result;
 }
 
 XMFLOAT4 LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& axisX , const XMFLOAT3& axisY , const XMFLOAT3& axisZ ,
@@ -34,7 +34,7 @@ XMFLOAT4 LCMath::TransformFromEulerAnglesToQuaternion(const XMFLOAT3& axisX , co
 	return result;
 }
 
-const XMFLOAT3& LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua , XMFLOAT3& resultAngle)
+const XMFLOAT3& LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua , XMFLOAT3& result)
 {
 	double pitch , yaw , roll;
 
@@ -65,11 +65,11 @@ const XMFLOAT3& LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua
 	yaw = std::asin(r21);
 	roll = std::atan2(r11 , r12);
 
-	resultAngle.x = XMConvertToDegrees(pitch);
-	resultAngle.y = XMConvertToDegrees(yaw);
-	resultAngle.z = XMConvertToDegrees(roll);
+	result.x = XMConvertToDegrees(pitch);
+	result.y = XMConvertToDegrees(yaw);
+	result.z = XMConvertToDegrees(roll);
 
-	return resultAngle;
+	return result;
 }
 
 XMFLOAT3 LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua)
@@ -98,17 +98,17 @@ XMFLOAT3 LCMath::TransformFromQuaternionToEulerAngles(const XMFLOAT4& qua)
 	return result;
 }
 
-const XMFLOAT3& LCMath::TransformFromMatrixToEulerAngles(const XMFLOAT4X4& matrix , XMFLOAT3& resultAngle)
+const XMFLOAT3& LCMath::TransformFromMatrixToEulerAngles(const XMFLOAT4X4& matrix , XMFLOAT3& result)
 {
 	XMFLOAT3 axisX = CalcFloat3Normalize({ matrix._11,matrix._12,matrix._13 });
 	XMFLOAT3 axisY = CalcFloat3Normalize({ matrix._21,matrix._22,matrix._23 });
 	XMFLOAT3 axisZ = CalcFloat3Normalize({ matrix._31,matrix._32,matrix._33 });
 
-	resultAngle.x = XMConvertToDegrees(std::atan2(axisZ.x , axisZ.y));
-	resultAngle.y = XMConvertToDegrees(std::asin(axisY.x));
-	resultAngle.z = XMConvertToDegrees(std::atan2(axisX.x , axisX.y));
+	result.x = XMConvertToDegrees(std::atan2(axisZ.x , axisZ.y));
+	result.y = XMConvertToDegrees(std::asin(axisY.x));
+	result.z = XMConvertToDegrees(std::atan2(axisX.x , axisX.y));
 
-	return resultAngle;
+	return result;
 }
 
 XMFLOAT3 LCMath::TransformFromMatrixToEulerAngles(const XMFLOAT4X4& matrix)
@@ -136,13 +136,13 @@ void LCMath::IdentityQuaternion(XMFLOAT4& target)
 	XMStoreFloat4(&target , XMQuaternionIdentity());
 }
 
-const XMFLOAT4X4& LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , const XMFLOAT4X4& rotMTX , XMFLOAT4X4& resultMTX)
+const XMFLOAT4X4& LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , const XMFLOAT4X4& rotMTX , XMFLOAT4X4& result)
 {
 	XMFLOAT4X4 trans;
-	DX11MtxScale(scale.x , scale.y , scale.z , resultMTX);
-	DX11MtxMultiply(resultMTX , resultMTX , rotMTX);
+	DX11MtxScale(scale.x , scale.y , scale.z , result);
+	DX11MtxMultiply(result , result , rotMTX);
 	DX11MtxTranslation(location , trans);
-	DX11MtxMultiply(resultMTX , resultMTX , trans);
+	DX11MtxMultiply(result , result , trans);
 
 	//resultMTX._11 = scale.x * rotMTX._11;
 	//resultMTX._12 = scale.y * rotMTX._12;
@@ -161,7 +161,7 @@ const XMFLOAT4X4& LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3
 	//resultMTX._43 = location.z;
 	//resultMTX._44 = 1;
 
-	return resultMTX;
+	return result;
 }
 
 XMFLOAT4X4 LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale , const XMFLOAT4X4& rotMTX)
@@ -177,13 +177,13 @@ XMFLOAT4X4 LCMath::UpdateMatrix(const XMFLOAT3& location , const XMFLOAT3& scale
 	return result;
 }
 
-const XMFLOAT4X4& LCMath::InverseMatrix(const XMFLOAT4X4& target , XMFLOAT4X4& resultMTX)
+const XMFLOAT4X4& LCMath::InverseMatrix(const XMFLOAT4X4& target , XMFLOAT4X4& result)
 {
 	XMMATRIX mat = XMLoadFloat4x4(&target);
 	XMMATRIX inverseMTX = XMMatrixInverse(nullptr , mat);
-	XMStoreFloat4x4(&resultMTX , inverseMTX);
+	XMStoreFloat4x4(&result , inverseMTX);
 
-	return resultMTX;
+	return result;
 }
 
 XMFLOAT4X4 LCMath::InverseMatrix(const XMFLOAT4X4& target)
@@ -197,13 +197,13 @@ XMFLOAT4X4 LCMath::InverseMatrix(const XMFLOAT4X4& target)
 	return result;
 }
 
-const XMFLOAT4X4& LCMath::TransposeMatrix(const XMFLOAT4X4& target , XMFLOAT4X4& resultMTX)
+const XMFLOAT4X4& LCMath::TransposeMatrix(const XMFLOAT4X4& target , XMFLOAT4X4& result)
 {
 	XMMATRIX mat = XMLoadFloat4x4(&target);
 	XMMATRIX trasposeMTX = XMMatrixTranspose(mat);
-	XMStoreFloat4x4(&resultMTX , trasposeMTX);
+	XMStoreFloat4x4(&result , trasposeMTX);
 
-	return resultMTX;
+	return result;
 }
 
 XMFLOAT4X4 LCMath::TransposeMatrix(const XMFLOAT4X4& target)
@@ -285,11 +285,11 @@ XMFLOAT4 LCMath::CreateFromAxisAndAngleToQuaternion(const XMFLOAT3& axis , const
 	return result;
 }
 
-const XMFLOAT4& LCMath::CalcQuaternionMultiply(const XMFLOAT4& qua1 , const XMFLOAT4& qua2 , XMFLOAT4& resultQua)
+const XMFLOAT4& LCMath::CalcQuaternionMultiply(const XMFLOAT4& qua1 , const XMFLOAT4& qua2 , XMFLOAT4& result)
 {
-	DX11QtMul(resultQua , qua1 , qua2);
+	DX11QtMul(result , qua1 , qua2);
 
-	return resultQua;
+	return result;
 }
 
 XMFLOAT4 LCMath::CalcQuaternionMultiply(const XMFLOAT4& qua1 , const XMFLOAT4& qua2)
@@ -301,11 +301,11 @@ XMFLOAT4 LCMath::CalcQuaternionMultiply(const XMFLOAT4& qua1 , const XMFLOAT4& q
 	return result;
 }
 
-const XMFLOAT4X4& LCMath::CalcMatrixFromQuaternion(const XMFLOAT4& target , XMFLOAT4X4& resultMTX)
+const XMFLOAT4X4& LCMath::CalcMatrixFromQuaternion(const XMFLOAT4& target , XMFLOAT4X4& result)
 {
-	DX11MtxFromQt(resultMTX , target);
+	DX11MtxFromQt(result , target);
 
-	return resultMTX;
+	return result;
 }
 
 XMFLOAT4X4 LCMath::CalcMatrixFromQuaternion(const XMFLOAT4& target)
@@ -317,11 +317,11 @@ XMFLOAT4X4 LCMath::CalcMatrixFromQuaternion(const XMFLOAT4& target)
 	return result;
 }
 
-const XMFLOAT4X4& LCMath::CalcMatrixMultply(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2 , XMFLOAT4X4& resultMTX)
+const XMFLOAT4X4& LCMath::CalcMatrixMultply(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2 , XMFLOAT4X4& result)
 {
-	DX11MtxMultiply(resultMTX , target1 , target2);
+	DX11MtxMultiply(result , target1 , target2);
 
-	return resultMTX;
+	return result;
 }
 
 XMFLOAT4X4 LCMath::CalcMatrixMultply(const XMFLOAT4X4& target1 , const XMFLOAT4X4& target2)
@@ -329,6 +329,50 @@ XMFLOAT4X4 LCMath::CalcMatrixMultply(const XMFLOAT4X4& target1 , const XMFLOAT4X
 	XMFLOAT4X4 result;
 
 	DX11MtxMultiply(result , target1 , target2);
+
+	return result;
+}
+
+const XMFLOAT3& LCMath::CalcFloat3Addition(const XMFLOAT3& target , const XMFLOAT3& target2 , XMFLOAT3& result)
+{
+	XMVECTOR targetVec = XMLoadFloat3(&target);
+	XMVECTOR target2Vec = XMLoadFloat3(&target2);
+
+	XMStoreFloat3(&result , XMVectorAdd(targetVec , target2Vec));
+
+	return result;
+}
+
+XMFLOAT3 LCMath::CalcFloat3Addition(const XMFLOAT3& target , const XMFLOAT3& target2)
+{
+	XMFLOAT3 result;
+
+	XMVECTOR targetVec = XMLoadFloat3(&target);
+	XMVECTOR target2Vec = XMLoadFloat3(&target2);
+
+	XMStoreFloat3(&result , XMVectorAdd(targetVec , target2Vec));
+
+	return result;
+}
+
+const XMFLOAT3& LCMath::CalcFloat3Subtraction(const XMFLOAT3& target , const XMFLOAT3& target2 , XMFLOAT3& result)
+{
+	XMVECTOR targetVec = XMLoadFloat3(&target);
+	XMVECTOR target2Vec = XMLoadFloat3(&target2);
+
+	XMStoreFloat3(&result , XMVectorSubtract(targetVec , target2Vec));
+
+	return result;
+}
+
+XMFLOAT3 LCMath::CalcFloat3Subtraction(const XMFLOAT3& target , const XMFLOAT3& target2)
+{
+	XMFLOAT3 result;
+
+	XMVECTOR targetVec = XMLoadFloat3(&target);
+	XMVECTOR target2Vec = XMLoadFloat3(&target2);
+
+	XMStoreFloat3(&result , XMVectorSubtract(targetVec , target2Vec));
 
 	return result;
 }
@@ -353,26 +397,6 @@ XMFLOAT3 LCMath::CalcFloat3FromStartToGoal(const XMFLOAT3& start , const XMFLOAT
 	XMStoreFloat3(&result , XMVectorSubtract(goalVec , startVec));
 
 	return result;
-}
-
-const XMFLOAT3& LCMath::CalcFloat3Addition(const XMFLOAT3& target , const XMFLOAT3& vector , XMFLOAT3& resultVec)
-{
-	resultVec.x = target.x + vector.x;
-	resultVec.y = target.y + vector.y;
-	resultVec.z = target.z + vector.z;
-
-	return resultVec;
-}
-
-XMFLOAT3 LCMath::CalcFloat3Addition(const XMFLOAT3& target , const XMFLOAT3& vector)
-{
-	XMFLOAT3 resultVec;
-
-	resultVec.x = target.x + vector.x;
-	resultVec.y = target.y + vector.y;
-	resultVec.z = target.z + vector.z;
-
-	return resultVec;
 }
 
 const float& LCMath::CalcFloat3Length(const XMFLOAT3& target , float& result)

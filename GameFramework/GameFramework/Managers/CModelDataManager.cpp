@@ -61,7 +61,7 @@ bool CModelDataManager::InputFile(CModelData& target , std::string filePath)
 	}
 	else
 	{
-		target.ReadData(*this , file);
+		target.ReadCacheData(*this , file);
 		file.close();
 
 		return true;
@@ -80,7 +80,7 @@ void CModelDataManager::OutputFile(CModelData& target , std::string filePath)
 	}
 	else
 	{
-		target.WriteData(*this , file);
+		target.WriteCacheData(*this , file);
 		file.close();
 	}
 }

@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief コライダーコンポーネントのヘッダーファイル
+//!
+
 #pragma once
 #include <vector>
 #include <functional>
@@ -6,11 +11,6 @@
 #include "../Transform/CTransform.h"
 #include "../Data/CModelMeshData.h"
 #include "CComponent.h"
-
-//!
-//! @file
-//! @brief コライダーコンポーネントのヘッダーファイル
-//!
 
 class CTransform;
 
@@ -63,14 +63,14 @@ protected:
 	//! @param[out] min 最小値の結果
 	//! @param[out] max 最大値の結果
 	//!
-	static void CalcMinMaxOfMeshes(const std::vector<CModelMeshData>& meshes , XMFLOAT3& min , XMFLOAT3& max);
+	static void CalcMinMaxOfMeshes(const std::vector<CModelMeshData>& meshes , XMFLOAT3& resultMin , XMFLOAT3& resultMax);
 
 public:
 	CTransform Transform;		//!< トランスフォーム
 
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
 	//! @param[in] type コライダーのタイプ
 	//! @param[in] priority 優先度

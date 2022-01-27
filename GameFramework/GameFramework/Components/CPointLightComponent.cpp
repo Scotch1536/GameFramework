@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief ポイントライトコンポーネントのソースファイル
+//!
+
 #include <functional>
 #include "../Actor/CActor.h"
 

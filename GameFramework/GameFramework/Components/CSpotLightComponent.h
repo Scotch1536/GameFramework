@@ -1,10 +1,10 @@
-#pragma once
-#include "CPointLightComponent.h"
-
 //!
 //! @file
 //! @brief スポットライトコンポーネントのヘッダーファイル
 //!
+
+#pragma once
+#include "CPointLightComponent.h"
 
 //! @brief スポットライトコンポーネントクラス
 class CSpotLightComponent :public CPointLightComponent
@@ -16,7 +16,7 @@ private:
 public:
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
 	//! @param[in] attenuation 減衰率
 	//! @param[in] direction 向き

@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief カメラアクターのヘッダーファイル
+//!
+
 #pragma once
 #include <string>
 
@@ -5,12 +10,19 @@
 
 #include "CActor.h"
 
+//! @brief ディスプレイ2Dアクタークラス
 class CDisplay2DActor :public CActor
 {
 private:
-	CDisplay2DComponent* mDisplay2D = nullptr;
+	CDisplay2DComponent* mDisplay2D = nullptr;		//!< ディスプレイ2Dコンポーネント
 
 public:
+	//!
+	//! @brief コンストラクタ
+	//! @param[in] partner このアクターを所有するレベル
+	//! @param[in] color 色情報
+	//! @param[in] texturePath テクスチャファイルのパス
+	//!
 	CDisplay2DActor(ILevel& partner , const XMFLOAT4& color , std::string texturePath = "NONE"):CActor(partner)
 	{
 		if(texturePath == "NONE")
@@ -23,6 +35,11 @@ public:
 		}
 	}
 
+	//!
+	//! @brief コンストラクタ
+	//! @param[in] partner このアクターを所有するレベル
+	//! @param[in] texturePath テクスチャファイルのパス
+	//!
 	CDisplay2DActor(ILevel& partner , std::string texturePath):CActor(partner)
 	{
 		mDisplay2D = new CDisplay2DComponent(*this , Transform , texturePath , { 1.0f,1.0f,1.0f,1.0f });

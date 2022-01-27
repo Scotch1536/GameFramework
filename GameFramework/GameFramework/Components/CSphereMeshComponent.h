@@ -1,12 +1,12 @@
-#pragma once
-#include <vector>
-
-#include "CPrimitiveMeshComponent.h"
-
 //!
 //! @file
 //! @brief スフィアメッシュコンポーネントのヘッダーファイル
 //!
+
+#pragma once
+#include <vector>
+
+#include "CPrimitiveMeshComponent.h"
 
 //! @brief スフィアメッシュコンポーネントクラス
 class CSphereMeshComponent :public CPrimitiveMeshComponent<>
@@ -24,7 +24,7 @@ private:
 public:
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
 	//! @param[in] color 色情報
 	//! @param[in] divNum 分割数

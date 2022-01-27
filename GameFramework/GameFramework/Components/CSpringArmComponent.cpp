@@ -1,14 +1,14 @@
+//!
+//! @file
+//! @brief スプリングアームコンポーネントのソースファイル
+//!
+
 #include "../Actor/CActor.h"
 #include "../Transform/CTransform.h"
 #include "../Library/LCMath.h"
 
 #include "CCameraComponent.h"
 #include "CSpringArmComponent.h"
-
-//!
-//! @file
-//! @brief スプリングアームコンポーネントのソースファイル
-//!
 
 CSpringArmComponent::CSpringArmComponent(CActor& owner , const CTransform& targetTrans , CCameraComponent& partnerCamera , ELinkMode linkMode , int priority)
 	:CComponent(owner , priority) ,

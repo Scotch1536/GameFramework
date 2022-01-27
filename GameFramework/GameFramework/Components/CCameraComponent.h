@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief カメラコンポーネントのヘッダーファイル
+//!
+
 #pragma once
 #include <DirectXMath.h>
 
@@ -7,11 +12,6 @@
 #include "../Library/LCMath.h"
 
 #include "CComponent.h"
-
-//!
-//! @file
-//! @brief カメラコンポーネントのヘッダーファイル
-//!
 
 class CSpringArmComponent;
 
@@ -54,7 +54,7 @@ private:
 public:
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] priority 優先度
 	//!
 	CCameraComponent(CActor& owner , int priority = 0):CComponent(owner , priority)

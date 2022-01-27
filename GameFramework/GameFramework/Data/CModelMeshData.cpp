@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief モデルメッシュデータのソースファイル
+//!
+
 #include <d3d11.h>
 #include <DirectXMath.h>
 #include <vector>
@@ -6,60 +11,52 @@
 #include "../ExternalCode/CDirectxGraphics.h"
 #include "../ExternalCode/shader.h"
 
-#include "VertexProto.h"
+#include "MeshDataDefinition.h"
 #include "CModelMeshData.h"
 
 using namespace std;
 using namespace DirectX;
 using Microsoft::WRL::ComPtr;
 
-CModelMeshData::CModelMeshData(vector<SVertexUV> vertices , vector<unsigned int> indices , vector<STexture> textures , SMaterial mtrl)
+CModelMeshData::CModelMeshData(vector<SVertexUV> vertices , vector<unsigned int> indices , vector<STexture> textures , SMaterial material):
+	Vertices(vertices) , Indices(indices) , Textures(textures) , Material(material)
 {
-	Vertices = vertices;
-	Indices = indices;
-	Textures = textures;
-	Material = mtrl;
-
+	//メッシュのセットアップ
 	SetupMesh();
 }
 
-bool CModelMeshData::SetupMesh()
+void CModelMeshData::SetupMesh()
 {
 	ID3D11Device* dev = CDirectXGraphics::GetInstance()->GetDXDevice();
 
 	// 頂点バッファ生成
-	bool sts = CreateVertexBufferWrite(dev ,
-		static_cast<unsigned int>(sizeof(SVertexUV)) ,			// ストライド
-		static_cast<unsigned int>(Vertices.size()) ,		// 頂点数
-		Vertices.data() ,									// 頂点データ
-		&mVertexBuffer);
+	bool sts = CreateVertexBufferWrite(dev , static_cast<unsigned int>(sizeof(SVertexUV)) ,
+		static_cast<unsigned int>(Vertices.size()) , Vertices.data() , &mVertexBuffer);
 	if(!sts)
 	{
-		return false;
+		MessageBox(nullptr , "メッシュのセットアップに失敗しました" , "error" , MB_OK);
+		return;
 	}
 
 	// インデックスバッファ生成
-	sts = CreateIndexBuffer(dev ,
-		static_cast<unsigned int>(Indices.size()) ,
-		Indices.data() ,
-		&mIndexBuffer);
+	sts = CreateIndexBuffer(dev , static_cast<unsigned int>(Indices.size()) , Indices.data() , &mIndexBuffer);
 	if(!sts)
 	{
-		return false;
+		MessageBox(nullptr , "メッシュのセットアップに失敗しました" , "error" , MB_OK);
+		return;
 	}
 
 	// マテリアル用コンスタントバッファ生成
-	sts = CreateConstantBufferWrite(dev ,
-		sizeof(SConstantBufferMaterial) ,
-		&mConstantBufferMaterial);
+	sts = CreateConstantBufferWrite(dev , sizeof(SConstantBufferMaterial) , &mConstantBufferMaterial);
 	if(!sts)
 	{
-		return false;
+		MessageBox(nullptr , "メッシュのセットアップに失敗しました" , "error" , MB_OK);
+		return;
 	}
 
 	ID3D11DeviceContext* devicecontext = CDirectXGraphics::GetInstance()->GetImmediateContext();;
 
-	// 定数バッファ更新
+	//定数バッファ初期化
 	D3D11_MAPPED_SUBRESOURCE pData;
 
 	SConstantBufferMaterial cb;
@@ -85,6 +82,4 @@ bool CModelMeshData::SetupMesh()
 		memcpy_s(pData.pData , pData.RowPitch , (void*)(&cb) , sizeof(SConstantBufferMaterial));
 		devicecontext->Unmap(mConstantBufferMaterial.Get() , 0);
 	}
-
-	return true;
 }

@@ -1,13 +1,13 @@
+//!
+//! @file
+//! @brief パーティクル生成コンポーネント類のソースファイル
+//!
+
 #include "../Actor/CActor.h"
 #include "../Library/LCMath.h"
 #include "../Managers/CGameManager.h"
 
 #include "CParticleGeneratorComponent.h"
-
-//!
-//! @file
-//! @brief パーティクル生成コンポーネント類のソースファイル
-//!
 
 SParticleBase CParticleBaseGeneratorLine::GenerateParticleBase()
 {

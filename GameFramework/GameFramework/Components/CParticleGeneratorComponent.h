@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief パーティクル生成コンポーネント類のヘッダーファイル
+//!
+
 #pragma once
 #include <random>
 #include <vector>
@@ -9,11 +14,6 @@
 #include "../Transform/CTransform.h"
 
 #include "CComponent.h"
-
-//!
-//! @file
-//! @brief パーティクル生成コンポーネント類のヘッダーファイル
-//!
 
 using namespace DirectX;
 
@@ -39,6 +39,7 @@ public:
 
 	//! @broef 向きベース生成
 	virtual SParticleBase GenerateParticleBase() = 0;
+
 };
 
 //! @brief 線形パーティクルベース生成クラス
@@ -53,6 +54,7 @@ public:
 
 	//! @broef 向きベース生成
 	SParticleBase GenerateParticleBase()override;
+
 };
 
 //! @brief 円錐パーティクルベース生成クラス
@@ -83,6 +85,7 @@ public:
 	{
 		mCentralAngle = angle;
 	}
+
 };
 
 //! @brief パーティクル生成コンポーネント
@@ -118,6 +121,7 @@ class CParticleGeneratorComponent :public CComponent
 		{
 			mVelocity = velocity;
 		}
+
 	};
 
 private:
@@ -150,7 +154,7 @@ public:
 
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] partner このコンポーネントの所有者
+	//! @param[in] partner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
 	//! @param[in] particleBodyFunc パーティクルの本体部分の生成関数オブジェクト
 	//! @param[in] lifetime ライフタイム

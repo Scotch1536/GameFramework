@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief コライダーコンポーネントのソースファイル
+//!
+
 #include "../Actor/CActor.h"
 #include "../Managers/CColliderManager.h"
 #include "../Library/LCCollision.h"
@@ -5,11 +10,6 @@
 #include "CColliderComponent.h"
 #include "CSphereColliderComponent.h"
 #include "CAABBColliderComponent.h"
-
-//!
-//! @file
-//! @brief コライダーコンポーネントのソースファイル
-//!
 
 CColliderComponent::CColliderComponent(CActor& owner , CTransform& parentTrans , EType type , int priority)
 	:CComponent(owner , priority) ,
@@ -138,21 +138,21 @@ void CColliderComponent::UpdateCollidedCache(CColliderComponent* targetCollider 
 	}
 }
 
-void CColliderComponent::CalcMinMaxOfMeshes(const std::vector<CModelMeshData>& meshes , XMFLOAT3& min , XMFLOAT3& max)
+void CColliderComponent::CalcMinMaxOfMeshes(const std::vector<CModelMeshData>& meshes , XMFLOAT3& resultMin , XMFLOAT3& resultMax)
 {
 	for(auto& m : meshes)
 	{
 		for(auto& v : m.Vertices)
 		{
 			//最小最大値の更新処理
-			if(min.x > v.Pos.x)	min.x = v.Pos.x;
-			else if(max.x < v.Pos.x) max.x = v.Pos.x;
+			if(resultMin.x > v.Pos.x)	resultMin.x = v.Pos.x;
+			else if(resultMax.x < v.Pos.x) resultMax.x = v.Pos.x;
 
-			if(min.y > v.Pos.y)	min.y = v.Pos.y;
-			else if(max.y < v.Pos.y) max.y = v.Pos.y;
+			if(resultMin.y > v.Pos.y)	resultMin.y = v.Pos.y;
+			else if(resultMax.y < v.Pos.y) resultMax.y = v.Pos.y;
 
-			if(min.z > v.Pos.z)	min.z = v.Pos.z;
-			else if(max.z < v.Pos.z) max.z = v.Pos.z;
+			if(resultMin.z > v.Pos.z)	resultMin.z = v.Pos.z;
+			else if(resultMax.z < v.Pos.z) resultMax.z = v.Pos.z;
 		}
 	}
 }

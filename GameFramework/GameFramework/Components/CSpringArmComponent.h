@@ -1,11 +1,11 @@
-#pragma once
-#include <memory>
-#include "CComponent.h"
-
 //!
 //! @file
 //! @brief スプリングアームコンポーネントのヘッダーファイル
 //!
+
+#pragma once
+#include <memory>
+#include "CComponent.h"
 
 class CTransform;
 class CCameraComponent;
@@ -41,7 +41,7 @@ private:
 public:
 	//!
 	//! @brief コンストラクタ
-	//! @param[in] owner このコンポーネントの所有者
+	//! @param[in] owner このコンポーネントを所有するアクター
 	//! @param[in] targetTrans ターゲットのトランスフォーム
 	//! @param[in] partnerCamera パートナーとなるカメラ
 	//! @param[in] linkMode 接続モードカメラ

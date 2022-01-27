@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief モデルデータのソースファイル
+//!
+
 #include <vector>
 #include <fstream>
 
@@ -12,53 +17,50 @@
 #include "../Managers/CDirectXResourceManager.h"
 
 #include "CModelData.h"
-#include "VertexProto.h"
+#include "MeshDataDefinition.h"
 
-std::vector<STexture> CModelData::LoadMaterialTextures(
-	aiMaterial* mtrl ,
-	aiTextureType type ,
-	std::string typeName ,
-	const aiScene * scene)
+std::vector<STexture> CModelData::LoadTextures(aiMaterial* mtrl , aiTextureType type , std::string typeName , const aiScene* scene)
 {
-	std::vector<STexture> textures;		// このマテリアルに関連づいたDIFFUSEテクスチャのリスト
+	std::vector<STexture> textures;		//このマテリアルに関連づいたDIFFUSEテクスチャのリスト
 	ID3D11Device* dev;
 	ID3D11DeviceContext* devcon;
 
 	dev = CDirectXGraphics::GetInstance()->GetDXDevice();
 	devcon = CDirectXGraphics::GetInstance()->GetImmediateContext();
 
-	// マテリアルからテクスチャ個数を取得し(基本は1個)ループする
+	//マテリアルからテクスチャ個数を取得し(基本は1個)ループする
 	for(unsigned int i = 0; i < mtrl->GetTextureCount(type); i++)
 	{
 		aiString str;
 
-		// マテリアルからｉ番目のテクスチャファイル名を取得する
+		//マテリアルからｉ番目のテクスチャファイル名を取得する
 		mtrl->GetTexture(type , i , &str);
 
-		// もし既にロードされたテクスチャであればロードをスキップする
+		//もし既にロードされたテクスチャであればロードをスキップする
 		bool skip = false;
 
-		// ロード済みテクスチャ数分ループする
+		//ロード済みテクスチャ数分ループする
 		for(unsigned int j = 0; j < mTexturesLoaded.size(); j++)
 		{
-			// ファイル名が同じであったら読み込まない
+			//ファイル名が同じであったら読み込まない
 			if(std::strcmp(mTexturesLoaded[j].Path.c_str() , str.C_Str()) == 0)
 			{
-				// 読み込み済みのテクスチャ情報をDIFFUSEテクスチャのリストにセット
+				//読み込み済みのテクスチャ情報をDIFFUSEテクスチャのリストにセット
 				textures.push_back(mTexturesLoaded[j]);
 				skip = true;
 				break;
 			}
 		}
 		if(!skip)
-		{   // まだ読み込まれていなかった場合
+		{
+			//まだ読み込まれていなかった場合
 			STexture tex;
 
 			std::string filename = std::string(str.C_Str());
-			std::string filenameonly = ExtractFileName(filename , '\\');		// ファイル名を取得
-			filename = mDirectory + filenameonly;								// リソースディレクトリ＋ファイル名
+			std::string filenameonly = ExtractFileName(filename , '\\');		//ファイル名を取得
+			filename = mDirectory + filenameonly;								//リソースディレクトリ＋ファイル名
 
-			tex.Texture = CDirectXResourceManager::GetInstance().GetTextureSRV(filename);
+			tex.TextureSRV = CDirectXResourceManager::GetInstance().GetTextureSRV(filename);
 
 			//bool sts = CreateSRVfromFile(
 			//	filename.c_str() ,
@@ -81,9 +83,10 @@ std::vector<STexture> CModelData::LoadMaterialTextures(
 
 			tex.Type = typeName;
 			tex.Path = str.C_Str();
-			// テクスチャ情報をDIFFUSEテクスチャのリストにセット
+
+			//テクスチャ情報をDIFFUSEテクスチャのリストにセット
 			textures.push_back(tex);
-			this->mTexturesLoaded.push_back(tex);	// このモデルに関連づいたテクスチャリストにセット
+			this->mTexturesLoaded.push_back(tex);		//このモデルに関連づいたテクスチャリストにセット
 		}
 	}
 
@@ -92,23 +95,23 @@ std::vector<STexture> CModelData::LoadMaterialTextures(
 
 CModelData::~CModelData()
 {
-	// assimp scene 解放
+	//Assimpシーン 解放
 	mAssimpScene.Exit();
 }
 
 void CModelData::LoadMaterial()
 {
-	// マテリアルが存在するか？
+	//マテリアルが存在するか
 	if(mAssimpScene.GetScene()->HasMaterials())
 	{
-		// マテリアル数 取得
+		//マテリアル数取得
 		int nummaterial = mAssimpScene.GetScene()->mNumMaterials;
 
 		for(int i = 0; i < nummaterial; i++)
 		{
 			SMaterial mtrl;
 
-			// i番目のマテリアルを取得
+			//i番目のマテリアルを取得
 			aiMaterial* mat = mAssimpScene.GetScene()->mMaterials[i];
 
 			aiColor3D colordiffuse(1.f , 1.f , 1.f);
@@ -147,9 +150,9 @@ void CModelData::LoadMaterial()
 	}
 }
 
-bool CModelData::Load(std::string resourceFolderPath ,
-	std::string filePath)
+bool CModelData::Load(std::string resourceFolderPath , std::string filePath)
 {
+	//Assimpシーン初期化
 	bool sts = mAssimpScene.Init(filePath);
 	if(!sts)
 	{
@@ -157,25 +160,24 @@ bool CModelData::Load(std::string resourceFolderPath ,
 		return false;
 	}
 
-	mDirectory = resourceFolderPath;		// このモデルのテクスチャが存在するディレクトリ
+	mDirectory = resourceFolderPath;
 
-	LoadMaterial();						// このモデルで使用されているマテリアルを取得する
+	LoadMaterial();			//このモデルで使用されているマテリアルを取得する
 
-	// aiノードを解析する
+	//aiノードを解析する
 	ProcessNode(mAssimpScene.GetScene()->mRootNode , mAssimpScene.GetScene());
 
 	return true;
 }
 
-// メッシュの解析
-CModelMeshData CModelData::ProcessMesh(aiMesh * mesh , const aiScene * scene , int meshidx)
+CModelMeshData CModelData::ProcessMesh(aiMesh* mesh , const aiScene* scene)
 {
-	std::vector<SVertexUV> vertices;			// 頂点
-	std::vector<unsigned int> indices;		// 面の構成情報
-	std::vector<STexture> textures;			// テクスチャ
+	std::vector<SVertexUV> vertices;		//頂点
+	std::vector<unsigned int> indices;		//面の構成情報
+	std::vector<STexture> textures;			//テクスチャ
 	SMaterial mtrl;
 
-	// 頂点情報を取得
+	//頂点情報を取得
 	for(unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
 		SVertexUV vertex;
@@ -184,7 +186,7 @@ CModelMeshData CModelData::ProcessMesh(aiMesh * mesh , const aiScene * scene , i
 		vertex.Pos.y = mesh->mVertices[i].y;
 		vertex.Pos.z = mesh->mVertices[i].z;
 
-		// 法線ベクトルが存在するか？
+		//法線ベクトルが存在するか？
 		if(mesh->HasNormals())
 		{
 			vertex.Normal.x = mesh->mNormals[i].x;
@@ -198,7 +200,7 @@ CModelMeshData CModelData::ProcessMesh(aiMesh * mesh , const aiScene * scene , i
 			vertex.Normal.z = 0.0f;
 		}
 
-		// テクスチャ座標（０番目）が存在するか？
+		//テクスチャ座標（０番目）が存在するか？
 		if(mesh->HasTextureCoords(0))
 		{
 			vertex.Tex.x = mesh->mTextureCoords[0][i].x;
@@ -208,26 +210,26 @@ CModelMeshData CModelData::ProcessMesh(aiMesh * mesh , const aiScene * scene , i
 		vertices.push_back(vertex);
 	}
 
-	// テクスチャ情報を取得する
+	//テクスチャ情報を取得する
 	if(mesh->mMaterialIndex >= 0)
 	{
-		// このメッシュのマテリアルインデックス値を取得する
+		//このメッシュのマテリアルインデックス値を取得する
 		int	mtrlidx = mesh->mMaterialIndex;
 
-		// このメッシュのマテリアルを取得する
+		//このメッシュのマテリアルを取得する
 		mtrl = mMaterials[mtrlidx];
 
-		// シーンからマテリアルデータを取得する
+		//シーンからマテリアルデータを取得する
 		aiMaterial* material = scene->mMaterials[mtrlidx];
 
-		// このマテリアルに関連づいたテクスチャを取り出す
-		std::vector<STexture> diffuseMaps = LoadMaterialTextures(material , aiTextureType_DIFFUSE , "texture_diffuse" , scene);
+		//このマテリアルに関連づいたテクスチャを取り出す
+		std::vector<STexture> diffuseMaps = LoadTextures(material , aiTextureType_DIFFUSE , "texture_diffuse" , scene);
 
-		// このメッシュで使用しているテクスチャを保存
+		//このメッシュで使用しているテクスチャを保存
 		textures.insert(textures.end() , diffuseMaps.begin() , diffuseMaps.end());
 	}
 
-	// 面の構成情報を取得
+	//面の構成情報を取得
 	for(unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
@@ -241,26 +243,25 @@ CModelMeshData CModelData::ProcessMesh(aiMesh * mesh , const aiScene * scene , i
 	return CModelMeshData(vertices , indices , textures , mtrl);
 }
 
-// ノードの解析
-void CModelData::ProcessNode(aiNode * node , const aiScene * scene)
+void CModelData::ProcessNode(aiNode* node , const aiScene* scene)
 {
-	// ノード内のメッシュの数分ループする
+	//ノード内のメッシュの数分ループする
 	for(unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
-		int meshindex = node->mMeshes[i];			// ノードのi番目メッシュのインデックスを取得
-		aiMesh* mesh = scene->mMeshes[meshindex];	// シーンからメッシュ本体を取り出す
+		int meshindex = node->mMeshes[i];				//ノードのi番目メッシュのインデックスを取得
+		aiMesh* mesh = scene->mMeshes[meshindex];		//シーンからメッシュ本体を取り出す
 
-		mMeshes.push_back(this->ProcessMesh(mesh , scene , meshindex));
+		mMeshes.push_back(this->ProcessMesh(mesh , scene));
 	}
 
-	// 子ノードについても解析
+	//子ノードについても解析
 	for(unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		this->ProcessNode(node->mChildren[i] , scene);
 	}
 }
 
-void CModelData::WriteData(const CModelDataManager& partner , std::fstream& file)
+void CModelData::WriteCacheData(const CModelDataManager& partner , std::fstream& file)
 {
 	size_t bufSize;
 
@@ -336,7 +337,7 @@ void CModelData::WriteData(const CModelDataManager& partner , std::fstream& file
 	file.write((char*)&mMaterials[0] , bufSize);
 }
 
-void CModelData::ReadData(const CModelDataManager& partner , std::fstream& file)
+void CModelData::ReadCacheData(const CModelDataManager& partner , std::fstream& file)
 {
 	size_t bufSize;
 
@@ -411,16 +412,19 @@ void CModelData::ReadDataInit()
 {
 	for(auto& mesh : mMeshes)
 	{
+		//メッシュのセットアップ
 		mesh.SetupMesh();
 
 		for(auto& texture : mesh.Textures)
 		{
+			//テクスチャ初期化
 			TextureInit(texture);
 		}
 	}
 
 	for(auto& texture : mTexturesLoaded)
 	{
+		//テクスチャ初期化
 		TextureInit(texture);
 	}
 }
@@ -428,8 +432,8 @@ void CModelData::ReadDataInit()
 void CModelData::TextureInit(STexture& target)
 {
 	std::string filename = target.Path;
-	std::string filenameonly = ExtractFileName(filename , '\\');		// ファイル名を取得
-	filename = mDirectory + filenameonly;								// リソースディレクトリ＋ファイル名
+	std::string filenameonly = ExtractFileName(filename , '\\');		//ファイル名を取得
+	filename = mDirectory + filenameonly;								//リソースディレクトリ＋ファイル名
 
-	target.Texture = CDirectXResourceManager::GetInstance().GetTextureSRV(filename);
+	target.TextureSRV = CDirectXResourceManager::GetInstance().GetTextureSRV(filename);
 }

@@ -1,12 +1,12 @@
-#include "CPointLightComponent.h"
-#include "CSpotLightComponent.h"
-
-#include "CLightComponent.h"
-
 //!
 //! @file
 //! @brief ライトコンポーネントのソースファイル
 //!
+
+#include "CPointLightComponent.h"
+#include "CSpotLightComponent.h"
+
+#include "CLightComponent.h"
 
 void CLightComponent::Create(CActor& owner, CTransform& parentTrans, XMFLOAT4 attenuation, XMFLOAT3 location)
 {

@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief AABBコライダーコンポーネントのソースファイル
+//!
+
 #include "../Library/LCCollision.h"
 #include "../Library/LCMath.h"
 #include "../Actor/CActor.h"
@@ -6,11 +11,6 @@
 #include "CAABBColliderComponent.h"
 #include "CSphereColliderComponent.h"
 #include "CBoxMeshComponent.h"
-
-//!
-//! @file
-//! @brief AABBコライダーコンポーネントのソースファイル
-//!
 
 CAABBColliderComponent::CAABBColliderComponent(CActor& owner, const CModelData& model, CTransform& parentTrans, bool isMesh, int priority)
 	:CColliderComponent(owner, parentTrans, CColliderComponent::EType::AABB, priority)
