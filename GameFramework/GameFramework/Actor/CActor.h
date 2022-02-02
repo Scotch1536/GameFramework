@@ -34,10 +34,11 @@ struct SRenderInfo
 	float DistanceToCamera = 0.0f;			//!< カメラとの距離
 };
 
-//!< @brief アクターインターフェースクラス
+//!< @brief 一般用アクターインターフェースクラス
 class IActor
 {
 public:
+	//! @brief デストラクタ
 	virtual ~IActor() {};
 
 	//!
@@ -51,6 +52,7 @@ public:
 class IActorToComponent :public IActor
 {
 public:
+	//! @brief デストラクタ
 	virtual ~IActorToComponent() {};
 
 	//!
@@ -72,10 +74,10 @@ public:
 	virtual CTransform& GetTransform() = 0;
 
 	//!
-	//! @brief レベルの更新前実行関数に追加のリクエスト
-	//! @param[in] func 追加する関数オブジェクト
+	//! @brief レベルの更新前実行イベントに追加のリクエスト
+	//! @param[in] event 追加するイベント
 	//!
-	virtual void RequestAddDoBeforeUpdateFunction(std::function<void()> func) = 0;
+	virtual void RequestAddDoBeforeUpdateEvent(std::function<void()> event) = 0;
 };
 
 //! @brief アクタークラス
@@ -100,10 +102,10 @@ private:
 	void AddRenderOrder(const SRenderInfo& order)override;
   
 	//!
-	//! @brief レベルの更新前実行関数に追加のリクエスト
-	//! @param[in] func 追加する関数オブジェクト
+	//! @brief レベルの更新前実行イベントに追加のリクエスト
+	//! @param[in] event 追加するイベント
 	//!
-	void RequestAddDoBeforeUpdateFunction(std::function<void()> func)override;
+	void RequestAddDoBeforeUpdateEvent(std::function<void()> event)override;
 
 	//!
 	//! @brief アクターの取得

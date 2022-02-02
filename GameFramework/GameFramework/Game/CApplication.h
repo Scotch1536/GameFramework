@@ -1,75 +1,68 @@
-//*****************************************************************************
-//!	@file	Application.h
-//!	@brief	
-//!	@note	アプリケーションクラス
-//!	@author	T.Suzuki
-//*****************************************************************************
+//!
+//!	@file
+//!	@brief アプリケーションシステムのヘッダーファイル
+//!
+
 #pragma once
 
-//-----------------------------------------------------------------------------
-//	Include header files.
-//-----------------------------------------------------------------------------
 #include	<Windows.h>
 #include	<stdio.h>
 #include	<cinttypes>
 
 class CGame;
 
-//==============================================================================
-//!	@class	CApplication
-//!	@brief	アプリケーション
-//==============================================================================
+//! @brief アプリケーションクラス
 class CApplication
 {
 public:
-	static const char*			WINDOW_TITLE;					// = "アプリケーションクラス";
-	static const char*			WINDOW_CLASS_NAME;				// = "win32app";
+	static const char* WINDOW_TITLE;						//!< ウィンドウタイトル
+	static const char* WINDOW_CLASS_NAME;					//!< ウィンドウクラス名
 
-	static const uint32_t		WINDOW_STYLE_WINDOWED;			// = (WS_VISIBLE | WS_CAPTION | WS_SYSMENU);
-	static const uint32_t		WINDOW_EX_STYLE_WINDOWED;		// = (0);
-	static const uint32_t		WINDOW_STYLE_FULL_SCREEN;		// = (WS_VISIBLE | WS_POPUP);
-	static const uint32_t		WINDOW_EX_STYLE_FULL_SCREEN;	// = (0);
+	static const uint32_t WINDOW_STYLE_WINDOWED;			//!< ウィンドウスタイル
+	static const uint32_t WINDOW_EX_STYLE_WINDOWED;			//!< ウィンドウスタイルEX
+	static const uint32_t WINDOW_STYLE_FULL_SCREEN;			//!< ウィンドウスタイルフルスクリーン
+	static const uint32_t WINDOW_EX_STYLE_FULL_SCREEN;		//!< ウィンドウスタイルEXフルスクリーン
 
-	static const uint32_t		CLIENT_WIDTH;					// = 1280;
-	static const uint32_t		CLIENT_HEIGHT;					// = 720;
+	static const uint32_t CLIENT_WIDTH;						//!< ウィンドウ横幅
+	static const uint32_t CLIENT_HEIGHT;					//!< ウィンドウ縦幅
 
-	static uint32_t				SYSTEM_WIDTH;					// = 0;
-	static uint32_t				SYSTEM_HEIGHT;					// = 0;
-
-	static const float			FPS;							// = 60;
+	static const float FPS;									//!< FPS
 
 private:
-	HWND					m_hWnd;							// Windowハンドル
-	HINSTANCE				m_hInst;						// インスタンスハンドル
-	uint32_t				m_SystemCounter;				// システムカウンタ
+	HWND					mHWnd;								//!< Windowハンドル
+	HINSTANCE				mHInstance;							//!< インスタンスハンドル
 
-#ifdef _DEBUG
-	FILE*					m_fp;							// デバッグ用コンソール
-#endif
-
-private:
-	CApplication( const CApplication& );					// コピー
-	CApplication& operator = (const CApplication&) {}		// =
-	
-	void Input(uint64_t deltatime);						// 入力
-	void Update(uint64_t deltatime);					// 更新
-	void Render(uint64_t deltatime);					// 描画
+	//コピー禁止
+	CApplication(const CApplication&);
+	CApplication& operator= (const CApplication&) {}
 
 public:
-	CApplication(CGame& partner);						// コンストラクタ
+	//!
+	//! @brief コンストラクタ
+	//! @param[in] partner このアプリケーションを所有するゲームシステム
+	//!
+	CApplication(CGame& partner) {};
 
-	virtual ~CApplication();								// デストラクタ
-	static void InitSystemWH();							// システム幅高さ初期化
+	//!
+	//! @brief 初期化
+	//! @param[in] hInstance インスタンスハンドル
+	//!
+	void Init(HINSTANCE hInstance);
 
-	bool Init( HINSTANCE h_cpInstance );				// システム有効化
-	void Dispose();										// システム無効化
-	unsigned long MainLoop();							// メインループ
+	//!
+	//! @brief メインループ
+	//! @return unsigned long ウィンドウメッセージ
+	//!
+	unsigned long MainLoop();
 
-	// メンバ取得関数
-	HWND			 	GetHWnd();						// ウィンドウハンドル
-	HINSTANCE			GetHInst();						// インスタンスハンドル
+	HWND GetHWnd()const
+	{
+		return mHWnd;
+	}
+
+	HINSTANCE GetHInst()const
+	{
+		return mHInstance;
+	}
+
 };
-
-//******************************************************************************
-//	End of file.
-//******************************************************************************

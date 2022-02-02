@@ -54,7 +54,7 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 
 	CCameraComponent& camera = *new CCameraComponent(*this);
 
-	XMFLOAT3 fv = Transform.GetForwardVectorWorld();
+	XMFLOAT3 fv = Transform.GetWorldForwardVector();
 	XMFLOAT3 loc = Transform.Location;
 	XMFLOAT3 cameraLoc = Transform.Location;
 	cameraLoc.x += fv.x*-20.0f;
@@ -78,7 +78,7 @@ mSpeedLimitMin(mSpeed / 2.0f) , mSpeedLimitMax(mSpeed*2.0f)
 
 	Transform.RequestDebugLine();
 
-	XMFLOAT3 forwardVec = Transform.GetForwardVectorWorld();
+	XMFLOAT3 forwardVec = Transform.GetWorldForwardVector();
 	forwardVec.x *= -1;
 	forwardVec.y *= -1;
 	forwardVec.z *= -1;
@@ -111,14 +111,14 @@ void CFighter::Shot()
 	mShotCnt++;
 
 	XMFLOAT3 loc = Transform.GetWorldLocation();
-	XMFLOAT3 fv = Transform.GetForwardVectorWorld();
+	XMFLOAT3 fv = Transform.GetWorldForwardVector();
 	XMFLOAT3 dire;
 
 	loc.x += fv.x * 10.0f;
 	loc.y += fv.y * 10.0f + 2.0f;
 	loc.z += fv.z * 10.0f;
 
-	LCMath::CalcFloat3FromStartToGoal(loc , mPointer.Transform.GetWorldLocation() , dire);
+	LCMath::CalcFloat3FromStartToEnd(loc , mPointer.Transform.GetWorldLocation() , dire);
 	LCMath::CalcFloat3Normalize(dire , dire);
 
 	new CBullet(mOwnerInterface , loc , dire , 60 * 3);
@@ -133,7 +133,7 @@ void CFighter::ShotReset()
 
 void CFighter::Move()
 {
-	XMFLOAT3 fv = Transform.GetForwardVectorWorld();
+	XMFLOAT3 fv = Transform.GetWorldForwardVector();
 	float dt = CGameManager::GetInstance().GetDeltaTime();
 
 	Transform.Location.x += fv.x * (mSpeed*dt);
@@ -178,5 +178,5 @@ void CFighter::Tick()
 
 		ImGui::End();
 	};
-	mOwnerInterface.AddImGuiDrawFunction(displayFighterInfo);
+	mOwnerInterface.AddImGuiDrawEvent(displayFighterInfo);
 }

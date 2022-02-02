@@ -27,7 +27,7 @@ class C2DAnimationComponent :public CSquareDivisionComponent
 		XMFLOAT2* ChangeTargetUV3;		//!< 変更ターゲットのUV座標の参照3
 		XMFLOAT2* ChangeTargetUV4;		//!< 変更ターゲットのUV座標の参照4
 
-		std::function<void()> FunctionWhenChangingUV;		//!< UV更新時実行関数
+		std::function<void()> EventWhenChangingUV;		//!< UV更新時実行イベント
 
 		int AnimCounter = 0;			//!< アニメーションのカウンター
 		int AnimStartIndex;				//!< アニメの開始するインデックス
@@ -63,11 +63,11 @@ public:
 	//! @param[in] changeUV2 変更するUV情報2つ目
 	//! @param[in] changeUV3 変更するUV情報3つ目
 	//! @param[in] changeUV4 変更するUV情報4つ目
-	//! @param[in] functionWhenChangingUV UVが変更された時に追加で呼びたい関数
+	//! @param[in] eventWhenChangingUV UVが変更された時に追加で呼びたいイベント
 	//! @param[in] alias 別名
 	//!
 	void AddAnimData(XMFLOAT2* changeUV1 , XMFLOAT2* changeUV2 , XMFLOAT2* changeUV3 , XMFLOAT2* changeUV4 ,
-		std::function<void()> functionWhenChangingUV , std::string alias = "NONE");
+		std::function<void()> eventWhenChangingUV , std::string alias = "NONE");
 
 	//!
 	//! @brief アニメ情報の追加
@@ -231,8 +231,8 @@ public:
 			*mAnimData[animDataIndex].ChangeTargetUV3 = mUVData.at(index).at(2);
 			*mAnimData[animDataIndex].ChangeTargetUV4 = mUVData.at(index).at(3);
 
-			//UV更新時実行関数の呼び出し
-			if(mAnimData[animDataIndex].FunctionWhenChangingUV != nullptr)mAnimData[animDataIndex].FunctionWhenChangingUV();
+			//UV更新時実行イベントの呼び出し
+			if(mAnimData[animDataIndex].EventWhenChangingUV != nullptr)mAnimData[animDataIndex].EventWhenChangingUV();
 		}
 		else
 		{

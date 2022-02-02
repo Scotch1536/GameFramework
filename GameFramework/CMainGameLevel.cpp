@@ -59,7 +59,7 @@ void CMainGameLevel::Init()
 	new CActorGenerator(*this , [&] { return new CAttachObject(*this); } , min , max , 15.0f);
 
 	fighter.GetComponent<CCameraComponent>(buf);
-	RequestSetCamera(*dynamic_cast<CCameraComponent*>(buf));
+	SetRenderCamera(*dynamic_cast<CCameraComponent*>(buf));
 
 	CLightManager::GetInstance().SetDirectionLight({ 1.0f,1.0f,-1.0f });
 	CLightManager::GetInstance().SetAmbientLight({ 0.1f,0.1f,0.1f });
@@ -110,9 +110,9 @@ void CMainGameLevel::Tick()
 
 		ImGui::End();
 	};
-	AddImGuiDrawFunction(displayHowTo);
-	AddImGuiDrawFunction(displayScore);
-	AddImGuiDrawFunction(displayTime);
+	AddImGuiDrawEvent(displayHowTo);
+	AddImGuiDrawEvent(displayScore);
+	AddImGuiDrawEvent(displayTime);
 }
 
 void CMainGameLevel::Notice(CActor& actor)

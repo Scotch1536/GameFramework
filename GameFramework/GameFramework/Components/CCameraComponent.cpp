@@ -42,7 +42,7 @@ void CCameraComponent::UpdateViewMatrix()
 	XMFLOAT3 vecX , vecY , vecZ;
 
 	//カメラ位置から注視点に向かうベクトルをZ軸とする
-	LCMath::CalcFloat3FromStartToGoal(eye , mLookAt , vecZ);
+	LCMath::CalcFloat3FromStartToEnd(eye , mLookAt , vecZ);
 	LCMath::CalcFloat3Normalize(vecZ , vecZ);
 
 	//上向きベクトルとZ軸の外積の結果をX軸とする

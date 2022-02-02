@@ -62,7 +62,7 @@ struct SInputDefinition
 
 	std::vector<SButtonInfo> ButtonInfoList;				//ボタンの情報リスト
 
-	std::function<void()> EventInfo;						//行いたいイベント（関数）
+	std::function<void()> EventInfo;						//行いたいイベント
 };
 
 //インプットマネージャークラス：シングルトン
@@ -83,14 +83,14 @@ public:
 	static CInputManager& GetInstance();
 
 	//アクションのバインドをリクエスト　※actionNameのキーがmActionListになければエラー表示
-	void RequestBindEvent(std::string actionName , CObject& instancePtr , std::function<void()>& func);
+	void RequestBindEvent(std::string actionName , CObject& instancePtr , std::function<void()>& event);
 
 	//アクションの追加　※actionNameのキーがmActionListに既にあっても上書きする
 	void AddEvent(const std::string& actionName , const EButtonOption& buttonOption ,
-		CObject& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& func);
+		CObject& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& event);
 
 	void AddEvent(const std::string& actionName , const EButtonOption& buttonOption ,
-		CObject& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& func);
+		CObject& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& event);
 
 	//アクションの削除
 	void DeleteEvent(const std::string& actionName);

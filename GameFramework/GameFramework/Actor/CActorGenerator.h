@@ -80,8 +80,8 @@ public:
 					mGenerationCounter++;
 				}
 			};
-			//レベルの更新前実行関数に追加
-			mOwnerInterface.AddDoBeforeUpdateFunction(generationActor);
+			//レベルの更新前実行イベントに追加
+			mOwnerInterface.AddDoBeforeUpdateEvent(generationActor);
 		}
 	}
 

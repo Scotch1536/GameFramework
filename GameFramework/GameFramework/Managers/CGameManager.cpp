@@ -44,7 +44,7 @@ float CGameManager::CalcDistanceToCamera(const XMFLOAT3& compareLocation)
 {
 	XMFLOAT3 cameraVec = mGame.GetLevel().GetRenderingCameraLocation();
 
-	XMFLOAT3 calcVec = LCMath::CalcFloat3FromStartToGoal(compareLocation , cameraVec);
+	XMFLOAT3 calcVec = LCMath::CalcFloat3FromStartToEnd(compareLocation , cameraVec);
 
 	return LCMath::CalcFloat3Length(calcVec);
 }

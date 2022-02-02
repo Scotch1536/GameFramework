@@ -50,10 +50,10 @@ void CActor::AddRenderOrder(const SRenderInfo& order)
 	mRenderOrders.emplace_back(order);
 }
 
-void CActor::RequestAddDoBeforeUpdateFunction(std::function<void()> func)
+void CActor::RequestAddDoBeforeUpdateEvent(std::function<void()> event)
 {
-	//レベルの更新前実行関数に追加
-	mOwnerInterface.AddDoBeforeUpdateFunction(func);
+	//レベルの更新前実行イベントに追加
+	mOwnerInterface.AddDoBeforeUpdateEvent(event);
 }
 
 void CActor::Update()
@@ -71,7 +71,7 @@ void CActor::Update()
 void CActor::Render()
 {
 	//描画命令のリクエスト
-	mOwnerInterface.RequestRenderOrders(mRenderOrders);
+	mOwnerInterface.RegisterRenderOrders(mRenderOrders);
 }
 
 void CActor::Destroy()

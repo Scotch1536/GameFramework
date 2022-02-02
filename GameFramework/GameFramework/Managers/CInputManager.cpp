@@ -18,7 +18,7 @@ CInputManager& CInputManager::GetInstance()
 	return instance;
 }
 
-void CInputManager::RequestBindEvent(std::string actionName , CObject& instancePtr , std::function<void()>& func)
+void CInputManager::RequestBindEvent(std::string actionName , CObject& instancePtr , std::function<void()>& event)
 {
 	//指定のキーがなければエラー表示
 	if(mEventList.count(actionName) == 0)
@@ -27,25 +27,25 @@ void CInputManager::RequestBindEvent(std::string actionName , CObject& instanceP
 		return;
 	}
 	mEventList[actionName].InstancePointer = &instancePtr;
-	mEventList[actionName].EventInfo = func;
+	mEventList[actionName].EventInfo = event;
 }
 
 void CInputManager::AddEvent(const std::string& actionName , const EButtonOption& buttonOption ,
-	CObject& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& func)
+	CObject& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& event)
 {
 	mEventList[actionName].ButtonOption = buttonOption;
 	mEventList[actionName].InstancePointer = &instancePtr;
 	mEventList[actionName].ButtonInfoList = buttonInfoList;
-	mEventList[actionName].EventInfo = func;
+	mEventList[actionName].EventInfo = event;
 }
 
 void CInputManager::AddEvent(const std::string& actionName , const EButtonOption& buttonOption ,
-	CObject& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& func)
+	CObject& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& event)
 {
 	mEventList[actionName].ButtonOption = buttonOption;
 	mEventList[actionName].InstancePointer = &instancePtr;
 	mEventList[actionName].ButtonInfoList.emplace_back(buttonInfo);
-	mEventList[actionName].EventInfo = func;
+	mEventList[actionName].EventInfo = event;
 }
 
 void CInputManager::DeleteEvent(const std::string& actionName)
