@@ -68,8 +68,8 @@ void CLineComponent::Init(std::string vertexShaderPath , std::string pixelShader
 	//親のトランスフォームが存在するなら
 	if(mParentTransform != nullptr)
 	{
-		//トランスフォームの行列更新時関数に自身のメソッドを追加
-		mParentTransform->AddMatrixUpdateTimeFunction(std::bind(&CLineComponent::SetShouldUpdate , std::ref(*this) , true));
+		//トランスフォームの行列更新時イベントに自身のメソッドを追加
+		mParentTransform->AddEventWhenMatrixUpdate(std::bind(&CLineComponent::SetShouldUpdate , std::ref(*this) , true));
 	}
 }
 
@@ -101,7 +101,7 @@ void CLineComponent::Update()
 			mShouldUpdate = false;
 
 			XMFLOAT3 scale = mParentTransform->GetWorldScale();						//親のトランスフォームのワールドのスケール情報取得
-			XMFLOAT4X4 resultMTX = mParentTransform->GetWorldMatrixResult();		//親のトランスフォームのワールド変換行列取得
+			XMFLOAT4X4 resultMTX = mParentTransform->GetWorldMatrix();		//親のトランスフォームのワールド変換行列取得
 			XMFLOAT4X4 scaleMTX;
 
 			DX11MtxScale(scale.x , scale.y , scale.z , scaleMTX);				//スケール行列作成

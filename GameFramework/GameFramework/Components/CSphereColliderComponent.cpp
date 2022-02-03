@@ -27,7 +27,7 @@ CSphereColliderComponent::CSphereColliderComponent(CActor& owner , const CModelD
 	float length;
 
 	//最小最大値からベクトルを算出
-	LCMath::CalcFloat3FromStartToGoal(min , max , vec);
+	LCMath::CalcFloat3FromStartToEnd(min , max , vec);
 
 	//ベクトルの長さを算出
 	LCMath::CalcFloat3Length(vec , length);

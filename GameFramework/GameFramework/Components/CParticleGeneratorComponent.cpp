@@ -40,7 +40,7 @@ SParticleBase CParticleBaseGeneratorCone::GenerateParticleBase()
 
 	LCMath::CalcFloat3Cross(mBaseAxis , rotationBaseDirection , rotationAxis);									//外積で回転軸を算出
 	LCMath::CreateFromAxisAndAngleToQuaternion(rotationAxis , rotationAngle(mRandomEngine) , quaternion);		//回転行列の元となるクオータニオンを算出
-	LCMath::CalcMatrixFromQuaternion(quaternion , rotMTX);														//回転行列作成
+	LCMath::TransformFromQuaternionToMatrix(quaternion , rotMTX);														//回転行列作成
 	LCMath::CalcFloat3MultplyMatrix(mBaseAxis , rotMTX , result.Direction);										//向きを算出
 	result.StartPoint = { 0.0f,0.0f,0.0f };
 
@@ -63,10 +63,10 @@ void CParticleGeneratorComponent::CParticle::Tick()
 	LCMath::CalcFloat3Addition(Transform.Location , mVelocity , Transform.Location);
 }
 
-CParticleGeneratorComponent::CParticleGeneratorComponent(CActor& partner ,CTransform& parentTrans, std::function<void(CActor&)> particleBodyFunc ,
+CParticleGeneratorComponent::CParticleGeneratorComponent(CActor& partner ,CTransform& parentTrans, std::function<void(CActor&)> particleBodyEvent ,
 	float lifetime , float particleSpeed , float generationPerSecond ,
 	CParticleBaseGenerator& particleBaseGenerator , int generationLimit):CComponent(partner) ,
-	Transform(partner , parentTrans) , mParticleBodyGenerateFunction(particleBodyFunc) ,
+	Transform(partner , parentTrans) , mParticleBodyGenerateEvent(particleBodyEvent) ,
 	mParticleLifetime(lifetime) , mParticleSpeed(particleSpeed) , mGenerationLimit(generationLimit) ,
 	mIncreasedValueOfGenerationGauge(generationPerSecond / 60.0f) , mParticleBaseGenerator(&particleBaseGenerator)
 {}
@@ -91,14 +91,14 @@ void CParticleGeneratorComponent::Update()
 
 				GenerateParticle();										//パーティクル生成
 
-				mParticleBodyGenerateFunction(*mParticleBuffer);		//パーティクルボディ生成
+				mParticleBodyGenerateEvent(*mParticleBuffer);			//パーティクルボディ生成
 
 				mGenerationCounter++;									//生成カウンター加算
 			}
 		};
 
-		//パーティクル生成の関数オブジェクトをレベルの更新前に実行する関数として登録
-		mOwnerInterface.RequestAddDoBeforeUpdateFunction(generationParticle);
+		//パーティクル生成の関数オブジェクトをレベルの更新前に実行するイベントとして登録
+		mOwnerInterface.RequestAddDoBeforeUpdateEvent(generationParticle);
 	}
 }
 
@@ -114,7 +114,7 @@ void CParticleGeneratorComponent::GenerateParticle()
 	LCMath::CalcFloat3Addition(Transform.GetWorldLocation() , particleBase.StartPoint , particleLocation);
 
 	//回転行列作成処理
-	XMFLOAT4X4 rotMTX = Transform.GetWorldMatrixResult();		//結果のマトリックス取得
+	XMFLOAT4X4 rotMTX = Transform.GetWorldMatrix();		//結果のマトリックス取得
 	XMFLOAT3 bufVec;
 
 	bufVec = LCMath::CalcFloat3Normalize({ rotMTX._11,rotMTX._12,rotMTX._13 });

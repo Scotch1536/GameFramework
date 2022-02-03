@@ -129,7 +129,7 @@ private:
 
 	std::unique_ptr<CParticleBaseGenerator> mParticleBaseGenerator;			//!< パーティクルベース生成器
 
-	std::function<void(CActor&)> mParticleBodyGenerateFunction;				//!< パーティクルの本体部分の生成関数
+	std::function<void(CActor&)> mParticleBodyGenerateEvent;				//!< パーティクルの本体部分の生成イベント
 
 	XMFLOAT3 mBaseAxis;								//!< パーティクル生成器の基礎軸
 
@@ -156,14 +156,14 @@ public:
 	//! @brief コンストラクタ
 	//! @param[in] partner このコンポーネントを所有するアクター
 	//! @param[in] parentTrans 親のトランスフォーム
-	//! @param[in] particleBodyFunc パーティクルの本体部分の生成関数オブジェクト
+	//! @param[in] particleBodyEvent パーティクルの本体部分の生成イベント
 	//! @param[in] lifetime ライフタイム
 	//! @param[in] particleSpeed パーティクルの速度（毎フレーム）
 	//! @param[in] generationPerSecond 1秒間に生成するパーティクルの数
 	//! @param[in] particleBaseGenerator パーティクルベース生成器
 	//! @param[in] generationLimit 生成限界値(総数)
 	//!
-	CParticleGeneratorComponent(CActor& partner , CTransform& parentTrans , std::function<void(CActor&)> particleBodyFunc ,
+	CParticleGeneratorComponent(CActor& partner , CTransform& parentTrans , std::function<void(CActor&)> particleBodyEvent ,
 		float lifetime , float particleSpeed , float generationPerSecond ,
 		CParticleBaseGenerator& particleBaseGenerator , int generationLimit = 1000);
 

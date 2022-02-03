@@ -25,8 +25,8 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner, const CModelData& 
 	//ボックスメッシュ作成
 	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , { 1.0f,1.0f,1.0f,0.3f } , mLocalMin , mLocalMax);
     
-	//トランスフォームの行列更新時関数に自身のメソッドを追加
-	parentTrans.AddMatrixUpdateTimeFunction(std::bind(&CAABBColliderComponent::SetShouldUpdate, std::ref(*this), true));
+	//トランスフォームの行列更新時イベントに自身のメソッドを追加
+	parentTrans.AddEventWhenMatrixUpdate(std::bind(&CAABBColliderComponent::SetShouldUpdate, std::ref(*this), true));
 }
 
 CAABBColliderComponent::CAABBColliderComponent(CActor& owner, CTransform& parentTrans, bool isMesh, int priority)
@@ -40,8 +40,8 @@ CAABBColliderComponent::CAABBColliderComponent(CActor& owner, CTransform& parent
 	//ボックスメッシュ作成
 	if(isMesh)mBoxMesh = new CBoxMeshComponent(owner , Transform , { 1.0f,1.0f,1.0f,0.3f } , mLocalMin , mLocalMax);
 
-	//トランスフォームの行列更新時関数に自身のメソッドを追加
-	parentTrans.AddMatrixUpdateTimeFunction(std::bind(&CAABBColliderComponent::SetShouldUpdate, std::ref(*this), true));
+	//トランスフォームの行列更新時イベントに自身のメソッドを追加
+	parentTrans.AddEventWhenMatrixUpdate(std::bind(&CAABBColliderComponent::SetShouldUpdate, std::ref(*this), true));
 }
 
 void CAABBColliderComponent::ConvertWorldCollider()
@@ -50,7 +50,7 @@ void CAABBColliderComponent::ConvertWorldCollider()
 	{
 		mShouldUpdate = false;
 
-		XMFLOAT4X4 worldMtx = Transform.GetWorldMatrixResult();		//ワールド変換行列
+		XMFLOAT4X4 worldMtx = Transform.GetWorldMatrix();		//ワールド変換行列
 		std::vector<XMFLOAT3> vertices;
 
 		//頂点数の拡張と初期化

@@ -44,12 +44,12 @@ struct SVertex2D
 //! @brief マテリアル構造体
 struct SMaterial
 {
+	float Alpha;			//!< アルファ
 	XMFLOAT3 Diffuse;		//!< ディフューズ
 	XMFLOAT3 Specular;		//!< スペキュラ
+	float SpecularPower;	//!< スペキュラパワー
 	XMFLOAT3 Ambient;		//!< アンビエント
 	XMFLOAT3 Emissive;		//!< エミッシブ
-	float Alpha;			//!< アルファ
-	float SpecularPower;	//!< スペキュラパワー
 
 	//! @brief コンストラクタ
 	SMaterial():Alpha(0) ,

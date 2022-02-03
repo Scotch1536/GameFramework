@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief 入力マネージャーのソースファイル
+//!
+
 #include <Windows.h>
 
 #include "../ExternalCode/CDirectInput.h"
@@ -18,47 +23,47 @@ CInputManager& CInputManager::GetInstance()
 	return instance;
 }
 
-void CInputManager::RequestBindEvent(std::string actionName , CObject& instancePtr , std::function<void()>& func)
+void CInputManager::RequestBindEvent(std::string eventName , CObject& instancePtr , std::function<void()>& event)
 {
 	//指定のキーがなければエラー表示
-	if(mEventList.count(actionName) == 0)
+	if(mInputEventList.count(eventName) == 0)
 	{
-		MessageBox(NULL , "RequestBindAction error:Not Found Key" , "error" , MB_OK);
+		MessageBox(NULL , "RequestBindEvent Error:キーが見つかりません" , "Error" , MB_OK);
 		return;
 	}
-	mEventList[actionName].InstancePointer = &instancePtr;
-	mEventList[actionName].EventInfo = func;
+	mInputEventList[eventName].InstancePointer = &instancePtr;
+	mInputEventList[eventName].EventInfo = event;
 }
 
-void CInputManager::AddEvent(const std::string& actionName , const EButtonOption& buttonOption ,
-	CObject& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& func)
+void CInputManager::AddEvent(const std::string& eventName , const EButtonOption& buttonOption ,
+	CObject& instancePtr , const std::vector<SButtonInfo>& buttonInfoList , const std::function<void()>& event)
 {
-	mEventList[actionName].ButtonOption = buttonOption;
-	mEventList[actionName].InstancePointer = &instancePtr;
-	mEventList[actionName].ButtonInfoList = buttonInfoList;
-	mEventList[actionName].EventInfo = func;
+	mInputEventList[eventName].ButtonOption = buttonOption;
+	mInputEventList[eventName].InstancePointer = &instancePtr;
+	mInputEventList[eventName].ButtonInfoList = buttonInfoList;
+	mInputEventList[eventName].EventInfo = event;
 }
 
-void CInputManager::AddEvent(const std::string& actionName , const EButtonOption& buttonOption ,
-	CObject& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& func)
+void CInputManager::AddEvent(const std::string& eventName , const EButtonOption& buttonOption ,
+	CObject& instancePtr , const SButtonInfo& buttonInfo , const std::function<void()>& event)
 {
-	mEventList[actionName].ButtonOption = buttonOption;
-	mEventList[actionName].InstancePointer = &instancePtr;
-	mEventList[actionName].ButtonInfoList.emplace_back(buttonInfo);
-	mEventList[actionName].EventInfo = func;
+	mInputEventList[eventName].ButtonOption = buttonOption;
+	mInputEventList[eventName].InstancePointer = &instancePtr;
+	mInputEventList[eventName].ButtonInfoList.emplace_back(buttonInfo);
+	mInputEventList[eventName].EventInfo = event;
 }
 
-void CInputManager::DeleteEvent(const std::string& actionName)
+void CInputManager::DeleteEvent(const std::string& eventName)
 {
-	mEventList[actionName].EventInfo = nullptr;
+	mInputEventList.erase(eventName);
 }
 
-void CInputManager::ReleaseBindTarget(CObject& target)
+void CInputManager::ReleaseBind(CObject& target)
 {
 	//アクションリストが空だった場合終了
-	if(!(mEventList.size() > 0))return;
+	if(mInputEventList.size() == 0)return;
 
-	for(auto& action : mEventList)
+	for(auto& action : mInputEventList)
 	{
 		if(action.second.InstancePointer == &target)
 		{
@@ -74,12 +79,13 @@ void CInputManager::CheckInput()
 	CDirectInput& directInput = CDirectInput::GetInstance();
 	CGameManager& gameManager = CGameManager::GetInstance();
 
+	//DirectInputの更新
 	directInput.GetKeyBuffer();
 	directInput.GetMouseState();
 
 	bool shouldEvent = false;
 
-	for(auto& event : mEventList)
+	for(auto& event : mInputEventList)
 	{
 		//イベント情報がなければcontinue
 		if(event.second.EventInfo == nullptr)continue;
@@ -98,13 +104,13 @@ void CInputManager::CheckInput()
 			//ボタンタイプ別の処理を記述
 			if(buttonInfo.ButtonType == EButtonType::NONE)
 			{
-				MessageBox(NULL , "ButtonType is NONE" , "error" , MB_OK);
+				MessageBox(NULL , "ボタンタイプがありません" , "Error" , MB_OK);
 			}
 			else if(buttonInfo.ButtonType == EButtonType::KEYBOARD)
 			{
 				if(event.second.ButtonOption == EButtonOption::NONE)
 				{
-					MessageBox(NULL , "ButtonType is NONE" , "error" , MB_OK);
+					MessageBox(NULL , "ボタンオプションがありません" , "Error" , MB_OK);
 				}
 				else if(event.second.ButtonOption == EButtonOption::PRESS)
 				{
@@ -135,13 +141,13 @@ void CInputManager::CheckInput()
 			{
 				if(event.second.ButtonOption == EButtonOption::NONE)
 				{
-					MessageBox(NULL , "ButtonType is NONE" , "error" , MB_OK);
+					MessageBox(NULL , "ボタンオプションがありません" , "Error" , MB_OK);
 				}
 				else if(event.second.ButtonOption == EButtonOption::PRESS)
 				{
 					if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::NONE))
 					{
-						MessageBox(NULL , "ButtonNum is NONE" , "error" , MB_OK);
+						MessageBox(NULL , "ボタン番号がありません" , "Error" , MB_OK);
 					}
 					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::L_BUTTON))
 					{
@@ -172,7 +178,7 @@ void CInputManager::CheckInput()
 				{
 					if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::NONE))
 					{
-						MessageBox(NULL , "ButtonNum is NONE" , "error" , MB_OK);
+						MessageBox(NULL , "ボタン番号がありません" , "Error" , MB_OK);
 					}
 					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::L_BUTTON))
 					{
@@ -203,7 +209,7 @@ void CInputManager::CheckInput()
 				{
 					if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::NONE))
 					{
-						MessageBox(NULL , "ButtonNum is NONE" , "error" , MB_OK);
+						MessageBox(NULL , "ボタン番号がありません" , "Error" , MB_OK);
 					}
 					else if(buttonInfo.ButtonNum == static_cast<int>(EMouseButtonType::L_BUTTON))
 					{
@@ -232,6 +238,8 @@ void CInputManager::CheckInput()
 				}
 			}
 		}
+
+		//イベントを行うべきなら
 		if(shouldEvent)
 		{
 			event.second.EventInfo();

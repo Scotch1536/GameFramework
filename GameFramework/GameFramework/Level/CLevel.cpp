@@ -1,3 +1,8 @@
+//!
+//!	@file
+//!	@brief レベルシステムのソースファイル
+//!
+
 #include <algorithm>
 
 #include "../ExternalTools/imgui/myimgui.h"
@@ -13,12 +18,14 @@
 
 CLevel::CLevel(IGame& owner , bool isFeed , XMFLOAT3 feedColor , float FeedTime):CObject("Level") , mOwnerInterface(owner)
 {
+	//レベルをロードする
 	mOwnerInterface.LoadLevel(*this , isFeed , feedColor , FeedTime);
 }
 
 CLevel::~CLevel()
 {
-	CInputManager::GetInstance().ReleaseBindTarget(*this);
+	//インプットマネージャーと自身を切り離す
+	CInputManager::GetInstance().ReleaseBind(*this);
 }
 
 void CLevel::AddActor(CActor& actor)
@@ -26,45 +33,48 @@ void CLevel::AddActor(CActor& actor)
 	mActors.emplace_back(&actor);
 }
 
-void CLevel::RequestSetCamera(CCameraComponent& camera)
+void CLevel::SetRenderCamera(CCameraComponent& camera)
 {
 	mRenderingCamera = &camera;
 }
 
 void CLevel::Update()
 {
-	//更新前に行う関数を実行
-	if(mDoBeforeUpdateFunction.size() != 0)
+	//更新前に行うイベントを実行
+	if(mDoBeforeUpdateEvent.size() != 0)
 	{
-		for(auto& func : mDoBeforeUpdateFunction)
+		for(auto& event : mDoBeforeUpdateEvent)
 		{
-			func();
+			event();
 		}
 		//中身を空にする
-		mDoBeforeUpdateFunction.clear();
-		mDoBeforeUpdateFunction.shrink_to_fit();
+		mDoBeforeUpdateEvent.clear();
+		mDoBeforeUpdateEvent.shrink_to_fit();
 	}
 
-	//デストロイ関数を実行
-	if(mDestroyFunction.size() != 0)
+	//デストロイイベントを実行
+	if(mDestroyEvent.size() != 0)
 	{
-		for(auto& func : mDestroyFunction)
+		for(auto& event : mDestroyEvent)
 		{
-			func();
+			event();
 		}
 		//中身を空にする
-		mDestroyFunction.clear();
-		mDestroyFunction.shrink_to_fit();
+		mDestroyEvent.clear();
+		mDestroyEvent.shrink_to_fit();
 	}
 
-	std::vector<CActor*> actors;
+	std::vector<CActor*> actors;		//このフレームですべてを更新するアクター
 	std::vector<CActor*> allActors;		//そのフレームでのUpdate開始時の全てのアクター
 	CActor* cameraActor = nullptr;
 
+	//処理するアクターの振り分け処理
+	//ポーズ中なら
 	if(CGameManager::GetInstance().GetIsPause())
 	{
 		for(auto& actor : mActors)
 		{
+			//ポーズの影響を受けないなら
 			if(!actor->GetIsAffectToPause())
 			{
 				actors.emplace_back(actor.get());
@@ -90,14 +100,18 @@ void CLevel::Update()
 	//コリジョンマネージャーの更新
 	CColliderManager::GetInstance().Update();
 
-	//カメラ所持のアクターのみ先に処理する
+	//描画担当カメラを所持するアクターのみ先に処理する
 	if(mRenderingCamera != nullptr)
 	{
 		cameraActor = &mRenderingCamera->GetOwner();
 
+		//描画担当カメラを所持するアクターのイテレータを処理するアクターの配列から検索し取得
 		auto cameraActorItr = std::find(actors.begin() , actors.end() , cameraActor);
+
+		//取得できていれば
 		if(cameraActorItr != actors.end())
 		{
+			//ポーズ中かつこのアクターがポーズの影響を受ける設定以外の全ての状態なら
 			if(!(CGameManager::GetInstance().GetIsPause() && cameraActor->GetIsAffectToPause()))
 			{
 				cameraActor->Tick();
@@ -121,10 +135,11 @@ void CLevel::Update()
 		actor->Update();
 	}
 
+	//ライトマネージャー更新
 	CLightManager::GetInstance().Update();
 }
 
-void CLevel::RequestRenderOrders(std::vector<SRenderInfo>& renderOrders)
+void CLevel::RegisterRenderOrders(std::vector<SRenderInfo>& renderOrders)
 {
 	for(auto& renderOrder : renderOrders)
 	{
@@ -143,30 +158,33 @@ void CLevel::Render()
 {
 	XMFLOAT4X4 bufMTX;
 
-	float col[4] = { 0.f,0.f,1.f,1.f };
+	float col[4] = { 0.0f,0.0f,1.0f,1.0f };
 
-	// ターゲットバッファクリア
-	CDirectXGraphics::GetInstance()->GetImmediateContext()->ClearRenderTargetView(
-		CDirectXGraphics::GetInstance()->GetRenderTargetView() , col);
-	// Zバッファクリア
-	CDirectXGraphics::GetInstance()->GetImmediateContext()->ClearDepthStencilView(
-		CDirectXGraphics::GetInstance()->GetDepthStencilView() ,
+	//ターゲットバッファクリア
+	CDirectXGraphics::GetInstance()->GetImmediateContext()->ClearRenderTargetView(CDirectXGraphics::GetInstance()->GetRenderTargetView() , col);
+
+	//Zバッファクリア
+	CDirectXGraphics::GetInstance()->GetImmediateContext()->ClearDepthStencilView(CDirectXGraphics::GetInstance()->GetDepthStencilView() ,
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f , 0);
 
 	if(mRenderingCamera != nullptr)
 	{
-		bufMTX = mRenderingCamera->GetProjectionMatrix();
-		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , bufMTX);
-
+		//ビュー行列の取得&GPUへセット
 		bufMTX = mRenderingCamera->GetViewMatrix();
 		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::VIEW , bufMTX);
+
+		//プロジェクション行列の取得&GPUへセット
+		bufMTX = mRenderingCamera->GetProjectionMatrix();
+		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , bufMTX);
 	}
 
+	//アクターの描画メソッドを呼び出して描画命令を登録させる
 	for(auto& actor : mActors)
 	{
 		actor->Render();
 	}
 
+	//描画命令登録から各種レンダーコンポーネントに割り振られたものを処理する
 	if(m3DOpacityRenderComponents.size() != 0)
 	{
 		for(auto& alphaRender : m3DOpacityRenderComponents)
@@ -196,7 +214,7 @@ void CLevel::Render()
 
 	if(m2DOpacityRenderComponents.size() != 0 || m2DTranslucentRenderComponents.size() != 0)
 	{
-		// 2D描画用射影変換行列
+		//2D描画用射影変換行列
 		XMFLOAT4X4 projectionMatrix2D = {
 				2.0f / static_cast<float>(CApplication::CLIENT_WIDTH) , 0.0f , 0.0f , 0.0f ,
 				0.0f , -2.0f / static_cast<float>(CApplication::CLIENT_HEIGHT), 0.0f , 0.0f ,
@@ -204,8 +222,10 @@ void CLevel::Render()
 				-1.0f , 1.0f , 0.0f , 1.0f
 		};
 
+		//2D描画用射影変換行列をGPUにセット
 		DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION , projectionMatrix2D);
 
+		//Zバッファオフ
 		CDirectXGraphics::GetInstance()->TurnOffZbuffer();
 
 		if(m2DOpacityRenderComponents.size() != 0)
@@ -228,28 +248,29 @@ void CLevel::Render()
 			m2DTranslucentRenderComponents.shrink_to_fit();
 		}
 
+		//Zバッファオン
 		CDirectXGraphics::GetInstance()->TurnOnZBuffer();
 	}
 
-	//ImGuiに渡す描画の関数オブジェクト一つの関数オブジェクトにまとめる
-	auto allGuiMethodExecute = [&]
+	//ImGuiに渡す描画のイベントを全て実行する関数オブジェクトを作成
+	auto allGuiEventExecute = [&]
 	{
-		for(auto& guiMethod : mImGuiDrawFunction)
+		for(auto& guiEvent : mImGuiDrawEvent)
 		{
-			guiMethod();
+			guiEvent();
 		}
 	};
-	imguiDraw(allGuiMethodExecute);
+	imguiDraw(allGuiEventExecute);
 
-	mImGuiDrawFunction.clear();
-	mImGuiDrawFunction.shrink_to_fit();
+	mImGuiDrawEvent.clear();
+	mImGuiDrawEvent.shrink_to_fit();
 
 	CDirectXGraphics::GetInstance()->GetSwapChain()->Present(0 , 0);
 }
 
 void CLevel::DestroyActor(CActor& target)
 {
-	//ラムダ式を作成
+	//デストロイ処理を行う関数オブジェクトを作成
 	auto destroyLambda = [&]
 	{
 		CComponent* refCamera;
@@ -270,8 +291,7 @@ void CLevel::DestroyActor(CActor& target)
 		}
 	};
 
-	//作成したラムダ式を格納
-	mDestroyFunction.emplace_back(destroyLambda);
+	mDestroyEvent.emplace_back(destroyLambda);
 }
 
 const XMFLOAT4X4* CLevel::GetRenderingCameraViewMatrix()const

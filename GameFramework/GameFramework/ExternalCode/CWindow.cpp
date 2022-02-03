@@ -214,7 +214,7 @@ void CWindow::SetWindow(HINSTANCE		h_Instance ,
 
 	if(!m_Handle)
 	{
-		MessageBox(nullptr , "CreateWindow Error" , "error" , MB_OK);
+		MessageBox(nullptr , "CreateWindow Error" , "Error" , MB_OK);
 	}
 
 	// コールバック関数設定

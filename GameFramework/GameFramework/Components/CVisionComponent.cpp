@@ -59,7 +59,7 @@ void CVisionComponent::Update()
 		float targetDistance;		//ターゲットまでの距離
 
 		XMFLOAT3 selfLoc = Transform.GetWorldLocation();
-		XMFLOAT3 selfForwardVec = Transform.GetForwardVectorWorld();
+		XMFLOAT3 selfForwardVec = Transform.GetWorldForwardVector();
 
 		XMFLOAT3 keyVec;		//ターゲットの位置から自分の向きベクトルを無限遠に伸ばした線に最短で交わる線のベクトル情報でキーになるベクトル
 		float keyVecLength;		//キーベクトルの長さ
@@ -76,14 +76,14 @@ void CVisionComponent::Update()
 			XMFLOAT3 maxLoc = LCMath::CalcFloat3Subtraction(aabb->GetWorldMax() , targetLoc);
 
 			//自分からターゲットまでのベクトルを算出
-			LCMath::CalcFloat3FromStartToGoal(selfLoc , targetLoc , targetVec);
+			LCMath::CalcFloat3FromStartToEnd(selfLoc , targetLoc , targetVec);
 
 			//ターゲットまでのベクトルと自分の向きベクトルとの内積を求め、コサイン（長さ）を算出
 			LCMath::CalcFloat3Dot(targetVec , selfForwardVec , keyVecLength);
 
 			//内積で求めた長さを自分の向きベクトルにかけてベクトルを算出、
 			//算出したベクトルとターゲットまでのベクトルで減算を行いその二点間のベクトルを算出
-			LCMath::CalcFloat3FromStartToGoal(targetVec , LCMath::CalcFloat3Scalar(selfForwardVec , keyVecLength) , keyVec);
+			LCMath::CalcFloat3FromStartToEnd(targetVec , LCMath::CalcFloat3Scalar(selfForwardVec , keyVecLength) , keyVec);
 
 			//キーベクトルがAABBの中だったら視界に入ってる判定にする
 			if((minLoc.x < keyVec.x && keyVec.x < maxLoc.x) &&
@@ -119,14 +119,14 @@ void CVisionComponent::Update()
 			targetLoc = sphere->GetCenter();
 
 			//自分からターゲットまでのベクトルを算出
-			LCMath::CalcFloat3FromStartToGoal(selfLoc , targetLoc , targetVec);
+			LCMath::CalcFloat3FromStartToEnd(selfLoc , targetLoc , targetVec);
 
 			//ターゲットまでのベクトルと自分の向きベクトルとの内積を求め、コサイン（長さ）を算出
 			LCMath::CalcFloat3Dot(targetVec , selfForwardVec , keyVecLength);
 
 			//内積で求めた長さを自分の向きベクトルにかけてベクトルを算出、
 			//算出したベクトルとターゲットまでのベクトルで減算を行いその二点間のベクトルを算出
-			LCMath::CalcFloat3FromStartToGoal(targetVec , LCMath::CalcFloat3Scalar(selfForwardVec , keyVecLength) , keyVec);
+			LCMath::CalcFloat3FromStartToEnd(targetVec , LCMath::CalcFloat3Scalar(selfForwardVec , keyVecLength) , keyVec);
 
 			//キーベクトルがスフィアの中だったら視界に入ってる判定にする
 			if(((keyVec.x * keyVec.x) + (keyVec.y * keyVec.y) + (keyVec.z * keyVec.z)) <= (sphere->GetWorldRadius() * sphere->GetWorldRadius()))

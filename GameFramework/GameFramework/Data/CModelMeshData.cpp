@@ -34,7 +34,7 @@ void CModelMeshData::SetupMesh()
 		static_cast<unsigned int>(Vertices.size()) , Vertices.data() , &mVertexBuffer);
 	if(!sts)
 	{
-		MessageBox(nullptr , "メッシュのセットアップに失敗しました" , "error" , MB_OK);
+		MessageBox(nullptr , "メッシュのセットアップに失敗しました" , "Error" , MB_OK);
 		return;
 	}
 
@@ -42,7 +42,7 @@ void CModelMeshData::SetupMesh()
 	sts = CreateIndexBuffer(dev , static_cast<unsigned int>(Indices.size()) , Indices.data() , &mIndexBuffer);
 	if(!sts)
 	{
-		MessageBox(nullptr , "メッシュのセットアップに失敗しました" , "error" , MB_OK);
+		MessageBox(nullptr , "メッシュのセットアップに失敗しました" , "Error" , MB_OK);
 		return;
 	}
 
@@ -50,7 +50,7 @@ void CModelMeshData::SetupMesh()
 	sts = CreateConstantBufferWrite(dev , sizeof(SConstantBufferMaterial) , &mConstantBufferMaterial);
 	if(!sts)
 	{
-		MessageBox(nullptr , "メッシュのセットアップに失敗しました" , "error" , MB_OK);
+		MessageBox(nullptr , "メッシュのセットアップに失敗しました" , "Error" , MB_OK);
 		return;
 	}
 

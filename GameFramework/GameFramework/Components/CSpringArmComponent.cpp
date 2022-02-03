@@ -37,7 +37,7 @@ void CSpringArmComponent::Update()
 	if(mSyncMode == ELinkMode::ALL_LINK)
 	{
 		//パートナーカメラのカメラ座標変換行列のベースにターゲットのワールド変換行列を乗算することで親子関係を実現しその結果を理想の行列とする
-		LCMath::CalcMatrixMultply(mPartnerCamera.GetCameraTransMatrixBase() , mTargetTransform.GetWorldMatrixResult() , idealMatrix);
+		LCMath::CalcMatrixMultply(mPartnerCamera.GetCameraTransMatrixBase() , mTargetTransform.GetWorldMatrix() , idealMatrix);
 	}
 	else if(mSyncMode == ELinkMode::LOCATION_ONLY_LINK)
 	{

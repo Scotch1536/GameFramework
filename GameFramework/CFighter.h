@@ -1,41 +1,49 @@
-#pragma once
-#include <memory>
+//!
+//! @file
+//! @brief 戦闘機アクターのヘッダーファイル
+//!
 
+#pragma once
 #include "GameFramework/Actor/CActor.h"
-#include "GameFramework/Components/CParticleGeneratorComponent.h"
 
 #include "CPointer.h"
 
 class CParticleSystemComponent;
 class CTransform;
 
+//! @brief 戦闘機アクタークラス
 class CFighter :public CActor
 {
 private:
-	CPointer& mPointer;
+	CPointer& mPointer;			//!< ポインター
 
-	int mShotCnt = 0;
-
-	float mAngleX;
-	float mAngleY;
-	float mSpeed = 50.0f;
-	float mSpeedLimitMin , mSpeedLimitMax;
+	float mSpeed = 50.0f;		//!< 移動速度
+	float mSpeedLimitMin;		//!< 速度限界最小値
+	float mSpeedLimitMax;		//!< 速度限界最大値
 
 public:
-	/*
-	★超重要★
-	コンポーネントの追加は基本的にコンストラクタ内で行う
-	*/
+	//!
+	//! @brief コンストラクタ
+	//! @param[in] owner このアクターを所有するレベル
+	//!
 	CFighter(ILevel& owner);
 
-	void Shot();
-	void ShotReset();
+	//! @brief 移動
 	void Move();
+
+	//!
+	//! @brief 回転
+	//! @param[in] dire 方向
+	//!
 	void Rot(int dire);
+
+	//!
+	//! @brief 速度変更
+	//! @param[in] type タイプ
+	//!
 	void SpeedChange(int type);
 
+	//! @brief ティック
 	void Tick()override;
-	//void EventAtBeginCollide(CActor& collideActor)override;
-	//void EventAtEndCollide(CActor& collideActor)override;
 
 };

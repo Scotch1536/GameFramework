@@ -12,7 +12,7 @@ C2DAnimationComponent::C2DAnimationComponent(CActor& owner , int divWidth , int 
 {}
 
 void C2DAnimationComponent::AddAnimData(XMFLOAT2* changeUV1 , XMFLOAT2* changeUV2 , XMFLOAT2* changeUV3 , XMFLOAT2* changeUV4 ,
-	std::function<void()> functionWhenChangingUV , std::string alias)
+	std::function<void()> eventWhenChangingUV , std::string alias)
 {
 	mAnimData.emplace_back();			//アニメデータ追加
 	mAnimDataAlias.emplace_back();		//アニメデータエイリアス追加
@@ -23,7 +23,7 @@ void C2DAnimationComponent::AddAnimData(XMFLOAT2* changeUV1 , XMFLOAT2* changeUV
 	mAnimData.back().ChangeTargetUV2 = changeUV2;
 	mAnimData.back().ChangeTargetUV3 = changeUV3;
 	mAnimData.back().ChangeTargetUV4 = changeUV4;
-	mAnimData.back().FunctionWhenChangingUV = functionWhenChangingUV;
+	mAnimData.back().EventWhenChangingUV = eventWhenChangingUV;
 
 	if(alias != "NONE")
 	{
@@ -76,8 +76,8 @@ void C2DAnimationComponent::Update()
 			*anim.ChangeTargetUV3 = mUVData.at(index).at(2);
 			*anim.ChangeTargetUV4 = mUVData.at(index).at(3);
 
-			//UV変更時実行関数の呼び出し
-			if(anim.FunctionWhenChangingUV != nullptr)anim.FunctionWhenChangingUV();
+			//UV変更時実行イベントの呼び出し
+			if(anim.EventWhenChangingUV != nullptr)anim.EventWhenChangingUV();
 		}
 	}
 }

@@ -1,3 +1,8 @@
+//!
+//!	@file
+//!	@brief ゲームシステムのソースファイル
+//!
+
 #include <Windows.h>
 
 #include "../ExternalTools/imgui/myimgui.h"
@@ -20,23 +25,20 @@ CGame::~CGame()
 	imguiExit();
 }
 
-long CGame::Execute(HINSTANCE hInst , int winMode)
+unsigned long CGame::Execute(HINSTANCE hInst , int winMode)
 {
-	// アプリケーション初期処理
+	//アプリケーション初期処理
 	mApp.Init(hInst);
 
-	// ウインドウを表示する
+	//ウインドウを表示する
 	ShowWindow(mApp.GetHWnd() , winMode);
 	UpdateWindow(mApp.GetHWnd());
 
 	//ゲーム情報の初期化
 	Init();
 
-	// メインループ
-	long ret = mApp.MainLoop();
-
-	// アプリケーション終了処理
-	mApp.Dispose();
+	//メインループ
+	unsigned long ret = mApp.MainLoop();
 
 	return ret;
 }
@@ -48,7 +50,6 @@ void CGame::SetLevel(CLevel& level)
 
 void CGame::Init()
 {
-	// DX11　初期化
 	bool sts;
 
 	//サウンドマネージャー初期化
@@ -64,7 +65,7 @@ void CGame::Init()
 		false);
 	if(!sts)
 	{
-		MessageBox(mApp.GetHWnd() , "DX11 init error" , "error" , MB_OK);
+		MessageBox(mApp.GetHWnd() , "CDirectXGraphics init Error" , "Error" , MB_OK);
 		exit(1);
 	}
 
@@ -72,7 +73,7 @@ void CGame::Init()
 	sts = DX11SetTransform::GetInstance()->Init();
 	if(!sts)
 	{
-		MessageBox(NULL , "SetTransform error" , "Error" , MB_OK);
+		MessageBox(NULL , "SetTransform Init Error" , "Error" , MB_OK);
 		exit(1);
 	}
 
@@ -92,12 +93,13 @@ void CGame::Init()
 	sts = CreateConstantBuffer(directGraph->GetDXDevice() , sizeof(SConstantBufferViewPort) , mConstantBufferViewPort.GetAddressOf());
 	if(!sts)
 	{
-		MessageBox(NULL , "CreateBuffer(constant buffer Light) error" , "Error" , MB_OK);
+		MessageBox(NULL , "CreateConstantBuffer Error" , "Error" , MB_OK);
 	}
 
 	ID3D11DeviceContext* devCon = directGraph->GetImmediateContext();
 	SConstantBufferViewPort cb;
 
+	//定数バッファ初期化
 	cb.ScreenWidth = CApplication::CLIENT_WIDTH;
 	cb.ScreenHeight = CApplication::CLIENT_HEIGHT;
 
@@ -123,8 +125,8 @@ void CGame::Update()
 	//レベルが設定されている場合
 	if(mLevel != nullptr)
 	{
-		mLevel->Tick();			//そのレベルオリジナルで行う処理の実行
-		mLevel->Update();		//全レベル共通の更新ルーティンを実行
+		mLevel->Tick();			//ティック実行
+		mLevel->Update();		//更新
 	}
 }
 
@@ -136,11 +138,11 @@ void CGame::Render()
 		mLevel->Render();		//描画処理の実行
 	}
 
-	//ロードレベル関数が設定されているなら実行し空にする
-	if(mLoadLevelFunction != nullptr)
+	//ロードレベルイベントが設定されているなら実行し空にする
+	if(mLoadLevelEvent != nullptr)
 	{
-		mLoadLevelFunction();
-		mLoadLevelFunction = nullptr;
+		mLoadLevelEvent();
+		mLoadLevelEvent = nullptr;
 	}
 }
 
@@ -167,7 +169,7 @@ void CGame::LoadLevel(CLevel& level , bool isFeed , XMFLOAT3 feedColor , float f
 			mLevel->Init();
 		};
 
-		//ロードレベル関数オブジェクトにセット
-		mLoadLevelFunction = loadLevel;
+		//ロードレベルイベントにセット
+		mLoadLevelEvent = loadLevel;
 	}
 }

@@ -38,7 +38,7 @@ void CRenderComponent::Render(unsigned int stride ,
 
 	ID3D11DeviceContext* devcontext = CDirectXGraphics::GetInstance()->GetImmediateContext();
 
-	//頂点フォーマットをセット
+	//頂点レイアウトをセット
 	devcontext->IASetInputLayout(mVertexLayout);
 
 	//頂点シェーダーをセット
@@ -77,7 +77,7 @@ void CRenderComponent::Render(unsigned int stride ,
 		}
 		else
 		{
-			MessageBox(nullptr , "Not Found White Texture" , "error" , MB_OK);
+			MessageBox(nullptr , "Not Found White Texture" , "Error" , MB_OK);
 		}
 
 		//SRVをセット

@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief コライダーマネージャーのソースファイル
+//!
+
 #include "CColliderManager.h"
 #include "../Components/CColliderComponent.h"
 
@@ -10,9 +15,15 @@ CColliderManager& CColliderManager::GetInstance()
 
 void CColliderManager::AddCollider(CColliderComponent& collider)
 {
+	auto sameCollider = std::find(mColliders.begin() , mColliders.end() , &collider);
+
+	//同じコライダーがあれば終了
+	if(sameCollider != mColliders.end())return;
+
 	mColliders.emplace_back(&collider);
 
-	for(auto& isCache : mIsBefore)
+	//キャッシュを更新しなければならないためフラグをすべてfalseにする
+	for(auto& isCache : mIsCache)
 	{
 		isCache.second = false;
 	}
@@ -28,27 +39,27 @@ bool CColliderManager::GetColliders(CColliderComponent* caller , std::vector<CCo
 	}
 
 	//前回の情報がなければ作る
-	if(mIsBefore.count(caller) == 0)
+	if(mIsCache.count(caller) == 0)
 	{
-		mIsBefore[caller] = false;
+		mIsCache[caller] = false;
 	}
 
 	//前回の情報があった上でtrueなら前回と変更なし
-	if(mIsBefore[caller] == true)return true;
+	if(mIsCache[caller] == true)return true;
 
 	std::string callerObjType = caller->GetObjectType();
 	std::vector<CColliderComponent*> buf;
 	for(auto& collider : mColliders)
 	{
 		//呼び出し元とポインタが一致しないかつオブジェクトタイプがNONEか呼び出し元と一致しないないなら比較対象とする
-		if(collider != caller && collider->GetObjectType() == "NONE"||collider->GetObjectType() != callerObjType)
+		if(collider != caller && collider->GetObjectType() == "NONE" || collider->GetObjectType() != callerObjType)
 		{
 			buf.push_back(collider);
 		}
 	}
 	result = buf;
 
-	mIsBefore[caller] = true;		//前回の情報が最新に更新された
+	mIsCache[caller] = true;		//前回の情報が最新に更新された
 
 	if(result.size() != 0)return true;		//返す配列がある場合はtrue返す
 	else return false;						//ない場合はfalseを返す
@@ -56,6 +67,9 @@ bool CColliderManager::GetColliders(CColliderComponent* caller , std::vector<CCo
 
 void CColliderManager::ReleaseCollider(CColliderComponent& collider)
 {
+	//存在しないなら終了
+	if(mIsCache.size() == 0)return;
+
 	for(auto itr = mColliders.begin(); itr != mColliders.end(); itr++)
 	{
 		if((*itr) == &collider)
@@ -66,14 +80,11 @@ void CColliderManager::ReleaseCollider(CColliderComponent& collider)
 		}
 	}
 
-	if(mIsBefore.size() != 0 && mIsBefore.count(&collider) != 0)mIsBefore.erase(&collider);
+	if(mIsCache.count(&collider) != 0)mIsCache.erase(&collider);
 
-	if(mIsBefore.size() != 0)
+	for(auto& isBefore : mIsCache)
 	{
-		for(auto& isBefore : mIsBefore)
-		{
-			isBefore.second = false;
-		}
+		isBefore.second = false;
 	}
 }
 
@@ -83,6 +94,7 @@ void CColliderManager::Update()
 	{
 		for(auto& collider : mColliders)
 		{
+			//ワールド座標系のコライダー情報に変換
 			collider->ConvertWorldCollider();
 		}
 	}

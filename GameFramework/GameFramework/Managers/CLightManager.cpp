@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief ライトマネージャーのソースファイル
+//!
+
 #include "../Components/CPointLightComponent.h"
 #include "../Components/CSpotLightComponent.h"
 #include "../Components/CLightComponent.h"
@@ -14,7 +19,7 @@ CLightManager::CLightManager()
 	bool sts = CreateConstantBuffer(CDirectXGraphics::GetInstance()->GetDXDevice() , sizeof(SConstantBufferLight) , mConstantBuffer.GetAddressOf());
 	if(!sts)
 	{
-		MessageBox(NULL , "CreateBuffer(constant buffer Light) error" , "Error" , MB_OK);
+		MessageBox(NULL , "CreateConstantBuffer Error" , "Error" , MB_OK);
 	}
 }
 
@@ -52,6 +57,7 @@ void CLightManager::Update()
 {
 	XMFLOAT3 cameraLocation = CGameManager::GetInstance().GetCameraLocation();
 
+	//一致しなければ
 	if(!LCMath::CompareFloat3(mEyePos , cameraLocation))
 	{
 		mShouldUpdate = true;
@@ -106,11 +112,12 @@ void CLightManager::Update()
 			}
 		}
 
+		//定数バッファ更新
 		CDirectXGraphics::GetInstance()->GetImmediateContext()->UpdateSubresource(mConstantBuffer.Get() , 0 , nullptr , &mConstantBufferLightData , 0 , 0);
 	}
 
-	// コンスタントバッファ4をｂ4レジスタへセット（頂点シェーダー用）
+	//定数バッファをレジスタへセット（頂点シェーダー用）
 	CDirectXGraphics::GetInstance()->GetImmediateContext()->VSSetConstantBuffers(4 , 1 , mConstantBuffer.GetAddressOf());
-	// コンスタントバッファ4をｂ4レジスタへセット(ピクセルシェーダー用)
+	//定数バッファをレジスタへセット(ピクセルシェーダー用)
 	CDirectXGraphics::GetInstance()->GetImmediateContext()->PSSetConstantBuffers(4 , 1 , mConstantBuffer.GetAddressOf());
 }

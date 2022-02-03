@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief DirectXリソースマネージャーのソースファイル
+//!
+
 #include <filesystem>
 #include "../ExternalCode/Shader.h"
 
@@ -11,15 +16,19 @@ CDirectXResourceManager::CDirectXResourceManager()
 		//ディレクトリを作成
 		std::filesystem::create_directories("Assets/Textures/White");
 
+		//指定のパスにファイルがない場合
 		if(std::filesystem::exists("GameFramework/Assets/white.bmp"))
 		{
+			//ファイルをコピーする
 			std::filesystem::copy("GameFramework/Assets/white.bmp" , "Assets/Textures/White/white.bmp");
 		}
 		else
 		{
 			MessageBox(nullptr , 
 				"white.bmpが見つかりません\nGameFrameworkのフォルダを実行ファイルのカレントディレクトリに配置して実行してください\nその後white.bmpが\"Assets/Textures/White/\"に作成されます" ,
-				"error" , MB_OK);
+				"Error" , MB_OK);
+
+			//実行を強制終了する
 			exit(1);
 		}
 	}
@@ -36,36 +45,39 @@ CDirectXResourceManager& CDirectXResourceManager::GetInstance()
 
 ID3D11ShaderResourceView* CDirectXResourceManager::GetTextureSRV(std::string filePath)
 {
-	if(mTextureSRVMap.count(filePath) == 0)
+	//存在しなければ
+	if(mTextureSRV.count(filePath) == 0)
 	{
-		mTextureResourceMap[filePath];
-		mTextureSRVMap[filePath];
+		mTextureResource[filePath];
+		mTextureSRV[filePath];
 
 		CDirectXGraphics& buf = *CDirectXGraphics::GetInstance();
 
+		//SRVを作成
 		bool sts = CreateSRVfromFile(
 			filePath.c_str() , buf.GetDXDevice() , buf.GetImmediateContext() ,
-			mTextureResourceMap[filePath].GetAddressOf() , mTextureSRVMap[filePath].GetAddressOf());
+			mTextureResource[filePath].GetAddressOf() , mTextureSRV[filePath].GetAddressOf());
 		if(!sts)
 		{
 			MessageBox(nullptr , "Texture couldn't be loaded" , "Error!" , MB_ICONERROR | MB_OK);
-			mTextureResourceMap[filePath] = nullptr;
-			mTextureSRVMap[filePath] = nullptr;
+			mTextureResource[filePath] = nullptr;
+			mTextureSRV[filePath] = nullptr;
 			exit(1);
 		}
 	}
-	return mTextureSRVMap[filePath].Get();
+	return mTextureSRV[filePath].Get();
 }
 
 ID3D11VertexShader* CDirectXResourceManager::GetVertexShader(std::string filePath)
 {
-	if(mVertexShaderMap.count(filePath) == 0)
+	//存在しなければ
+	if(mVertexShader.count(filePath) == 0)
 	{
-		mVertexShaderMap[filePath];
+		mVertexShader[filePath];
 
 		ID3D11Device* device = CDirectXGraphics::GetInstance()->GetDXDevice();
 
-		// 頂点シェーダーを生成
+		//頂点シェーダーを作成
 		bool sts = CreateVertexShader(
 			device ,
 			filePath.c_str() ,
@@ -73,48 +85,50 @@ ID3D11VertexShader* CDirectXResourceManager::GetVertexShader(std::string filePat
 			"vs_5_0" ,
 			nullptr ,
 			0 ,
-			&mVertexShaderMap[filePath] ,
+			&mVertexShader[filePath] ,
 			nullptr);
 		if(!sts)
 		{
-			MessageBox(nullptr , "CreateVertexShader error" , "error" , MB_OK);
+			MessageBox(nullptr , "CreateVertexShader Error" , "Error" , MB_OK);
 		}
 	}
-	return mVertexShaderMap[filePath].Get();
+	return mVertexShader[filePath].Get();
 }
 
 ID3D11PixelShader* CDirectXResourceManager::GetPixelShader(std::string filePath)
 {
-	if(mPixelShaderMap.count(filePath) == 0)
+	//存在しなければ
+	if(mPixelShader.count(filePath) == 0)
 	{
-		mPixelShaderMap[filePath];
+		mPixelShader[filePath];
 
 		ID3D11Device* device = CDirectXGraphics::GetInstance()->GetDXDevice();
 
-		// ピクセルシェーダーを生成
+		//ピクセルシェーダーを作成
 		bool sts = CreatePixelShader(
 			device ,
 			filePath.c_str() ,
 			"main" ,
 			"ps_5_0" ,
-			&mPixelShaderMap[filePath]);
+			&mPixelShader[filePath]);
 		if(!sts)
 		{
-			MessageBox(nullptr , "CreatePixelShader error" , "error" , MB_OK);
+			MessageBox(nullptr , "CreatePixelShader Error" , "Error" , MB_OK);
 		}
 	}
-	return mPixelShaderMap[filePath].Get();
+	return mPixelShader[filePath].Get();
 }
 
-ID3D11InputLayout* CDirectXResourceManager::GetVertexLayout(D3D11_INPUT_ELEMENT_DESC* layout , unsigned int layoutSize , std::string vsFilePath)
+void CDirectXResourceManager::CreateVertexLayout(D3D11_INPUT_ELEMENT_DESC* layout , unsigned int layoutSize , std::string vsFilePath)
 {
-	if(mVertexLayoutMap.count(vsFilePath) == 0)
+	//存在しなければ
+	if(mVertexLayout.count(vsFilePath) == 0)
 	{
-		mVertexLayoutMap[vsFilePath];
+		mVertexLayout[vsFilePath];
 
 		ID3D11Device* device = CDirectXGraphics::GetInstance()->GetDXDevice();
 
-		// 頂点シェーダーを生成
+		//頂点シェーダーを生成
 		bool sts = CreateVertexShader(
 			device ,
 			vsFilePath.c_str() ,
@@ -123,11 +137,31 @@ ID3D11InputLayout* CDirectXResourceManager::GetVertexLayout(D3D11_INPUT_ELEMENT_
 			layout ,
 			layoutSize ,
 			nullptr ,
-			&mVertexLayoutMap[vsFilePath]);
+			&mVertexLayout[vsFilePath]);
 		if(!sts)
 		{
-			MessageBox(nullptr , "CreateVertexShader error" , "error" , MB_OK);
+			MessageBox(nullptr , "CreateVertexShader Error" , "Error" , MB_OK);
 		}
 	}
-	return mVertexLayoutMap[vsFilePath].Get();
+}
+
+ID3D11InputLayout* CDirectXResourceManager::GetVertexLayout(std::string vsFilePath)
+{
+	//存在しなければ
+	if(mVertexLayout.count(vsFilePath) == 0)
+	{
+		MessageBox(nullptr , "頂点レイアウトが見つかりませんでした" , "Error" , MB_OK);
+		return nullptr;
+	}
+	return mVertexLayout[vsFilePath].Get();
+}
+
+ID3D11InputLayout* CDirectXResourceManager::GetVertexLayout(D3D11_INPUT_ELEMENT_DESC* layout , unsigned int layoutSize , std::string vsFilePath)
+{
+	//存在しなければ
+	if(mVertexLayout.count(vsFilePath) == 0)
+	{
+		CreateVertexLayout(layout , layoutSize , vsFilePath);
+	}
+	return mVertexLayout[vsFilePath].Get();
 }
