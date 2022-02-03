@@ -125,7 +125,6 @@ private:
 		return Transform;
 	}
 
-
 protected:
 	ILevel& mOwnerInterface;		//!< 所有レベルのインターフェース
 

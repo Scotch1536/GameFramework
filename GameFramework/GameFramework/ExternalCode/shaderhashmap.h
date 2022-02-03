@@ -145,7 +145,7 @@ public:
 	}
 
 	// 頂点レイアウト取得
-	ID3D11InputLayout* GetVertexLayout(std::string filenamekey) {
+	ID3D11InputLayout* CreateVertexLayout(std::string filenamekey) {
 		// 存在するかを確かめる
 		auto it = m_layouthashmap.find(filenamekey);
 		if (it == m_layouthashmap.end()) {

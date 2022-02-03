@@ -25,7 +25,7 @@ CLevel::CLevel(IGame& owner , bool isFeed , XMFLOAT3 feedColor , float FeedTime)
 CLevel::~CLevel()
 {
 	//インプットマネージャーと自身を切り離す
-	CInputManager::GetInstance().ReleaseBindTarget(*this);
+	CInputManager::GetInstance().ReleaseBind(*this);
 }
 
 void CLevel::AddActor(CActor& actor)

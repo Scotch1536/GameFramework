@@ -55,7 +55,7 @@ void CPrimitiveMeshComponent<VertexType>::GenerateVertexAndIndexBuffer()
 		mVertices.data() , &mVertexBuffer);
 	if(!sts)
 	{
-		MessageBox(NULL , "CreateBuffer(vertex buffer) error" , "Error" , MB_OK);
+		MessageBox(NULL , "CreateVertexBuffer Error" , "Error" , MB_OK);
 		exit(1);
 	}
 
@@ -64,7 +64,7 @@ void CPrimitiveMeshComponent<VertexType>::GenerateVertexAndIndexBuffer()
 		mIndices.data() , &mIndexBuffer);
 	if(!sts)
 	{
-		MessageBox(NULL , "CreateBuffer(index buffer) error" , "Error" , MB_OK);
+		MessageBox(NULL , "CreateIndexBuffer Error" , "Error" , MB_OK);
 		exit(1);
 	}
 }

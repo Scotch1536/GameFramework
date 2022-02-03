@@ -165,9 +165,6 @@
     <ClCompile Include="CPointer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CBullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework\Components\CCameraComponent.cpp">
       <Filter>GameFramework\Components\ソースファイル</Filter>
     </ClCompile>
@@ -314,9 +311,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameFramework\ExternalCode\CDirectInput.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CSkyDome.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -363,9 +357,6 @@
       <Filter>GameFramework\Components\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="CPointer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CBullet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameFramework\Components\CDisplay2DComponent.h">
@@ -538,6 +529,9 @@
     </ClInclude>
     <ClInclude Include="GameFramework\Data\MeshDataDefinition.h">
       <Filter>GameFramework\Data\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework\ExternalCode\CDirectInput.h">
+      <Filter>GameFramework\ExternalCode\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

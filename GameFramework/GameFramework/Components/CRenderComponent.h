@@ -19,7 +19,7 @@ class CRenderComponent :public CComponent
 private:
 	ID3D11VertexShader* mVertexShader = nullptr;		//!< 頂点シェーダー
 	ID3D11PixelShader* mPixelShader = nullptr;			//!< ピクセルシェーダー
-	ID3D11InputLayout* mVertexLayout = nullptr;			//!< 頂点フォーマット
+	ID3D11InputLayout* mVertexLayout = nullptr;			//!< 頂点レイアウト
 
 public:
 	//!
@@ -31,8 +31,8 @@ public:
 
 	//!
 	//! @brief 頂点シェーダ生成
-	//! @param[in] layout 頂点フォーマット
-	//! @param[in] layoutSize 頂点フォーマットの大きさ
+	//! @param[in] layout 頂点レイアウト
+	//! @param[in] layoutSize 頂点レイアウトの大きさ
 	//! @param[in] vsFilePath 頂点シェーダのパス
 	//!
 	void GenerateVertexShader(D3D11_INPUT_ELEMENT_DESC* layout , unsigned int layoutSize , std::string vsFilePath);

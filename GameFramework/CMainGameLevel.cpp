@@ -1,7 +1,11 @@
+//!
+//! @file
+//! @brief メインゲームレベルのソースファイル
+//!
+
 #include "GameFramework/Components/CStaticMeshComponent.h"
 #include "GameFramework/Components/CCameraComponent.h"
 #include "GameFramework/Components/CParticleGeneratorComponent.h"
-#include "GameFramework/Components/CSphereMeshComponent.h"
 #include "GameFramework/Actor/CActorGenerator.h"
 #include "GameFramework/Actor/CActor.h"
 #include "GameFramework/Actor/CFeedActor.h"
@@ -19,21 +23,31 @@
 
 void CMainGameLevel::Init()
 {
+	//フェードアクター作成
 	new CFeedActor(*this , nullptr , CFeedActor::EOption::FEEDIN);
 
 	CComponent* buf;
 
+	//戦闘機作成&初期化
 	CFighter& fighter = *new CFighter(*this);
 	fighter.Transform.Location.z = -500.0f;
 
+	//スカイドーム作成
 	CSkyDome& skyDome = *new CSkyDome(*this);
+
+	//戦闘機にスカイドームをアタッチ
 	fighter.Transform.AttachTransform(skyDome.Transform);
-	skyDome.Transform.SetOption(CTransform::EAttachOption::LOCATION_ONLY);
-	skyDome.GetComponent<CStaticMeshComponent>(buf);
+
+	//スカイドームのアタッチオプションをロケーションのみに設定
+	skyDome.Transform.SetAttachOption(CTransform::EAttachOption::LOCATION_ONLY);
+
 	XMFLOAT3 min , max;
 	min = max = { 0.0f,0.0f,0.0f };
+
+	skyDome.GetComponent<CStaticMeshComponent>(buf);
 	CStaticMeshComponent& skyDomeMesh = dynamic_cast<CStaticMeshComponent&>(*buf);
 
+	//スカイドームメッシュから最小最大値を求める
 	for(auto& mesh : skyDomeMesh.GetModel().GetMeshes())
 	{
 		for(auto& vertex : mesh.Vertices)
@@ -49,6 +63,7 @@ void CMainGameLevel::Init()
 		}
 	}
 
+	//ワールド情報に変換
 	min.x *= (skyDomeMesh.Transform.Scale.x / 2.0f);
 	min.y *= (skyDomeMesh.Transform.Scale.y / 2.0f);
 	min.z *= (skyDomeMesh.Transform.Scale.z / 2.0f);
@@ -56,28 +71,35 @@ void CMainGameLevel::Init()
 	max.y *= (skyDomeMesh.Transform.Scale.y / 2.0f);
 	max.z *= (skyDomeMesh.Transform.Scale.z / 2.0f);
 
+	//アクタージェネレータ作成
 	new CActorGenerator(*this , [&] { return new CAttachObject(*this); } , min , max , 15.0f);
 
 	fighter.GetComponent<CCameraComponent>(buf);
-	SetRenderCamera(*dynamic_cast<CCameraComponent*>(buf));
+	SetRenderCamera(*dynamic_cast<CCameraComponent*>(buf));			//描画カメラセット
 
+	//ライトのセット
 	CLightManager::GetInstance().SetDirectionLight({ 1.0f,1.0f,-1.0f });
 	CLightManager::GetInstance().SetAmbientLight({ 0.1f,0.1f,0.1f });
 }
 
 void CMainGameLevel::Tick()
 {
+	//制限時間更新
 	mTime -= CGameManager::GetInstance().GetDeltaTime();
 
+	//終了していたら
 	if(mTime <= 0.0f && !mIsEnd)
 	{
 		mIsEnd = true;
 
 		std::string scoreStr = "Score:" + std::to_string(mScore);
 		MessageBox(nullptr , scoreStr.c_str() , "GameOver!" , MB_OK);
+
+		//タイトルレベルに遷移
 		new CTitle(mOwnerInterface , true);
 	}
 
+	//GUI作成処理
 	auto displayHowTo = [&]
 	{
 		ImGui::SetNextWindowPos(ImVec2(10 , 10) , ImGuiCond_Once);
@@ -117,6 +139,7 @@ void CMainGameLevel::Tick()
 
 void CMainGameLevel::Notice(CActor& actor)
 {
+	//アタッチオブジェクトからの通知なら
 	if(actor.HasTag("AttachObject"))
 	{
 		mScore += 1;

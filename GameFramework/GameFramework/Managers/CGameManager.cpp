@@ -1,3 +1,8 @@
+//!
+//! @file
+//! @brief ゲームマネージャーのソースファイル
+//!
+
 #include <Windows.h>
 
 #include "../Game/CApplication.h"
@@ -7,7 +12,9 @@
 #include "CGameManager.h"
 
 CGameManager::CGameManager():mGame(*this)
-{}
+{
+	mGameInterface = &mGame;
+}
 
 CGameManager& CGameManager::GetInstance()
 {
@@ -22,11 +29,7 @@ void CGameManager::RequestExecute(HINSTANCE hInst , int winMode)
 	{
 		mCanExecute = false;
 
-		static_cast<IGameToGameManager&>(mGame).Execute(hInst , winMode);
-	}
-	else
-	{
-		MessageBox(NULL , "Not Execute" , "error" , MB_OK);
+		mGameInterface->Execute(hInst , winMode);
 	}
 }
 
@@ -44,7 +47,7 @@ float CGameManager::CalcDistanceToCamera(const XMFLOAT3& compareLocation)
 {
 	XMFLOAT3 cameraVec = mGame.GetLevel().GetRenderingCameraLocation();
 
-	XMFLOAT3 calcVec = LCMath::CalcFloat3FromStartToEnd(compareLocation , cameraVec);
+	XMFLOAT3 calcVec = LCMath::CalcFloat3Subtraction(compareLocation , cameraVec);
 
 	return LCMath::CalcFloat3Length(calcVec);
 }

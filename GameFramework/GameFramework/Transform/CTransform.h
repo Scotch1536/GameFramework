@@ -173,7 +173,7 @@ public:
 		mIsBillboard = flg;
 	}
 
-	void SetOption(EAttachOption option)
+	void SetAttachOption(EAttachOption option)
 	{
 		mAttachOption = option;
 	}

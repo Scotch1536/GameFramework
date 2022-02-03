@@ -65,7 +65,7 @@ void CGame::Init()
 		false);
 	if(!sts)
 	{
-		MessageBox(mApp.GetHWnd() , "DX11 init error" , "error" , MB_OK);
+		MessageBox(mApp.GetHWnd() , "CDirectXGraphics init Error" , "Error" , MB_OK);
 		exit(1);
 	}
 
@@ -73,7 +73,7 @@ void CGame::Init()
 	sts = DX11SetTransform::GetInstance()->Init();
 	if(!sts)
 	{
-		MessageBox(NULL , "SetTransform error" , "Error" , MB_OK);
+		MessageBox(NULL , "SetTransform Init Error" , "Error" , MB_OK);
 		exit(1);
 	}
 
@@ -93,7 +93,7 @@ void CGame::Init()
 	sts = CreateConstantBuffer(directGraph->GetDXDevice() , sizeof(SConstantBufferViewPort) , mConstantBufferViewPort.GetAddressOf());
 	if(!sts)
 	{
-		MessageBox(NULL , "CreateBuffer(constant buffer Light) error" , "Error" , MB_OK);
+		MessageBox(NULL , "CreateConstantBuffer Error" , "Error" , MB_OK);
 	}
 
 	ID3D11DeviceContext* devCon = directGraph->GetImmediateContext();

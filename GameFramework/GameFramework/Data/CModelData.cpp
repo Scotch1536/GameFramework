@@ -156,7 +156,7 @@ bool CModelData::Load(std::string resourceFolderPath , std::string filePath)
 	bool sts = mAssimpScene.Init(filePath);
 	if(!sts)
 	{
-		MessageBox(nullptr , "ModelData load error" , "error" , MB_OK);
+		MessageBox(nullptr , "AssimpƒV[ƒ“‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½" , "Error" , MB_OK);
 		return false;
 	}
 

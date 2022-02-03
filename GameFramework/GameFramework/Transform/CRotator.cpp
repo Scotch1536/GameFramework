@@ -41,6 +41,7 @@ XMFLOAT4X4 CRotator::GenerateMatrix()
 
 void CRotator::SetAngle(const XMFLOAT3& angle)
 {
+	//初期姿勢を回転軸にクォータニオンを算出
 	LCMath::TransformFromEulerAnglesToQuaternion({ 1.0f,0.0f,0.0f } , { 0.0f , 1.0f , 0.0f } ,
 		{ 0.0f,0.0f,1.0f } , angle , mQuaternion);
 

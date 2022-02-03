@@ -29,8 +29,9 @@ public:
 	static const float FPS;									//!< FPS
 
 private:
-	HWND					mHWnd;								//!< Windowハンドル
-	HINSTANCE				mHInstance;							//!< インスタンスハンドル
+	HWND mHWnd;					//!< Windowハンドル
+	HINSTANCE mHInstance;		//!< インスタンスハンドル
+	CGame* mGame;				//!< ゲームシステム
 
 	//コピー禁止
 	CApplication(const CApplication&);
@@ -41,7 +42,7 @@ public:
 	//! @brief コンストラクタ
 	//! @param[in] partner このアプリケーションを所有するゲームシステム
 	//!
-	CApplication(CGame& partner) {};
+	CApplication(CGame& partner):mGame(&partner) {};
 
 	//!
 	//! @brief 初期化

@@ -220,6 +220,7 @@ void CTransform::Update()
 
 void CTransform::RequestSetMatrix()
 {
+	//GPUにワールド変換行列をセットする
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD , mWorldMatrix);
 }
 
@@ -328,21 +329,3 @@ XMFLOAT3 CTransform::GetWorldScale()const
 	}
 	else return Scale;
 }
-
-//XMFLOAT3 CTransform::GetWorldRotatorAngle()const
-//{
-//	XMFLOAT3 angle = Rotation.GetAngle();
-//	XMFLOAT3 result;
-//
-//	if(mParentTransform != nullptr)
-//	{
-//		result = mParentTransform->GetWorldRotatorAngle();
-//
-//		result.x += angle.x;
-//		result.y += angle.y;
-//		result.z += angle.z;
-//
-//		return result;
-//	}
-//	else return angle;
-//}

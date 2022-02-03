@@ -1,7 +1,6 @@
 //!
 //!	@file
-//!	@brief エントリーポイント
-//!	@note アプリケーション開始
+//!	@brief エントリーポイントのソースファイル
 //!
 
 #include <Windows.h>
@@ -9,22 +8,22 @@
 
 #include "CTitle.h"
 
-INT APIENTRY WinMain(HINSTANCE  h_hInst ,
-	HINSTANCE  h_hPrevInst ,
-	LPSTR		h_lpszArgs ,
-	int		h_nWinMode)
+//!
+//! @brief エントリーポイント
+//! @param[in] hInst インスタンスハンドル
+//! @param[in] hPrevInst 特になし
+//! @param[in] lpCmdLine コマンドライン
+//! @param[in] winMode ウィンドウモード
+//! @return INT 終了コード
+//!
+INT APIENTRY WinMain(HINSTANCE hInst , HINSTANCE  hPrevInst , LPSTR lpCmdLine , int winMode)
 {
 	//ゲームマネージャー取得
 	CGameManager& gameManager = CGameManager::GetInstance();
 
-	/*
-	★超重要★
-	ここに開始したいレベルのコンストラクタを
-	引数をIGame&で呼び出す
-	メモリ解放はゲームマネージャーが行うので考えなくてよい
-	*/
+	//初期レベルの作成
 	new CTitle(gameManager.GetGameInterface());
 
 	//ゲームの実行をリクエスト
-	gameManager.RequestExecute(h_hInst , h_nWinMode);
+	gameManager.RequestExecute(hInst , winMode);
 }

@@ -64,8 +64,6 @@ unsigned long CApplication::MainLoop()
 	uint64_t current_time = 0;
 	uint64_t last_time = 0;
 
-	CGame& game = CGameManager::GetInstance().GetGame(*this);
-
 	//タイマ解像度をミリ秒に
 	::timeBeginPeriod(1);
 
@@ -84,13 +82,13 @@ unsigned long CApplication::MainLoop()
 		if(delta_time != current_time && delta_time < 1000)
 		{
 			//ゲームマネージャーで管理しているデルタタイムを更新
-			CGameManager::GetInstance().SetDeltaTime(*this , delta_time);
+			CGameManager::GetInstance().SetDeltaTime(delta_time);
 		}
 
 		//ゲームフロー
-		game.Input();
-		game.Update();
-		game.Render();
+		mGame->Input();
+		mGame->Update();
+		mGame->Render();
 
 		int64_t sleep_time = 16666 - delta_time;
 

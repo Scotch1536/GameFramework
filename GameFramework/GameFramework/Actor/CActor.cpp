@@ -9,9 +9,9 @@
 
 #include "CActor.h"
 
-CActor::CActor(ILevel& owner, bool isAffectToPause)
-	:CObject("Actor"),
-	mOwnerInterface(owner), mIsAffectToPause(isAffectToPause),
+CActor::CActor(ILevel& owner , bool isAffectToPause)
+	:CObject("Actor") ,
+	mOwnerInterface(owner) , mIsAffectToPause(isAffectToPause) ,
 	Transform(*this)
 {
 	//アクター追加
@@ -21,7 +21,7 @@ CActor::CActor(ILevel& owner, bool isAffectToPause)
 CActor::~CActor()
 {
 	//入力マネージャーと自身のバインドを切り離す
-	CInputManager::GetInstance().ReleaseBindTarget(*this);
+	CInputManager::GetInstance().ReleaseBind(*this);
 }
 
 void CActor::AddComponent(CComponent& component)
@@ -29,19 +29,19 @@ void CActor::AddComponent(CComponent& component)
 	int myPriority = component.GetPriority();
 	auto itr = this->mComponents.begin();
 
-	for (; itr != this->mComponents.end(); ++itr)
+	for(; itr != this->mComponents.end(); ++itr)
 	{
 		//引数と同じポインタが見つかった場合終了
-		if ((*itr).get() == &component)return;
+		if((*itr).get() == &component)return;
 
 		//自身の優先度の方が低い場合
-		if (myPriority <= (*itr)->GetPriority())
+		if(myPriority <= (*itr)->GetPriority())
 		{
 			break;
 		}
 	}
 	//コンポーネントを挿入
-	this->mComponents.emplace(itr, &component);
+	this->mComponents.emplace(itr , &component);
 }
 
 void CActor::AddRenderOrder(const SRenderInfo& order)
@@ -58,8 +58,12 @@ void CActor::RequestAddDoBeforeUpdateEvent(std::function<void()> event)
 
 void CActor::Update()
 {
-	//トランスフォーム更新
-	Transform.Update();
+	//子トランスフォームじゃなければ
+	if(!Transform.GetIsChild())
+	{
+		//トランスフォーム更新
+		Transform.Update();
+	}
 
 	for(auto& component : mComponents)
 	{
