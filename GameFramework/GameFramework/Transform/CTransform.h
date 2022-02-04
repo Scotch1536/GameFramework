@@ -42,7 +42,7 @@ private:
 
 	IActor& mOwnerInterface;										//!< 自身を所有するアクターのインターフェース
 
-	std::vector<std::function<void()>> mEventWhenMatrixUpdate;		//!< 行列更新時実行イベント
+	std::vector<std::function<void()>> mEventsWhenMatrixUpdate;		//!< 行列更新時実行イベント
 
 	bool mShouldUpdateMatrix = true;								//!< 行列を更新すべきか
 	bool mIgnoreUpdateMatrixOnce = false;							//!< 一度行列の更新を無視するか
@@ -150,7 +150,7 @@ public:
 	//!
 	void AddEventWhenMatrixUpdate(const std::function<void()>& event)
 	{
-		mEventWhenMatrixUpdate.emplace_back(event);
+		mEventsWhenMatrixUpdate.emplace_back(event);
 	};
 
 	const XMFLOAT4X4& GetWorldMatrix()const

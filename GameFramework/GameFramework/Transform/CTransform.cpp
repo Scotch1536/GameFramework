@@ -139,10 +139,10 @@ void CTransform::Update()
 		LCMath::CreateMatrix(Location , Scale , Rotation.GenerateMatrix() , mLocalMatrix);
 
 		//存在するなら
-		if(mEventWhenMatrixUpdate.size() > 0)
+		if(mEventsWhenMatrixUpdate.size() > 0)
 		{
 			//行列更新時実行イベントを行う
-			for(auto& event : mEventWhenMatrixUpdate)
+			for(auto& event : mEventsWhenMatrixUpdate)
 			{
 				event();
 			}

@@ -63,9 +63,9 @@ struct SButtonInfo
 	//! @brief コンストラクタ
 	//! @param[in] mouseButtonNum ボタン番号
 	//!
-	SButtonInfo(EMouseButtonType mouseButtonNum)
+	SButtonInfo(EButtonType type , EMouseButtonType mouseButtonNum)
 	{
-		ButtonType = EButtonType::MOUSE;
+		ButtonType = type;
 		ButtonNum = static_cast<int>(mouseButtonNum);
 	}
 };
@@ -87,6 +87,8 @@ class CInputManager
 {
 private:
 	std::unordered_map<std::string , SInputDefinition> mInputEventList;		//!< 入力イベントリスト
+
+	std::vector<std::function<void()>> mDeleteEvents;
 
 	//!
 	//! @brief コンストラクタ

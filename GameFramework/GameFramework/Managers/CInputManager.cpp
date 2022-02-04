@@ -55,7 +55,13 @@ void CInputManager::AddEvent(const std::string& eventName , const EButtonOption&
 
 void CInputManager::DeleteEvent(const std::string& eventName)
 {
-	mInputEventList.erase(eventName);
+	//イベントを削除する関数オブジェクト作成
+	auto deleteEvent = [& , eventName]
+	{
+		mInputEventList.erase(eventName);
+	};
+
+	mDeleteEvents.emplace_back(deleteEvent);
 }
 
 void CInputManager::ReleaseBind(CObject& target)
@@ -63,13 +69,13 @@ void CInputManager::ReleaseBind(CObject& target)
 	//アクションリストが空だった場合終了
 	if(mInputEventList.size() == 0)return;
 
-	for(auto& action : mInputEventList)
+	for(auto& event : mInputEventList)
 	{
-		if(action.second.InstancePointer == &target)
+		if(event.second.InstancePointer == &target)
 		{
 			//バインドで実装することも鑑みて要素の削除(erase)ではなく値の代入で記述
-			action.second.InstancePointer = nullptr;
-			action.second.EventInfo = nullptr;
+			event.second.InstancePointer = nullptr;
+			event.second.EventInfo = nullptr;
 		}
 	}
 }
@@ -84,6 +90,21 @@ void CInputManager::CheckInput()
 	directInput.GetMouseState();
 
 	bool shouldEvent = false;
+
+	//存在しなければ終了
+	if(mInputEventList.size() == 0)return;
+
+	if(mDeleteEvents.size() != 0)
+	{
+		for(auto& deleteEvent : mDeleteEvents)
+		{
+			deleteEvent();
+		}
+
+		//中身を空にする
+		mDeleteEvents.clear();
+		mDeleteEvents.shrink_to_fit();
+	}
 
 	for(auto& event : mInputEventList)
 	{
