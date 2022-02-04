@@ -41,27 +41,29 @@ void CLevel::SetRenderCamera(CCameraComponent& camera)
 void CLevel::Update()
 {
 	//更新前に行うイベントを実行
-	if(mDoBeforeUpdateEvent.size() != 0)
+	if(mDoBeforeUpdateEvents.size() != 0)
 	{
-		for(auto& event : mDoBeforeUpdateEvent)
+		for(auto& event : mDoBeforeUpdateEvents)
 		{
 			event();
 		}
+
 		//中身を空にする
-		mDoBeforeUpdateEvent.clear();
-		mDoBeforeUpdateEvent.shrink_to_fit();
+		mDoBeforeUpdateEvents.clear();
+		mDoBeforeUpdateEvents.shrink_to_fit();
 	}
 
 	//デストロイイベントを実行
-	if(mDestroyEvent.size() != 0)
+	if(mDestroyEvents.size() != 0)
 	{
-		for(auto& event : mDestroyEvent)
+		for(auto& event : mDestroyEvents)
 		{
 			event();
 		}
+
 		//中身を空にする
-		mDestroyEvent.clear();
-		mDestroyEvent.shrink_to_fit();
+		mDestroyEvents.clear();
+		mDestroyEvents.shrink_to_fit();
 	}
 
 	std::vector<CActor*> actors;		//このフレームですべてを更新するアクター
@@ -255,15 +257,15 @@ void CLevel::Render()
 	//ImGuiに渡す描画のイベントを全て実行する関数オブジェクトを作成
 	auto allGuiEventExecute = [&]
 	{
-		for(auto& guiEvent : mImGuiDrawEvent)
+		for(auto& guiEvent : mImGuiDrawEvents)
 		{
 			guiEvent();
 		}
 	};
 	imguiDraw(allGuiEventExecute);
 
-	mImGuiDrawEvent.clear();
-	mImGuiDrawEvent.shrink_to_fit();
+	mImGuiDrawEvents.clear();
+	mImGuiDrawEvents.shrink_to_fit();
 
 	CDirectXGraphics::GetInstance()->GetSwapChain()->Present(0 , 0);
 }
@@ -291,7 +293,7 @@ void CLevel::DestroyActor(CActor& target)
 		}
 	};
 
-	mDestroyEvent.emplace_back(destroyLambda);
+	mDestroyEvents.emplace_back(destroyLambda);
 }
 
 const XMFLOAT4X4* CLevel::GetRenderingCameraViewMatrix()const

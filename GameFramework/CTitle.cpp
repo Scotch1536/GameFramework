@@ -27,7 +27,7 @@ void CTitle::Init()
 	CSoundManager::GetInstance().PlaySound("BGM");
 
 	//“ü—ÍƒCƒxƒ“ƒg‚Ì“o˜^
-	CInputManager::GetInstance().AddEvent("TitleEnd" , EButtonOption::TRIGGER , *this , { {EMouseButtonType::L_BUTTON},{EButtonType::KEYBOARD,DIK_SPACE} } , std::bind(&CTitle::End , std::ref(*this)));
+	CInputManager::GetInstance().AddEvent("TitleEnd" , EButtonOption::TRIGGER , *this , { {EButtonType::MOUSE,EMouseButtonType::L_BUTTON},{EButtonType::KEYBOARD,DIK_SPACE} } , std::bind(&CTitle::End , std::ref(*this)));
 }
 
 void CTitle::End()

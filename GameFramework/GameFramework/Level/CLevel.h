@@ -76,9 +76,9 @@ class CLevel :public CObject , public ILevel
 private:
 	std::vector<std::unique_ptr<CActor>> mActors;									//!< アクター
 
-	std::vector<std::function<void()>> mDoBeforeUpdateEvent;						//!< 更新前に行うイベント
-	std::vector<std::function<void()>> mDestroyEvent;								//!< デストロイのイベント
-	std::vector<std::function<void()>> mImGuiDrawEvent;								//!< ImGuiに行わせる描画のイベント
+	std::vector<std::function<void()>> mDoBeforeUpdateEvents;						//!< 更新前に行うイベント
+	std::vector<std::function<void()>> mDestroyEvents;								//!< デストロイのイベント
+	std::vector<std::function<void()>> mImGuiDrawEvents;							//!< ImGuiに行わせる描画のイベント
 
 	std::vector<IRender*> m3DOpacityRenderComponents;								//!< 不透明3Dレンダーコンポーネント
 	std::vector<std::pair<IRender* , float>> m3DTranslucentRenderComponents;		//!< 半透明3Dレンダーコンポーネント
@@ -150,7 +150,7 @@ private:
 	//!
 	void AddDoBeforeUpdateEvent(std::function<void()> event)override
 	{
-		mDoBeforeUpdateEvent.emplace_back(event);
+		mDoBeforeUpdateEvents.emplace_back(event);
 	}
 
 	//!
@@ -178,7 +178,7 @@ protected:
 	//!
 	void AddImGuiDrawEvent(std::function<void()> event)override
 	{
-		mImGuiDrawEvent.emplace_back(event);
+		mImGuiDrawEvents.emplace_back(event);
 	}
 
 	//!
