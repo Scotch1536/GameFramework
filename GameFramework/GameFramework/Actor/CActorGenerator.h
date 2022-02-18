@@ -40,8 +40,8 @@ public:
 	//! @param[in] generationPerSecond 1•b‚ ‚½‚è‚Ì¶¬”
 	//! @param[in] generationLimit ¶¬ŒÀŠE’li‘”j
 	//!
-	CActorGenerator(ILevel& partner , std::function<CActor*()> instantiationEvent , XMFLOAT3 minRange , XMFLOAT3 maxRange , float generationPerSecond , int generationLimit = 1000):CActor(partner) ,
-		mInstantiationEvent(instantiationEvent) ,
+	CActorGenerator(ILevel& partner , std::function<CActor*()> instantiationEvent , XMFLOAT3 minRange , XMFLOAT3 maxRange , float generationPerSecond , int generationLimit = 1000)
+		:CActor(partner) , mInstantiationEvent(instantiationEvent) ,
 		mRandomEngine(mRandomSeed()) , mRandomGeneratorX(minRange.x , maxRange.x) ,
 		mRandomGeneratorY(minRange.y , maxRange.y) , mRandomGeneratorZ(minRange.z , maxRange.z) ,
 		mGenerationLimit(generationLimit) , mIncreasedValueOfGenerationGauge(generationPerSecond / 60.0f)
