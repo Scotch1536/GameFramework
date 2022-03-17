@@ -19,10 +19,10 @@ class CTransform;
 //! @brief レンダーオプション列挙型
 enum class ERenderOption
 {
-	OPACITY3D ,				//!< 不透明3D
+	OPAQUE3D ,				//!< 不透明3D
 	TRANSLUCENT3D ,			//!< 半透明3D
 	BILLBOARD ,				//!< ビルボード
-	OPACITY2D ,				//!< 不透明2D
+	OPAQUE2D ,				//!< 不透明2D
 	TRANSLUCENT2D ,			//!< 半透明2D
 };
 

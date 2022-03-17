@@ -73,7 +73,7 @@ template<class VertexType>
 void CPrimitiveMeshComponent<VertexType>::Update()
 {
 	//”¼“§–¾‚¶‚á‚È‚¯‚ê‚Î
-	if(!mIsTranslucent)mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY3D });																				//•`‰æ–½—ß’Ç‰Á
+	if(!mIsTranslucent)mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPAQUE3D });																				//•`‰æ–½—ß’Ç‰Á
 	else mOwnerInterface.AddRenderOrder({ *this,ERenderOption::TRANSLUCENT3D,CGameManager::GetInstance().CalcDistanceToCamera(Transform.GetWorldLocation()) });			//•`‰æ–½—ß’Ç‰Á
 }
 

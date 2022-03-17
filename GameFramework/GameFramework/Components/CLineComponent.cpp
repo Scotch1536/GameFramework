@@ -129,7 +129,7 @@ void CLineComponent::Update()
 	}
 
 	//•`‰æ–½—ß’Ç‰Á
-	mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY3D });
+	mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPAQUE3D });
 }
 
 void CLineComponent::UpdateVertex(void* source , int size)

@@ -57,7 +57,7 @@ XMFLOAT2* CDisplay2DComponent::GetUV(int index)
 void CDisplay2DComponent::Update()
 {
 	//”¼“§–¾‚¶‚á‚È‚¯‚ê‚Î
-	if(!this->mIsTranslucent)this->mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY2D });		//•`‰æ–½—ß’Ç‰Á
+	if(!this->mIsTranslucent)this->mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPAQUE2D });		//•`‰æ–½—ß’Ç‰Á
 	else this->mOwnerInterface.AddRenderOrder({ *this,ERenderOption::TRANSLUCENT2D });						//•`‰æ–½—ß’Ç‰Á
 }
 

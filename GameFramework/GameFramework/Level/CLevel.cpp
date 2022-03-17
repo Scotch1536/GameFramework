@@ -145,10 +145,10 @@ void CLevel::RegisterRenderOrders(std::vector<SRenderInfo>& renderOrders)
 {
 	for(auto& renderOrder : renderOrders)
 	{
-		if(renderOrder.RenderOption == ERenderOption::OPACITY3D)Add3DOpacityRenderComponent(renderOrder.RenderComponentReference);
+		if(renderOrder.RenderOption == ERenderOption::OPAQUE3D)Add3DOpaqueRenderComponent(renderOrder.RenderComponentReference);
 		else if(renderOrder.RenderOption == ERenderOption::TRANSLUCENT3D)Add3DTranslucentRenderComponent(renderOrder.RenderComponentReference , renderOrder.DistanceToCamera);
 		else if(renderOrder.RenderOption == ERenderOption::BILLBOARD)Add3DTranslucentRenderComponent(renderOrder.RenderComponentReference , renderOrder.DistanceToCamera);
-		else if(renderOrder.RenderOption == ERenderOption::OPACITY2D)Add2DOpacityRenderComponent(renderOrder.RenderComponentReference);
+		else if(renderOrder.RenderOption == ERenderOption::OPAQUE2D)Add2DOpaqueRenderComponent(renderOrder.RenderComponentReference);
 		else if(renderOrder.RenderOption == ERenderOption::TRANSLUCENT2D)Add2DTranslucentRenderComponent(renderOrder.RenderComponentReference);
 	}
 
@@ -187,14 +187,14 @@ void CLevel::Render()
 	}
 
 	//描画命令登録から各種レンダーコンポーネントに割り振られたものを処理する
-	if(m3DOpacityRenderComponents.size() != 0)
+	if(m3DOpaqueRenderComponents.size() != 0)
 	{
-		for(auto& alphaRender : m3DOpacityRenderComponents)
+		for(auto& alphaRender : m3DOpaqueRenderComponents)
 		{
 			alphaRender->Render();
 		}
-		m3DOpacityRenderComponents.clear();
-		m3DOpacityRenderComponents.shrink_to_fit();
+		m3DOpaqueRenderComponents.clear();
+		m3DOpaqueRenderComponents.shrink_to_fit();
 	}
 
 	if(m3DTranslucentRenderComponents.size() != 0)
@@ -214,7 +214,7 @@ void CLevel::Render()
 		m3DTranslucentRenderComponents.shrink_to_fit();
 	}
 
-	if(m2DOpacityRenderComponents.size() != 0 || m2DTranslucentRenderComponents.size() != 0)
+	if(m2DOpaqueRenderComponents.size() != 0 || m2DTranslucentRenderComponents.size() != 0)
 	{
 		//2D描画用射影変換行列
 		XMFLOAT4X4 projectionMatrix2D = {
@@ -230,14 +230,14 @@ void CLevel::Render()
 		//Zバッファオフ
 		CDirectXGraphics::GetInstance()->TurnOffZbuffer();
 
-		if(m2DOpacityRenderComponents.size() != 0)
+		if(m2DOpaqueRenderComponents.size() != 0)
 		{
-			for(auto& render : m2DOpacityRenderComponents)
+			for(auto& render : m2DOpaqueRenderComponents)
 			{
 				render->Render();
 			}
-			m2DOpacityRenderComponents.clear();
-			m2DOpacityRenderComponents.shrink_to_fit();
+			m2DOpaqueRenderComponents.clear();
+			m2DOpaqueRenderComponents.shrink_to_fit();
 		}
 
 		if(m2DTranslucentRenderComponents.size() != 0)

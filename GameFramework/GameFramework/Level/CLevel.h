@@ -80,9 +80,9 @@ private:
 	std::vector<std::function<void()>> mDestroyEvents;								//!< デストロイのイベント
 	std::vector<std::function<void()>> mImGuiDrawEvents;							//!< ImGuiに行わせる描画のイベント
 
-	std::vector<IRender*> m3DOpacityRenderComponents;								//!< 不透明3Dレンダーコンポーネント
+	std::vector<IRender*> m3DOpaqueRenderComponents;								//!< 不透明3Dレンダーコンポーネント
 	std::vector<std::pair<IRender* , float>> m3DTranslucentRenderComponents;		//!< 半透明3Dレンダーコンポーネント
-	std::vector<IRender*> m2DOpacityRenderComponents;								//!< 不透明2Dレンダーコンポーネント
+	std::vector<IRender*> m2DOpaqueRenderComponents;								//!< 不透明2Dレンダーコンポーネント
 	std::vector<IRender*> m2DTranslucentRenderComponents;							//!< 半透明2Dレンダーコンポーネント
 
 	CCameraComponent* mRenderingCamera = nullptr;									//!< 描画を担当するカメラ
@@ -111,9 +111,9 @@ private:
 	//! @brief 不透明3Dレンダーコンポーネントの追加
 	//! @param[in] renderComponent 追加するレンダーコンポーネント
 	//!
-	void Add3DOpacityRenderComponent(IRender& renderComponent)
+	void Add3DOpaqueRenderComponent(IRender& renderComponent)
 	{
-		m3DOpacityRenderComponents.emplace_back(&renderComponent);
+		m3DOpaqueRenderComponents.emplace_back(&renderComponent);
 	}
 
 	//!
@@ -130,9 +130,9 @@ private:
 	//! @brief 不透明2Dレンダーコンポーネントの追加
 	//! @param[in] renderComponent 追加するレンダーコンポーネント
 	//!
-	void Add2DOpacityRenderComponent(IRender& renderComponent)
+	void Add2DOpaqueRenderComponent(IRender& renderComponent)
 	{
-		m2DOpacityRenderComponents.emplace_back(&renderComponent);
+		m2DOpaqueRenderComponents.emplace_back(&renderComponent);
 	}
 
 	//!
