@@ -34,7 +34,7 @@ CStaticMeshComponent::CStaticMeshComponent(CActor& owner , CTransform& parentTra
 void CStaticMeshComponent::Update()
 {
 	//•`‰æ–½—ß’Ç‰Á
-	mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPACITY3D });
+	mOwnerInterface.AddRenderOrder({ *this,ERenderOption::OPAQUE3D });
 }
 
 void CStaticMeshComponent::Render()
